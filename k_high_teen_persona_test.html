@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-High Teen Persona Test</title>
+    
+    <!-- Tailwind CSS for rapid styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Outfit for body, Playfair for headings -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            color: #1e293b;
+            padding: 1rem;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            /* Allow the container to grow based on content to prevent overlapping */
+            min-height: 600px; 
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Screen Transitions - FIXED for no overlapping */
+        .screen {
+            display: none; /* Hide all screens by default */
+            width: 100%;
+            flex-grow: 1;
+            padding: 2.5rem 2rem;
+            flex-direction: column;
+        }
+
+        .screen.active {
+            display: flex;
+            animation: fadeInSlide 0.4s ease forwards;
+        }
+
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        h1, h2 { font-family: 'Playfair Display', serif; }
+
+        /* Custom Button Styles */
+        .btn-primary {
+            background: linear-gradient(to right, #ec4899, #8b5cf6);
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(236, 72, 153, 0.3);
+        }
+
+        .btn-option {
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+            transition: all 0.2s;
+        }
+        .btn-option:hover {
+            border-color: #ec4899;
+            background: #fdf2f8;
+            color: #ec4899;
+            transform: translateY(-1px);
+        }
+
+        /* Progress Bar */
+        .progress-bar-bg {
+            background: #f1f5f9;
+            border-radius: 9999px;
+            height: 10px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .progress-bar-fill {
+            background: linear-gradient(to right, #ec4899, #8b5cf6);
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.4s ease;
+        }
+
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #f1f5f9;
+            border-top: 4px solid #ec4899;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Ad Block Placeholder Styling */
+        .ad-placeholder {
+            width: 100%;
+            min-height: 80px;
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            margin: 1rem 0;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        
+        <!-- 1. START SCREEN -->
+        <div id="start-screen" class="screen active text-center justify-center">
+            <div class="mx-auto mb-6 bg-pink-100 text-pink-600 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
+                Trending in Korea 🇰🇷
+            </div>
+            <h1 class="text-4xl font-bold mb-4 text-slate-800 leading-tight">K-High Teen Persona Test</h1>
+            <p class="text-slate-500 mb-8 text-lg">Are you the Tsundere Class President or the Sunshine Transfer Student? Take the test to find out your K-Teen archetype!</p>
+            
+            <button onclick="switchScreen('start-screen', 'gender-screen')" class="btn-primary w-full py-4 rounded-xl font-bold text-lg shadow-lg">
+                Start the Test ✨
+            </button>
+
+            <!-- [MONETIZATION] Top/Bottom Banner Ad Placement -->
+            <div class="ad-placeholder mt-8">Google AdSense Banner Area</div>
+
+            <div class="mt-10 border-t border-slate-200 pt-8">
+                <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">🔥 More Trending Tests</h3>
+                <div class="flex flex-col gap-3">
+                    <a href="k_aesthetic_test.html" class="flex items-center gap-4 p-3 rounded-xl border border-slate-100 bg-white hover:border-pink-300 transition-all shadow-sm">
+                        <div class="w-12 h-12 rounded-lg bg-pink-100 flex items-center justify-center text-xl">💄</div>
+                        <div class="text-left">
+                            <p class="text-sm font-bold text-slate-800">K-Aesthetic & Color Test</p>
+                            <p class="text-xs text-slate-500">Find your Seoul vibe</p>
+                        </div>
+                    </a>
+                    <a href="k_drama_archetype_test.html" class="flex items-center gap-4 p-3 rounded-xl border border-slate-100 bg-white hover:border-indigo-300 transition-all shadow-sm">
+                        <div class="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center text-xl">🎬</div>
+                        <div class="text-left">
+                            <p class="text-sm font-bold text-slate-800">K-Drama Archetype Test</p>
+                            <p class="text-xs text-slate-500">Which cliché are you?</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1.5. GENDER SCREEN -->
+        <div id="gender-screen" class="screen text-center justify-center">
+            <div class="mx-auto mb-6 bg-indigo-100 text-indigo-600 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
+                Step 1
+            </div>
+            <h2 class="text-3xl font-bold mb-8 text-slate-800">Select Your Gender</h2>
+            <p class="text-slate-500 mb-8">This helps us match you with the perfect K-Drama character.</p>
+            <div class="flex flex-col gap-4">
+                <button onclick="selectGender('F')" class="btn-option w-full py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-3">
+                    <span class="text-2xl">👩</span> Female
+                </button>
+                <button onclick="selectGender('M')" class="btn-option w-full py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-3">
+                    <span class="text-2xl">👨</span> Male
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. QUESTION SCREEN -->
+        <div id="question-screen" class="screen justify-between">
+            <div class="flex-grow">
+                <!-- Progress Header -->
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Question</span>
+                    <span id="q-counter" class="text-sm font-bold text-pink-500 bg-pink-50 px-3 py-1 rounded-full">1 / 5</span>
+                </div>
+                <div class="progress-bar-bg mb-8">
+                    <div id="progress-fill" class="progress-bar-fill" style="width: 20%;"></div>
+                </div>
+
+                <!-- Question Text -->
+                <h2 id="q-text" class="text-2xl font-bold mb-8 text-slate-800 leading-snug">
+                    Question goes here
+                </h2>
+            </div>
+
+            <!-- Options -->
+            <div class="flex flex-col gap-4 mt-8">
+                <button onclick="answerQuestion('A')" id="btn-a" class="btn-option w-full py-4 px-6 rounded-xl text-left font-medium text-lg leading-relaxed shadow-sm">
+                    Option A
+                </button>
+                <button onclick="answerQuestion('B')" id="btn-b" class="btn-option w-full py-4 px-6 rounded-xl text-left font-medium text-lg leading-relaxed shadow-sm">
+                    Option B
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. LOADING SCREEN (Perfect for Interstitial Ads!) -->
+        <div id="loading-screen" class="screen text-center justify-center items-center">
+            <div class="loader mb-8"></div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-3">Analyzing your Vibe...</h2>
+            <p class="text-slate-500">Matching you with K-Drama tropes</p>
+            
+            <!-- [MONETIZATION] 
+                 This is where you trigger the Google AdSense Vignette (Interstitial) Ad.
+                 High CPM value here! 
+            -->
+        </div>
+
+        <!-- 4. RESULT SCREEN -->
+        <div id="result-screen" class="screen text-center">
+            <span class="text-xs font-bold text-pink-500 tracking-widest uppercase mb-2 block">Your Persona is...</span>
+            <h1 id="r-title" class="text-3xl font-bold mb-6 text-slate-800">The Tsundere</h1>
+            
+            <!-- Webtoon 2D Result Image Container (영어 버전 이미지로 업데이트 및 텍스트가 잘리지 않게 사이즈 최적화) -->
+            <div class="w-full max-w-[320px] aspect-square mx-auto bg-slate-100 rounded-3xl mb-6 overflow-hidden relative shadow-xl border-4 border-white">
+                <div id="r-img-div" class="w-full h-full" style="background-image: url('ChatGPT Image 2026년 6월 9일 오후 11_26_19.png'); background-size: 200% 200%; background-position: 0% 0%;"></div>
+            </div>
+
+            <p id="r-desc" class="text-slate-600 mb-8 leading-relaxed text-lg">Description goes here.</p>
+
+            <div class="bg-indigo-50 border border-indigo-100 rounded-xl p-5 mb-8 text-left flex items-center gap-4">
+                <div class="bg-indigo-100 text-indigo-500 p-3 rounded-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                </div>
+                <div>
+                    <p class="text-xs font-bold text-indigo-400 uppercase tracking-wide mb-1">Perfect Match</p>
+                    <p id="r-match" class="text-slate-800 font-bold text-lg">Someone</p>
+                </div>
+            </div>
+
+            <!-- [MONETIZATION] In-feed Ad Block -->
+            <div class="ad-placeholder mb-6">Google AdSense In-feed Ad</div>
+
+            <div class="flex flex-col gap-3">
+                <button id="share-btn" onclick="shareResult()" class="btn-primary w-full py-4 rounded-xl font-bold text-lg shadow-lg flex justify-center items-center gap-2">
+                    Share to Instagram 
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+                </button>
+                <button onclick="location.reload()" class="w-full py-4 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-colors">
+                    Retake Test
+                </button>
+            </div>
+
+            <div class="mt-8 border-t border-slate-200 pt-6">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Try these next!</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="k_aesthetic_test.html" class="p-3 rounded-xl border border-slate-100 bg-white hover:border-pink-300 transition-all shadow-sm flex flex-col items-center text-center">
+                        <div class="text-2xl mb-1">💄</div>
+                        <p class="text-xs font-bold text-slate-800">K-Aesthetic</p>
+                    </a>
+                    <a href="k_drama_archetype_test.html" class="p-3 rounded-xl border border-slate-100 bg-white hover:border-indigo-300 transition-all shadow-sm flex flex-col items-center text-center">
+                        <div class="text-2xl mb-1">🎬</div>
+                        <p class="text-xs font-bold text-slate-800">K-Drama Role</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Data Setup (English Text mapped to Korean logic)
+        const questions = [
+            {
+                q: "You're 1 minute late! You turn the corner with toast in your mouth and bump into someone!",
+                a: "Make eye contact while picking up their books. ✨", // Feeling/Extrovert
+                b: "Quickly apologize and sprint to the gate. 🏃‍♀️", // Thinking/Introvert
+                type: "EI"
+            },
+            {
+                q: "It's finally lunchtime. Where are you heading first?",
+                a: "The noisy cafeteria to fight for spicy tteokbokki! 🥘", // Extrovert
+                b: "The quiet rooftop or a corner in the library. 🎧", // Introvert
+                type: "EI"
+            },
+            {
+                q: "Your friend says: 'I was so stressed I bought a new K-pop album.'",
+                a: "'Oh no, what made you stressed?' 🥺", // Feeling
+                b: "'Which group? Did you get your bias photocard?' 📸", // Thinking
+                type: "TF"
+            },
+            {
+                q: "School festival is coming! What's your role?",
+                a: "Center of the dance/band club performing on stage. 🎤", // Extrovert
+                b: "The brain managing the budget behind the scenes. 📊", // Introvert
+                type: "EI"
+            },
+            {
+                q: "A junior confesses their feelings to you with a letter.",
+                a: "Feel touched and write a careful, gentle reply. 💌", // Feeling
+                b: "Logically explain why you can't date right now. 📝", // Thinking
+                type: "TF"
+            }
+        ];
+
+        // 1.5. Gender-Based Results Data
+        const resultsData = {
+            "F": {
+                "EF": {
+                    title: "The Sunshine Transfer Student ☀️",
+                    desc: "You are the ultimate 'Inssa' (Insider). From the first day you transferred, you flipped the class vibe! You have a bright energy that naturally draws people to you.",
+                    match: "The Tsundere Class President",
+                    bgPos: "0% 0%",
+                    bgImg: "ChatGPT Image 2026년 6월 9일 오후 11_26_19.png" // 여성용 2x2 그리드
+                },
+                "IT": {
+                    title: "The Tsundere Class President 👓",
+                    desc: "Cold on the outside, warm on the inside. You strictly follow the rules but secretly leave banana milk on your crush's desk. You're the classic K-Drama second lead.",
+                    match: "The Sunshine Transfer Student",
+                    bgPos: "100% 0%",
+                    bgImg: "ChatGPT Image 2026년 6월 9일 오후 11_26_19.png"
+                },
+                "ET": {
+                    title: "The Girl Crush Vocalist 🎤",
+                    desc: "You own the stage! You are highly logical but express yourself through explosive charisma. Everyone in school secretly wants to be your friend.",
+                    match: "The Quiet Library Angel",
+                    bgPos: "0% 100%",
+                    bgImg: "ChatGPT Image 2026년 6월 9일 오후 11_26_19.png"
+                },
+                "IF": {
+                    title: "The Quiet Observer 📝",
+                    desc: "You observe everything from the corner of the classroom. You're highly empathetic and have a rich, creative inner world.",
+                    match: "The Girl Crush Vocalist",
+                    bgPos: "100% 100%",
+                    bgImg: "ChatGPT Image 2026년 6월 9일 오후 11_26_19.png"
+                }
+            },
+            "M": {
+                "EF": {
+                    title: "The Golden Retriever Junior 🐶",
+                    desc: "Always smiling and full of energy! You follow your seniors around and brighten up the room just by walking in.",
+                    match: "The Tsundere Class President",
+                    bgPos: "0% 0%",
+                    bgImg: "https://placehold.co/800x800/eef2ff/4338ca?text=Male+Grid+Image" // [TODO] 남성용 2x2 이미지로 교체
+                },
+                "IT": {
+                    title: "The Cold City Boy Heir 💼",
+                    desc: "You look like you don't care about anything, but you're actually paying close attention. The classic Tsundere male lead.",
+                    match: "The Golden Retriever Junior",
+                    bgPos: "100% 0%",
+                    bgImg: "https://placehold.co/800x800/eef2ff/4338ca?text=Male+Grid+Image"
+                },
+                "ET": {
+                    title: "The Rebellious Band Leader 🎸",
+                    desc: "You sleep during math class, but on stage, you own the school. You're highly logical but express yourself through action and charisma.",
+                    match: "The Quiet Library Angel",
+                    bgPos: "0% 100%",
+                    bgImg: "https://placehold.co/800x800/eef2ff/4338ca?text=Male+Grid+Image"
+                },
+                "IF": {
+                    title: "The Mysterious Library Senior 🎧",
+                    desc: "Always wearing headphones and reading by the window. You have a deep, calm vibe that makes people curious about your story.",
+                    match: "The Rebellious Band Leader",
+                    bgPos: "100% 100%",
+                    bgImg: "https://placehold.co/800x800/eef2ff/4338ca?text=Male+Grid+Image"
+                }
+            }
+        };
+
+        // 2. State Variables
+        let currentQuestionIndex = 0;
+        let scores = { E: 0, I: 0, T: 0, F: 0 };
+        let userGender = "F"; // 기본값 세팅
+
+        // 3. UI Navigation Functions
+        function switchScreen(fromId, toId) {
+            const fromScreen = document.getElementById(fromId);
+            const toScreen = document.getElementById(toId);
+            
+            fromScreen.classList.remove('active');
+            // Give a tiny delay so the display:none kicks in cleanly, allowing the new screen to take space
+            setTimeout(() => {
+                toScreen.classList.add('active');
+            }, 50);
+        }
+
+        function selectGender(gender) {
+            userGender = gender;
+            currentQuestionIndex = 0;
+            scores = { E: 0, I: 0, T: 0, F: 0 };
+            renderQuestion();
+            switchScreen('gender-screen', 'question-screen');
+        }
+
+        function startTest() {
+            currentQuestionIndex = 0;
+            scores = { E: 0, I: 0, T: 0, F: 0 };
+            renderQuestion();
+            switchScreen('start-screen', 'question-screen');
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('q-counter').innerText = `${currentQuestionIndex + 1} / ${questions.length}`;
+            document.getElementById('progress-fill').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            
+            document.getElementById('q-text').innerText = q.q;
+            document.getElementById('btn-a').innerText = q.a;
+            document.getElementById('btn-b').innerText = q.b;
+        }
+
+        function answerQuestion(choice) {
+            const q = questions[currentQuestionIndex];
+            
+            // Basic Scoring Logic
+            if (q.type === "EI") {
+                if (choice === 'A') scores.E++; else scores.I++;
+            } else if (q.type === "TF") {
+                if (choice === 'A') scores.F++; else scores.T++;
+            }
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < questions.length) {
+                // Next question with fade effect
+                const qScreen = document.getElementById('question-screen');
+                qScreen.style.opacity = '0';
+                setTimeout(() => {
+                    renderQuestion();
+                    qScreen.style.opacity = '1';
+                }, 300);
+            } else {
+                calculateResult();
+            }
+        }
+
+        function calculateResult() {
+            switchScreen('question-screen', 'loading-screen');
+            
+            // Calculate final type string (e.g., "ET", "IF")
+            let finalType = "";
+            finalType += (scores.E >= scores.I) ? "E" : "I";
+            finalType += (scores.T >= scores.F) ? "T" : "F";
+
+            // 성별(userGender)에 따라 데이터 분기
+            const result = resultsData[userGender][finalType] || resultsData[userGender]["EF"]; 
+
+            // Populate Result Screen
+            document.getElementById('r-title').innerText = result.title;
+            document.getElementById('r-desc').innerText = result.desc;
+            document.getElementById('r-match').innerText = result.match;
+            
+            // 성별에 맞는 배경 이미지(bgImg)와 좌표(bgPos) 동적 할당
+            const imgDiv = document.getElementById('r-img-div');
+            imgDiv.style.backgroundImage = `url('${result.bgImg}')`;
+            imgDiv.style.backgroundPosition = result.bgPos;
+
+            // Fake loading time to show the interstitial ad potential
+            setTimeout(() => {
+                switchScreen('loading-screen', 'result-screen');
+            }, 3000); // 3 seconds loading
+        }
+
+        // 4. Custom Share Function (No Alerts)
+        function shareResult() {
+            if (navigator.share) {
+                navigator.share({
+                    title: "What's Your K-Drama High School Persona?",
+                    text: `I got ${document.getElementById('r-title').innerText}! Take the test to find out yours! 🇰🇷`,
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                // Fallback for desktop/browsers without web share API
+                const dummy = document.createElement('textarea');
+                dummy.value = window.location.href;
+                document.body.appendChild(dummy);
+                dummy.select();
+                document.execCommand('copy');
+                document.body.removeChild(dummy);
+                
+                // Visual feedback without alert()
+                const btn = document.getElementById('share-btn');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = `Copied Link! ✨`;
+                btn.classList.add('bg-green-500'); // Optional: change color briefly
+                
+                setTimeout(() => { 
+                    btn.innerHTML = originalHTML; 
+                    btn.classList.remove('bg-green-500');
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>

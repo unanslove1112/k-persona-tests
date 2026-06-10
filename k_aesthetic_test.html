@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Aesthetic Style Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Outfit', sans-serif; background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0; color: #1e293b; padding: 1rem; }
+        .app-container { width: 100%; max-width: 480px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(225, 29, 72, 0.1); position: relative; min-height: 600px; display: flex; flex-direction: column; border: 1px solid rgba(255, 255, 255, 0.5); }
+        .screen { display: none; width: 100%; flex-grow: 1; padding: 2.5rem 2rem; flex-direction: column; }
+        .screen.active { display: flex; animation: fadeInSlide 0.4s ease forwards; }
+        @keyframes fadeInSlide { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        h1, h2 { font-family: 'Playfair Display', serif; }
+        .btn-primary { background: linear-gradient(to right, #fb7185, #e11d48); color: white; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(225, 29, 72, 0.3); }
+        .btn-option { background: white; border: 2px solid #ffe4e6; color: #475569; transition: all 0.2s; }
+        .btn-option:hover { border-color: #fb7185; background: #fff1f2; color: #e11d48; transform: translateY(-1px); }
+        .progress-bar-bg { background: #f1f5f9; border-radius: 9999px; height: 10px; overflow: hidden; }
+        .progress-bar-fill { background: linear-gradient(to right, #fb7185, #e11d48); height: 100%; border-radius: 9999px; transition: width 0.4s ease; }
+        .loader { border: 4px solid #ffe4e6; border-top: 4px solid #e11d48; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .ad-placeholder { width: 100%; min-height: 80px; background: #f8fafc; border: 1px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.75rem; margin: 1rem 0; border-radius: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- 1. START SCREEN -->
+        <div id="start-screen" class="screen active text-center justify-center">
+            <div class="mx-auto mb-6 bg-rose-100 text-rose-600 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
+                Seoul Fashion Vibes 💄
+            </div>
+            <h1 class="text-4xl font-bold mb-4 text-slate-800 leading-tight">K-Aesthetic Style Test</h1>
+            <p class="text-slate-500 mb-8 text-lg">Are you Seongsu Streetwear or Hannam Old Money? Find your Seoul style!</p>
+            <button onclick="switchScreen('start-screen', 'gender-screen')" class="btn-primary w-full py-4 rounded-xl font-bold text-lg shadow-lg">Find My Vibe ✨</button>
+
+            <!-- Cross Promo -->
+            <div class="mt-10 border-t border-slate-200 pt-8">
+                <h3 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">🔥 More Tests</h3>
+                <a href="k_high_teen_test.html" class="flex items-center gap-4 p-3 rounded-xl border border-slate-100 bg-white hover:border-pink-300 transition-all shadow-sm mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-pink-100 flex items-center justify-center text-xl">🏫</div>
+                    <div class="text-left">
+                        <p class="text-sm font-bold text-slate-800">High School Persona</p>
+                        <p class="text-xs text-slate-500">Back to K-High!</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 1.5. GENDER SCREEN -->
+        <div id="gender-screen" class="screen text-center justify-center">
+            <div class="mx-auto mb-6 bg-rose-100 text-rose-600 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
+                Step 1
+            </div>
+            <h2 class="text-3xl font-bold mb-8 text-slate-800">Select Your Gender</h2>
+            <p class="text-slate-500 mb-8">This helps us tailor your K-Aesthetic match.</p>
+            <div class="flex flex-col gap-4">
+                <button onclick="selectGender('F')" class="btn-option w-full py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-3">
+                    <span class="text-2xl">👩</span> Female
+                </button>
+                <button onclick="selectGender('M')" class="btn-option w-full py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-3">
+                    <span class="text-2xl">👨</span> Male
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. QUESTION SCREEN -->
+        <div id="question-screen" class="screen justify-between">
+            <div class="flex-grow">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Question</span>
+                    <span id="q-counter" class="text-sm font-bold text-rose-500 bg-rose-50 px-3 py-1 rounded-full">1 / 5</span>
+                </div>
+                <div class="progress-bar-bg mb-8"><div id="progress-fill" class="progress-bar-fill" style="width: 20%;"></div></div>
+                <h2 id="q-text" class="text-2xl font-bold mb-8 text-slate-800 leading-snug">Question goes here</h2>
+            </div>
+            <div class="flex flex-col gap-4 mt-8">
+                <button onclick="answerQuestion('A')" id="btn-a" class="btn-option w-full py-4 px-6 rounded-xl text-left font-medium text-lg leading-relaxed shadow-sm">Option A</button>
+                <button onclick="answerQuestion('B')" id="btn-b" class="btn-option w-full py-4 px-6 rounded-xl text-left font-medium text-lg leading-relaxed shadow-sm">Option B</button>
+            </div>
+        </div>
+
+        <!-- 3. LOADING SCREEN -->
+        <div id="loading-screen" class="screen text-center justify-center items-center">
+            <div class="loader mb-8"></div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-3">Scanning your closet...</h2>
+            <p class="text-slate-500">Analyzing your aesthetic</p>
+        </div>
+
+        <!-- 4. RESULT SCREEN -->
+        <div id="result-screen" class="screen text-center">
+            <span class="text-xs font-bold text-rose-500 tracking-widest uppercase mb-2 block">Your Vibe is...</span>
+            <h1 id="r-title" class="text-3xl font-bold mb-6 text-slate-800">The Vibe</h1>
+            
+            <div class="w-full max-w-[320px] aspect-square mx-auto bg-rose-50 rounded-3xl mb-6 flex flex-col items-center justify-center shadow-xl border-4 border-white text-6xl">
+                <span id="r-emoji">🎀</span>
+            </div>
+
+            <p id="r-desc" class="text-slate-600 mb-8 leading-relaxed text-lg">Description</p>
+
+            <button id="share-btn" onclick="shareResult()" class="btn-primary w-full py-4 rounded-xl font-bold text-lg shadow-lg mb-3">Share to Instagram</button>
+            <button onclick="location.reload()" class="w-full py-4 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-colors">Retake Test</button>
+            
+            <div class="mt-8 border-t border-slate-200 pt-6">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Try these next!</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="k_high_teen_test.html" class="p-3 rounded-xl border border-slate-100 bg-white text-center">
+                        <div class="text-2xl mb-1">🏫</div><p class="text-xs font-bold">K-High</p>
+                    </a>
+                    <a href="k_drama_archetype_test.html" class="p-3 rounded-xl border border-slate-100 bg-white text-center">
+                        <div class="text-2xl mb-1">🎬</div><p class="text-xs font-bold">K-Drama</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "It's Saturday afternoon. Where are you getting coffee?", a: "A sleek, hidden cafe with monochrome interior. ☕️", b: "A cute, pastel cafe with giant ribbon cakes. 🍰", type: "Color" },
+            { q: "What's your go-to outfit base?", a: "Oversized blazer and wide-leg trousers. 🧥", b: "A fitted crop top and a pleated skirt. 🎀", type: "Style" },
+            { q: "Choose your favorite accessory:", a: "Silver chunky rings and headphones. 🎧", b: "Pearl necklace and a designer mini-bag. 👜", type: "Style" },
+            { q: "Your Instagram feed looks like...", a: "Flash photography, blurry nights, edgy angles. 📸", b: "Bright lighting, flowers, aesthetic brunch. 🌸", type: "Color" },
+            { q: "Pick a makeup point:", a: "Smudged eyeliner and cool-toned lip tint. 🖤", b: "Glittery aegyosal and glossy warm-toned lips. ✨", type: "Color" }
+        ];
+
+        const resultsData = {
+            "F": {
+                "AA": { title: "Hongdae Indie Girl 🎧", emoji: "🎸", desc: "You are effortlessly cool. Your style is dominated by black, silver hardware, and oversized silhouettes. You probably know all the underground K-R&B artists." },
+                "AB": { title: "Seongsu Streetwear 👟", emoji: "🛹", desc: "Trendy and hip! You mix high fashion with vintage streetwear perfectly. Gorpcore and parachute pants are your best friends." },
+                "BA": { title: "Gangnam Chic 🕶️", emoji: "🍸", desc: "Sleek, modern, and sophisticated. You prefer clean lines, neutral colors, and subtle luxury. Less is always more for you." },
+                "BB": { title: "Hannam Old Money 🦢", emoji: "🩰", desc: "Elegant, soft, and luxurious. You lean towards pastel tones, tweeds, and romantic silhouettes. Think K-Pop idol on their day off." }
+            },
+            "M": {
+                "AA": { title: "Hongdae Hipster 🎧", emoji: "🎸", desc: "You exude underground vibes. Oversized leather jackets, silver chains, and a mysterious aura make you stand out in the Hongdae indie scene." },
+                "AB": { title: "Seongsu Gorpcore 👟", emoji: "🛹", desc: "Function meets street fashion. You rock windbreakers, cargo pants, and trendy sneakers effortlessly while sipping flat whites in Seongsu." },
+                "BA": { title: "Gangnam Classic 🕶️", emoji: "🍸", desc: "Sharp, clean, and professional. You prefer tailored fits, neutral tones, and a polished look that screams young CEO." },
+                "BB": { title: "Hannam Preppy 🦢", emoji: "🎻", desc: "Soft-spoken and rich in taste. Knitted sweaters, clean shirts, and a very neat appearance. The classic 'Oppa' look." }
+            }
+        };
+
+        let currentQuestionIndex = 0;
+        let scores = { A: 0, B: 0 };
+        let userGender = "F";
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.remove('active');
+            setTimeout(() => document.getElementById(toId).classList.add('active'), 50);
+        }
+
+        function selectGender(gender) {
+            userGender = gender;
+            currentQuestionIndex = 0; scores = { A: 0, B: 0 };
+            renderQuestion(); switchScreen('gender-screen', 'question-screen');
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('q-counter').innerText = `${currentQuestionIndex + 1} / ${questions.length}`;
+            document.getElementById('progress-fill').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            document.getElementById('q-text').innerText = q.q;
+            document.getElementById('btn-a').innerText = q.a;
+            document.getElementById('btn-b').innerText = q.b;
+        }
+
+        function answerQuestion(choice) {
+            scores[choice]++;
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                const qScreen = document.getElementById('question-screen');
+                qScreen.style.opacity = '0';
+                setTimeout(() => { renderQuestion(); qScreen.style.opacity = '1'; }, 300);
+            } else { calculateResult(); }
+        }
+
+        function calculateResult() {
+            switchScreen('question-screen', 'loading-screen');
+            // Simplified logic based on majority A or B answers
+            let finalType = scores.A >= 3 ? (scores.A > 4 ? "AA" : "AB") : (scores.B > 4 ? "BB" : "BA");
+            const result = resultsData[userGender][finalType] || resultsData[userGender]["BB"];
+            
+            document.getElementById('r-title').innerText = result.title;
+            document.getElementById('r-desc').innerText = result.desc;
+            document.getElementById('r-emoji').innerText = result.emoji;
+            
+            setTimeout(() => switchScreen('loading-screen', 'result-screen'), 2500);
+        }
+
+        function shareResult() {
+            const btn = document.getElementById('share-btn');
+            btn.innerHTML = `Copied Link! ✨`; btn.classList.add('bg-green-500');
+            setTimeout(() => { btn.innerHTML = `Share to Instagram`; btn.classList.remove('bg-green-500'); }, 2000);
+        }
+    </script>
+</body>
+</html>

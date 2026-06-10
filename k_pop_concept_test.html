@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Pop Concept Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Outfit', sans-serif; background: linear-gradient(135deg, #f3e8ff 0%, #e0e7ff 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0; color: #1e293b; padding: 1rem; }
+        .app-container { width: 100%; max-width: 480px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-radius: 24px; box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.15); position: relative; min-height: 600px; display: flex; flex-direction: column; border: 1px solid rgba(255, 255, 255, 0.5); overflow-y: auto; }
+        .screen { display: none; width: 100%; flex-grow: 1; padding: 2.5rem 2rem; flex-direction: column; }
+        .screen.active { display: flex; animation: fadeInSlide 0.4s ease forwards; }
+        @keyframes fadeInSlide { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        h1, h2 { font-family: 'Playfair Display', serif; }
+        .btn-primary { background: linear-gradient(to right, #8b5cf6, #6d28d9); color: white; transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(139, 92, 246, 0.3); }
+        .btn-option { background: white; border: 2px solid #e0e7ff; color: #475569; transition: all 0.2s; }
+        .btn-option:hover { border-color: #8b5cf6; background: #f3e8ff; color: #6d28d9; transform: translateY(-1px); }
+        .progress-bar-bg { background: #f1f5f9; border-radius: 9999px; height: 10px; overflow: hidden; }
+        .progress-bar-fill { background: linear-gradient(to right, #a78bfa, #8b5cf6); height: 100%; border-radius: 9999px; transition: width 0.4s ease; }
+        .loader { border: 4px solid #e0e7ff; border-top: 4px solid #8b5cf6; border-radius: 50%; width: 60px; height: 60px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .ad-placeholder { width: 100%; min-height: 80px; background: #f8fafc; border: 1px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; color: #94a3b8; font-size: 0.75rem; margin: 1rem 0; border-radius: 12px; }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- 1. START SCREEN -->
+        <div id="start-screen" class="screen active text-center justify-center">
+            <div class="mx-auto mb-6 bg-purple-100 text-purple-700 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
+                Idol Debut Test 🎤
+            </div>
+            <h1 class="text-4xl font-bold mb-4 text-slate-800 leading-tight">K-Pop Concept Test</h1>
+            <p class="text-slate-500 mb-8 text-lg">Girl Crush, Y2K, Mala-Taste, or Refreshing? Find out your group's debut style!</p>
+            <button onclick="switchScreen('start-screen', 'gender-screen')" class="btn-primary w-full py-4 rounded-xl font-bold text-lg shadow-lg">Debut Now ✨</button>
+
+            <!-- [MONETIZATION] -->
+            <div class="ad-placeholder mt-8">AdSense Banner Area</div>
+        </div>
+
+        <!-- 1.5. GENDER SCREEN -->
+        <div id="gender-screen" class="screen text-center justify-center">
+            <div class="mx-auto mb-6 bg-purple-100 text-purple-700 px-4 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase">
+                Step 1
+            </div>
+            <h2 class="text-3xl font-bold mb-8 text-slate-800">Select Your Gender</h2>
+            <p class="text-slate-500 mb-8">This determines your idol group's concept.</p>
+            <div class="flex flex-col gap-4">
+                <button onclick="selectGender('F')" class="btn-option w-full py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-3">
+                    <span class="text-2xl">👩</span> Girl Group
+                </button>
+                <button onclick="selectGender('M')" class="btn-option w-full py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-3">
+                    <span class="text-2xl">👨</span> Boy Group
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. QUESTION SCREEN -->
+        <div id="question-screen" class="screen justify-between">
+            <div class="flex-grow">
+                <div class="flex justify-between items-center mb-3">
+                    <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Question</span>
+                    <span id="q-counter" class="text-sm font-bold text-purple-600 bg-purple-50 px-3 py-1 rounded-full">1 / 5</span>
+                </div>
+                <div class="progress-bar-bg mb-8"><div id="progress-fill" class="progress-bar-fill" style="width: 20%;"></div></div>
+                <h2 id="q-text" class="text-2xl font-bold mb-8 text-slate-800 leading-snug">Question</h2>
+            </div>
+            <div class="flex flex-col gap-4 mt-8">
+                <button onclick="answerQuestion('A')" id="btn-a" class="btn-option w-full py-4 px-6 rounded-xl text-left font-medium text-lg leading-relaxed shadow-sm">Option A</button>
+                <button onclick="answerQuestion('B')" id="btn-b" class="btn-option w-full py-4 px-6 rounded-xl text-left font-medium text-lg leading-relaxed shadow-sm">Option B</button>
+            </div>
+        </div>
+
+        <!-- 3. LOADING SCREEN -->
+        <div id="loading-screen" class="screen text-center justify-center items-center">
+            <div class="loader mb-8 mx-auto"></div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-3">Filming Music Video...</h2>
+            <p class="text-slate-500">Choosing your concept</p>
+        </div>
+
+        <!-- 4. RESULT SCREEN -->
+        <div id="result-screen" class="screen text-center pb-8">
+            <span class="text-xs font-bold text-purple-500 tracking-widest uppercase mb-2 block">Your Concept is...</span>
+            <h1 id="r-title" class="text-3xl font-bold mb-6 text-slate-800">Concept</h1>
+            
+            <div class="w-full max-w-[320px] aspect-square mx-auto bg-purple-50 rounded-3xl mb-6 flex flex-col items-center justify-center shadow-xl border-4 border-white text-7xl">
+                <span id="r-emoji">✨</span>
+            </div>
+
+            <p id="r-desc" class="text-slate-600 mb-8 leading-relaxed text-lg">Description</p>
+
+            <button id="share-btn" onclick="shareResult()" class="btn-primary w-full py-4 rounded-xl font-bold text-lg shadow-lg mb-3">Share to Instagram</button>
+            <button onclick="location.reload()" class="w-full py-4 rounded-xl font-bold text-slate-500 hover:bg-slate-100 transition-colors">Retake Test</button>
+            
+            <!-- Cross Promo -->
+            <div class="mt-8 border-t border-slate-200 pt-6">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">🔥 Try other tests!</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <a href="k_city_test.html" class="p-3 rounded-xl border border-slate-100 bg-white hover:border-purple-300 flex flex-col items-center text-center">
+                        <div class="text-2xl mb-1">✈️</div><p class="text-xs font-bold text-slate-800">K-City Soul</p>
+                    </a>
+                    <a href="k_high_teen_test.html" class="p-3 rounded-xl border border-slate-100 bg-white hover:border-purple-300 flex flex-col items-center text-center">
+                        <div class="text-2xl mb-1">🏫</div><p class="text-xs font-bold text-slate-800">High School</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Logic Axis:
+        // D(Dark/Strong) vs B(Bright/Soft)
+        // M(Modern/Intense) vs R(Retro/Chill)
+        const questions = [
+            { q: "Choose your debut stage outfit:", a: "Black leather, chains, and dark makeup. 🖤", b: "Baggy pants, crop tops, and pastel colors. 🌸", type: "DB" },
+            { q: "What's the setting for your Music Video?", a: "A post-apocalyptic cyber city or dark castle. 🏰", b: "A sunny high school or a vintage roller rink. 🛼", type: "DB" },
+            { q: "Your choreography's point move is:", a: "A powerful, synchronized dance break. 🔥", b: "A catchy, easy-to-follow hand gesture. 👋", type: "MR" },
+            { q: "The essential prop for your concept photo is:", a: "A sleek sports car or a futuristic weapon. 🏎️", b: "A retro camcorder or a flip phone. 📼", type: "MR" },
+            { q: "Your 'Killing Part' in the song is:", a: "An intense high note or a fast rap verse. 🎤", b: "A whisper or a very catchy, chill melody. 🎧", type: "MR" }
+        ];
+
+        const resultsData = {
+            "F": {
+                "DM": { title: "Fierce Girl Crush 🖤", emoji: "👑", desc: "You are confident, bold, and untouchable! Your concept features heavy bass, designer brands, and a 'I am the best' attitude. (Think: BLACKPINK, Aespa)" },
+                "DR": { title: "Intense 'Mala-Taste' 🌶️", emoji: "🐺", desc: "Spicy, intense, and highly addictive! Your group has a dark lore and choreography that goes incredibly hard. (Think: Dreamcatcher)" },
+                "BM": { title: "Pure Refreshing Vibe 🍋", emoji: "🫧", desc: "You are the human vitamin! Your music is bright, energetic, and brings a smile to everyone's face. High teen energy at its best. (Think: STAYC, IVE)" },
+                "BR": { title: "Nostalgic Y2K 🎧", emoji: "📼", desc: "Chill, easy-listening, and aesthetic. You bring back the 90s/00s vibes with soft vocals, baggy jeans, and a naturally cool aura. (Think: NewJeans)" }
+            },
+            "M": {
+                "DM": { title: "Dark & Sexy Concept 🖤", emoji: "🧛‍♂️", desc: "Lethal and mesmerizing. Your group is known for dark suits, smooth R&B vocals, and an irresistible, mature aura. (Think: EXO, ENHYPEN)" },
+                "DR": { title: "Intense 'Mala-Taste' 🌶️", emoji: "🐺", desc: "Spicy, intense, and highly addictive! Your group has a deep storyline, dark lore, and choreography that goes incredibly hard. (Think: Stray Kids, ATEEZ)" },
+                "BM": { title: "Refreshing Boy Next Door 🍋", emoji: "🫧", desc: "You are the human vitamin! Your music is bright, energetic, and brings a smile to everyone's face. Schoolboy energy at its best. (Think: TWS, SEVENTEEN)" },
+                "BR": { title: "Nostalgic Y2K 🎧", emoji: "📼", desc: "Chill, easy-listening, and aesthetic. You bring back the 90s/00s vibes with soft vocals, baggy jeans, and a naturally cool aura. (Think: RIIZE, BOYNEXTDOOR)" }
+            }
+        };
+
+        let currentQuestionIndex = 0;
+        let scores = { D: 0, B: 0, M: 0, R: 0 };
+        let userGender = "F";
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.remove('active');
+            setTimeout(() => document.getElementById(toId).classList.add('active'), 50);
+        }
+
+        function selectGender(gender) {
+            userGender = gender;
+            currentQuestionIndex = 0; scores = { D: 0, B: 0, M: 0, R: 0 };
+            renderQuestion(); switchScreen('gender-screen', 'question-screen');
+        }
+
+        function renderQuestion() {
+            const q = questions[currentQuestionIndex];
+            document.getElementById('q-counter').innerText = `${currentQuestionIndex + 1} / ${questions.length}`;
+            document.getElementById('progress-fill').style.width = `${((currentQuestionIndex + 1) / questions.length) * 100}%`;
+            document.getElementById('q-text').innerText = q.q;
+            document.getElementById('btn-a').innerText = q.a;
+            document.getElementById('btn-b').innerText = q.b;
+        }
+
+        function answerQuestion(choice) {
+            const q = questions[currentQuestionIndex];
+            if(q.type === "DB") { choice === 'A' ? scores.D++ : scores.B++; }
+            else { choice === 'A' ? scores.M++ : scores.R++; }
+
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                const qScreen = document.getElementById('question-screen');
+                qScreen.style.opacity = '0';
+                setTimeout(() => { renderQuestion(); qScreen.style.opacity = '1'; }, 300);
+            } else { calculateResult(); }
+        }
+
+        function calculateResult() {
+            switchScreen('question-screen', 'loading-screen');
+            let finalType = (scores.D >= scores.B ? "D" : "B") + (scores.M >= scores.R ? "M" : "R");
+            const result = resultsData[userGender][finalType] || resultsData[userGender]["BR"];
+            
+            document.getElementById('r-title').innerText = result.title;
+            document.getElementById('r-desc').innerText = result.desc;
+            document.getElementById('r-emoji').innerText = result.emoji;
+            
+            setTimeout(() => switchScreen('loading-screen', 'result-screen'), 2500);
+        }
+
+        function shareResult() {
+            const btn = document.getElementById('share-btn');
+            const orig = btn.innerHTML;
+            btn.innerHTML = `Copied Link! ✨`; btn.classList.add('bg-green-500');
+            setTimeout(() => { btn.innerHTML = orig; btn.classList.remove('bg-green-500'); }, 2000);
+        }
+    </script>
+</body>
+</html>
