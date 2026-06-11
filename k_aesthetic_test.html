@@ -14,8 +14,8 @@
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 mb-8">
                 <h2 class="text-xl font-bold mb-4">Step 1: Select Your Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 text-blue-700 font-bold py-4 rounded-xl">👨 Male</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 text-pink-700 font-bold py-4 rounded-xl">👩 Female</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
                 </div>
             </div>
         </div>
@@ -25,10 +25,10 @@
                 <div id="progress-bar" class="bg-pink-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center">
-                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question</h2>
+                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question text</h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 border border-gray-200 p-5 rounded-xl"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 border border-gray-200 p-5 rounded-xl"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 hover:border-pink-300 p-5 rounded-xl shadow-sm"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 hover:border-pink-300 p-5 rounded-xl shadow-sm"></button>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="space-y-3 mb-8">
-                <button onclick="location.href='index.html'" class="w-full bg-pink-500 text-white font-bold py-4 rounded-xl">🏠 Go to Lobby</button>
+                <button onclick="location.href='index.html'" class="w-full bg-pink-500 text-white font-bold py-4 rounded-xl shadow-md">🏠 Go to Lobby</button>
             </div>
         </div>
     </div>
@@ -61,7 +61,9 @@
         const questions = [
             { q: "Saturday afternoon coffee?", a: "A hidden monochrome chic cafe.", b: "A bright cafe with giant ribbon cakes." },
             { q: "Your daily look base?", a: "Oversized blazer and wide pants.", b: "Fitted crop top and tennis skirt." },
-            { q: "Your Instagram feed vibe?", a: "Flash photography and blurry night pics.", b: "Sunny brunch and floral aesthetics." }
+            { q: "Your Instagram feed vibe?", a: "Flash photography and blurry night pics.", b: "Sunny brunch and floral aesthetics." },
+            { q: "Favorite accessory?", a: "Chunky silver rings and chains.", b: "Pearl necklaces and cute hairbows." },
+            { q: "Walking down the street, you listen to...", a: "Trendy R&B or Hip-hop beats.", b: "Upbeat K-Pop or acoustic pop." }
         ];
         
         const resultsData = {
