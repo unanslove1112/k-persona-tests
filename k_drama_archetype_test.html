@@ -131,6 +131,8 @@
             
             const imgDiv = document.getElementById('r-img-div');
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_drama_archetype_w.png')" : "url('k_drama_archetype_m.png')";
+            imgDiv.style.backgroundSize = "200% 200%"; // 2x2 격자이므로 200% 필수!
+            imgDiv.style.backgroundColor = "transparent";
             
             const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
             imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
