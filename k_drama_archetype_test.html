@@ -9,13 +9,13 @@
 <body class="bg-gray-100 text-gray-900 font-sans">
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-blue-50 to-white">
-            <h1 class="text-4xl font-extrabold text-blue-600 mb-4">K-Drama Archetype</h1>
-            <p class="text-gray-600 mb-8">Which K-Drama cliché are you?</p>
+            <h1 class="text-4xl font-extrabold text-blue-600 mb-4 tracking-tight">K-Drama Archetype</h1>
+            <p class="text-gray-600 mb-8 font-medium">Which K-Drama cliché are you?</p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 mb-8">
                 <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 text-blue-700 font-bold py-4 rounded-xl">👨 Male</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 text-pink-700 font-bold py-4 rounded-xl">👩 Female</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
                 </div>
             </div>
         </div>
@@ -25,10 +25,10 @@
                 <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center">
-                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question</h2>
+                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question text</h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 border border-gray-200 p-5 rounded-xl"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 border border-gray-200 p-5 rounded-xl"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 p-5 rounded-xl shadow-sm"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 p-5 rounded-xl shadow-sm"></button>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="space-y-3 mb-8">
-                <button onclick="location.href='index.html'" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl">🏠 Go to Lobby</button>
+                <button onclick="location.href='index.html'" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-md">🏠 Go to Lobby</button>
             </div>
         </div>
     </div>
@@ -59,9 +59,11 @@
     <script>
         let userGender = '';
         const questions = [
-            { q: "It suddenly rains and you have no umbrella.", a: "Run in the rain smiling.", b: "Wait quietly under a roof." },
-            { q: "You spilled coffee on a stranger's expensive suit!", a: "Beg for forgiveness and offer to pay.", b: "Throw a blank check at them." },
-            { q: "When you're deeply sad...", a: "Cry loudly drinking soju at a street tent.", b: "Stare at the wall while standing in a shower." }
+            { q: "It suddenly rains and you have no umbrella.", a: "Run in the rain smiling happily.", b: "Wait quietly under a roof for someone." },
+            { q: "You spilled coffee on a stranger's expensive suit!", a: "Beg for forgiveness and offer to pay for cleaning.", b: "Throw a blank check at them and walk away." },
+            { q: "When you're deeply sad...", a: "Cry loudly drinking soju at a street tent.", b: "Stare at the wall while fully clothed in the shower." },
+            { q: "You find out a huge secret about your crush.", a: "Confront them immediately to hear the truth.", b: "Keep it to yourself to protect them secretly." },
+            { q: "The finale is approaching! What's the ending scene?", a: "A dramatic chase scene at the airport.", b: "A quiet, smiling reunion years later." }
         ];
         
         const resultsData = {
