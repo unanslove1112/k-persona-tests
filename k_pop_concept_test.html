@@ -9,13 +9,13 @@
 <body class="bg-gray-100 text-gray-900 font-sans">
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-purple-50 to-white">
-            <h1 class="text-4xl font-extrabold text-purple-600 mb-4">K-Pop Concept</h1>
-            <p class="text-gray-600 mb-8">What's your idol debut concept?</p>
+            <h1 class="text-4xl font-extrabold text-purple-600 mb-4 tracking-tight">K-Pop Concept</h1>
+            <p class="text-gray-600 mb-8 font-medium">What's your idol debut concept?</p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-purple-100 mb-8">
                 <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 text-blue-700 font-bold py-4 rounded-xl">👨 Boy Group</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 text-pink-700 font-bold py-4 rounded-xl">👩 Girl Group</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Boy Group</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Girl Group</button>
                 </div>
             </div>
         </div>
@@ -25,10 +25,10 @@
                 <div id="progress-bar" class="bg-purple-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center">
-                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question</h2>
+                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question text</h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 border border-gray-200 p-5 rounded-xl"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 border border-gray-200 p-5 rounded-xl"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-300 p-5 rounded-xl shadow-sm"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-300 p-5 rounded-xl shadow-sm"></button>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="space-y-3 mb-8">
-                <button onclick="location.href='index.html'" class="w-full bg-purple-600 text-white font-bold py-4 rounded-xl">🏠 Go to Lobby</button>
+                <button onclick="location.href='index.html'" class="w-full bg-purple-600 text-white font-bold py-4 rounded-xl shadow-md">🏠 Go to Lobby</button>
             </div>
         </div>
     </div>
@@ -59,9 +59,11 @@
     <script>
         let userGender = '';
         const questions = [
-            { q: "Debut stage outfit?", a: "Fierce leather and silver chains.", b: "Pastel tones and high-teen look." },
-            { q: "Music Video background?", a: "Cyberpunk futuristic city.", b: "Vintage school and roller-rink." },
-            { q: "Key choreography?", a: "Powerful, synchronized sharp moves.", b: "Cute, easy-to-follow hand gestures." }
+            { q: "What is your dream debut stage outfit?", a: "Fierce leather jackets and silver chains.", b: "Pastel tones and bright high-teen uniforms." },
+            { q: "Choose your Music Video background!", a: "A dark cyberpunk futuristic city.", b: "A colorful vintage school and roller-rink." },
+            { q: "What's the key point choreography of your song?", a: "Powerful, sharply synchronized moves.", b: "Cute, highly addictive hand gestures." },
+            { q: "What is your main role in the group?", a: "The charismatic leader or main dancer.", b: "The visual center and energy mood maker." },
+            { q: "What's the concept for your first comeback?", a: "Dark, rebellious, and intense.", b: "Bright, nostalgic, and emotional." }
         ];
         
         const resultsData = {
