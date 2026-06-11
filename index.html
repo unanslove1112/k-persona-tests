@@ -3,193 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-Persona Universe | Trending Korean Tests</title>
-    
-    <!-- Tailwind CSS -->
+    <title>K-Persona: Find Your Korean Vibe</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-    
-    <style>
-        body { 
-            font-family: 'Outfit', sans-serif; 
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%); 
-            min-height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            margin: 0; 
-            color: #1e293b; 
-        }
-        
-        .app-container { 
-            width: 100%; 
-            max-width: 480px; 
-            background: rgba(255, 255, 255, 0.85); 
-            backdrop-filter: blur(20px); 
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); 
-            position: relative; 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-        }
-
-        h1, h2 { font-family: 'Playfair Display', serif; }
-        
-        /* Card Hover Animations */
-        .test-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .test-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        /* Ad Placeholder */
-        .ad-placeholder { 
-            width: 100%; 
-            min-height: 100px; 
-            background: #f1f5f9; 
-            border: 1px dashed #cbd5e1; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            color: #94a3b8; 
-            font-size: 0.75rem; 
-            border-radius: 16px;
-            margin: 1.5rem 0;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-    </style>
 </head>
-<body class="antialiased">
-
-    <div class="app-container">
-        
-        <!-- Header Section -->
-        <header class="pt-12 pb-6 px-6 text-center relative overflow-hidden">
-            <!-- Decorative blur blobs -->
-            <div class="absolute top-0 left-0 w-32 h-32 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-            <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-            
-            <div class="relative z-10">
-                <div class="inline-block px-4 py-1.5 rounded-full bg-slate-900 text-white text-xs font-bold tracking-widest uppercase mb-4 shadow-md">
-                    Welcome to K-Universe ✨
-                </div>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight mb-3">
-                    Discover Your <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-600">K-Vibe</span>
-                </h1>
-                <p class="text-slate-500 text-lg">
-                    Trending personality tests for K-Culture lovers. What's your true persona?
-                </p>
-            </div>
+<body class="bg-gray-50 text-gray-900 font-sans">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-xl relative pb-20">
+        <!-- Header -->
+        <header class="text-center py-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-b-3xl shadow-md">
+            <h1 class="text-3xl font-extrabold text-white tracking-tight">K-Persona</h1>
+            <p class="text-indigo-100 mt-2 font-medium">Discover your K-Vibe ✨</p>
         </header>
 
         <!-- [MONETIZATION] Top Banner Ad -->
-        <div class="px-6">
-            <div class="ad-placeholder">
-                Google AdSense Top Banner (High Visibility)
-            </div>
+        <div class="w-full h-16 bg-gray-200 my-4 flex items-center justify-center text-gray-400 text-sm">
+            AdSense Top Banner
         </div>
 
-        <!-- Test Cards List -->
-        <main class="flex-grow px-6 pb-12 flex flex-col gap-4 relative z-10">
-            
-            <!-- 1. K-High Teen Test -->
-            <a href="k_high_teen_persona_test.html" class="test-card block bg-white border-2 border-pink-100 rounded-2xl p-4 relative overflow-hidden group">
-                <div class="absolute top-3 right-3 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse uppercase tracking-wider">
-                    Hot 🔥
-                </div>
-                <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 shrink-0 rounded-xl bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center text-3xl shadow-inner">
-                        🏫
-                    </div>
+        <!-- Test List -->
+        <main class="px-5 py-2 space-y-4">
+            <h2 class="text-lg font-bold text-gray-800 mb-4 px-1">🔥 Trending Tests</h2>
+
+            <a href="k_high_teen_test.html" class="block group">
+                <div class="bg-white border-2 border-gray-100 rounded-2xl p-4 flex items-center shadow-sm hover:shadow-md transition relative overflow-hidden">
+                    <div class="text-4xl mr-4 group-hover:scale-110 transition">🏫</div>
                     <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-1 group-hover:text-pink-600 transition-colors">K-High Teen Persona</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2">Are you the Tsundere President or the Sunshine Student? Find your trope!</p>
+                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-indigo-600 transition">K-High Teen</h3>
+                        <p class="text-sm text-gray-500">What's your Korean high school persona?</p>
+                    </div>
+                    <span class="absolute top-2 right-2 bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded-full animate-pulse">HOT</span>
+                </div>
+            </a>
+
+            <a href="k_aesthetic_test.html" class="block group">
+                <div class="bg-white border-2 border-gray-100 rounded-2xl p-4 flex items-center shadow-sm hover:shadow-md transition">
+                    <div class="text-4xl mr-4 group-hover:scale-110 transition">💄</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-pink-500 transition">K-Aesthetic</h3>
+                        <p class="text-sm text-gray-500">Find your Seoul styling vibe.</p>
                     </div>
                 </div>
             </a>
 
-            <!-- 2. K-Pop Concept Test -->
-            <a href="k_pop_concept_test.html" class="test-card block bg-white border-2 border-purple-100 rounded-2xl p-4 group">
-                <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 shrink-0 rounded-xl bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center text-3xl shadow-inner">
-                        🎤
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-1 group-hover:text-purple-600 transition-colors">K-Pop Concept Test</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2">Girl Crush, Y2K, or Refreshing? Discover your K-Pop group's style.</p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- 3. K-Aesthetic Test -->
-            <a href="k_aesthetic_test.html" class="test-card block bg-white border-2 border-rose-100 rounded-2xl p-4 group">
-                <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 shrink-0 rounded-xl bg-gradient-to-br from-rose-100 to-rose-200 flex items-center justify-center text-3xl shadow-inner">
-                        💄
-                    </div>
-                    <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-1 group-hover:text-rose-600 transition-colors">K-Aesthetic Style</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2">Hongdae Indie or Hannam Old Money? Find your perfect Korean styling.</p>
-                    </div>
-                </div>
-            </a>
-
-            <!-- [MONETIZATION] In-Feed Native Ad -->
-            <div class="ad-placeholder !min-h-[80px] !my-0 !rounded-2xl">
-                Google AdSense In-Feed Ad
+            <!-- [MONETIZATION] In-feed Ad -->
+            <div class="w-full h-24 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400 text-sm my-2">
+                AdSense In-feed Ad
             </div>
 
-            <!-- 4. K-City Soul Test -->
-            <a href="k_city_soul_test.html" class="test-card block bg-white border-2 border-emerald-100 rounded-2xl p-4 group">
-                <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 shrink-0 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center text-3xl shadow-inner">
-                        ✈️
-                    </div>
+            <a href="k_drama_archetype_test.html" class="block group">
+                <div class="bg-white border-2 border-gray-100 rounded-2xl p-4 flex items-center shadow-sm hover:shadow-md transition">
+                    <div class="text-4xl mr-4 group-hover:scale-110 transition">🎬</div>
                     <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-1 group-hover:text-emerald-600 transition-colors">K-City Soulmate</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2">Seoul, Busan, or Gangwon? Which Korean city matches your travel vibe?</p>
+                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-blue-600 transition">K-Drama Archetype</h3>
+                        <p class="text-sm text-gray-500">Which K-Drama cliché are you?</p>
                     </div>
                 </div>
             </a>
 
-            <!-- 5. K-Drama Archetype Test -->
-            <a href="k_drama_archetype_test.html" class="test-card block bg-white border-2 border-indigo-100 rounded-2xl p-4 group">
-                <div class="flex items-center gap-4">
-                    <div class="w-16 h-16 shrink-0 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center text-3xl shadow-inner">
-                        🎬
-                    </div>
+            <a href="k_city_test.html" class="block group">
+                <div class="bg-white border-2 border-gray-100 rounded-2xl p-4 flex items-center shadow-sm hover:shadow-md transition">
+                    <div class="text-4xl mr-4 group-hover:scale-110 transition">🚄</div>
                     <div>
-                        <h3 class="text-lg font-bold text-slate-800 mb-1 group-hover:text-indigo-600 transition-colors">K-Drama Archetype</h3>
-                        <p class="text-sm text-slate-500 line-clamp-2">The arrogant CEO or the secretive second lead? Get your script now.</p>
+                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-green-500 transition">K-City Soul</h3>
+                        <p class="text-sm text-gray-500">Where is your Korean soul city?</p>
                     </div>
                 </div>
             </a>
 
+            <a href="k_pop_concept_test.html" class="block group">
+                <div class="bg-white border-2 border-gray-100 rounded-2xl p-4 flex items-center shadow-sm hover:shadow-md transition">
+                    <div class="text-4xl mr-4 group-hover:scale-110 transition">🎤</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-purple-600 transition">K-Pop Concept</h3>
+                        <p class="text-sm text-gray-500">What's your idol debut concept?</p>
+                    </div>
+                </div>
+            </a>
         </main>
 
-        <!-- Footer / Legal Info (Crucial for AdSense Approval) -->
-        <footer class="mt-auto bg-slate-900 text-slate-400 py-8 px-6 text-center text-xs">
-            <p class="font-bold text-white text-sm mb-4">K-Persona Universe</p>
-            <div class="flex justify-center gap-4 mb-6">
-                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+        <!-- Footer for AdSense Approval -->
+        <footer class="absolute bottom-0 w-full py-6 bg-gray-50 text-center border-t border-gray-200">
+            <div class="space-x-4 text-xs text-gray-500 mb-2">
+                <a href="#" class="hover:underline">Privacy Policy</a>
                 <span>|</span>
-                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="hover:underline">Terms of Service</a>
                 <span>|</span>
-                <a href="#" class="hover:text-white transition-colors">Contact</a>
+                <a href="#" class="hover:underline">Contact</a>
             </div>
-            <p>&copy; 2026 K-Persona. All rights reserved.</p>
-            <p class="mt-2 text-slate-500">For entertainment purposes only.</p>
+            <p class="text-xs text-gray-400">&copy; 2026 K-Persona. All rights reserved.</p>
         </footer>
-
     </div>
-
 </body>
 </html>
