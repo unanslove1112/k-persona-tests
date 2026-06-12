@@ -135,7 +135,7 @@
             document.getElementById('r-match').innerText = result.match;
             
             const imgDiv = document.getElementById('r-img-div');
-            imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_high_teen_w.png')" : "url('k_high_teen_m.png')";
+            imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_high_teen_w.jpeg')" : "url('k_high_teen_m.jpeg')";
             
             const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
             imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
