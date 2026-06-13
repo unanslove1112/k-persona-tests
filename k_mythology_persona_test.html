@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Mythology Persona Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <div class="max-w-md mx-auto min-h-screen bg-gray-800 shadow-lg overflow-hidden relative border-x border-gray-700">
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-purple-900 to-gray-900">
+            <h1 class="text-4xl font-extrabold text-purple-400 mb-4 tracking-tight">K-Mythology</h1>
+            <p class="text-gray-300 mb-8 font-medium whitespace-pre-line">Which Korean folklore being are you?
+            (당신은 전설 속 어떤 존재인가요?)</p>
+            <div class="bg-gray-800 p-6 rounded-2xl shadow-md border border-gray-700 mb-8">
+                <h2 class="text-xl font-bold mb-4 text-white">Step 1: Select Gender</h2>
+                <div class="flex gap-4">
+                    <button onclick="selectGender('M')" class="flex-1 bg-gray-700 hover:bg-gray-600 text-blue-300 font-bold py-4 rounded-xl transition">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-gray-700 hover:bg-gray-600 text-pink-300 font-bold py-4 rounded-xl transition">👩 Female</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-gray-900">
+            <div class="w-full bg-gray-700 rounded-full h-2.5 mb-8">
+                <div id="progress-bar" class="bg-purple-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="flex-1 flex flex-col justify-center">
+                <h2 id="q-title" class="text-xl font-bold text-white mb-8 leading-relaxed whitespace-pre-line">Question text</h2>
+                <div class="space-y-4">
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-800 hover:bg-gray-700 border border-gray-600 text-gray-200 p-5 rounded-xl whitespace-pre-line leading-relaxed transition"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-800 hover:bg-gray-700 border border-gray-600 text-gray-200 p-5 rounded-xl whitespace-pre-line leading-relaxed transition"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-purple-900 text-white">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
+            <h2 class="text-2xl font-bold mb-2 whitespace-pre-line">Consulting the spirits...
+            (전설의 두루마리를 펴는 중...)</h2>
+        </div>
+
+        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-900">
+            <div class="text-center mb-6">
+                <h1 id="r-title" class="text-2xl font-extrabold text-purple-400 whitespace-pre-line">Title</h1>
+            </div>
+            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-[0_0_15px_rgba(168,85,247,0.5)] border border-purple-500/30 mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+            <div class="bg-gray-800 rounded-2xl p-6 shadow-md border border-gray-700 mb-6">
+                <p id="r-desc" class="text-gray-300 text-center mb-4 text-sm whitespace-pre-line leading-relaxed"></p>
+                <div class="bg-gray-700 rounded-xl p-4 text-center">
+                    <p class="text-xs text-purple-300 font-bold mb-1">CROSSED FATES</p>
+                    <p id="r-match" class="font-bold text-purple-100"></p>
+                </div>
+            </div>
+
+            <div class="mb-6 text-center">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3466039113171143"
+                     data-ad-slot="여기에_슬롯ID_입력"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            </div>
+
+            <div class="space-y-3 mb-8">
+                <button onclick="location.href='index.html'" class="w-full bg-purple-600 text-white font-bold py-4 rounded-xl shadow-md hover:bg-purple-700">🏠 Escape to Lobby</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userGender = '';
+        const questions = [
+            { 
+                q: "You hear a strange bell ringing in the dark forest.\n(어두운 숲속에서 이상한 방울 소리가 들린다.)", 
+                a: "Follow the sound to see what it is.\n(호기심에 이끌려 소리가 나는 곳으로 가본다.)", 
+                b: "Hide quietly and wait until it stops.\n(일단 조용히 숨어서 상황을 지켜본다.)" 
+            },
+            { 
+                q: "You find a mysterious ancient artifact.\n(버려진 신당에서 신비로운 골동품을 발견했다.)", 
+                a: "Touch it to feel its hidden power.\n(신기해하며 만져보고 숨겨진 힘을 확인한다.)", 
+                b: "Leave it alone. It looks dangerous.\n(불길한 기운이 느껴져 절대 건드리지 않는다.)" 
+            },
+            { 
+                q: "A stranger asks you for directions at midnight.\n(자정 무렵, 창백한 낯선 이가 길을 묻는다.)", 
+                a: "Politely point them in the right direction.\n(아무 의심 없이 친절하게 길을 알려준다.)", 
+                b: "Analyze them first. Something feels off.\n(상태를 먼저 스캔한다. 왠지 싸한 기분이 든다.)" 
+            },
+            { 
+                q: "If you had a magical power, you would...\n(만약 당신에게 기이한 능력이 주어진다면?)", 
+                a: "Use it to play tricks and have fun.\n(사람들을 놀래키거나 재미있는 장난을 친다.)", 
+                b: "Use it strictly to maintain rules and balance.\n(세상의 규칙과 균형을 바로잡는 데에만 쓴다.)" 
+            },
+            { 
+                q: "What is your role in a group of friends?\n(친구들 무리에서 당신의 포지션은?)", 
+                a: "The charismatic one who draws attention.\n(어딜 가나 시선을 끌고 사람들을 홀리는 매력캐.)", 
+                b: "The wise one who listens to their worries.\n(친구들의 고민을 들어주고 해결책을 주는 지혜캐.)" 
+            }
+        ];
+        
+        const resultsData = {
+            F: [
+                { id: "f1", title: "🦊 The Alluring Gumiho\n(매혹적인 구미호)", desc: "Charismatic and stunning. You naturally draw people in with your irresistible charm.\n(화려하고 치명적입니다. 가만히 있어도 사람들을 홀리는 거부할 수 없는 매력을 가졌습니다.)", match: "The Wise Mountain Spirit" },
+                { id: "f2", title: "👹 The Playful Dokkaebi\n(엉뚱한 도깨비)", desc: "Unpredictable and fun! You love making people laugh with your playful nature.\n(장난기 많고 예측 불허! 사람들과 어울려 노는 것을 좋아하는 분위기 메이커입니다.)", match: "The Cold Grim Reaper" },
+                { id: "f3", title: "🌑 The Cold Grim Reaper\n(냉철한 저승사자)", desc: "Rational and strict. You stay calm and stick to your principles no matter what.\n(감정보다는 이성! 어떤 상황에서도 원칙을 지키며 냉철하게 판단하는 스타일입니다.)", match: "The Playful Dokkaebi" },
+                { id: "f4", title: "⛰️ The Wise Mountain Spirit\n(지혜로운 산신령)", desc: "Deep and insightful. People always come to you for comfort and good advice.\n(깊은 통찰력의 소유자. 사람들이 고민이 있을 때 가장 먼저 찾아오는 정신적 지주입니다.)", match: "The Alluring Gumiho" }
+            ],
+            M: [
+                { id: "m1", title: "🦊 The Charming Gumiho\n(매혹적인 구미호)", desc: "Seductive and mysterious. You have a fatal charm that captivates everyone.\n(신비롭고 치명적입니다. 나른한 매력으로 은근하게 사람들의 마음을 사로잡습니다.)", match: "The Wise Mountain Spirit" },
+                { id: "m2", title: "👹 The Cheerful Dokkaebi\n(유쾌한 도깨비)", desc: "Loud, energetic, and extremely loyal. You bring good luck wherever you go.\n(에너지가 넘치고 의리가 깊습니다. 무리의 텐션을 올려주는 인간 부적 같은 존재입니다.)", match: "The Cold Grim Reaper" },
+                { id: "m3", title: "🌑 The Strict Grim Reaper\n(냉철한 저승사자)", desc: "Flawless and cold on the outside, but you have a strong sense of duty.\n(빈틈없고 완벽을 추구합니다. 차가워 보이지만 맡은 바 책임을 다하는 신뢰의 아이콘입니다.)", match: "The Cheerful Dokkaebi" },
+                { id: "m4", title: "⛰️ The Wise Mountain Spirit\n(지혜로운 산신령)", desc: "Calm and understanding. You are the peaceful guardian everyone relies on.\n(언제나 평온하고 넓은 마음을 가졌습니다. 모두를 품어주는 믿음직한 안식처입니다.)", match: "The Charming Gumiho" }
+            ]
+        };
+
+        let currentQ = 0; let score = 0;
+
+        function selectGender(g) {
+            userGender = g;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('question-screen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
+            document.getElementById('q-title').innerText = questions[currentQ].q;
+            document.getElementById('btn-a').innerText = questions[currentQ].a;
+            document.getElementById('btn-b').innerText = questions[currentQ].b;
+        }
+
+        function answer(val) {
+            if(val === 0) score++;
+            currentQ++;
+            if(currentQ < questions.length) showQuestion();
+            else {
+                document.getElementById('question-screen').classList.add('hidden');
+                document.getElementById('loading-screen').classList.remove('hidden');
+                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            }
+        }
+
+        function showResult(resultId) {
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            const result = resultsData[userGender].find(r => r.id === resultId);
+            
+            document.getElementById('r-title').innerText = result.title;
+            document.getElementById('r-desc').innerText = result.desc;
+            document.getElementById('r-match').innerText = result.match;
+            
+            const imgDiv = document.getElementById('r-img-div');
+            imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_mythology_persona_w.png')" : "url('k_mythology_persona_m.png')";
+            imgDiv.style.backgroundSize = "200% 200%";
+            imgDiv.style.backgroundColor = "transparent";
+            
+            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
+            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+        }
+    </script>
+</body>
+</html>

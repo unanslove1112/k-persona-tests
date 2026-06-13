@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Dating Style Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-rose-50 to-white">
+            <h1 class="text-4xl font-extrabold text-rose-600 mb-4 tracking-tight">K-Dating Style</h1>
+            <p class="text-gray-600 mb-8 font-medium whitespace-pre-line">Discover your hidden romance vibe.
+            (나의 숨겨진 연애 세포는?)</p>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 mb-8">
+                <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
+                <div class="flex gap-4">
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
+                <div id="progress-bar" class="bg-rose-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="flex-1 flex flex-col justify-center">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed whitespace-pre-line">Question text</h2>
+                <div class="space-y-4">
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-rose-50 border border-gray-200 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-rose-50 border border-gray-200 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-rose-500 text-white">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
+            <h2 class="text-2xl font-bold mb-2 whitespace-pre-line">Checking chemistry...
+            (연애 세포 분석 중...)</h2>
+        </div>
+
+        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-50">
+            <div class="text-center mb-6">
+                <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 whitespace-pre-line">Title</h1>
+            </div>
+            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-inner border border-white/50 mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-6">
+                <p id="r-desc" class="text-gray-600 text-center mb-4 text-sm whitespace-pre-line leading-relaxed"></p>
+                <div class="bg-rose-50 rounded-xl p-4 text-center">
+                    <p class="text-xs text-rose-400 font-bold mb-1">SOULMATE MATCH</p>
+                    <p id="r-match" class="font-bold text-rose-700"></p>
+                </div>
+            </div>
+
+            <div class="mb-6 text-center">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3466039113171143"
+                     data-ad-slot="여기에_슬롯ID_입력"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            </div>
+
+            <div class="space-y-3 mb-8">
+                <button onclick="location.href='index.html'" class="w-full bg-rose-500 text-white font-bold py-4 rounded-xl shadow-md hover:bg-rose-600">🏠 Go to Lobby</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userGender = '';
+        const questions = [
+            { 
+                q: "You meet someone totally your type at a cafe!\n(카페에서 완전 내 이상형을 발견했다!)", 
+                a: "Go straight up and ask for their Instagram.\n(바로 직진해서 인스타 아이디를 물어본다.)", 
+                b: "Keep glancing at them, hoping for eye contact.\n(눈이 마주치길 바라며 계속 힐끔거린다.)" 
+            },
+            { 
+                q: "Your partner hasn't replied to your text for 3 hours.\n(애인이 3시간째 카톡 답장이 없다면?)", 
+                a: "Focus on my own work; they must be busy.\n(바쁜가 보다 하고 내 할 일에 집중한다.)", 
+                b: "Check my phone constantly, wondering what's wrong.\n(무슨 일 있나 신경 쓰여서 폰만 계속 본다.)" 
+            },
+            { 
+                q: "It's the weekend! What's the perfect date?\n(주말 데이트! 가장 완벽한 일정은?)", 
+                a: "Exploring a new hot spot or an activity together.\n(새로운 핫플 투어나 활동적인 데이트를 한다.)", 
+                b: "Chilling at home or a quiet cafe, just talking.\n(집이나 조용한 카페에서 오붓하게 대화한다.)" 
+            },
+            { 
+                q: "You get into a big argument with your partner.\n(애인과 크게 다투었을 때, 당신의 대처는?)", 
+                a: "Discuss the facts logically to find a solution.\n(논리적으로 원인을 파악하고 해결책을 찾는다.)", 
+                b: "Address their hurt feelings first before analyzing.\n(잘잘못을 따지기 전에 상대의 감정을 먼저 달래준다.)" 
+            },
+            { 
+                q: "How do you prepare for your 1-year anniversary?\n(1주년 기념일, 당신의 준비 방식은?)", 
+                a: "Book a nice restaurant and pick a practical gift.\n(좋은 식당 예약과 실용적인 선물을 쿨하게 준비한다.)", 
+                b: "Write a handwritten letter and plan a heartfelt surprise.\n(정성 가득한 손편지와 깜짝 이벤트를 준비한다.)" 
+            }
+        ];
+        
+        const resultsData = {
+            F: [
+                { id: "f1", title: "🚜 The Confident Bulldozer\n(직진 불도저)", desc: "Honest and bold! If you like someone, you make it obvious without playing games.\n(밀당은 없다! 좋으면 좋다고 솔직 당당하게 표현하는 스타일입니다.)", match: "The Perfect Observer" },
+                { id: "f2", title: "👀 The Perfect Observer\n(섬세한 관찰자)", desc: "You notice the smallest details and take care of your partner quietly.\n(상대의 사소한 변화까지 다 알아채고 세심하게 배려하는 스타일입니다.)", match: "The Cool Analyst" },
+                { id: "f3", title: "🧊 The Cool Analyst\n(이성적인 분석가)", desc: "You prefer realistic, mature relationships without unnecessary emotional drama.\n(감정 소모보다는 이성적이고 성숙한 연애를 선호하는 쿨한 타입입니다.)", match: "The Confident Bulldozer" },
+                { id: "f4", title: "💐 The True Romanticist\n(헌신적인 로맨티스트)", desc: "You give your 100% in love. Making your partner smile is your greatest joy.\n(사랑에 모든 걸 쏟아붓습니다. 다정하고 로맨틱한 사랑꾼입니다.)", match: "The Cool Analyst" }
+            ],
+            M: [
+                { id: "m1", title: "🚜 The Direct Bulldozer\n(직진 불도저)", desc: "No hesitation! You are straightforward and passionate when you fall in love.\n(망설임은 없다! 한 번 빠지면 뒤도 안 돌아보고 돌진하는 열정파입니다.)", match: "The Perfect Observer" },
+                { id: "m2", title: "👀 The Gentle Observer\n(섬세한 관찰자)", desc: "You remember what she likes and quietly surprise her. Very sweet and caring.\n(상대가 스치듯 한 말도 기억했다가 챙겨주는 스윗하고 섬세한 타입입니다.)", match: "The Cool Analyst" },
+                { id: "m3", title: "🧊 The Logical Analyst\n(이성적인 분석가)", desc: "A reliable partner who solves problems calmly rather than getting emotional.\n(감정에 치우치지 않고 차분하게 문제를 해결해 주는 든든한 타입입니다.)", match: "The Direct Bulldozer" },
+                { id: "m4", title: "💐 The Ultimate Romantic\n(헌신적인 로맨티스트)", desc: "You live for love. You always prepare events and sweet words for your partner.\n(연애가 1순위! 깜짝 이벤트와 달콤한 멘트를 아끼지 않는 로맨티스트입니다.)", match: "The Logical Analyst" }
+            ]
+        };
+
+        let currentQ = 0; let score = 0;
+
+        function selectGender(g) {
+            userGender = g;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('question-screen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
+            document.getElementById('q-title').innerText = questions[currentQ].q;
+            document.getElementById('btn-a').innerText = questions[currentQ].a;
+            document.getElementById('btn-b').innerText = questions[currentQ].b;
+        }
+
+        function answer(val) {
+            if(val === 0) score++;
+            currentQ++;
+            if(currentQ < questions.length) showQuestion();
+            else {
+                document.getElementById('question-screen').classList.add('hidden');
+                document.getElementById('loading-screen').classList.remove('hidden');
+                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            }
+        }
+
+        function showResult(resultId) {
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            const result = resultsData[userGender].find(r => r.id === resultId);
+            
+            document.getElementById('r-title').innerText = result.title;
+            document.getElementById('r-desc').innerText = result.desc;
+            document.getElementById('r-match').innerText = result.match;
+            
+            const imgDiv = document.getElementById('r-img-div');
+            imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_dating_style_w.png')" : "url('k_dating_style_m.png')";
+            imgDiv.style.backgroundSize = "200% 200%";
+            imgDiv.style.backgroundColor = "transparent";
+            
+            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
+            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+        }
+    </script>
+</body>
+</html>

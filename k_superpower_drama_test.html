@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Superpower Drama Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-teal-50 to-white">
+            <h1 class="text-4xl font-extrabold text-teal-600 mb-4 tracking-tight">K-Superpower Drama</h1>
+            <p class="text-gray-600 mb-8 font-medium whitespace-pre-line">If you were the main character with a hidden power?
+            (내가 초능력 드라마의 주인공이라면?)</p>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-teal-100 mb-8">
+                <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
+                <div class="flex gap-4">
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
+                <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="flex-1 flex flex-col justify-center">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed whitespace-pre-line">Question text</h2>
+                <div class="space-y-4">
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-teal-50 border border-gray-200 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-teal-50 border border-gray-200 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-teal-500 text-white">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
+            <h2 class="text-2xl font-bold mb-2 whitespace-pre-line">Awakening your power...
+            (초능력 각성 중...)</h2>
+        </div>
+
+        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-50">
+            <div class="text-center mb-6">
+                <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 whitespace-pre-line">Title</h1>
+            </div>
+            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-inner border border-white/50 mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-6">
+                <p id="r-desc" class="text-gray-600 text-center mb-4 text-sm whitespace-pre-line leading-relaxed"></p>
+                <div class="bg-teal-50 rounded-xl p-4 text-center">
+                    <p class="text-xs text-teal-500 font-bold mb-1">PERFECT PARTNER</p>
+                    <p id="r-match" class="font-bold text-teal-700"></p>
+                </div>
+            </div>
+
+            <div class="mb-6 text-center">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3466039113171143"
+                     data-ad-slot="여기에_슬롯ID_입력"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            </div>
+
+            <div class="space-y-3 mb-8">
+                <button onclick="location.href='index.html'" class="w-full bg-teal-500 text-white font-bold py-4 rounded-xl shadow-md hover:bg-teal-600">🏠 Go to Lobby</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userGender = '';
+        const questions = [
+            { 
+                q: "You see someone crying alone in an alleyway.\n(골목길에서 혼자 울고 있는 사람을 발견했다.)", 
+                a: "Go up to them and ask what's wrong.\n(다가가서 무슨 일인지 물어보고 위로해 준다.)", 
+                b: "Keep my distance but silently figure out what happened.\n(거리를 두지만 조용히 무슨 일이 있었는지 추리해 본다.)" 
+            },
+            { 
+                q: "You're late, and the traffic is completely jammed.\n(지각인데, 도로가 꽉 막혀 움직이지 않는다.)", 
+                a: "I wish I could freeze time right now!\n(시간을 멈춰버리고 싶다!)", 
+                b: "I wish I could lift the cars out of the way!\n(차들을 다 번쩍 들어서 옮겨버리고 싶다!)" 
+            },
+            { 
+                q: "Your friend is hiding a big secret.\n(친구가 나에게 무언가 큰 비밀을 숨기고 있다.)", 
+                a: "I want to read their mind to know the truth.\n(마음을 읽는 능력으로 진짜 속마음을 알아내고 싶다.)", 
+                b: "I'll wait until they are ready to heal and tell me.\n(스스로 상처를 치유하고 말해줄 때까지 기다려준다.)" 
+            },
+            { 
+                q: "If a villain attacked your city, you would...\n(악당이 도시에 나타난다면 당신의 행동은?)", 
+                a: "Fight them head-on with powerful combat skills.\n(강력한 전투 능력으로 맨 앞에서 악당과 싸운다.)", 
+                b: "Formulate a perfect strategy behind the scenes.\n(뒤에서 완벽한 전략을 짜서 피해를 최소화한다.)" 
+            },
+            { 
+                q: "What is your ultimate goal with your power?\n(초능력으로 이루고 싶은 당신의 최종 목표는?)", 
+                a: "Correcting past mistakes to make a perfect future.\n(과거의 실수를 바로잡아 완벽한 미래를 만드는 것.)", 
+                b: "Protecting everyone around me so nobody gets hurt.\n(내 주변 사람들이 아무도 다치지 않게 지키는 것.)" 
+            }
+        ];
+        
+        const resultsData = {
+            F: [
+                { id: "f1", title: "⏳ The Time Controller\n(시간의 지배자)", desc: "A perfectionist who wants to fix every mistake. You always plan ahead.\n(과거를 되돌리고 싶은 완벽주의자. 항상 앞날을 계획하고 통제하려 합니다.)", match: "The Gentle Healer" },
+                { id: "f2", title: "🧠 The Mind Reader\n(속마음 리더)", desc: "Highly perceptive. You know exactly what people need before they say it.\n(눈치가 100단! 사람들이 말하기 전에 그들의 진짜 속마음과 니즈를 파악합니다.)", match: "The Super Strength" },
+                { id: "f3", title: "💥 The Super Strength\n(천하장사 해결사)", desc: "Action over words! You bravely step up to solve problems for everyone.\n(말보다 행동! 불의를 보면 참지 못하고 앞장서서 문제를 부숴버리는 해결사입니다.)", match: "The Mind Reader" },
+                { id: "f4", title: "🌿 The Gentle Healer\n(치유의 능력자)", desc: "A true pacifist. Your warm presence alone comforts those around you.\n(진정한 평화주의자. 곁에 있는 것만으로도 사람들의 마음을 따뜻하게 치유해 줍니다.)", match: "The Time Controller" }
+            ],
+            M: [
+                { id: "m1", title: "⏳ The Time Traveler\n(시간의 지배자)", desc: "You regret past mistakes and constantly try to optimize your life.\n(실수를 용납하지 않는 전략가. 항상 더 완벽한 선택을 하기 위해 고민합니다.)", match: "The Gentle Healer" },
+                { id: "m2", title: "🧠 The Mind Reader\n(속마음 리더)", desc: "Sharp and empathetic. You can easily detect lies and hidden emotions.\n(예리한 통찰력! 거짓말과 숨겨진 감정을 단번에 알아채는 인간 탐지기입니다.)", match: "The Super Strength" },
+                { id: "m3", title: "💥 The Powerhouse\n(천하장사 해결사)", desc: "A reliable protector. You use your strong energy to defend your loved ones.\n(든든한 수호자. 넘치는 에너지와 행동력으로 사랑하는 사람들을 지켜냅니다.)", match: "The Mind Reader" },
+                { id: "m4", title: "🌿 The Miracle Healer\n(치유의 능력자)", desc: "Kind and supportive. You silently fix what is broken in the world.\n(다정함이 곧 무기. 상처받은 사람들을 조용히 보듬어주고 세상을 따뜻하게 만듭니다.)", match: "The Time Traveler" }
+            ]
+        };
+
+        let currentQ = 0; let score = 0;
+
+        function selectGender(g) {
+            userGender = g;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('question-screen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
+            document.getElementById('q-title').innerText = questions[currentQ].q;
+            document.getElementById('btn-a').innerText = questions[currentQ].a;
+            document.getElementById('btn-b').innerText = questions[currentQ].b;
+        }
+
+        function answer(val) {
+            if(val === 0) score++;
+            currentQ++;
+            if(currentQ < questions.length) showQuestion();
+            else {
+                document.getElementById('question-screen').classList.add('hidden');
+                document.getElementById('loading-screen').classList.remove('hidden');
+                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            }
+        }
+
+        function showResult(resultId) {
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            const result = resultsData[userGender].find(r => r.id === resultId);
+            
+            document.getElementById('r-title').innerText = result.title;
+            document.getElementById('r-desc').innerText = result.desc;
+            document.getElementById('r-match').innerText = result.match;
+            
+            const imgDiv = document.getElementById('r-img-div');
+            imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_superpower_drama_w.png')" : "url('k_superpower_drama_m.png')";
+            imgDiv.style.backgroundSize = "200% 200%";
+            imgDiv.style.backgroundColor = "transparent";
+            
+            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
+            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+        }
+    </script>
+</body>
+</html>

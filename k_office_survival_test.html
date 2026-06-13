@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Office Survival Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-gray-100 to-white">
+            <h1 class="text-4xl font-extrabold text-gray-800 mb-4 tracking-tight">K-Office Survival</h1>
+            <p class="text-gray-600 mb-8 font-medium whitespace-pre-line">What is your Korean corporate persona?
+            (당신의 K-직장인 페르소나는?)</p>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 mb-8">
+                <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
+                <div class="flex gap-4">
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
+                <div id="progress-bar" class="bg-gray-800 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="flex-1 flex flex-col justify-center">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed whitespace-pre-line">Question text</h2>
+                <div class="space-y-4">
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-gray-100 border border-gray-200 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-gray-100 border border-gray-200 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-gray-800 text-white">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
+            <h2 class="text-2xl font-bold mb-2 whitespace-pre-line">Scanning ID card...
+            (사원증 스캔 중...)</h2>
+        </div>
+
+        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-50">
+            <div class="text-center mb-6">
+                <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 whitespace-pre-line">Title</h1>
+            </div>
+            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-inner border border-white/50 mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-6">
+                <p id="r-desc" class="text-gray-600 text-center mb-4 text-sm whitespace-pre-line leading-relaxed"></p>
+                <div class="bg-gray-100 rounded-xl p-4 text-center">
+                    <p class="text-xs text-gray-500 font-bold mb-1">BEST CO-WORKER</p>
+                    <p id="r-match" class="font-bold text-gray-800"></p>
+                </div>
+            </div>
+
+            <div class="mb-6 text-center">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-3466039113171143"
+                     data-ad-slot="여기에_슬롯ID_입력"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+            </div>
+
+            <div class="space-y-3 mb-8">
+                <button onclick="location.href='index.html'" class="w-full bg-gray-800 text-white font-bold py-4 rounded-xl shadow-md hover:bg-gray-900">🏠 Go to Lobby</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userGender = '';
+        const questions = [
+            { 
+                q: "It's 5:50 PM. Your boss gives you a new task.\n(오후 5시 50분, 상사가 새로운 업무를 주었다.)", 
+                a: "Assess the deadline, finish it fast, and leave on time.\n(마감일을 묻고, 내일 하거나 빨리 끝내고 칼퇴한다.)", 
+                b: "Work overtime to finish it perfectly today.\n(어차피 할 일, 야근해서라도 오늘 완벽히 끝낸다.)" 
+            },
+            { 
+                q: "A sudden team dinner (Hoesik) is announced for tonight.\n(오늘 저녁 갑작스러운 팀 회식이 잡혔다.)", 
+                a: "Politely decline and go home to rest.\n(정중하게 거절하고 집에 가서 쉰다.)", 
+                b: "Go and use it to build relationships with the team.\n(참석해서 팀원들과 친목을 다진다.)" 
+            },
+            { 
+                q: "During a meeting, the boss suggests a highly inefficient idea.\n(회의 중, 상사가 비효율적인 아이디어를 낸다.)", 
+                a: "Quietly accept it to avoid conflict.\n(피곤해지기 싫어서 그냥 조용히 넘어간다.)", 
+                b: "Politely suggest a better, more efficient alternative.\n(더 나은 대안을 정중하지만 확실하게 제시한다.)" 
+            },
+            { 
+                q: "How do you usually spend your lunch break?\n(당신의 점심시간 루틴은?)", 
+                a: "Eating alone or resting at my desk.\n(혼자 조용히 밥을 먹거나 자리에서 쉰다.)", 
+                b: "Going out to a nice restaurant with colleagues.\n(동료들과 맛집을 찾아다니며 수다를 떤다.)" 
+            },
+            { 
+                q: "A coworker texts you about work on a Saturday.\n(주말에 직장 동료에게 업무 카톡이 왔다.)", 
+                a: "Ignore it until Monday morning.\n(월요일 아침 출근 전까지 절대 안 본다.)", 
+                b: "Reply quickly to clear my mind of pending work.\n(찝찝하니까 일단 빨리 답장해서 해결한다.)" 
+            }
+        ];
+        
+        const resultsData = {
+            F: [
+                { id: "f1", title: "🏃‍♀️ The 6 PM Fairy\n(칼퇴 요정)", desc: "Work is work, life is life! You value efficiency and personal time above all.\n(일은 일, 내 삶은 내 삶! 워라밸과 효율을 가장 중요하게 생각합니다.)", match: "The Social Butterfly" },
+                { id: "f2", title: "🔥 Passionate Hustler\n(열정 만수르)", desc: "Growth is your happiness. You find vision and ambition in your career.\n(성장이 곧 행복! 회사에서 비전을 찾고 목표를 향해 달리는 야망가입니다.)", match: "The Hidden Master" },
+                { id: "f3", title: "💬 The Social Butterfly\n(눈치 100단 처세술)", desc: "The mood maker of the team! Everyone loves working with you.\n(팀의 분위기 메이커! 뛰어난 사회성으로 어디서든 사랑받습니다.)", match: "The 6 PM Fairy" },
+                { id: "f4", title: "🥷 The Hidden Master\n(조용한 은둔형 고수)", desc: "You don't talk much, but you flawlessly complete all your tasks.\n(말은 없지만 맡은 일은 완벽하게 끝내버리는 숨겨진 에이스입니다.)", match: "Passionate Hustler" }
+            ],
+            M: [
+                { id: "m1", title: "🏃‍♂️ The 6 PM Pro\n(칼퇴 요정)", desc: "Maximum efficiency. You get things done fast to protect your work-life balance.\n(최고의 효율! 개인 시간을 지키기 위해 엄청난 집중력으로 일합니다.)", match: "The Social Butterfly" },
+                { id: "m2", title: "🔥 Ambitious Hustler\n(열정 만수르)", desc: "You are the future CEO. Work is a stepping stone for your ultimate success.\n(미래의 CEO! 일은 내 성공을 위한 발판이라고 생각하며 불태웁니다.)", match: "The Hidden Master" },
+                { id: "m3", title: "🤝 Master of Networking\n(눈치 100단 처세술)", desc: "You read the room perfectly. You navigate office politics with ease.\n(분위기 파악의 달인! 직장 내 인간관계를 아주 스무스하게 관리합니다.)", match: "The 6 PM Pro" },
+                { id: "m4", title: "🥷 The Silent Ace\n(조용한 은둔형 고수)", desc: "No drama, just results. You quietly solve problems like a ninja.\n(소문 없이 강하다! 조용히 모든 문제를 해결하는 부서의 기둥입니다.)", match: "Ambitious Hustler" }
+            ]
+        };
+
+        let currentQ = 0; let score = 0;
+
+        function selectGender(g) {
+            userGender = g;
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('question-screen').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
+            document.getElementById('q-title').innerText = questions[currentQ].q;
+            document.getElementById('btn-a').innerText = questions[currentQ].a;
+            document.getElementById('btn-b').innerText = questions[currentQ].b;
+        }
+
+        function answer(val) {
+            if(val === 0) score++;
+            currentQ++;
+            if(currentQ < questions.length) showQuestion();
+            else {
+                document.getElementById('question-screen').classList.add('hidden');
+                document.getElementById('loading-screen').classList.remove('hidden');
+                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            }
+        }
+
+        function showResult(resultId) {
+            document.getElementById('loading-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.remove('hidden');
+            const result = resultsData[userGender].find(r => r.id === resultId);
+            
+            document.getElementById('r-title').innerText = result.title;
+            document.getElementById('r-desc').innerText = result.desc;
+            document.getElementById('r-match').innerText = result.match;
+            
+            const imgDiv = document.getElementById('r-img-div');
+            imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_office_survival_w.png')" : "url('k_office_survival_m.png')";
+            imgDiv.style.backgroundSize = "200% 200%";
+            imgDiv.style.backgroundColor = "transparent";
+            
+            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
+            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+        }
+    </script>
+</body>
+</html>
