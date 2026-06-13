@@ -5,137 +5,269 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-Aesthetic Test</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143"
-     crossorigin="anonymous"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+    <style>
+        /* 부드러운 페이드인 애니메이션 (K-Office Test와 동일) */
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
-        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-pink-50 to-white">
+        
+        <!-- 1. START SCREEN -->
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-pink-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-pink-500 mb-4 tracking-tight">K-Aesthetic</h1>
-            <p class="text-gray-600 mb-8 font-medium">Find your Seoul styling vibe.</p>
+            <p class="text-gray-600 mb-8 font-medium">
+                Find your Seoul styling vibe.<br><br>
+                <span class="text-sm text-gray-400">당신의 서울 스타일링 바이브를 찾아보세요.</span>
+            </p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 mb-8">
-                <h2 class="text-xl font-bold mb-4">Step 1: Select Your Gender</h2>
+                <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-50 hover:bg-pink-100 text-pink-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👩 Female</button>
                 </div>
             </div>
         </div>
 
+        <!-- 2. QUESTION SCREEN -->
         <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-pink-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            <div class="w-full bg-gray-100 rounded-full h-2.5 mb-8">
+                <div id="progress-bar" class="bg-pink-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
             </div>
-            <div class="flex-1 flex flex-col justify-center">
-                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question text</h2>
+            <div class="flex-1 flex flex-col justify-center fade-in">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 hover:border-pink-300 p-5 rounded-xl shadow-sm"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 hover:border-pink-300 p-5 rounded-xl shadow-sm"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
                 </div>
             </div>
         </div>
 
+        <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-pink-500 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">Finding your color...</h2>
+            <h2 class="text-2xl font-bold mb-2">
+                Finding your color...<br><br>
+                <span class="text-lg opacity-80 font-normal">퍼스널 컬러 스캔 중...</span>
+            </h2>
         </div>
 
-        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-50">
-            <div class="text-center mb-6">
-                <h1 id="r-title" class="text-3xl font-extrabold text-gray-900">Title</h1>
-            </div>
-            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-inner border border-white/50 mb-6" style="background-size: 200%; background-position: 0% 0%;"></div>
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
-                <p id="r-desc" class="text-gray-600 text-center mb-4"></p>
-                <div class="bg-pink-50 rounded-xl p-4 text-center">
-                    <p class="text-xs text-pink-400 font-bold mb-1">BEST MATCH</p>
-                    <p id="r-match" class="font-bold text-pink-700"></p>
-                </div>
-            </div>
-            
-            <div class="mb-6 text-center">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-3466039113171143"
-                     data-ad-slot="여기에_슬롯ID_입력"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
-            </div>
+        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI) -->
+        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-slate-50">
+            <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
+                
+                <!-- 배경 장식 -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-pink-100 rounded-full blur-3xl opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-3 py-1 bg-pink-50 text-pink-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Analysis Complete</span>
+                        <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
+                    </div>
 
-            <div class="space-y-3 mb-8">
-                <button onclick="location.href='index.html'" class="w-full bg-pink-500 text-white font-bold py-4 rounded-xl shadow-md">🏠 Go to Lobby</button>
+                    <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+
+                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
+                    <div id="r-desc" class="space-y-4 mb-6"></div>
+
+                    <!-- 찰떡 궁합 섹션 -->
+                    <div class="flex items-center justify-between bg-slate-900 rounded-2xl p-4 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold opacity-60 uppercase tracking-widest">BEST MATCH</span>
+                        <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
+                    </div>
+
+                    <!-- 광고 영역 -->
+                    <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                        <ins class="adsbygoogle"
+                             style="display:block; width:100%;"
+                             data-ad-client="ca-pub-3466039113171143"
+                             data-ad-slot="여기에_슬롯ID_입력"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+                    </div>
+
+                    <!-- 연관 테스트 추천 섹션 -->
+                    <div class="border-t border-gray-100 pt-6 mb-6">
+                        <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center mb-4">Recommended K-Tests</p>
+                        <div id="r-recommendations" class="grid grid-cols-2 gap-3">
+                            <button onclick="location.href='k_office_survival_test.html'" class="w-full text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 hover:border-pink-200 p-3 rounded-xl shadow-sm transition-all flex flex-col items-center justify-center">
+                                <span class="text-2xl mb-1">💼</span>
+                                <span class="font-bold text-xs text-gray-800">Office Survival</span>
+                            </button>
+                            <button onclick="location.href='k_pop_concept_test.html'" class="w-full text-left bg-gray-50 hover:bg-pink-50 border border-gray-200 hover:border-pink-200 p-3 rounded-xl shadow-sm transition-all flex flex-col items-center justify-center">
+                                <span class="text-2xl mb-1">🎤</span>
+                                <span class="font-bold text-xs text-gray-800">K-Pop Concept</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button onclick="location.href='index.html'" class="w-full py-4 bg-slate-900 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        🏠 Go to Lobby
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         let userGender = '';
+        let currentQ = 0; 
+        let score = 0;
+
+        // 질문 데이터 (Bilingual 통합 및 Office Test와 동일한 텍스트 하이러키 적용, 괄호 제거)
         const questions = [
-            { q: "Saturday afternoon coffee?", a: "A hidden monochrome chic cafe.", b: "A bright cafe with giant ribbon cakes." },
-            { q: "Your daily look base?", a: "Oversized blazer and wide pants.", b: "Fitted crop top and tennis skirt." },
-            { q: "Your Instagram feed vibe?", a: "Flash photography and blurry night pics.", b: "Sunny brunch and floral aesthetics." },
-            { q: "Favorite accessory?", a: "Chunky silver rings and chains.", b: "Pearl necklaces and cute hairbows." },
-            { q: "Walking down the street, you listen to...", a: "Trendy R&B or Hip-hop beats.", b: "Upbeat K-Pop or acoustic pop." }
+            { 
+                q: "Saturday afternoon coffee?<br><br><span class='text-sm text-gray-400 font-normal'>토요일 오후 커피 한 잔?</span>", 
+                a: "A hidden monochrome chic cafe.<br><br><span class='text-sm text-gray-500 font-normal'>숨겨진 모노톤의 시크한 카페.</span>", 
+                b: "A bright cafe with giant ribbon cakes.<br><br><span class='text-sm text-gray-500 font-normal'>커다란 리본 케이크가 있는 밝은 카페.</span>" 
+            },
+            { 
+                q: "Your daily look base?<br><br><span class='text-sm text-gray-400 font-normal'>데일리룩의 기본 아이템은?</span>", 
+                a: "Oversized blazer and wide pants.<br><br><span class='text-sm text-gray-500 font-normal'>오버핏 블레이저와 와이드 팬츠.</span>", 
+                b: "Fitted crop top and tennis skirt.<br><br><span class='text-sm text-gray-500 font-normal'>몸에 딱 붙는 크롭탑과 테니스 스커트.</span>" 
+            },
+            { 
+                q: "Your Instagram feed vibe?<br><br><span class='text-sm text-gray-400 font-normal'>당신의 인스타그램 피드 분위기는?</span>", 
+                a: "Flash photography and blurry night pics.<br><br><span class='text-sm text-gray-500 font-normal'>플래시를 터뜨리거나 흔들린 감성 사진.</span>", 
+                b: "Sunny brunch and floral aesthetics.<br><br><span class='text-sm text-gray-500 font-normal'>햇살 가득한 브런치나 꽃 사진.</span>" 
+            },
+            { 
+                q: "Favorite accessory?<br><br><span class='text-sm text-gray-400 font-normal'>가장 좋아하는 액세서리는?</span>", 
+                a: "Chunky silver rings and chains.<br><br><span class='text-sm text-gray-500 font-normal'>볼드한 실버 링이나 체인 목걸이.</span>", 
+                b: "Pearl necklaces and cute hairbows.<br><br><span class='text-sm text-gray-500 font-normal'>진주 목걸이나 귀여운 헤어 리본.</span>" 
+            },
+            { 
+                q: "Walking down the street, you listen to...<br><br><span class='text-sm text-gray-400 font-normal'>거리를 걸을 때 듣는 음악은...</span>", 
+                a: "Trendy R&B or Hip-hop beats.<br><br><span class='text-sm text-gray-500 font-normal'>트렌디한 R&B나 힙합 비트.</span>", 
+                b: "Upbeat K-Pop or acoustic pop.<br><br><span class='text-sm text-gray-500 font-normal'>신나는 K-Pop이나 어쿠스틱 팝.</span>" 
+            }
         ];
         
+        // 결과 데이터 (전문 심리 리포트 3단 분리 포맷, 괄호 제거, Bilingual)
         const resultsData = {
             F: [
-                { id: "f1", title: "🎸 Hongdae Indie", desc: "Black, silver accessories, and effortlessly cool.", match: "Hannam Old Money" },
-                { id: "f2", title: "🛹 Seongsu Streetwear", desc: "Trendy, gorpcore, mixing vintage with high fashion.", match: "Gangnam Chic" },
-                { id: "f3", title: "🍸 Gangnam Chic", desc: "Clean lines, neutral tones, modern and sophisticated.", match: "Seongsu Streetwear" },
-                { id: "f4", title: "🦢 Hannam Old Money", desc: "Tweed jackets, pearls, elegant and romantic like an idol off-duty.", match: "Hongdae Indie" }
-            ],
-            M: [
-                { id: "m1", title: "🎸 Hongdae Grunge", desc: "Leather jackets, silver rings, dark and moody.", match: "Hannam Preppy" },
-                { id: "m2", title: "🛹 Seongsu Gorpcore", desc: "Nylon pants, layered tech-wear, trendy.", match: "Gangnam Classic" },
-                { id: "m3", title: "🍸 Gangnam Classic", desc: "Tailored slacks, crisp shirts, flawless hair.", match: "Seongsu Gorpcore" },
-                { id: "m4", title: "🦢 Hannam Preppy", desc: "Knit sweaters, gentle glasses, soft boyfriend look.", match: "Hongdae Grunge" }
+                { 
+                    id: "f1", 
+                    title: "🎸 Hongdae Indie<br><span class='text-lg font-bold text-gray-500'>홍대 인디 힙스터</span>", 
+                    overview: "You prioritize non-conformist subcultural identity over mainstream consumer logic. You express internal creative chaos through raw, vintage-layered fashion.<br><br><span class='text-xs opacity-80'>메인스트림의 유행을 거부하고 나만의 예술적 감성을 사랑합니다. 빈티지와 락시크 무드를 즐기는 자유로운 영혼입니다.</span>", 
+                    strengths: "Absolute authenticity, high aesthetic bravery, and organic trend independence. You define what is cool by simply being yourself.<br><br><span class='text-xs opacity-80'>타인의 시선을 비웃는 듯한 독보적인 개성과 힙한 아우라가 있습니다. 서브컬처에 대한 깊은 지식과 뚜렷한 주관이 돋보입니다.</span>", 
+                    weaknesses: "You fall into snobbish elitism. You suffer from a hipster curse: the moment something you love becomes popular, you drop it out of spite.<br><br><span class='text-xs opacity-80'>대중적인 취향을 촌스럽다며 은근히 무시하는 홍대병이 있습니다. 남들과 무조건 달라야 한다는 강박이 자아를 피곤하게 만듭니다.</span>", 
+                    match: "Hannam Old Money<br><span class='text-[10px] font-normal'>한남동 올드머니</span>" 
+                },
+                { 
+                    id: "f2", 
+                    title: "🛹 Seongsu Streetwear<br><span class='text-lg font-bold text-gray-500'>성수 미니멀 스트리트</span>", 
+                    overview: "You process structural minimalism and practical utility with a high urban edge. You blend architectural industrial aesthetics with everyday luxury.<br><br><span class='text-xs opacity-80'>차가운 인더스트리얼 무드와 편안한 스트리트룩을 믹스매치하는 감각적인 바이브입니다. 무심한 듯 힙한 꾸안꾸의 정석입니다.</span>", 
+                    strengths: "Incredible casual fluid styling, highly practical design intelligence, and modern sociability. You navigate work and leisure effortlessly.<br><br><span class='text-xs opacity-80'>가장 트렌디한 고프코어 룩을 완벽히 소화해 냅니다. 과하지 않으면서도 도시적인 세련됨이 자연스럽게 묻어납니다.</span>", 
+                    weaknesses: "You are hyper-dependent on contextual validation. You spend too much energy chasing the exact aesthetic consensus of the current trend bubble.<br><br><span class='text-xs opacity-80'>인스타 감성과 핫플 소비에 은근히 중독되어 있습니다. 유행하는 공간과 브랜드의 인증샷 없이는 묘한 불안감을 느끼기도 합니다.</span>", 
+                    match: "Gangnam Chic<br><span class='text-[10px] font-normal'>강남 시크</span>" 
+                },
+                { 
+                    id: "f3", 
+                    title: "🍸 Gangnam Chic<br><span class='text-lg font-bold text-gray-500'>강남 모던 시크</span>", 
+                    overview: "You adopt a highly curated, quiet luxury defense framework. You value silent class structures, high-material minimalism, and aristocratic restraint.<br><br><span class='text-xs opacity-80'>드러내지 않는 고급스러움과 절제된 미학을 추구합니다. 과한 로고플레이 대신 완벽한 실루엣과 하이 퀄리티 소재로 승부합니다.</span>", 
+                    strengths: "Flawless elegant poise, sophisticated taste profiles, and clean behavioral manners. You radiate an effortless stability that commands respect.<br><br><span class='text-xs opacity-80'>우아하고 차분한 애티튜드가 몸에 배어 있습니다. 유행에 휩쓸리지 않는 클래식함으로 다가가기 힘든 고급스러운 아우라를 풍깁니다.</span>", 
+                    weaknesses: "You are hyper-conscious of social decorum. Your obsession with keeping up a perfect, flawless façade prevents raw, vulnerable human connection.<br><br><span class='text-xs opacity-80'>빈틈없는 완벽한 모습만 보여주려다 보니 대인관계에서 차가워 보입니다. 흠결을 드러내는 것을 극도로 두려워하는 완벽주의자입니다.</span>", 
+                    match: "Seongsu Streetwear<br><span class='text-[10px] font-normal'>성수 미니멀 스트리트</span>" 
+                },
+                { 
+                    id: "f4", 
+                    title: "🦢 Hannam Old Money<br><span class='text-lg font-bold text-gray-500'>한남동 올드머니</span>", 
+                    overview: "You function with a highly warm, romantic-nostalgic emotional engine. You seek safety in fairytale textures, floral-pastel layers, and elegant softness.<br><br><span class='text-xs opacity-80'>아기자기하고 따뜻한 파스텔톤과 동화 같은 무드를 사랑합니다. 트위드 자켓과 진주 목걸이처럼 클래식하고 러블리한 감성을 추구합니다.</span>", 
+                    strengths: "Extreme relational warmth, high comforting power, and organic visual softness. You turn cold spaces into inviting, nostalgic sanctuaries.<br><br><span class='text-xs opacity-80'>각박한 세상 속에서 보기 드문 무해함과 다정함을 풍깁니다. 곁에 있는 사람의 마음까지 몽글몽글하게 만드는 사랑스러운 분위기 메이커입니다.</span>", 
+                    weaknesses: "You suffer from reality escapism. You filter out harsh systematic truths, falling into deep passive melancholy when real life breaks your romantic fantasies.<br><br><span class='text-xs opacity-80'>현실의 삭막하고 냉정한 문제를 마주하길 두려워하고 회피합니다. 본인만의 환상이 깨지면 쉽게 무너져 내리는 유리멘탈을 가졌습니다.</span>", 
+                    match: "Hongdae Indie<br><span class='text-[10px] font-normal'>홍대 인디 힙스터</span>" 
+                }
             ]
         };
 
-        let currentQ = 0; let score = 0;
+        // 남성 데이터를 여성 데이터와 구조 동일하게 복제 후 타이틀 수정
+        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
+        resultsData.M[0].title = "🎸 Hongdae Grunge<br><span class='text-lg font-bold text-gray-500'>홍대 그런지 락시크</span>";
+        resultsData.M[1].title = "🛹 Seongsu Gorpcore<br><span class='text-lg font-bold text-gray-500'>성수 놈코어 스트리트</span>";
+        resultsData.M[2].title = "🍸 Gangnam Classic<br><span class='text-lg font-bold text-gray-500'>강남 댄디 클래식</span>";
+        resultsData.M[3].title = "🦢 Hannam Preppy<br><span class='text-lg font-bold text-gray-500'>한남동 시티보이 남친룩</span>";
+        // 매칭 데이터 보정
+        resultsData.M[0].match = "Hannam Preppy<br><span class='text-[10px] font-normal'>한남동 시티보이 남친룩</span>";
+        resultsData.M[1].match = "Gangnam Classic<br><span class='text-[10px] font-normal'>강남 댄디 클래식</span>";
+        resultsData.M[2].match = "Seongsu Gorpcore<br><span class='text-[10px] font-normal'>성수 놈코어 스트리트</span>";
+        resultsData.M[3].match = "Hongdae Grunge<br><span class='text-[10px] font-normal'>홍대 그런지 락시크</span>";
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.add('hidden');
+            document.getElementById(fromId).classList.remove('flex');
+            
+            const toScreen = document.getElementById(toId);
+            toScreen.classList.remove('hidden');
+            toScreen.classList.add('flex');
+        }
 
         function selectGender(g) {
             userGender = g;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('question-screen').classList.remove('hidden');
+            switchScreen('start-screen', 'question-screen');
             showQuestion();
         }
 
         function showQuestion() {
+            // 진행바 애니메이션
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
-            document.getElementById('q-title').innerText = questions[currentQ].q;
-            document.getElementById('btn-a').innerText = questions[currentQ].a;
-            document.getElementById('btn-b').innerText = questions[currentQ].b;
+            
+            // 페이드인 애니메이션 리셋
+            const qScreen = document.getElementById('question-screen');
+            qScreen.classList.remove('fade-in');
+            void qScreen.offsetWidth; 
+            qScreen.classList.add('fade-in');
+
+            // innerHTML로 태그 렌더링
+            document.getElementById('q-title').innerHTML = questions[currentQ].q;
+            document.getElementById('btn-a').innerHTML = questions[currentQ].a;
+            document.getElementById('btn-b').innerHTML = questions[currentQ].b;
         }
 
         function answer(val) {
             if(val === 0) score++;
             currentQ++;
-            if(currentQ < questions.length) showQuestion();
-            else {
-                document.getElementById('question-screen').classList.add('hidden');
-                document.getElementById('loading-screen').classList.remove('hidden');
-                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            
+            if(currentQ < questions.length) {
+                showQuestion();
+            } else {
+                switchScreen('question-screen', 'loading-screen');
+                const finalIdx = score % 4; 
+                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
             }
         }
 
         function showResult(resultId) {
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            const result = resultsData[userGender].find(r => r.id === resultId);
+            switchScreen('loading-screen', 'result-screen');
             
-            document.getElementById('r-title').innerText = result.title;
-            document.getElementById('r-desc').innerText = result.desc;
-            document.getElementById('r-match').innerText = result.match;
+            const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
+            const result = resultsData[userGender][idx];
+            
+            document.getElementById('r-title').innerHTML = result.title;
+            document.getElementById('r-match').innerHTML = result.match;
             
             const imgDiv = document.getElementById('r-img-div');
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_aesthetic_w.png')" : "url('k_aesthetic_m.png')";
+            imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
-            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+            // 프리미엄 리포트 UI 렌더링 (Office Test와 동일한 3단 박스 구조, 컬러는 핑크 테마에 맞게 조정)
+            document.getElementById('r-desc').innerHTML = `
+                <div class="bg-pink-50 p-5 rounded-2xl border border-pink-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-pink-600 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
+                    <p class="text-sm text-pink-900 leading-relaxed font-medium">${result.overview}</p>
+                </div>
+                <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
+                    <p class="text-sm text-emerald-900 leading-relaxed font-medium">${result.strengths}</p>
+                </div>
+                <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
+                    <p class="text-sm text-rose-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                </div>
+            `;
         }
     </script>
 </body>
