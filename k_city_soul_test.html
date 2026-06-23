@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,138 +6,257 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-City Soul Test</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143"
-     crossorigin="anonymous"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+    <style>
+        /* 1번 파일의 부드러운 페이드인 애니메이션 적용 */
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
-        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-green-50 to-white">
+        
+        <!-- 1. START SCREEN (디자인 유지 & 한글 해석 추가) -->
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-green-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-green-600 mb-4 tracking-tight">K-City Soul</h1>
-            <p class="text-gray-600 mb-8 font-medium">Where is your Korean soul city?</p>
+            <p class="text-gray-600 mb-8 font-medium">
+                Where is your Korean soul city?<br><br>
+                <span class="text-sm text-gray-400">당신의 한국 소울 시티는 어디인가요?</span>
+            </p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-green-100 mb-8">
                 <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm transition-all active:scale-95">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm transition-all active:scale-95">👩 Female</button>
                 </div>
             </div>
         </div>
 
+        <!-- 2. QUESTION SCREEN (디자인 유지 & 한글 해석 추가) -->
         <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
             <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
                 <div id="progress-bar" class="bg-green-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
-            <div class="flex-1 flex flex-col justify-center">
-                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question text</h2>
+            <div class="flex-1 flex flex-col justify-center fade-in">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-green-50 border border-gray-200 hover:border-green-300 p-5 rounded-xl shadow-sm"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-green-50 border border-gray-200 hover:border-green-300 p-5 rounded-xl shadow-sm"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-green-50 border border-gray-200 hover:border-green-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-green-50 border border-gray-200 hover:border-green-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
                 </div>
             </div>
         </div>
 
+        <!-- 3. LOADING SCREEN (디자인 유지 & 한글 해석 추가) -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-green-600 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">Booking your ticket...</h2>
+            <h2 class="text-2xl font-bold mb-2">
+                Booking your ticket...<br><br>
+                <span class="text-lg opacity-80 font-normal">소울 시티로 가는 티켓 발권 중...</span>
+            </h2>
         </div>
 
-        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-50">
-            <div class="text-center mb-6">
-                <h1 id="r-title" class="text-3xl font-extrabold text-gray-900">Title</h1>
-            </div>
-            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-inner border border-white/50 mb-6" style="background-size: 200%; background-position: 0% 0%;"></div>
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
-                <p id="r-desc" class="text-gray-600 text-center mb-4"></p>
-                <div class="bg-green-50 rounded-xl p-4 text-center">
-                    <p class="text-xs text-green-400 font-bold mb-1">BEST MATCH</p>
-                    <p id="r-match" class="font-bold text-green-700"></p>
+        <!-- 4. RESULT SCREEN (1번 파일의 구체적이고 전문적인 구조 적용, 컬러 테마는 Green 계열 유지) -->
+        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
+            <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
+                
+                <!-- 배경 장식 (그린 테마) -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-green-100 rounded-full blur-3xl opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-3 py-1 bg-green-50 text-green-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Analysis Complete</span>
+                        <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
+                    </div>
+
+                    <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+
+                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
+                    <div id="r-desc" class="space-y-4 mb-6"></div>
+
+                    <!-- 찰떡 궁합 섹션 -->
+                    <div class="flex items-center justify-between bg-green-900 rounded-2xl p-4 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">BEST MATCH</span>
+                        <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
+                    </div>
+
+                    <!-- 광고 영역 -->
+                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                        <ins class="adsbygoogle"
+                             style="display:block; width:100%;"
+                             data-ad-client="ca-pub-3466039113171143"
+                             data-ad-slot="여기에_슬롯ID_입력"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+                    </div>
+
+                    <button onclick="location.href='index.html'" class="w-full py-4 bg-green-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        🏠 Go to Lobby
+                    </button>
                 </div>
-            </div>
-
-            <div class="mb-6 text-center">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-3466039113171143"
-                     data-ad-slot="여기에_슬롯ID_입력"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
-            </div>
-
-            <div class="space-y-3 mb-8">
-                <button onclick="location.href='index.html'" class="w-full bg-green-600 text-white font-bold py-4 rounded-xl shadow-md">🏠 Go to Lobby</button>
             </div>
         </div>
     </div>
 
     <script>
         let userGender = '';
+        let currentQ = 0; 
+        let score = 0;
+
+        // 질문 데이터 (한영 혼용 포맷 적용)
         const questions = [
-            { q: "Your dream hotel window view?", a: "Bright neon signs and high skyscrapers.", b: "Endless ocean and calm pine trees." },
-            { q: "You found a famous restaurant with a huge line.", a: "Wait 2 hours if it's the hottest trend.", b: "Skip it and find a quiet local hidden gem." },
-            { q: "When talking to locals during travel?", a: "Love it when they treat me warmly like family.", b: "Prefer polite distance and my own privacy." },
-            { q: "Your perfect evening activity?", a: "Shopping and clubbing until late night.", b: "A peaceful walk along the beach or river." },
-            { q: "What's your travel pace?", a: "Packed schedule! 10 places a day.", b: "Chill and go with the flow. No stress." }
+            { 
+                q: "Your dream hotel window view?<br><br><span class='text-sm text-gray-400 font-normal'>당신이 꿈꾸는 호텔 창밖 풍경은?</span>", 
+                a: "Bright neon signs and high skyscrapers.<br><br><span class='text-sm text-gray-500 font-normal'>화려한 네온사인과 높은 마천루.</span>", 
+                b: "Endless ocean and calm pine trees.<br><br><span class='text-sm text-gray-500 font-normal'>끝없는 바다와 고요한 소나무 숲.</span>" 
+            },
+            { 
+                q: "You found a famous restaurant with a huge line.<br><br><span class='text-sm text-gray-400 font-normal'>줄이 엄청나게 긴 유명 맛집을 발견했다면?</span>", 
+                a: "Wait 2 hours if it's the hottest trend.<br><br><span class='text-sm text-gray-500 font-normal'>가장 핫한 트렌드라면 2시간이라도 기다린다.</span>", 
+                b: "Skip it and find a quiet local hidden gem.<br><br><span class='text-sm text-gray-500 font-normal'>과감히 포기하고 조용한 로컬 숨은 맛집을 찾는다.</span>" 
+            },
+            { 
+                q: "When talking to locals during travel?<br><br><span class='text-sm text-gray-400 font-normal'>여행 중 현지인과 대화할 때 당신의 스타일은?</span>", 
+                a: "Love it when they treat me warmly like family.<br><br><span class='text-sm text-gray-500 font-normal'>가족처럼 정겹고 따뜻하게 대해줄 때 마음이 편하다.</span>", 
+                b: "Prefer polite distance and my own privacy.<br><br><span class='text-sm text-gray-500 font-normal'>적당한 거리를 유지하며 프라이버시를 존중받고 싶다.</span>" 
+            },
+            { 
+                q: "Your perfect evening activity?<br><br><span class='text-sm text-gray-400 font-normal'>완벽한 저녁 일정은?</span>", 
+                a: "Shopping and clubbing until late night.<br><br><span class='text-sm text-gray-500 font-normal'>늦은 밤까지 이어지는 쇼핑과 화려한 클러빙.</span>", 
+                b: "A peaceful walk along the beach or river.<br><br><span class='text-sm text-gray-500 font-normal'>바다나 강변을 따라 걷는 평화로운 야간 산책.</span>" 
+            },
+            { 
+                q: "What's your travel pace?<br><br><span class='text-sm text-gray-400 font-normal'>당신의 여행 페이스는?</span>", 
+                a: "Packed schedule! 10 places a day.<br><br><span class='text-sm text-gray-500 font-normal'>꽉 찬 일정! 하루에 최소 10곳은 가야 직성이 풀린다.</span>", 
+                b: "Chill and go with the flow. No stress.<br><br><span class='text-sm text-gray-500 font-normal'>발길 닿는 대로. 여유롭고 스트레스 없는 여행.</span>" 
+            }
         ];
         
+        // 결과 데이터 (1번 파일 스타일로 3단 분석 구조 및 한영 혼용 확장)
         const resultsData = {
             F: [
-                { id: "f1", title: "🏙️ Chic Seoulite", desc: "Trendy and modern. You love exploring hidden cafes in the busy city.", match: "Gangwon Healer" },
-                { id: "f2", title: "🌊 Passionate Busan-er", desc: "Energetic and warm-hearted. You enjoy the mix of city vibes and the ocean.", match: "Jeolla Foodie" },
-                { id: "f3", title: "🍚 Warm Jeolla Foodie", desc: "You value deep traditions and the absolute best food in the country.", match: "Passionate Busan-er" },
-                { id: "f4", title: "🌲 Gangwon Healer", desc: "Peaceful nature lover. You find yourself in quiet beaches and pine forests.", match: "Chic Seoulite" }
-            ],
-            M: [
-                { id: "m1", title: "🏙️ Urban Seoulite", desc: "Fast-paced and ambitious. The city lights fuel your energy.", match: "Gangwon Healer" },
-                { id: "m2", title: "🌊 Dynamic Busan-er", desc: "Loyal and energetic. You thrive in the loud, lively coastal city.", match: "Jeolla Foodie" },
-                { id: "m3", title: "🍚 Authentic Jeolla Foodie", desc: "You seek genuine connections and the richest traditional flavors.", match: "Dynamic Busan-er" },
-                { id: "m4", title: "🌲 Gangwon Explorer", desc: "Calm and collected. You prefer driving coastal roads and hiking.", match: "Urban Seoulite" }
+                { 
+                    id: "f1", 
+                    title: "🏙️ Chic Seoulite<br><span class='text-lg font-bold text-gray-500'>도도한 서울라이트</span>", 
+                    overview: "Trendy and modern. You love exploring hidden cafes in the busy city.<br><br><span class='text-xs opacity-80'>트렌디하고 모던한 감각의 소유자입니다. 바쁜 도심 속 숨겨진 힙한 카페와 공간을 탐험하는 것을 즐깁니다.</span>",
+                    strengths: "Fast-paced adaptability and sophisticated taste. You easily navigate complex urban environments.<br><br><span class='text-xs opacity-80'>빠른 트렌드 적응력과 세련된 안목을 가졌습니다. 복잡한 도시 환경에서도 여유를 잃지 않고 완벽하게 적응합니다.</span>",
+                    weaknesses: "Can easily get burned out by the relentless speed and crowds of city life.<br><br><span class='text-xs opacity-80'>끊임없이 변하는 유행과 도시의 빠른 속도, 수많은 인파에 가끔은 극심한 번아웃을 느끼기도 합니다.</span>",
+                    match: "Gangwon Healer<br><span class='text-[10px] font-normal'>강원 힐러</span>" 
+                },
+                { 
+                    id: "f2", 
+                    title: "🌊 Passionate Busan-er<br><span class='text-lg font-bold text-gray-500'>열정적인 부산러</span>", 
+                    overview: "Energetic and warm-hearted. You enjoy the mix of city vibes and the ocean.<br><br><span class='text-xs opacity-80'>에너지 넘치고 따뜻한 마음을 가졌습니다. 화려한 도시의 바이브와 탁 트인 바다의 낭만을 동시에 즐길 줄 아는 매력적인 성격입니다.</span>",
+                    strengths: "Incredible social energy and loyalty. You naturally draw people in with your enthusiastic vibe.<br><br><span class='text-xs opacity-80'>엄청난 친화력과 의리를 자랑합니다. 특유의 활기찬 에너지로 사람들을 자연스럽게 끌어당기는 리더십이 있습니다.</span>",
+                    weaknesses: "Sometimes acts too impulsively and gets emotionally overwhelmed in quiet, slow-paced environments.<br><br><span class='text-xs opacity-80'>가끔은 너무 충동적으로 행동하며, 지나치게 고요하고 느린 환경에서는 오히려 답답함과 불안을 느낍니다.</span>",
+                    match: "Jeolla Foodie<br><span class='text-[10px] font-normal'>전라도 푸디</span>" 
+                },
+                { 
+                    id: "f3", 
+                    title: "🍚 Warm Jeolla Foodie<br><span class='text-lg font-bold text-gray-500'>따뜻한 전라도 푸디</span>", 
+                    overview: "You value deep traditions and the absolute best food in the country.<br><br><span class='text-xs opacity-80'>깊은 전통과 진정한 맛을 중요하게 생각합니다. 사람 사이의 끈끈한 정과 풍성한 식탁에서 오는 행복을 가장 큰 가치로 여깁니다.</span>",
+                    strengths: "Generous, hospitable, and possesses a rich cultural appreciation. You make everyone feel at home.<br><br><span class='text-xs opacity-80'>넉넉한 인심과 타인을 환대하는 문화를 사랑하며, 깊이 있는 문화적 소양을 지녔습니다. 누구든 곁에 있으면 편안해집니다.</span>",
+                    weaknesses: "Can be overly traditional or stubborn about how things 'should' be done.<br><br><span class='text-xs opacity-80'>본인만의 확고한 미식 기준이나 전통적인 방식을 지나치게 고집하여 가끔은 융통성이 부족해 보일 때가 있습니다.</span>",
+                    match: "Passionate Busan-er<br><span class='text-[10px] font-normal'>열정적인 부산러</span>" 
+                },
+                { 
+                    id: "f4", 
+                    title: "🌲 Gangwon Healer<br><span class='text-lg font-bold text-gray-500'>평화로운 강원 힐러</span>", 
+                    overview: "Peaceful nature lover. You find yourself in quiet beaches and pine forests.<br><br><span class='text-xs opacity-80'>평화를 사랑하는 자연주의자입니다. 사람의 발길이 닿지 않은 해변과 끝없는 소나무 숲속에서 진정한 휴식과 영감을 얻습니다.</span>",
+                    strengths: "Exceptional emotional stability and healing presence. You bring calm to chaotic situations.<br><br><span class='text-xs opacity-80'>뛰어난 정서적 안정감과 힐링의 아우라를 지녔습니다. 복잡하고 혼란스러운 상황 속에서도 평정심을 유지하며 주변을 안심시킵니다.</span>",
+                    weaknesses: "Tends to avoid conflict at all costs and may isolate from necessary social dynamics.<br><br><span class='text-xs opacity-80'>갈등 상황을 극도로 피하려 하며, 심리적으로 지칠 때는 사람들과의 교류를 끊고 동굴로 들어가 버리는 성향이 있습니다.</span>",
+                    match: "Chic Seoulite<br><span class='text-[10px] font-normal'>도도한 서울라이트</span>" 
+                }
             ]
         };
 
-        let currentQ = 0; let score = 0;
+        // 남성 데이터를 여성 데이터와 구조 동일하게 복제 후 타이틀 및 매칭 수정
+        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
+        resultsData.M[0].title = "🏙️ Urban Seoulite<br><span class='text-lg font-bold text-gray-500'>어반 서울라이트</span>";
+        resultsData.M[1].title = "🌊 Dynamic Busan-er<br><span class='text-lg font-bold text-gray-500'>다이내믹 부산러</span>";
+        resultsData.M[2].title = "🍚 Authentic Jeolla Foodie<br><span class='text-lg font-bold text-gray-500'>어센틱 전라도 푸디</span>";
+        resultsData.M[3].title = "🌲 Gangwon Explorer<br><span class='text-lg font-bold text-gray-500'>강원 익스플로러</span>";
+        
+        resultsData.M[0].match = "Gangwon Explorer<br><span class='text-[10px] font-normal'>강원 익스플로러</span>";
+        resultsData.M[1].match = "Authentic Jeolla Foodie<br><span class='text-[10px] font-normal'>어센틱 전라도 푸디</span>";
+        resultsData.M[2].match = "Dynamic Busan-er<br><span class='text-[10px] font-normal'>다이내믹 부산러</span>";
+        resultsData.M[3].match = "Urban Seoulite<br><span class='text-[10px] font-normal'>어반 서울라이트</span>";
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.add('hidden');
+            document.getElementById(fromId).classList.remove('flex');
+            
+            const toScreen = document.getElementById(toId);
+            toScreen.classList.remove('hidden');
+            toScreen.classList.add('flex');
+        }
 
         function selectGender(g) {
             userGender = g;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('question-screen').classList.remove('hidden');
+            switchScreen('start-screen', 'question-screen');
             showQuestion();
         }
 
         function showQuestion() {
+            // 진행바 애니메이션
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
-            document.getElementById('q-title').innerText = questions[currentQ].q;
-            document.getElementById('btn-a').innerText = questions[currentQ].a;
-            document.getElementById('btn-b').innerText = questions[currentQ].b;
+            
+            // 페이드인 애니메이션 리셋
+            const qScreen = document.getElementById('question-screen');
+            qScreen.classList.remove('fade-in');
+            void qScreen.offsetWidth; 
+            qScreen.classList.add('fade-in');
+
+            // innerHTML로 태그 렌더링 적용 (1번 파일 방식)
+            document.getElementById('q-title').innerHTML = questions[currentQ].q;
+            document.getElementById('btn-a').innerHTML = questions[currentQ].a;
+            document.getElementById('btn-b').innerHTML = questions[currentQ].b;
         }
 
         function answer(val) {
             if(val === 0) score++;
             currentQ++;
-            if(currentQ < questions.length) showQuestion();
-            else {
-                document.getElementById('question-screen').classList.add('hidden');
-                document.getElementById('loading-screen').classList.remove('hidden');
-                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            
+            if(currentQ < questions.length) {
+                showQuestion();
+            } else {
+                switchScreen('question-screen', 'loading-screen');
+                const finalIdx = score % 4; 
+                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
             }
         }
 
         function showResult(resultId) {
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            const result = resultsData[userGender].find(r => r.id === resultId);
+            switchScreen('loading-screen', 'result-screen');
             
-            document.getElementById('r-title').innerText = result.title;
-            document.getElementById('r-desc').innerText = result.desc;
-            document.getElementById('r-match').innerText = result.match;
+            const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
+            const result = resultsData[userGender][idx];
+            
+            document.getElementById('r-title').innerHTML = result.title;
+            document.getElementById('r-match').innerHTML = result.match;
             
             const imgDiv = document.getElementById('r-img-div');
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_city_soul_w.png')" : "url('k_city_soul_m.png')";
+            imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
-            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+            // 1번 파일과 동일한 3단 분석 UI 구성 (2번 파일의 Green 컬러 톤 유지)
+            document.getElementById('r-desc').innerHTML = `
+                <div class="bg-green-50 p-5 rounded-2xl border border-green-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-green-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
+                    <p class="text-sm text-green-900 leading-relaxed font-medium">${result.overview}</p>
+                </div>
+                <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-teal-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
+                    <p class="text-sm text-teal-900 leading-relaxed font-medium">${result.strengths}</p>
+                </div>
+                <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-emerald-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
+                    <p class="text-sm text-emerald-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                </div>
+            `;
         }
     </script>
 </body>
 </html>
+
+```
