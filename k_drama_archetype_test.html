@@ -5,139 +5,270 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-Drama Archetype Test</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143"
-     crossorigin="anonymous"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+    <style>
+        /* 부드러운 페이드인 애니메이션 추가 */
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
-        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-blue-50 to-white">
+        
+        <!-- 1. START SCREEN -->
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-blue-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-blue-600 mb-4 tracking-tight">K-Drama Archetype</h1>
-            <p class="text-gray-600 mb-8 font-medium">Which K-Drama cliché are you?</p>
+            <p class="text-gray-600 mb-8 font-medium">
+                Which K-Drama cliché are you?<br><br>
+                <span class="text-sm text-gray-400">당신은 어떤 한국 드라마 클리셰 주인공인가요?</span>
+            </p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 mb-8">
                 <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👩 Female</button>
                 </div>
             </div>
         </div>
 
+        <!-- 2. QUESTION SCREEN -->
         <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
             <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
                 <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
-            <div class="flex-1 flex flex-col justify-center">
-                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question text</h2>
+            <div class="flex-1 flex flex-col justify-center fade-in">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 p-5 rounded-xl shadow-sm"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 p-5 rounded-xl shadow-sm"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-blue-50 border border-gray-200 hover:border-blue-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
                 </div>
             </div>
         </div>
 
+        <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-blue-600 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">Writing the script...</h2>
+            <h2 class="text-2xl font-bold mb-2">
+                Writing the script...<br><br>
+                <span class="text-lg opacity-80 font-normal">드라마 대본 작성 중...</span>
+            </h2>
         </div>
 
-        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-50">
-            <div class="text-center mb-6">
-                <h1 id="r-title" class="text-3xl font-extrabold text-gray-900">Title</h1>
-            </div>
-            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-inner border border-white/50 mb-6" style="background-size: 200%; background-position: 0% 0%;"></div>
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
-                <p id="r-desc" class="text-gray-600 text-center mb-4"></p>
-                <div class="bg-blue-50 rounded-xl p-4 text-center">
-                    <p class="text-xs text-blue-400 font-bold mb-1">BEST MATCH</p>
-                    <p id="r-match" class="font-bold text-blue-700"></p>
-                </div>
-            </div>
-            
-            <div class="mb-6 text-center">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-3466039113171143"
-                     data-ad-slot="여기에_슬롯ID_입력"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
-            </div>
+        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI) -->
+        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
+            <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
+                
+                <!-- 배경 장식 (블루 테마) -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Drama Casting Complete</span>
+                        <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
+                    </div>
 
-            <div class="space-y-3 mb-8">
-                <button onclick="location.href='index.html'" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-md">🏠 Go to Lobby</button>
+                    <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+
+                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
+                    <div id="r-desc" class="space-y-4 mb-6"></div>
+
+                    <!-- 찰떡 궁합 섹션 -->
+                    <div class="flex items-center justify-between bg-blue-900 rounded-2xl p-4 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">CO-STAR MATCH</span>
+                        <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
+                    </div>
+
+                    <!-- 광고 영역 -->
+                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                        <ins class="adsbygoogle"
+                             style="display:block; width:100%;"
+                             data-ad-client="ca-pub-3466039113171143"
+                             data-ad-slot="여기에_슬롯ID_입력"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+                    </div>
+
+                    <button onclick="location.href='index.html'" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        🏠 Go to Lobby
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         let userGender = '';
+        let currentQ = 0; 
+        let score = 0;
+
+        // 질문 데이터 (한영 혼용 포맷)
         const questions = [
-            { q: "It suddenly rains and you have no umbrella.", a: "Run in the rain smiling happily.", b: "Wait quietly under a roof for someone." },
-            { q: "You spilled coffee on a stranger's expensive suit!", a: "Beg for forgiveness and offer to pay for cleaning.", b: "Throw a blank check at them and walk away." },
-            { q: "When you're deeply sad...", a: "Cry loudly drinking soju at a street tent.", b: "Stare at the wall while fully clothed in the shower." },
-            { q: "You find out a huge secret about your crush.", a: "Confront them immediately to hear the truth.", b: "Keep it to yourself to protect them secretly." },
-            { q: "The finale is approaching! What's the ending scene?", a: "A dramatic chase scene at the airport.", b: "A quiet, smiling reunion years later." }
+            { 
+                q: "It suddenly rains and you have no umbrella.<br><br><span class='text-sm text-gray-400 font-normal'>갑자기 비가 오는데 우산이 없다면?</span>", 
+                a: "Run in the rain smiling happily.<br><br><span class='text-sm text-gray-500 font-normal'>해맑게 웃으며 비를 맞고 뛰어간다.</span>", 
+                b: "Wait quietly under a roof for someone.<br><br><span class='text-sm text-gray-500 font-normal'>누군가 와주길 바라며 처마 밑에서 조용히 기다린다.</span>" 
+            },
+            { 
+                q: "You spilled coffee on a stranger's expensive suit!<br><br><span class='text-sm text-gray-400 font-normal'>낯선 사람의 비싼 정장에 커피를 쏟았다!</span>", 
+                a: "Beg for forgiveness and offer to pay for cleaning.<br><br><span class='text-sm text-gray-500 font-normal'>진심으로 사과하며 세탁비를 물어주겠다고 한다.</span>", 
+                b: "Throw a blank check at them and walk away.<br><br><span class='text-sm text-gray-500 font-normal'>백지 수표를 던져주고 쿨하게 돌아선다.</span>" 
+            },
+            { 
+                q: "When you're deeply sad...<br><br><span class='text-sm text-gray-400 font-normal'>너무나도 슬프고 우울할 때 당신은...</span>", 
+                a: "Cry loudly drinking soju at a street tent.<br><br><span class='text-sm text-gray-500 font-normal'>포장마차에서 소주를 마시며 펑펑 운다.</span>", 
+                b: "Stare at the wall while fully clothed in the shower.<br><br><span class='text-sm text-gray-500 font-normal'>옷을 다 입은 채로 샤워기를 틀고 벽을 노려본다.</span>" 
+            },
+            { 
+                q: "You find out a huge secret about your crush.<br><br><span class='text-sm text-gray-400 font-normal'>짝사랑하는 사람의 엄청난 비밀을 알게 되었다면?</span>", 
+                a: "Confront them immediately to hear the truth.<br><br><span class='text-sm text-gray-500 font-normal'>당장 찾아가서 진실이 무엇인지 따져 묻는다.</span>", 
+                b: "Keep it to yourself to protect them secretly.<br><br><span class='text-sm text-gray-500 font-normal'>그를 지켜주기 위해 혼자만의 비밀로 간직한다.</span>" 
+            },
+            { 
+                q: "The finale is approaching! What's the ending scene?<br><br><span class='text-sm text-gray-400 font-normal'>대망의 마지막 화! 당신이 원하는 엔딩 씬은?</span>", 
+                a: "A dramatic chase scene at the airport.<br><br><span class='text-sm text-gray-500 font-normal'>공항에서 극적으로 서로를 붙잡는 추격씬.</span>", 
+                b: "A quiet, smiling reunion years later.<br><br><span class='text-sm text-gray-500 font-normal'>몇 년 뒤 우연히 마주치며 잔잔하게 미소 짓는 재회씬.</span>" 
+            }
         ];
         
+        // 결과 데이터 (전문 심리 리포트 3단 분리 포맷)
         const resultsData = {
             F: [
-                { id: "f1", title: "🏃‍♀️ Resilient Candy", desc: "Never gives up no matter how hard life gets. Melts the cold CEO's heart.", match: "Arrogant Chaebol Heir" },
-                { id: "f2", title: "💸 Arrogant Heiress", desc: "Believes money solves everything until you meet someone who treats you differently.", match: "Resilient Candy" },
-                { id: "f3", title: "🥺 Secretive Second Lead", desc: "Always cares from behind but misses the timing to confess.", match: "The Best Friend" },
-                { id: "f4", title: "🍗 The Best Friend", desc: "Shows up with fried chicken and beer when the lead gets heartbroken.", match: "Secretive Second Lead" }
-            ],
-            M: [
-                { id: "m1", title: "🏃‍♂️ Hardworking Lead", desc: "Juggles 3 part-time jobs but keeps a bright smile.", match: "Arrogant Heiress" },
-                { id: "m2", title: "💸 Arrogant Chaebol Heir", desc: "You think money is everything, until you say: 'You're the first person to treat me like this.'", match: "Resilient Candy" },
-                { id: "m3", title: "☔ Tragic Second Lead", desc: "Holds an umbrella for her in the rain, but she runs to the main lead.", match: "The Best Friend" },
-                { id: "m4", title: "🍗 Loyal Wingman", desc: "Provides comic relief and strictly offers bad dating advice.", match: "Tragic Second Lead" }
+                { 
+                    id: "f1", 
+                    title: "🏃‍♀️ Resilient Candy<br><span class='text-lg font-bold text-gray-500'>캔디형 여주인공</span>", 
+                    overview: "Never gives up no matter how hard life gets. You melt the cold CEO's heart with your pure and hard-working spirit.<br><br><span class='text-xs opacity-80'>아무리 힘든 일이 있어도 절대 포기하지 않습니다. 순수하고 억척스러운 매력으로 차가운 재벌 2세의 마음을 녹이는 주역입니다.</span>", 
+                    strengths: "Incredible mental toughness and positive energy. You easily win people's hearts with your sincere empathy.<br><br><span class='text-xs opacity-80'>엄청난 정신력과 긍정적인 에너지를 가졌습니다. 진심 어린 공감 능력으로 주변 사람들을 자연스럽게 내 편으로 만듭니다.</span>", 
+                    weaknesses: "You tend to take on all the burdens yourself. Sometimes you need to learn how to rely on others instead of just suffering in silence.<br><br><span class='text-xs opacity-80'>모든 짐을 혼자 짊어지려는 경향이 있습니다. 가끔은 꾹 참지 말고 타인에게 기대는 법을 배워야 스스로 지치지 않습니다.</span>", 
+                    match: "Arrogant Chaebol Heir<br><span class='text-[10px] font-normal'>까칠한 재벌 3세</span>" 
+                },
+                { 
+                    id: "f2", 
+                    title: "💸 Arrogant Heiress<br><span class='text-lg font-bold text-gray-500'>안하무인 재벌녀</span>", 
+                    overview: "Believes money solves everything until you meet someone who treats you differently.<br><br><span class='text-xs opacity-80'>돈으로 모든 것을 해결할 수 있다고 믿지만, 자신을 함부로 대하는 사람에게 묘한 끌림을 느끼는 반전 매력의 소유자입니다.</span>", 
+                    strengths: "High confidence, fierce independence, and immaculate fashion sense. You know exactly what you want.<br><br><span class='text-xs opacity-80'>넘치는 자신감, 강한 독립심, 그리고 완벽한 스타일을 자랑합니다. 원하는 것이 무엇인지, 어떻게 얻는지 정확히 알고 행동합니다.</span>", 
+                    weaknesses: "You mask your loneliness with a prickly exterior. Deep down, you are terrified of genuine emotional vulnerability.<br><br><span class='text-xs opacity-80'>가시 돋친 태도로 깊은 외로움을 숨기고 있습니다. 마음속 깊은 곳에서는 진정한 감정적 교류와 상처받는 것을 매우 두려워합니다.</span>", 
+                    match: "Hardworking Lead<br><span class='text-[10px] font-normal'>열혈 알바생 남주</span>" 
+                },
+                { 
+                    id: "f3", 
+                    title: "🥺 Secretive Second Lead<br><span class='text-lg font-bold text-gray-500'>아련한 서브 여주</span>", 
+                    overview: "Always cares from behind but misses the timing to confess. You carry a deep, unrequited love story.<br><br><span class='text-xs opacity-80'>항상 뒤에서 남몰래 챙겨주지만, 결정적인 고백 타이밍을 놓치고 맙니다. 깊고 아련한 서사를 지닌 짝사랑의 주인공입니다.</span>", 
+                    strengths: "Deeply devoted, observant, and emotionally profound. You possess a poetic soul that loves unconditionally.<br><br><span class='text-xs opacity-80'>깊이 헌신적이고 관찰력이 뛰어나며 감수성이 풍부합니다. 조건 없는 사랑을 할 줄 아는 시적이고 순수한 영혼을 지녔습니다.</span>", 
+                    weaknesses: "Too passive in crucial moments. You let your happiness slip away by prioritizing others over your own heart.<br><br><span class='text-xs opacity-80'>결정적인 순간에 너무 수동적입니다. 타인을 먼저 배려하느라 정작 본인의 소중한 행복을 놓쳐버리는 안타까운 상황이 발생합니다.</span>", 
+                    match: "Loyal Wingman<br><span class='text-[10px] font-normal'>눈치 없는 개그캐 찐친</span>" 
+                },
+                { 
+                    id: "f4", 
+                    title: "🍗 The Best Friend<br><span class='text-lg font-bold text-gray-500'>감초 찐친 여사친</span>", 
+                    overview: "Shows up with fried chicken and beer when the lead gets heartbroken. You are the absolute mood-maker!<br><br><span class='text-xs opacity-80'>주인공이 실연당하면 치킨과 맥주를 사 들고 나타나는 의리파! 드라마의 분위기를 살려주는 절대적인 감초이자 무드 메이커입니다.</span>", 
+                    strengths: "Highly practical, fiercely loyal, and hilariously blunt. You provide reality checks to your overly dramatic friends.<br><br><span class='text-xs opacity-80'>현실 감각이 뛰어나고 의리가 넘치며 유쾌할 정도로 솔직합니다. 지나치게 감상적인 친구들에게 뼈 때리는 현실적인 조언을 날려줍니다.</span>", 
+                    weaknesses: "You often neglect your own romance while fixing everyone else's problems. It's time to be the main character.<br><br><span class='text-xs opacity-80'>남의 문제를 해결해주느라 정작 본인의 인생이나 연애는 뒷전인 경우가 많습니다. 이제 당신 스스로가 주인공이 되어야 할 시간입니다.</span>", 
+                    match: "Tragic Second Lead<br><span class='text-[10px] font-normal'>맴찢 서브 남주</span>" 
+                }
             ]
         };
 
-        let currentQ = 0; let score = 0;
+        // 남성 데이터를 여성 데이터 구조와 동일하게 복사 후 수정
+        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
+        resultsData.M[0].title = "🏃‍♂️ Hardworking Lead<br><span class='text-lg font-bold text-gray-500'>열혈 알바생 남주</span>";
+        resultsData.M[1].title = "💸 Arrogant Chaebol Heir<br><span class='text-lg font-bold text-gray-500'>까칠한 재벌 3세</span>";
+        resultsData.M[2].title = "☔ Tragic Second Lead<br><span class='text-lg font-bold text-gray-500'>맴찢 서브 남주</span>";
+        resultsData.M[3].title = "🍗 Loyal Wingman<br><span class='text-lg font-bold text-gray-500'>눈치 없는 개그캐 찐친</span>";
+
+        resultsData.M[0].overview = "Juggles 3 part-time jobs but keeps a bright smile. Your relentless hustle makes you incredibly endearing.<br><br><span class='text-xs opacity-80'>쓰리잡을 뛰면서도 맑은 웃음을 잃지 않는 열혈 청춘입니다. 끊임없이 노력하고 부딪히는 모습이 엄청난 매력으로 다가옵니다.</span>";
+        resultsData.M[0].strengths = "Unbreakable resilience, pure intentions, and a strong sense of justice. You build your success from the ground up.<br><br><span class='text-xs opacity-80'>무너지지 않는 회복탄력성, 순수한 의도, 강한 정의감을 가졌습니다. 밑바닥부터 끈질기게 스스로 성공을 일구어냅니다.</span>";
+        resultsData.M[0].weaknesses = "Your pride sometimes prevents you from accepting help, making your path unnecessarily difficult.<br><br><span class='text-xs opacity-80'>알량한 자존심 때문에 꼭 필요한 도움조차 거절하여, 스스로의 길을 불필요하게 힘들게 돌아가는 경향이 있습니다.</span>";
+        
+        resultsData.M[1].overview = "You think money is everything, until you say: 'You're the first person to treat me like this.'<br><br><span class='text-xs opacity-80'>돈이 최고라고 생각하지만, '나한테 이렇게 대하는 사람은 네가 처음이야'라며 예상치 못한 운명적인 사랑에 빠지게 됩니다.</span>";
+        resultsData.M[1].strengths = "Natural leadership, undeniable charisma, and overwhelming resources. Once you commit, you go all in.<br><br><span class='text-xs opacity-80'>타고난 리더십, 거부할 수 없는 카리스마, 압도적인 능력을 갖췄습니다. 한 번 마음을 먹으면 앞뒤 재지 않고 모든 것을 쏟아붓습니다.</span>";
+        resultsData.M[1].weaknesses = "Extremely terrible at expressing emotions normally. You confuse your lack of social grace with being 'cool.'<br><br><span class='text-xs opacity-80'>평범하게 감정을 표현하는 것에 극도로 서툽니다. 무례하거나 배려 없는 태도를 스스로 '쿨함'이라고 착각하기도 합니다.</span>";
+        
+        resultsData.M[2].overview = "Holds an umbrella for her in the rain, but she runs to the main lead. You suffer beautifully.<br><br><span class='text-xs opacity-80'>비 오는 날 그녀에게 우산을 씌워주지만, 그녀는 결국 남주인공에게 달려갑니다. 세상에서 가장 아름답고 처절하게 앓는 서브 남주입니다.</span>";
+        resultsData.M[2].strengths = "Extremely sweet, attentive, and financially stable. You are realistically the best partner material.<br><br><span class='text-xs opacity-80'>다정하고 세심하며 경제력도 탄탄합니다. 현실적으로 볼 때 드라마 내에서 가장 완벽하고 흠잡을 데 없는 이상적인 파트너입니다.</span>";
+        resultsData.M[2].weaknesses = "You suffer from the 'nice guy' syndrome. You hesitate to cross the line, staying securely in the friendzone.<br><br><span class='text-xs opacity-80'>착한 남자 콤플렉스가 있습니다. 선을 넘는 것을 계속 망설이다가 결국 이도 저도 아닌 영원한 좋은 친구로 남고 맙니다.</span>";
+        
+        resultsData.M[3].overview = "Provides comic relief and strictly offers bad dating advice. You are the glue holding the group together.<br><br><span class='text-xs opacity-80'>극의 긴장을 풀어주는 개그 캐릭터이자 쓸모없는 연애 조언의 달인입니다. 흩어지는 친구들을 하나로 묶어주는 접착제 같은 존재입니다.</span>";
+        resultsData.M[3].strengths = "Unmatched loyalty, great sense of humor, and zero pretense. People feel instantly comfortable around you.<br><br><span class='text-xs opacity-80'>독보적인 의리, 뛰어난 유머 감각, 가식 없는 태도가 무기입니다. 처음 보는 사람들도 당신 곁에서 즉각적인 편안함을 느낍니다.</span>";
+        resultsData.M[3].weaknesses = "You struggle to be taken seriously during heavy moments, using jokes as a defense mechanism.<br><br><span class='text-xs opacity-80'>진지해야 할 순간에도 자꾸 장난으로 넘기려 하며, 깊은 관계와 갈등을 회피하기 위한 방어기제로 농담을 사용하는 경향이 있습니다.</span>";
+
+        resultsData.M[0].match = "Arrogant Heiress<br><span class='text-[10px] font-normal'>안하무인 재벌녀</span>";
+        resultsData.M[1].match = "Resilient Candy<br><span class='text-[10px] font-normal'>캔디형 여주인공</span>";
+        resultsData.M[2].match = "The Best Friend<br><span class='text-[10px] font-normal'>감초 찐친 여사친</span>";
+        resultsData.M[3].match = "Secretive Second Lead<br><span class='text-[10px] font-normal'>아련한 서브 여주</span>";
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.add('hidden');
+            document.getElementById(fromId).classList.remove('flex');
+            
+            const toScreen = document.getElementById(toId);
+            toScreen.classList.remove('hidden');
+            toScreen.classList.add('flex');
+        }
 
         function selectGender(g) {
             userGender = g;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('question-screen').classList.remove('hidden');
+            switchScreen('start-screen', 'question-screen');
             showQuestion();
         }
 
         function showQuestion() {
+            // 진행바
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
-            document.getElementById('q-title').innerText = questions[currentQ].q;
-            document.getElementById('btn-a').innerText = questions[currentQ].a;
-            document.getElementById('btn-b').innerText = questions[currentQ].b;
+            
+            // 페이드인 리셋
+            const qScreen = document.getElementById('question-screen');
+            qScreen.classList.remove('fade-in');
+            void qScreen.offsetWidth; 
+            qScreen.classList.add('fade-in');
+
+            // innerHTML 렌더링
+            document.getElementById('q-title').innerHTML = questions[currentQ].q;
+            document.getElementById('btn-a').innerHTML = questions[currentQ].a;
+            document.getElementById('btn-b').innerHTML = questions[currentQ].b;
         }
 
         function answer(val) {
             if(val === 0) score++;
             currentQ++;
-            if(currentQ < questions.length) showQuestion();
-            else {
-                document.getElementById('question-screen').classList.add('hidden');
-                document.getElementById('loading-screen').classList.remove('hidden');
-                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            
+            if(currentQ < questions.length) {
+                showQuestion();
+            } else {
+                switchScreen('question-screen', 'loading-screen');
+                const finalIdx = score % 4; 
+                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
             }
         }
 
         function showResult(resultId) {
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            const result = resultsData[userGender].find(r => r.id === resultId);
+            switchScreen('loading-screen', 'result-screen');
             
-            document.getElementById('r-title').innerText = result.title;
-            document.getElementById('r-desc').innerText = result.desc;
-            document.getElementById('r-match').innerText = result.match;
+            const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
+            const result = resultsData[userGender][idx];
+            
+            document.getElementById('r-title').innerHTML = result.title;
+            document.getElementById('r-match').innerHTML = result.match;
             
             const imgDiv = document.getElementById('r-img-div');
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_drama_archetype_w.png')" : "url('k_drama_archetype_m.png')";
-            imgDiv.style.backgroundSize = "200% 200%"; // 2x2 격자이므로 200% 필수!
-            imgDiv.style.backgroundColor = "transparent";
+            imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
-            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+            // 프리미엄 리포트 UI 적용 (블루 계열 테마)
+            document.getElementById('r-desc').innerHTML = `
+                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-blue-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
+                    <p class="text-sm text-blue-900 leading-relaxed font-medium">${result.overview}</p>
+                </div>
+                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
+                    <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.strengths}</p>
+                </div>
+                <div class="bg-violet-50 p-5 rounded-2xl border border-violet-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-violet-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
+                    <p class="text-sm text-violet-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                </div>
+            `;
         }
     </script>
 </body>
