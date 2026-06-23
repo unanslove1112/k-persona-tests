@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Webtoon Reincarnation Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-gray-100 font-sans">
+    <div class="max-w-md mx-auto min-h-screen bg-slate-800 shadow-lg overflow-hidden relative border-x border-slate-700">
+        
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-red-900 to-slate-900 fade-in">
+            <h1 class="text-4xl font-extrabold text-red-500 mb-4 tracking-tight">K-Webtoon Soul</h1>
+            <p class="text-gray-300 mb-8 font-medium">
+                You reincarnated in a webtoon. Who are you?<br><br>
+                <span class="text-sm text-gray-400">눈을 떠보니 웹툰 속? 당신의 빙의 캐릭터는?</span>
+            </p>
+            <div class="bg-slate-800 p-6 rounded-2xl shadow-md border border-slate-700 mb-8">
+                <h2 class="text-xl font-bold mb-4 text-white">Step 1: Select Gender</h2>
+                <div class="flex gap-4">
+                    <button onclick="selectGender('M')" class="flex-1 bg-slate-700 hover:bg-slate-600 text-blue-400 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-slate-700 hover:bg-slate-600 text-pink-400 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👩 Female</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-slate-900">
+            <div class="w-full bg-slate-700 rounded-full h-2.5 mb-8">
+                <div id="progress-bar" class="bg-red-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="flex-1 flex flex-col justify-center fade-in">
+                <h2 id="q-title" class="text-xl font-bold text-white mb-8 leading-relaxed"></h2>
+                <div class="space-y-4">
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-slate-800 hover:bg-slate-700 border border-slate-600 text-gray-200 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-slate-800 hover:bg-slate-700 border border-slate-600 text-gray-200 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-red-900 text-white">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
+            <h2 class="text-2xl font-bold mb-2">
+                Syncing with the System...<br><br>
+                <span class="text-lg opacity-80 font-normal">시스템 동기화 중...</span>
+            </h2>
+        </div>
+
+        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-slate-900">
+            <div class="w-full bg-slate-800 rounded-[2rem] shadow-2xl p-6 relative overflow-hidden border border-slate-700 fade-in">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-red-900 rounded-full blur-3xl opacity-30"></div>
+                <div class="relative z-10">
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-3 py-1 bg-slate-700 text-red-400 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Character Unlocked</span>
+                        <h1 id="r-title" class="text-2xl font-extrabold text-red-500 leading-tight"></h1>
+                    </div>
+                    <div id="r-img-div" class="w-full aspect-square bg-slate-900 bg-cover bg-no-repeat rounded-[1.5rem] shadow-[0_0_15px_rgba(239,68,68,0.3)] border border-red-500/30 mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+                    <div id="r-desc" class="space-y-4 mb-6"></div>
+                    <div class="flex items-center justify-between bg-slate-900 rounded-2xl p-4 text-white mb-8 border border-slate-700 shadow-md">
+                        <span class="text-[10px] font-bold text-red-400 opacity-80 uppercase tracking-widest">FATED COMPANION</span>
+                        <span id="r-match" class="font-bold text-sm tracking-tight text-right text-red-100"></span>
+                    </div>
+                    <div class="mb-6 text-center bg-slate-800 rounded-xl border border-dashed border-slate-600 p-2 min-h-[100px] flex items-center justify-center">
+                        <ins class="adsbygoogle" style="display:block; width:100%;" data-ad-client="ca-pub-3466039113171143" data-ad-slot="여기에_슬롯ID_입력" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                        <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+                    </div>
+                    <button onclick="location.href='index.html'" class="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        🏠 Exit System
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userGender = ''; let currentQ = 0; let score = 0;
+
+        const questions = [
+            { q: "You wake up in a webtoon. Where are you?<br><br><span class='text-sm text-slate-400 font-normal'>눈을 떠보니 웹툰 속. 지금 당신이 있는 곳은?</span>", a: "A fancy European-style castle with maids.<br><br><span class='text-sm text-slate-300 font-normal'>화려한 드레스와 하녀들이 있는 유럽풍 대저택.</span>", b: "A modern city where a 'System Window' pops up.<br><br><span class='text-sm text-slate-300 font-normal'>허공에 파란색 '시스템 창'이 떠 있는 현대 도시.</span>" },
+            { q: "You check your starting stats and skills.<br><br><span class='text-sm text-slate-400 font-normal'>당신의 초기 스탯과 스킬을 확인했다.</span>", a: "Level 1, but with infinite growth potential.<br><br><span class='text-sm text-slate-300 font-normal'>현재 레벨 1이지만 무한한 성장 가능성을 지녔다.</span>", b: "Max level, hiding my true power from everyone.<br><br><span class='text-sm text-slate-300 font-normal'>이미 만렙. 사람들에게 진짜 힘을 숨기고 있다.</span>" },
+            { q: "A suspicious character approaches you.<br><br><span class='text-sm text-slate-400 font-normal'>수상한 인물이 당신에게 접근해 온다면?</span>", a: "Keep them close to gather info and use them.<br><br><span class='text-sm text-slate-300 font-normal'>의도를 파악하고 역으로 이용하기 위해 곁에 둔다.</span>", b: "Ignore them entirely and go my own way.<br><br><span class='text-sm text-slate-300 font-normal'>귀찮은 일에 엮이기 싫어 철저하게 무시하고 갈 길 간다.</span>" },
+            { q: "What's your ultimate goal in this world?<br><br><span class='text-sm text-slate-400 font-normal'>이 세계에서 당신의 최종 목표는?</span>", a: "Reach the top and conquer the world.<br><br><span class='text-sm text-slate-300 font-normal'>최고의 자리에 올라 이 세계를 정복하는 것.</span>", b: "Survive quietly and live a peaceful life.<br><br><span class='text-sm text-slate-300 font-normal'>조용히 살아남아 평화롭고 돈 많은 백수로 사는 것.</span>" },
+            { q: "You found a hidden treasure chest in a dungeon.<br><br><span class='text-sm text-slate-400 font-normal'>던전에서 숨겨진 보물상자를 발견했다.</span>", a: "Open it immediately. Risk equals reward!<br><br><span class='text-sm text-slate-300 font-normal'>하이 리스크 하이 리턴! 당장 열어본다.</span>", b: "Check carefully for any hidden traps first.<br><br><span class='text-sm text-slate-300 font-normal'>함정이 없는지 시스템 스킬로 꼼꼼히 확인부터 한다.</span>" }
+        ];
+        
+        const resultsData = {
+            F: [
+                { id: "f1", title: "👑 The Misunderstood Villainess<br><span class='text-lg font-bold text-red-400'>오해받는 악녀</span>", overview: "Fierce, strategic, and secretly soft. You wear a mask of a villain to protect what's yours.<br><br><span class='text-xs opacity-80'>강렬하고 전략적이지만 은근히 다정합니다. 내 사람들을 지키기 위해 기꺼이 악녀의 가면을 쓰는 츤데레입니다.</span>", strengths: "High political intelligence, flawless fashion sense, and you never let anyone look down on you.<br><br><span class='text-xs opacity-80'>뛰어난 정치적 두뇌, 완벽한 패션 감각. 그 누구도 당신을 함부로 무시하거나 짓밟을 수 없습니다.</span>", weaknesses: "You push people away to protect them, leading to unnecessary misunderstandings and loneliness.<br><br><span class='text-xs opacity-80'>사람들을 보호하려 오히려 밀어내기 때문에, 불필요한 오해를 사고 스스로를 지독한 외로움에 빠뜨립니다.</span>", match: "The Mysterious Mastermind<br><span class='text-[10px] font-normal'>흑막 엑스트라</span>" },
+                { id: "f2", title: "🗡️ The Max-Level Player<br><span class='text-lg font-bold text-red-400'>만렙 회귀자</span>", overview: "Efficient, unstoppable, and goal-oriented. You've lived this life before, and this time, you won't fail.<br><br><span class='text-xs opacity-80'>효율적이고 거침없으며 목표 지향적입니다. 이미 한 번 겪어본 생, 이번 회차에서는 절대 실패하지 않습니다.</span>", strengths: "Overpowering combat skills, zero hesitation, and perfect foresight to secure all the hidden items.<br><br><span class='text-xs opacity-80'>압도적인 무력, 망설임 없는 결단력. 미래를 알고 있어 모든 히든 피스와 기회를 독식하는 사기캐입니다.</span>", weaknesses: "You treat people like NPCs. Your lack of empathy might isolate you from true emotional connections.<br><br><span class='text-xs opacity-80'>주변 사람들을 체스 말이나 NPC처럼 대하는 경향이 있어, 진정한 감정적 교류나 인간미가 부족해 보일 수 있습니다.</span>", match: "The Hidden Saintess<br><span class='text-[10px] font-normal'>숨겨진 성녀</span>" },
+                { id: "f3", title: "✨ The Hidden Saintess<br><span class='text-lg font-bold text-red-400'>숨겨진 성녀</span>", overview: "Healing, empathetic, and everyone's salvation. Your gentle power brings hope to a ruined world.<br><br><span class='text-xs opacity-80'>치유하고 공감하는 모두의 구원자. 당신의 따뜻하고 상냥한 힘은 멸망해가는 세계에 한 줄기 빛이 됩니다.</span>", strengths: "Infinite divine power, high likability, and the ability to purify even the darkest corrupted souls.<br><br><span class='text-xs opacity-80'>무한한 신성력, 모두에게 사랑받는 호감도. 아무리 타락한 흑막이라도 당신 앞에서는 무장해제됩니다.</span>", weaknesses: "You are overly self-sacrificing and often manipulated by greedy empires or temples.<br><br><span class='text-xs opacity-80'>지나치게 자기희생적입니다. 탐욕스러운 제국이나 신전 등 권력자들에게 착취당하고 이용당하기 가장 쉬운 타겟입니다.</span>", match: "The Max-Level Player<br><span class='text-[10px] font-normal'>만렙 회귀자</span>" },
+                { id: "f4", title: "🎭 The Mysterious Mastermind<br><span class='text-lg font-bold text-red-400'>흑막 엑스트라</span>", overview: "Manipulative, smart, and stays in the shadows. You control the main characters like chess pieces.<br><br><span class='text-xs opacity-80'>조종하고, 계획하며, 어둠 속에 숨어 있습니다. 주인공들을 체스 말처럼 다루며 세계의 진짜 흐름을 통제합니다.</span>", strengths: "Genius-level intellect, wealth, and a perfect poker face. Nobody knows your true intentions.<br><br><span class='text-xs opacity-80'>천재적인 두뇌, 막대한 재력, 그리고 완벽한 포커페이스. 그 누구도 당신의 진짜 의도를 알아채지 못합니다.</span>", weaknesses: "You overcomplicate simple things and trust absolutely no one, making your life highly stressful.<br><br><span class='text-xs opacity-80'>단순한 일도 지나치게 복잡하게 생각하며 그 누구도 믿지 않아, 스스로의 삶을 매우 피곤하고 스트레스 받게 만듭니다.</span>", match: "The Misunderstood Villainess<br><span class='text-[10px] font-normal'>오해받는 악녀</span>" }
+            ]
+        };
+        // 남성 데이터를 여성 데이터 구조와 동일하게 설정
+        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
+        resultsData.M[0].title = "👑 The Misunderstood Villain<br><span class='text-lg font-bold text-red-400'>오해받는 악당</span>";
+        resultsData.M[2].title = "✨ The Hidden Guide<br><span class='text-lg font-bold text-red-400'>숨겨진 가이드</span>";
+        resultsData.M[0].match = "The Mysterious Mastermind<br><span class='text-[10px] font-normal'>흑막 엑스트라</span>";
+        resultsData.M[1].match = "The Hidden Guide<br><span class='text-[10px] font-normal'>숨겨진 가이드</span>";
+        resultsData.M[2].match = "The Max-Level Player<br><span class='text-[10px] font-normal'>만렙 회귀자</span>";
+        resultsData.M[3].match = "The Misunderstood Villain<br><span class='text-[10px] font-normal'>오해받는 악당</span>";
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.add('hidden');
+            document.getElementById(toId).classList.remove('hidden');
+            document.getElementById(toId).classList.add('flex');
+        }
+        function selectGender(g) {
+            userGender = g;
+            switchScreen('start-screen', 'question-screen');
+            showQuestion();
+        }
+        function showQuestion() {
+            document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
+            const qScreen = document.getElementById('question-screen');
+            qScreen.classList.remove('fade-in'); void qScreen.offsetWidth; qScreen.classList.add('fade-in');
+            document.getElementById('q-title').innerHTML = questions[currentQ].q;
+            document.getElementById('btn-a').innerHTML = questions[currentQ].a;
+            document.getElementById('btn-b').innerHTML = questions[currentQ].b;
+        }
+        function answer(val) {
+            if(val === 0) score++;
+            currentQ++;
+            if(currentQ < questions.length) showQuestion();
+            else {
+                switchScreen('question-screen', 'loading-screen');
+                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2500);
+            }
+        }
+        function showResult(resultId) {
+            switchScreen('loading-screen', 'result-screen');
+            const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
+            const result = resultsData[userGender][idx];
+            document.getElementById('r-title').innerHTML = result.title;
+            document.getElementById('r-match').innerHTML = result.match;
+            const imgDiv = document.getElementById('r-img-div');
+            imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_webtoon_w.png')" : "url('k_webtoon_m.png')";
+            imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
+            
+            document.getElementById('r-desc').innerHTML = `
+                <div class="bg-slate-800 p-5 rounded-2xl border border-red-500/30 shadow-sm">
+                    <h4 class="text-[10px] font-black text-red-400 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.overview}</p>
+                </div>
+                <div class="bg-slate-800 p-5 rounded-2xl border border-rose-500/30 shadow-sm">
+                    <h4 class="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.strengths}</p>
+                </div>
+                <div class="bg-slate-800 p-5 rounded-2xl border border-slate-500/30 shadow-sm">
+                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
+                    <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.weaknesses}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

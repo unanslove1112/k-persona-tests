@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Food Soul Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+        
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-orange-50 to-white fade-in">
+            <h1 class="text-4xl font-extrabold text-orange-600 mb-4 tracking-tight">K-Food Soul</h1>
+            <p class="text-gray-600 mb-8 font-medium">
+                Which Korean food matches your vibe?<br><br>
+                <span class="text-sm text-gray-400">당신의 성향과 똑 닮은 K-푸드는?</span>
+            </p>
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100 mb-8">
+                <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
+                <div class="flex gap-4">
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-50 hover:bg-pink-100 text-pink-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👩 Female</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
+                <div id="progress-bar" class="bg-orange-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+            <div class="flex-1 flex flex-col justify-center fade-in">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
+                <div class="space-y-4">
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-orange-50 border border-gray-200 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-orange-50 border border-gray-200 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-orange-500 text-white">
+            <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
+            <h2 class="text-2xl font-bold mb-2">
+                Cooking your result...<br><br>
+                <span class="text-lg opacity-80 font-normal">당신의 소울푸드 조리 중...</span>
+            </h2>
+        </div>
+
+        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
+            <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50"></div>
+                <div class="relative z-10">
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-3 py-1 bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Dish Ready</span>
+                        <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
+                    </div>
+                    <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+                    <div id="r-desc" class="space-y-4 mb-6"></div>
+                    <div class="flex items-center justify-between bg-orange-900 rounded-2xl p-4 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">BEST PAIRING</span>
+                        <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
+                    </div>
+                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                        <ins class="adsbygoogle" style="display:block; width:100%;" data-ad-client="ca-pub-3466039113171143" data-ad-slot="여기에_슬롯ID_입력" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                        <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+                    </div>
+                    <button onclick="location.href='index.html'" class="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        🏠 Go to Lobby
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let userGender = ''; let currentQ = 0; let score = 0;
+
+        const questions = [
+            { q: "It's Friday night! What's for dinner?<br><br><span class='text-sm text-gray-400 font-normal'>불금입니다! 오늘 저녁 메뉴는?</span>", a: "Spicy street food with loud friends.<br><br><span class='text-sm text-gray-500 font-normal'>시끌벅적한 친구들과 먹는 매운 길거리 음식.</span>", b: "A quiet, warm, and hearty soup.<br><br><span class='text-sm text-gray-500 font-normal'>조용하고 든든하게 배를 채우는 따뜻한 국밥.</span>" },
+            { q: "When cooking a new recipe...<br><br><span class='text-sm text-gray-400 font-normal'>새로운 요리를 할 때 당신은?</span>", a: "I just eyeball the ingredients. Cooking is an art!<br><br><span class='text-sm text-gray-500 font-normal'>눈대중으로 대충 감으로 넣는다. 요리는 예술이지!</span>", b: "I measure exactly according to the recipe.<br><br><span class='text-sm text-gray-500 font-normal'>레시피에 적힌 정량 그대로 정확하게 계량한다.</span>" },
+            { q: "After a heavy, satisfying meal...<br><br><span class='text-sm text-gray-400 font-normal'>배부르게 밥을 먹고 난 후에는?</span>", a: "I need a sweet and trendy dessert like Tanghulu.<br><br><span class='text-sm text-gray-500 font-normal'>탕후루나 케이크 같은 달콤하고 트렌디한 디저트 필수.</span>", b: "Just a clean Iced Americano, please.<br><br><span class='text-sm text-gray-500 font-normal'>깔끔하게 아이스 아메리카노 한 잔이면 충분하다.</span>" },
+            { q: "Your friends are arguing about what to eat.<br><br><span class='text-sm text-gray-400 font-normal'>친구들이 메뉴를 못 정하고 싸우고 있다면?</span>", a: "I take charge and pick the best restaurant.<br><br><span class='text-sm text-gray-500 font-normal'>내가 주도권을 잡고 최고의 맛집으로 이끈다.</span>", b: "I just follow whatever the majority wants.<br><br><span class='text-sm text-gray-500 font-normal'>다수결에 따르며 조용히 의견을 맞춘다.</span>" },
+            { q: "When you are extremely stressed out...<br><br><span class='text-sm text-gray-400 font-normal'>극심한 스트레스를 받았을 때 당신은?</span>", a: "Eat something so spicy I cry to release stress.<br><br><span class='text-sm text-gray-500 font-normal'>눈물 쏙 빠지게 매운 음식을 먹으며 스트레스를 푼다.</span>", b: "Eat my favorite comfort food alone in peace.<br><br><span class='text-sm text-gray-500 font-normal'>방해받지 않고 조용히 나만의 소울푸드를 음미한다.</span>" }
+        ];
+        
+        const resultsData = {
+            F: [
+                { id: "f1", title: "🔥 Fiery Tteokbokki<br><span class='text-lg font-bold text-gray-500'>불타는 마라 떡볶이</span>", overview: "Passionate and trendy. You have a spicy personality that leaves a strong impression on everyone.<br><br><span class='text-xs opacity-80'>열정적이고 트렌디합니다. 한 번 보면 잊을 수 없는 강렬하고 매콤한 성격의 소유자입니다.</span>", strengths: "High energy, great leadership, and an incredible ability to hype people up.<br><br><span class='text-xs opacity-80'>넘치는 에너지와 리더십을 가졌으며, 주변 사람들의 텐션을 단숨에 끌어올리는 능력이 탁월합니다.</span>", weaknesses: "You can be quite hot-tempered. Your straightforwardness sometimes burns others.<br><br><span class='text-xs opacity-80'>다소 다혈질적인 면이 있습니다. 너무 솔직하고 직설적인 화법이 때로는 타인에게 상처를 주기도 합니다.</span>", match: "Warm Gukbap<br><span class='text-[10px] font-normal'>따뜻한 뚝배기 국밥</span>" },
+                { id: "f2", title: "🍚 Warm Gukbap<br><span class='text-lg font-bold text-gray-500'>따뜻한 뚝배기 국밥</span>", overview: "Reliable and comforting. You are a deep, genuine person who values long-term relationships.<br><br><span class='text-xs opacity-80'>든든하고 편안합니다. 가벼운 유행보다는 변치 않는 진정성과 깊은 관계를 중시하는 진국 같은 사람입니다.</span>", strengths: "Incredible patience, strong sense of responsibility, and a warm heart that heals others.<br><br><span class='text-xs opacity-80'>놀라운 인내심, 강한 책임감, 그리고 타인의 마음을 달래주는 따뜻한 위로 능력을 갖췄습니다.</span>", weaknesses: "You can be a bit stubborn. You hate stepping out of your comfort zone.<br><br><span class='text-xs opacity-80'>은근히 고집이 셉니다. 익숙하고 편안한 것을 지나치게 좋아해 새로운 도전을 꺼리는 경향이 있습니다.</span>", match: "Chill Naengmyeon<br><span class='text-[10px] font-normal'>쿨한 얼음 냉면</span>" },
+                { id: "f3", title: "🍖 Sizzling K-BBQ<br><span class='text-lg font-bold text-gray-500'>지글지글 K-삼겹살</span>", overview: "Social, rich, and essential. You are the center of every party and bring people together.<br><br><span class='text-xs opacity-80'>사교적이고 풍성하며 모임에 절대 빠질 수 없는 존재. 사람들을 하나로 모으는 파티의 중심입니다.</span>", strengths: "Amazing sociability, generous nature, and excellent at creating a fun atmosphere.<br><br><span class='text-xs opacity-80'>놀라운 친화력과 넉넉한 인심을 자랑하며, 어느 자리에서든 유쾌한 분위기를 만들어내는 재주꾼입니다.</span>", weaknesses: "You hate being alone so much that you sometimes overcommit your time and energy to others.<br><br><span class='text-xs opacity-80'>혼자 있는 것을 너무 싫어해 끊임없이 약속을 잡다가, 정작 본인의 체력과 에너지가 방전되곤 합니다.</span>", match: "Fiery Tteokbokki<br><span class='text-[10px] font-normal'>불타는 마라 떡볶이</span>" },
+                { id: "f4", title: "🧊 Chill Naengmyeon<br><span class='text-lg font-bold text-gray-500'>쿨한 얼음 냉면</span>", overview: "Calm, independent, and refreshing. You keep a cool head in any chaotic situation.<br><br><span class='text-xs opacity-80'>차분하고 독립적이며 깔끔합니다. 아무리 복잡한 상황에서도 얼음처럼 이성적이고 쿨한 태도를 유지합니다.</span>", strengths: "High logic, sharp problem-solving skills, and you never cross people's boundaries.<br><br><span class='text-xs opacity-80'>논리적이고 문제 해결 능력이 뛰어나며, 타인의 선을 넘거나 불필요한 참견을 절대 하지 않습니다.</span>", weaknesses: "You can appear emotionally detached or indifferent, making it hard for people to get close to you.<br><br><span class='text-xs opacity-80'>감정 표현이 적고 무관심해 보여서, 사람들이 당신에게 진정으로 다가가는 데 큰 어려움을 느낄 수 있습니다.</span>", match: "Sizzling K-BBQ<br><span class='text-[10px] font-normal'>지글지글 K-삼겹살</span>" }
+            ]
+        };
+        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.add('hidden');
+            document.getElementById(toId).classList.remove('hidden');
+            document.getElementById(toId).classList.add('flex');
+        }
+        function selectGender(g) {
+            userGender = g;
+            switchScreen('start-screen', 'question-screen');
+            showQuestion();
+        }
+        function showQuestion() {
+            document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
+            const qScreen = document.getElementById('question-screen');
+            qScreen.classList.remove('fade-in'); void qScreen.offsetWidth; qScreen.classList.add('fade-in');
+            document.getElementById('q-title').innerHTML = questions[currentQ].q;
+            document.getElementById('btn-a').innerHTML = questions[currentQ].a;
+            document.getElementById('btn-b').innerHTML = questions[currentQ].b;
+        }
+        function answer(val) {
+            if(val === 0) score++;
+            currentQ++;
+            if(currentQ < questions.length) showQuestion();
+            else {
+                switchScreen('question-screen', 'loading-screen');
+                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2500);
+            }
+        }
+        function showResult(resultId) {
+            switchScreen('loading-screen', 'result-screen');
+            const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
+            const result = resultsData[userGender][idx];
+            document.getElementById('r-title').innerHTML = result.title;
+            document.getElementById('r-match').innerHTML = result.match;
+            const imgDiv = document.getElementById('r-img-div');
+            imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_food_soul_w.png')" : "url('k_food_soul_m.png')";
+            imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
+            
+            document.getElementById('r-desc').innerHTML = `
+                <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-orange-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
+                    <p class="text-sm text-orange-900 leading-relaxed font-medium">${result.overview}</p>
+                </div>
+                <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-amber-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
+                    <p class="text-sm text-amber-900 leading-relaxed font-medium">${result.strengths}</p>
+                </div>
+                <div class="bg-red-50 p-5 rounded-2xl border border-red-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-red-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
+                    <p class="text-sm text-red-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
