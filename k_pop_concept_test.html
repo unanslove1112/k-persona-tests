@@ -5,137 +5,270 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-Pop Concept Test</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143"
-     crossorigin="anonymous"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+    <style>
+        /* 부드러운 페이드인 애니메이션 추가 */
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
-        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-purple-50 to-white">
+        
+        <!-- 1. START SCREEN -->
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-purple-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-purple-600 mb-4 tracking-tight">K-Pop Concept</h1>
-            <p class="text-gray-600 mb-8 font-medium">What's your idol debut concept?</p>
+            <p class="text-gray-600 mb-8 font-medium">
+                What's your idol debut concept?<br><br>
+                <span class="text-sm text-gray-400">당신의 아이돌 데뷔 콘셉트는 무엇인가요?</span>
+            </p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-purple-100 mb-8">
                 <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Boy Group</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Girl Group</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👨 Boy Group</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-50 hover:bg-pink-100 text-pink-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👩 Girl Group</button>
                 </div>
             </div>
         </div>
 
+        <!-- 2. QUESTION SCREEN -->
         <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
             <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
                 <div id="progress-bar" class="bg-purple-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
             </div>
-            <div class="flex-1 flex flex-col justify-center">
-                <h2 id="q-title" class="text-2xl font-bold text-gray-800 mb-8 leading-relaxed">Question text</h2>
+            <div class="flex-1 flex flex-col justify-center fade-in">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-300 p-5 rounded-xl shadow-sm"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-300 p-5 rounded-xl shadow-sm"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-purple-50 border border-gray-200 hover:border-purple-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
                 </div>
             </div>
         </div>
 
+        <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-purple-600 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">Tuning the mic...</h2>
+            <h2 class="text-2xl font-bold mb-2">
+                Tuning the mic...<br><br>
+                <span class="text-lg opacity-80 font-normal">마이크 세팅 중...</span>
+            </h2>
         </div>
 
-        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-50">
-            <div class="text-center mb-6">
-                <h1 id="r-title" class="text-3xl font-extrabold text-gray-900">Title</h1>
-            </div>
-            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-inner border border-white/50 mb-6" style="background-size: 200%; background-position: 0% 0%;"></div>
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 mb-6">
-                <p id="r-desc" class="text-gray-600 text-center mb-4"></p>
-                <div class="bg-purple-50 rounded-xl p-4 text-center">
-                    <p class="text-xs text-purple-400 font-bold mb-1">BEST MATCH</p>
-                    <p id="r-match" class="font-bold text-purple-700"></p>
+        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI) -->
+        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
+            <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
+                
+                <!-- 배경 장식 (퍼플 테마) -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-3 py-1 bg-purple-50 text-purple-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Debut Concept Confirmed</span>
+                        <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
+                    </div>
+
+                    <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+
+                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
+                    <div id="r-desc" class="space-y-4 mb-6"></div>
+
+                    <!-- 찰떡 궁합 섹션 -->
+                    <div class="flex items-center justify-between bg-purple-900 rounded-2xl p-4 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">COLLAB MATCH</span>
+                        <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
+                    </div>
+
+                    <!-- 광고 영역 -->
+                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                        <ins class="adsbygoogle"
+                             style="display:block; width:100%;"
+                             data-ad-client="ca-pub-3466039113171143"
+                             data-ad-slot="여기에_슬롯ID_입력"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+                    </div>
+
+                    <button onclick="location.href='index.html'" class="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
+                        🏠 Go to Lobby
+                    </button>
                 </div>
-            </div>
-
-            <div class="mb-6 text-center">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-3466039113171143"
-                     data-ad-slot="여기에_슬롯ID_입력"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
-            </div>
-
-            <div class="space-y-3 mb-8">
-                <button onclick="location.href='index.html'" class="w-full bg-purple-600 text-white font-bold py-4 rounded-xl shadow-md">🏠 Go to Lobby</button>
             </div>
         </div>
     </div>
 
     <script>
         let userGender = '';
+        let currentQ = 0; 
+        let score = 0;
+
+        // 질문 데이터 (한영 혼용 HTML 포맷 적용)
         const questions = [
-            { q: "What is your dream debut stage outfit?", a: "Fierce leather jackets and silver chains.", b: "Pastel tones and bright high-teen uniforms." },
-            { q: "Choose your Music Video background!", a: "A dark cyberpunk futuristic city.", b: "A colorful vintage school and roller-rink." },
-            { q: "What's the key point choreography of your song?", a: "Powerful, sharply synchronized moves.", b: "Cute, highly addictive hand gestures." },
-            { q: "What is your main role in the group?", a: "The charismatic leader or main dancer.", b: "The visual center and energy mood maker." },
-            { q: "What's the concept for your first comeback?", a: "Dark, rebellious, and intense.", b: "Bright, nostalgic, and emotional." }
+            { 
+                q: "What is your dream debut stage outfit?<br><br><span class='text-sm text-gray-400 font-normal'>당신이 꿈꾸는 데뷔 무대 의상은?</span>", 
+                a: "Fierce leather jackets and silver chains.<br><br><span class='text-sm text-gray-500 font-normal'>강렬한 가죽 재킷과 실버 체인.</span>", 
+                b: "Pastel tones and bright high-teen uniforms.<br><br><span class='text-sm text-gray-500 font-normal'>파스텔 톤과 밝은 하이틴 스쿨룩.</span>" 
+            },
+            { 
+                q: "Choose your Music Video background!<br><br><span class='text-sm text-gray-400 font-normal'>뮤직비디오 배경을 골라주세요!</span>", 
+                a: "A dark cyberpunk futuristic city.<br><br><span class='text-sm text-gray-500 font-normal'>어두운 사이버펑크 미래 도시.</span>", 
+                b: "A colorful vintage school and roller-rink.<br><br><span class='text-sm text-gray-500 font-normal'>컬러풀한 빈티지 학교와 롤러스케이트장.</span>" 
+            },
+            { 
+                q: "What's the key point choreography of your song?<br><br><span class='text-sm text-gray-400 font-normal'>타이틀곡의 포인트 안무는?</span>", 
+                a: "Powerful, sharply synchronized moves.<br><br><span class='text-sm text-gray-500 font-normal'>파워풀하고 칼같이 맞는 군무.</span>", 
+                b: "Cute, highly addictive hand gestures.<br><br><span class='text-sm text-gray-500 font-normal'>귀엽고 중독성 강한 손동작 안무.</span>" 
+            },
+            { 
+                q: "What is your main role in the group?<br><br><span class='text-sm text-gray-400 font-normal'>그룹 내에서 당신의 메인 포지션은?</span>", 
+                a: "The charismatic leader or main dancer.<br><br><span class='text-sm text-gray-500 font-normal'>카리스마 넘치는 리더 또는 메인 댄서.</span>", 
+                b: "The visual center and energy mood maker.<br><br><span class='text-sm text-gray-500 font-normal'>비주얼 센터이자 에너지 넘치는 무드 메이커.</span>" 
+            },
+            { 
+                q: "What's the concept for your first comeback?<br><br><span class='text-sm text-gray-400 font-normal'>첫 컴백의 콘셉트는 무엇으로 할까요?</span>", 
+                a: "Dark, rebellious, and intense.<br><br><span class='text-sm text-gray-500 font-normal'>다크하고 반항적이며 강렬한 콘셉트.</span>", 
+                b: "Bright, nostalgic, and emotional.<br><br><span class='text-sm text-gray-500 font-normal'>밝고 향수를 불러일으키는 감성적인 콘셉트.</span>" 
+            }
         ];
         
+        // 결과 데이터 (전문 심리 리포트 3단 분리 포맷)
         const resultsData = {
             F: [
-                { id: "f1", title: "🖤 Fierce Girl Crush", desc: "Unmatched charisma. You tear up the stage like BLACKPINK or Aespa.", match: "Pure Refreshing" },
-                { id: "f2", title: "🌶️ Spicy Mala-Taste", desc: "Intense beats and dark storyline. Rebellious and highly addictive.", match: "Nostalgic Y2K" },
-                { id: "f3", title: "🍋 Pure Refreshing", desc: "Human vitamin. Your smile makes everyone happy instantly.", match: "Fierce Girl Crush" },
-                { id: "f4", title: "📼 Nostalgic Y2K", desc: "Trendy easy-listening vibe like NewJeans. Bringing the 00s back.", match: "Spicy Mala-Taste" }
-            ],
-            M: [
-                { id: "m1", title: "🖤 Dark Charisma", desc: "Powerful aura. You dominate the stage like EXO or Monsta X.", match: "Bright Boy Next Door" },
-                { id: "m2", title: "🌶️ Intense Mala-Taste", desc: "Hard-hitting rap and wild performances like Stray Kids or ATEEZ.", match: "Sentimental Y2K" },
-                { id: "m3", title: "🍋 Bright Boy Next Door", desc: "Refreshing and cute. Everyone's first love material.", match: "Dark Charisma" },
-                { id: "m4", title: "📼 Sentimental Y2K", desc: "Trendy, chill, and emotional vibe like RIIZE or TWS.", match: "Intense Mala-Taste" }
+                { 
+                    id: "f1", 
+                    title: "🖤 Fierce Girl Crush<br><span class='text-lg font-bold text-gray-500'>강렬한 걸크러시</span>", 
+                    overview: "Unmatched charisma. You tear up the stage and define what it means to be a powerful icon.<br><br><span class='text-xs opacity-80'>독보적인 카리스마. 무대 위를 압도하며 걸크러시의 정석이 무엇인지 보여주는 강렬한 콘셉트입니다.</span>", 
+                    strengths: "Powerful stage presence, trend-setting fashion, and a strong independent aura. You instantly capture the audience's attention.<br><br><span class='text-xs opacity-80'>파워풀한 무대 장악력, 트렌드를 이끄는 패션, 그리고 강한 독립적인 아우라. 단숨에 관중의 시선을 사로잡습니다.</span>", 
+                    weaknesses: "Your fierce image might make people think you are unapproachable or cold in real life.<br><br><span class='text-xs opacity-80'>워낙 강렬한 이미지 때문에, 실제 성격도 차갑거나 다가가기 어려울 것이라는 오해를 종종 받습니다.</span>", 
+                    match: "Pure Refreshing<br><span class='text-[10px] font-normal'>상큼 발랄 청량돌</span>" 
+                },
+                { 
+                    id: "f2", 
+                    title: "🌶️ Spicy Mala-Taste<br><span class='text-lg font-bold text-gray-500'>매운맛 마라맛 아이돌</span>", 
+                    overview: "Intense beats and a dark storyline. Rebellious, experimental, and highly addictive once people get a taste.<br><br><span class='text-xs opacity-80'>강렬한 비트와 다크한 세계관. 반항적이고 실험적이며, 한 번 맛보면 절대 빠져나올 수 없는 엄청난 중독성을 자랑합니다.</span>", 
+                    strengths: "Unrivaled performance skills and a deeply loyal core fandom. You aren't afraid to break the rules.<br><br><span class='text-xs opacity-80'>타의 추종을 불허하는 퍼포먼스 실력과 코어 팬덤의 탄탄한 지지. 기존의 틀과 공식을 깨는 것을 두려워하지 않습니다.</span>", 
+                    weaknesses: "The concepts can be too experimental for the general public, making it a bit harder to achieve mainstream chart success instantly.<br><br><span class='text-xs opacity-80'>콘셉트가 대중에게는 다소 난해하게 다가갈 수 있어, 대중적인 음원 차트를 즉각적으로 장악하기엔 진입 장벽이 있을 수 있습니다.</span>", 
+                    match: "Nostalgic Y2K<br><span class='text-[10px] font-normal'>아련 감성 Y2K</span>" 
+                },
+                { 
+                    id: "f3", 
+                    title: "🍋 Pure Refreshing<br><span class='text-lg font-bold text-gray-500'>상큼 발랄 청량돌</span>", 
+                    overview: "The ultimate human vitamin. Your bright smile and energetic songs make everyone happy instantly.<br><br><span class='text-xs opacity-80'>완벽한 인간 비타민. 특유의 밝은 미소와 에너제틱한 노래로 보는 사람까지 즉시 행복하게 만드는 콘셉트입니다.</span>", 
+                    strengths: "Broad public appeal, infectious positive energy, and perfect synchronization. You are loved by people of all ages.<br><br><span class='text-xs opacity-80'>폭넓은 대중성, 전염성 강한 긍정 에너지, 그리고 완벽한 팀워크. 남녀노소 모두에게 사랑받는 궁극의 호감형입니다.</span>", 
+                    weaknesses: "You may struggle to break out of the 'cute' box and face pressure when trying mature concepts later in your career.<br><br><span class='text-xs opacity-80'>'귀엽고 밝은' 이미지에 갇혀, 훗날 성숙하거나 다크한 콘셉트로 이미지 변신을 시도할 때 큰 압박감을 느낄 수 있습니다.</span>", 
+                    match: "Fierce Girl Crush<br><span class='text-[10px] font-normal'>강렬한 걸크러시</span>" 
+                },
+                { 
+                    id: "f4", 
+                    title: "📼 Nostalgic Y2K<br><span class='text-lg font-bold text-gray-500'>아련 감성 Y2K</span>", 
+                    overview: "Trendy easy-listening vibe. You bring the 00s back with an effortless, emotional aesthetic.<br><br><span class='text-xs opacity-80'>트렌디한 이지리스닝 바이브. 꾸안꾸 스타일과 아련한 감성으로 2000년대의 향수를 완벽하게 재현합니다.</span>", 
+                    strengths: "Highly trendy, natural charms, and music that dominates the streaming charts. You set the current standard of cool.<br><br><span class='text-xs opacity-80'>가장 트렌디하고 자연스러운 매력. 스트리밍 차트를 휩쓰는 대중성을 지녔으며 현재 K-Pop 씬의 '힙함'을 정의합니다.</span>", 
+                    weaknesses: "Since the vibe heavily relies on the current trend cycle, you must constantly innovate to stay relevant.<br><br><span class='text-xs opacity-80'>현재의 유행 흐름에 크게 의존하는 바이브이기 때문에, 트렌드가 변함에 따라 끊임없이 새로운 감성을 발굴해야 하는 부담이 있습니다.</span>", 
+                    match: "Spicy Mala-Taste<br><span class='text-[10px] font-normal'>매운맛 마라맛 아이돌</span>" 
+                }
             ]
         };
 
-        let currentQ = 0; let score = 0;
+        // 남성 데이터를 여성 데이터 구조와 동일하게 설정 후 타이틀 및 텍스트 수정
+        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
+        resultsData.M[0].title = "🖤 Dark Charisma<br><span class='text-lg font-bold text-gray-500'>다크 카리스마</span>";
+        resultsData.M[1].title = "🌶️ Intense Mala-Taste<br><span class='text-lg font-bold text-gray-500'>매운맛 퍼포먼스</span>";
+        resultsData.M[2].title = "🍋 Bright Boy Next Door<br><span class='text-lg font-bold text-gray-500'>청량한 옆집 소년</span>";
+        resultsData.M[3].title = "📼 Sentimental Y2K<br><span class='text-lg font-bold text-gray-500'>아련 감성 Y2K 보이</span>";
+
+        resultsData.M[0].overview = "Powerful aura and sexy concept. You dominate the stage with an intense, mature presence.<br><br><span class='text-xs opacity-80'>파워풀한 아우라와 절제된 섹시함. 무대 위를 압도하며 성숙하고 치명적인 매력을 발산하는 콘셉트입니다.</span>";
+        resultsData.M[0].strengths = "Flawless facial expressions, incredible physical presence, and the ability to pull off luxurious concepts perfectly.<br><br><span class='text-xs opacity-80'>완벽한 표정 연기, 압도적인 피지컬, 그리고 고급스럽고 무거운 콘셉트를 완벽하게 소화하는 능력을 갖췄습니다.</span>";
+        resultsData.M[0].weaknesses = "You might be boxed into overly serious or dramatic concepts, making it hard to show a bright, casual side.<br><br><span class='text-xs opacity-80'>지나치게 무겁거나 드라마틱한 콘셉트에 갇혀, 가끔은 밝고 캐주얼한 본래의 모습을 보여주기 어려울 때가 있습니다.</span>";
+        
+        resultsData.M[1].overview = "Hard-hitting rap and wild performances. You bring raw energy and massive scale to the stage.<br><br><span class='text-xs opacity-80'>거친 래핑과 야생적인 퍼포먼스. 무대를 부술 듯한 강렬한 에너지와 압도적인 스케일을 자랑하는 콘셉트입니다.</span>";
+        resultsData.M[1].strengths = "Self-producing abilities, jaw-dropping choreography, and explosive global popularity.<br><br><span class='text-xs opacity-80'>팀 내 자체 제작 능력, 입이 떡 벌어지는 고난도 안무 소화력, 그리고 폭발적인 글로벌 코어 인기를 자랑합니다.</span>";
+        resultsData.M[1].weaknesses = "The physical toll of the intense choreography is extremely high, and the music can be polarizing for the general public.<br><br><span class='text-xs opacity-80'>안무의 강도가 너무 높아 체력적인 부담이 극심하며, 강한 비트의 음악이 대중들에게는 호불호가 갈릴 수 있습니다.</span>";
+        
+        resultsData.M[2].overview = "Refreshing, cute, and approachable. You are everyone's first love material, radiating pure boyish charm.<br><br><span class='text-xs opacity-80'>청량하고 귀여우며 친근합니다. 만인의 첫사랑 조작을 일으키는 맑고 순수한 소년미의 결정체입니다.</span>";
+        resultsData.M[2].strengths = "Incredible public-friendly vibe, sweet vocals, and high variety show potential. You easily win over the masses.<br><br><span class='text-xs opacity-80'>엄청난 대중 친화력, 감미로운 보컬, 그리고 뛰어난 예능감. 대중들의 호감과 사랑을 아주 쉽게 얻어냅니다.</span>";
+        resultsData.M[2].weaknesses = "Hard to maintain the 'boyish' image as you grow older. Transitioning into mature concepts is a huge hurdle.<br><br><span class='text-xs opacity-80'>시간이 지남에 따라 '소년' 이미지를 계속 유지하기 어려우며, 성숙한 콘셉트로 넘어갈 때 큰 성장통을 겪습니다.</span>";
+        
+        resultsData.M[3].overview = "Trendy, chill, and emotional vibe. You capture the fleeting, beautiful moments of youth.<br><br><span class='text-xs opacity-80'>트렌디하고 칠(Chill)한 감성. 청춘의 찬란하고 아련한 순간들을 음악과 비주얼로 완벽하게 담아내는 콘셉트입니다.</span>";
+        resultsData.M[3].strengths = "Highly relatable music, effortless styling, and strong appeal to the MZ generation. You make everything look natural.<br><br><span class='text-xs opacity-80'>공감대를 형성하는 이지리스닝 음악, 꾸안꾸 스타일링, 그리고 MZ세대에게 강력하게 어필하는 힙하고 자연스러운 매력.</span>";
+        resultsData.M[3].weaknesses = "Your relaxed vibe might be overshadowed by groups with highly aggressive, flashy concepts in music shows.<br><br><span class='text-xs opacity-80'>자연스럽고 여유로운 바이브 탓에, 음악 방송 등에서 화려하고 자극적인 콘셉트의 그룹들에게 시선이 분산될 우려가 있습니다.</span>";
+
+        resultsData.M[0].match = "Bright Boy Next Door<br><span class='text-[10px] font-normal'>청량한 옆집 소년</span>";
+        resultsData.M[1].match = "Sentimental Y2K<br><span class='text-[10px] font-normal'>아련 감성 Y2K 보이</span>";
+        resultsData.M[2].match = "Dark Charisma<br><span class='text-[10px] font-normal'>다크 카리스마</span>";
+        resultsData.M[3].match = "Intense Mala-Taste<br><span class='text-[10px] font-normal'>매운맛 퍼포먼스</span>";
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.add('hidden');
+            document.getElementById(fromId).classList.remove('flex');
+            
+            const toScreen = document.getElementById(toId);
+            toScreen.classList.remove('hidden');
+            toScreen.classList.add('flex');
+        }
 
         function selectGender(g) {
             userGender = g;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('question-screen').classList.remove('hidden');
+            switchScreen('start-screen', 'question-screen');
             showQuestion();
         }
 
         function showQuestion() {
+            // 진행바 애니메이션
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
-            document.getElementById('q-title').innerText = questions[currentQ].q;
-            document.getElementById('btn-a').innerText = questions[currentQ].a;
-            document.getElementById('btn-b').innerText = questions[currentQ].b;
+            
+            // 페이드인 애니메이션 리셋
+            const qScreen = document.getElementById('question-screen');
+            qScreen.classList.remove('fade-in');
+            void qScreen.offsetWidth; 
+            qScreen.classList.add('fade-in');
+
+            // innerHTML 렌더링
+            document.getElementById('q-title').innerHTML = questions[currentQ].q;
+            document.getElementById('btn-a').innerHTML = questions[currentQ].a;
+            document.getElementById('btn-b').innerHTML = questions[currentQ].b;
         }
 
         function answer(val) {
             if(val === 0) score++;
             currentQ++;
-            if(currentQ < questions.length) showQuestion();
-            else {
-                document.getElementById('question-screen').classList.add('hidden');
-                document.getElementById('loading-screen').classList.remove('hidden');
-                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            
+            if(currentQ < questions.length) {
+                showQuestion();
+            } else {
+                switchScreen('question-screen', 'loading-screen');
+                const finalIdx = score % 4; 
+                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
             }
         }
 
         function showResult(resultId) {
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            const result = resultsData[userGender].find(r => r.id === resultId);
+            switchScreen('loading-screen', 'result-screen');
             
-            document.getElementById('r-title').innerText = result.title;
-            document.getElementById('r-desc').innerText = result.desc;
-            document.getElementById('r-match').innerText = result.match;
+            const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
+            const result = resultsData[userGender][idx];
+            
+            document.getElementById('r-title').innerHTML = result.title;
+            document.getElementById('r-match').innerHTML = result.match;
             
             const imgDiv = document.getElementById('r-img-div');
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_pop_concept_w.png')" : "url('k_pop_concept_m.png')";
+            imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
-            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+            // 1번 파일과 동일한 3단 분석 UI 구성 (퍼플 테마에 맞춘 배색)
+            document.getElementById('r-desc').innerHTML = `
+                <div class="bg-purple-50 p-5 rounded-2xl border border-purple-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-purple-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
+                    <p class="text-sm text-purple-900 leading-relaxed font-medium">${result.overview}</p>
+                </div>
+                <div class="bg-fuchsia-50 p-5 rounded-2xl border border-fuchsia-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-fuchsia-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
+                    <p class="text-sm text-fuchsia-900 leading-relaxed font-medium">${result.strengths}</p>
+                </div>
+                <div class="bg-violet-50 p-5 rounded-2xl border border-violet-100 shadow-sm">
+                    <h4 class="text-[10px] font-black text-violet-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
+                    <p class="text-sm text-violet-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                </div>
+            `;
         }
     </script>
 </body>
