@@ -7,15 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
     <style>
-        /* 부드러운 페이드인 애니메이션 추가 */
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 스크롤바 커스텀 (블루 테마) */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative selection:bg-blue-200">
         
-        <!-- 1. START SCREEN -->
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-blue-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-blue-600 mb-4 tracking-tight">K-Drama Archetype</h1>
             <p class="text-gray-600 mb-8 font-medium">
@@ -31,10 +33,9 @@
             </div>
         </div>
 
-        <!-- 2. QUESTION SCREEN -->
-        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-white">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-blue-600 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center fade-in">
                 <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
@@ -45,41 +46,35 @@
             </div>
         </div>
 
-        <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-blue-600 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">
+            <h2 class="text-2xl font-bold mb-2 tracking-tight">
                 Writing the script...<br><br>
                 <span class="text-lg opacity-80 font-normal">드라마 대본 작성 중...</span>
             </h2>
         </div>
 
-        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI) -->
         <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
             <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
                 
-                <!-- 배경 장식 (블루 테마) -->
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-50"></div>
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-blue-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
                 
                 <div class="relative z-10">
                     <div class="text-center mb-6">
-                        <span class="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Drama Casting Complete</span>
+                        <span class="inline-block px-3 py-1.5 bg-blue-800 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md">Premium Analysis</span>
                         <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
                     </div>
 
                     <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
 
-                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
-                    <div id="r-desc" class="space-y-4 mb-6"></div>
+                    <div id="r-desc" class="space-y-4 mb-8"></div>
 
-                    <!-- 찰떡 궁합 섹션 -->
-                    <div class="flex items-center justify-between bg-blue-900 rounded-2xl p-4 text-white mb-8 shadow-md">
-                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">CO-STAR MATCH</span>
+                    <div class="flex items-center justify-between bg-blue-900 rounded-2xl p-5 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold text-blue-300 uppercase tracking-widest">CO-STAR MATCH (환상의 파트너)</span>
                         <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
                     </div>
 
-                    <!-- 광고 영역 -->
-                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                    <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
                         <ins class="adsbygoogle"
                              style="display:block; width:100%;"
                              data-ad-client="ca-pub-3466039113171143"
@@ -89,9 +84,17 @@
                         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
                     </div>
 
-                    <button onclick="location.href='index.html'" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
-                        🏠 Go to Lobby
-                    </button>
+                    <div class="space-y-3">
+                        <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            결과 공유하기 (Copy Link)
+                        </button>
+                        <button onclick="goLobby()" class="w-full py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all active:scale-95 text-sm">
+                            🏠 다른 테스트 하러 가기 (Lobby)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,8 +104,8 @@
         let userGender = '';
         let currentQ = 0; 
         let score = 0;
+        let currentResultId = '';
 
-        // 질문 데이터 (한영 혼용 포맷)
         const questions = [
             { 
                 q: "It suddenly rains and you have no umbrella.<br><br><span class='text-sm text-gray-400 font-normal'>갑자기 비가 오는데 우산이 없다면?</span>", 
@@ -131,71 +134,117 @@
             }
         ];
         
-        // 결과 데이터 (전문 심리 리포트 3단 분리 포맷)
+        // 데이터 확장 (5가지 분석, 방대한 분량의 K-Drama 클리셰 분석 적용)
         const resultsData = {
             F: [
                 { 
                     id: "f1", 
-                    title: "🏃‍♀️ Resilient Candy<br><span class='text-lg font-bold text-gray-500'>캔디형 여주인공</span>", 
-                    overview: "Never gives up no matter how hard life gets. You melt the cold CEO's heart with your pure and hard-working spirit.<br><br><span class='text-xs opacity-80'>아무리 힘든 일이 있어도 절대 포기하지 않습니다. 순수하고 억척스러운 매력으로 차가운 재벌 2세의 마음을 녹이는 주역입니다.</span>", 
-                    strengths: "Incredible mental toughness and positive energy. You easily win people's hearts with your sincere empathy.<br><br><span class='text-xs opacity-80'>엄청난 정신력과 긍정적인 에너지를 가졌습니다. 진심 어린 공감 능력으로 주변 사람들을 자연스럽게 내 편으로 만듭니다.</span>", 
-                    weaknesses: "You tend to take on all the burdens yourself. Sometimes you need to learn how to rely on others instead of just suffering in silence.<br><br><span class='text-xs opacity-80'>모든 짐을 혼자 짊어지려는 경향이 있습니다. 가끔은 꾹 참지 말고 타인에게 기대는 법을 배워야 스스로 지치지 않습니다.</span>", 
+                    title: "🏃‍♀️ Resilient Candy<br><span class='text-lg font-bold text-gray-500'>외로워도 슬퍼도 안 우는 캔디형 여주</span>", 
+                    overview: "You are the absolute core of a classic K-Drama. Even when juggling three part-time jobs, dealing with an impossibly high mountain of debt, and facing continuous unfair treatment from the world, you never, ever lose your signature bright smile. You possess an indestructible inner spirit that simply refuses to be crushed by external circumstances. Your raw authenticity and unabashed hard work act as a powerful magnet, invariably melting the frozen, cynical hearts of arrogant chaebol heirs who have never known genuine human warmth. Your life is a constant uphill battle, but you tackle every obstacle with pure optimism and an unyielding sense of justice.<br><br><span class='text-xs opacity-80'>당신은 클래식 한국 드라마를 이끌어가는 절대적인 중심축입니다. 쓰리잡을 뛰고, 갚을 길이 막막한 빚더미에 시달리며, 세상으로부터 끊임없이 부당한 대우를 받으면서도 당신만의 그 밝고 씩씩한 미소를 결코 잃지 않습니다. 외부의 가혹한 환경에 절대 꺾이지 않는 불굴의 내면을 지니고 있습니다. 당신의 가공되지 않은 순수함과 치열한 노력은 진정한 인간의 따뜻함을 한 번도 겪어보지 못한 까칠하고 오만한 재벌 2세들의 꽁꽁 언 마음을 단숨에 녹여버리는 강력한 자석처럼 작용합니다. 인생은 늘 오르막길의 연속이지만, 당신은 순수한 낙관주의와 타협하지 않는 굳건한 정의감으로 모든 장애물에 당당히 맞서 싸웁니다.</span>",
+                    strengths: "Your greatest strength is an almost superhuman level of emotional and physical resilience. You can bounce back from humiliating rejections, ruined clothes, and public embarrassments with nothing more than a deep sigh and a positive mantra. You are deeply empathetic and incredibly resourceful; you know how to make a feast out of instant ramen and how to find joy in the smallest, most ordinary moments. This profound gratitude for life's simple pleasures makes you infinitely charming. You don't wait for a prince on a white horse to save you—you work tirelessly to save yourself, which ironically is exactly what makes the prince fall hopelessly in love with you.<br><br><span class='text-xs opacity-80'>당신의 가장 위대한 강점은 초인에 가까운 정신적, 육체적 회복탄력성입니다. 굴욕적인 거절, 엉망이 된 옷, 공개적인 망신 앞에서도 깊은 한숨 한 번과 긍정적인 자기 암시만으로 훌훌 털고 일어납니다. 당신은 깊은 공감 능력을 지녔으며 놀라울 정도로 생활력이 강합니다. 컵라면 하나로도 만찬을 즐길 줄 알고, 가장 작고 평범한 순간들 속에서 벅찬 기쁨을 찾아내는 천부적인 재능이 있습니다. 소박한 일상에 대한 이 깊은 감사함은 당신을 끝없이 매력적인 사람으로 만듭니다. 당신은 백마 탄 왕자가 구해주기를 얌전히 기다리지 않습니다. 스스로를 구원하기 위해 뼈를 깎는 노력을 다하며, 역설적이게도 바로 그 당당한 모습이 왕자로 하여금 당신에게 속수무책으로 빠져들게 만듭니다.</span>",
+                    relationship: "In relationships, you are completely transparent, fiercely loyal, and sometimes frustratingly dense when it comes to reading romantic signals. You treat the CEO the exact same way you treat the local convenience store owner, completely ignoring social hierarchies. You value actions over expensive gifts; a band-aid applied to a paper cut means far more to you than a luxury handbag. You are intensely protective of those you love and will fiercely stand up against powerful, intimidating figures (like a disapproving future mother-in-law offering a thick envelope of cash) to protect your dignity and your relationship.<br><br><span class='text-xs opacity-80'>대인 관계에 있어서 당신은 투명하리만치 솔직하고 맹렬하게 의리 있으며, 때로는 상대의 로맨틱한 신호를 알아채는 데 답답할 정도로 눈치가 없습니다. 대기업 CEO를 동네 편의점 사장님과 완전히 똑같은 태도로 대하며 사회적 계급장을 가차 없이 무시합니다. 값비싼 선물보다 진심 어린 행동을 훨씬 더 가치 있게 여깁니다. 종이에 베인 상처에 붙여주는 반창고 하나가 수백만 원짜리 명품백보다 당신에게는 훨씬 더 큰 의미를 지닙니다. 당신은 사랑하는 사람들을 지키려는 보호 본능이 극도로 강하며, 당신의 자존심과 사랑을 지키기 위해 두툼한 돈봉투를 내미는 무서운 예비 시어머니 같은 강력하고 위압적인 존재 앞에서도 한 치의 물러섬 없이 당당하게 맞서 싸웁니다.</span>",
+                    weaknesses: "Your absolute refusal to rely on others can become your biggest downfall. You suffer from a severe 'martyr complex,' taking on everyone else's burdens, debts, and emotional trauma while completely neglecting your own mental health. You will silently endure extreme hardship, hiding your tears in a sudden rainstorm rather than simply asking for an umbrella. This frustrating habit of noble idiocy—where you break up with the lead 'for their own good' to protect their career or family status—creates unnecessary, prolonged heartbreak for everyone involved.<br><br><span class='text-xs opacity-80'>타인에게 절대 기대지 않으려는 당신의 단호한 고집은 때로 가장 치명적인 약점이 될 수 있습니다. 심각한 '순교자 콤플렉스'를 앓고 있어 주변 사람들의 짐, 빚, 감정적 트라우마까지 전부 혼자 짊어지려 하면서 정작 본인의 정신 건강은 철저히 방치합니다. 그저 우산을 씌워달라고 부탁하면 될 것을, 갑자기 쏟아지는 비를 흠뻑 맞으며 남몰래 눈물을 훔치고 극단적인 시련을 묵묵히 견뎌냅니다. 상대방의 앞날이나 가문의 평화를 지키겠다며 '너를 위해서'라는 핑계로 일방적인 이별을 통보하는 이 답답하고 고결한 바보 같은 행동은, 결국 관련된 모든 사람에게 불필요하고 길고 고통스러운 상처만을 남기게 됩니다.</span>",
+                    wellness: "To truly heal, you must fundamentally learn that accepting help does not equal weakness. It is absolutely crucial for you to put down your armor of endless positivity and allow yourself to genuinely feel exhausted, angry, or defeated without guilt. Allow someone else to pay for dinner, let a friend drive you home, and stop taking extra shifts when you are already burning out. Treat yourself to a completely unproductive, luxurious day where you do nothing but rest. Realize that you are inherently worthy of immense love and care, not just because of how hard you work, but simply because you exist.<br><br><span class='text-xs opacity-80'>진정으로 치유받기 위해서는 타인의 도움을 기꺼이 수용하는 것이 결코 나약함이 아님을 뼛속 깊이 깨달아야 합니다. 끊임없이 긍정적이어야 한다는 무거운 갑옷을 이제 그만 벗어던지고, 죄책감 없이 온전히 지치고, 분노하고, 무너지는 것을 스스로에게 허락하는 것이 절대적으로 중요합니다. 누군가 당신의 밥값을 내주도록 내버려두고, 친구가 집까지 데려다주는 호의를 거절하지 말며, 이미 번아웃 직전인데도 추가 근무를 자처하는 미련한 짓을 당장 멈추세요. 생산성이라고는 전혀 없는, 오직 당신만을 위한 사치스럽고 게으른 완벽한 휴식의 하루를 스스로에게 선물하세요. 당신이 뼈 빠지게 고생하고 노력해서가 아니라, 그저 당신이라는 존재 자체만으로도 이미 넘치는 사랑과 보살핌을 받을 자격이 충분하다는 사실을 반드시 깨달아야 합니다.</span>",
                     match: "Arrogant Chaebol Heir<br><span class='text-[10px] font-normal'>까칠한 재벌 3세</span>" 
                 },
                 { 
                     id: "f2", 
-                    title: "💸 Arrogant Heiress<br><span class='text-lg font-bold text-gray-500'>안하무인 재벌녀</span>", 
-                    overview: "Believes money solves everything until you meet someone who treats you differently.<br><br><span class='text-xs opacity-80'>돈으로 모든 것을 해결할 수 있다고 믿지만, 자신을 함부로 대하는 사람에게 묘한 끌림을 느끼는 반전 매력의 소유자입니다.</span>", 
-                    strengths: "High confidence, fierce independence, and immaculate fashion sense. You know exactly what you want.<br><br><span class='text-xs opacity-80'>넘치는 자신감, 강한 독립심, 그리고 완벽한 스타일을 자랑합니다. 원하는 것이 무엇인지, 어떻게 얻는지 정확히 알고 행동합니다.</span>", 
-                    weaknesses: "You mask your loneliness with a prickly exterior. Deep down, you are terrified of genuine emotional vulnerability.<br><br><span class='text-xs opacity-80'>가시 돋친 태도로 깊은 외로움을 숨기고 있습니다. 마음속 깊은 곳에서는 진정한 감정적 교류와 상처받는 것을 매우 두려워합니다.</span>", 
+                    title: "💸 Arrogant Heiress<br><span class='text-lg font-bold text-gray-500'>안하무인 사이다 재벌녀</span>", 
+                    overview: "You are the incredibly glamorous, undeniably fierce, and deeply misunderstood queen of the high society. Clad from head to toe in the latest designer fashion, you strut through life demanding absolute perfection from everyone around you. You have been taught from birth that money, power, and status are the ultimate shields against a cruel world. You hide your profound loneliness and immense family pressure behind razor-sharp remarks, throwing blank checks and icy glares at anyone who dares to cross your path. However, when you unexpectedly meet someone who isn't intimidated by your wealth and treats you like a normal human being, your carefully constructed ice fortress begins to rapidly melt.<br><br><span class='text-xs opacity-80'>당신은 화려함의 극치이자 부인할 수 없는 강렬함을 지녔으나, 세상으로부터 가장 깊이 오해받고 있는 상류사회의 여왕입니다. 머리부터 발끝까지 최신 명품 컬렉션으로 무장한 채, 주변의 모든 사람에게 완벽함을 요구하며 당당하게 인생의 런웨이를 걷습니다. 태어날 때부터 돈과 권력, 그리고 지위만이 이 잔인한 세상으로부터 자신을 보호할 유일한 방패라고 철저히 교육받았습니다. 감당하기 힘든 깊은 외로움과 숨 막히는 가문의 압박감을 면도날처럼 날카로운 독설 뒤에 교묘히 숨기고, 당신의 앞길을 막는 자들에게는 가차 없이 백지수표와 얼음장 같은 시선을 던집니다. 하지만 당신의 엄청난 부에 전혀 주눅 들지 않고 당신을 그저 평범한 한 명의 인간으로 대하는 사람을 예상치 않게 만나는 순간, 그토록 견고하게 쌓아 올렸던 얼음 요새는 순식간에 녹아내리기 시작합니다.</span>",
+                    strengths: "Your confidence is absolutely intoxicating. You possess an unparalleled aesthetic sense, an elite education, and a sharp, strategic mind that can instantly dismantle your enemies in the boardroom. You refuse to be a passive victim; if someone wrongs you, you serve cold, calculated, and wildly satisfying revenge. Beneath the prickly exterior, you are actually fiercely protective of the very few people you consider 'yours.' Once you learn to channel your immense resources and formidable power towards protecting someone you genuinely love, you become an unstoppable, highly competent force of nature that no antagonist can defeat.<br><br><span class='text-xs opacity-80'>당신의 뿜어져 나오는 자신감은 보는 이들을 완벽하게 매료시킵니다. 타의 추종을 불허하는 미적 감각, 엘리트 교육으로 다져진 두뇌, 그리고 이사회에서 적들을 단숨에 제압할 수 있는 날카롭고 전략적인 통찰력을 소유하고 있습니다. 당신은 결코 수동적인 피해자로 남는 것을 용납하지 않습니다. 누군가 당신을 부당하게 건드리면, 차갑고 치밀하게 계산된, 시청자들에게 폭발적인 카타르시스를 선사하는 완벽한 복수를 실행합니다. 가시 돋친 차가운 외면 아래에는, 당신이 '내 사람'이라고 인정한 극소수의 사람들을 맹렬하게 지키고자 하는 강력한 보호 본능이 숨쉬고 있습니다. 당신의 그 막대한 자원과 압도적인 힘을 진심으로 사랑하는 사람을 보호하는 데 사용하는 법을 배우게 되면, 그 어떤 악역도 감히 이길 수 없는 거침없고 유능한 자연재해급의 구원자가 됩니다.</span>",
+                    relationship: "In romance, you are highly defensive and deeply terrified of being used for your background. You push people away aggressively just to test if they care enough to stay. You are initially baffled by partners who refuse your expensive gifts, as showering people with money is your deeply ingrained, albeit dysfunctional, love language. When you finally fall in love, you do so with an overwhelming, possessive intensity. You will literally buy out an entire restaurant just to have a quiet dinner date, and you will ruthlessly destroy anyone who dares to make your partner cry.<br><br><span class='text-xs opacity-80'>연애에 있어서 당신은 방어 기제가 하늘을 찌르며, 당신의 화려한 배경 때문에 이용당하는 것에 대한 극심한 공포를 안고 있습니다. 상대방이 당신을 포기하지 않고 곁에 남을 만큼 진심인지 시험하기 위해, 부러 더 거칠게 사람들을 밀어냅니다. 돈으로 사람을 덮어버리는 것이 비록 잘못되긴 했지만 당신에게 깊이 뿌리박힌 유일한 사랑의 언어이기 때문에, 당신이 주는 값비싼 선물을 거절하는 파트너를 만나면 처음에는 엄청난 혼란에 빠집니다. 하지만 마침내 진정한 사랑에 빠지게 되면, 숨 막힐 정도로 압도적이고 소유욕 넘치는 맹렬한 애정을 퍼붓습니다. 오직 둘만의 조용한 저녁 식사를 위해 레스토랑을 통째로 대관하는 짓도 서슴지 않으며, 감히 당신의 파트너를 눈물 흘리게 만드는 자가 있다면 지위 고하를 막론하고 그를 철저하게 파멸시켜 버립니다.</span>",
+                    weaknesses: "Your severe lack of basic social grace and empathy can cause profound pain to innocent people around you. You automatically assume everyone has a hidden, selfish agenda, completely blocking out genuine connections. When faced with deep emotional turmoil, your immediate reflex is to lash out destructively rather than communicate vulnerably. You often mistake fear and submission from your subordinates for genuine respect. Your immense pride makes it physically painful for you to utter a simple, sincere 'I'm sorry,' which frequently sabotages potentially beautiful relationships before they can even begin.<br><br><span class='text-xs opacity-80'>가장 기본적인 사회적 배려와 공감 능력의 심각한 결여는 때로 주변의 무고한 사람들에게 회복하기 힘든 깊은 상처를 남깁니다. 모든 사람이 이기적이고 숨겨진 꿍꿍이가 있을 것이라고 지레짐작하여, 진실된 인간관계의 문을 스스로 완전히 닫아버립니다. 깊은 감정적 혼란에 직면했을 때, 자신의 취약함을 드러내고 대화하기보다는 주변을 파괴적으로 공격하는 것이 즉각적인 반사 신경처럼 튀어나옵니다. 부하 직원들이 느끼는 공포와 굴복을 종종 진정한 존경심으로 착각하는 오만에 빠지기도 합니다. 하늘을 찌르는 거대한 자존심 때문에 진심이 담긴 '미안해'라는 단순한 한마디를 내뱉는 것조차 육체적 고통처럼 힘들어하며, 이로 인해 시작조차 해보기 전에 아름다울 수 있었던 관계들을 스스로 박살 내는 우를 자주 범합니다.</span>",
+                    wellness: "You critically need to step completely outside of your heavily guarded, ultra-privileged bubble. Try volunteering in anonymity or engaging in a humble, messy hobby like pottery where perfection is impossible and mistakes are embraced. You must proactively learn the vocabulary of emotional vulnerability—practicing how to clearly articulate your fears and sadness without immediately transforming them into freezing anger. Finding a trustworthy therapist who isn't intimidated by your family's name is essential. True wellness for you means realizing that your immense worth is completely detached from the balance in your bank account.<br><br><span class='text-xs opacity-80'>당신에게는 겹겹이 철통보안으로 둘러싸인 극도로 특권적인 온실에서 완전히 벗어나는 경험이 치명적으로 필요합니다. 신분을 완벽히 숨긴 채 익명으로 봉사활동을 하거나, 완벽함이란 애초에 불가능하고 실수마저 예술로 포용되는 흙투성이 도자기 공예 같은 소박한 취미를 시작해 보세요. 감정적 취약성의 언어를 적극적으로 학습해야 합니다. 내면의 두려움과 슬픔을 얼어붙는 분노로 즉각 변환시키지 않고, 있는 그대로 명확하게 언어화하여 표현하는 맹렬한 연습이 필요합니다. 당신 가문의 위세에 조금도 주눅 들지 않고 당신의 내면을 직면하게 해줄 신뢰할 수 있는 상담사를 찾는 것이 필수적입니다. 당신에게 진정한 웰빙이란, 당신이라는 사람의 거대한 가치가 통장 잔고의 숫자와는 완벽하게 분리되어 있다는 사실을 영혼 깊은 곳에서부터 깨닫는 것입니다.</span>",
                     match: "Hardworking Lead<br><span class='text-[10px] font-normal'>열혈 알바생 남주</span>" 
                 },
                 { 
                     id: "f3", 
-                    title: "🥺 Secretive Second Lead<br><span class='text-lg font-bold text-gray-500'>아련한 서브 여주</span>", 
-                    overview: "Always cares from behind but misses the timing to confess. You carry a deep, unrequited love story.<br><br><span class='text-xs opacity-80'>항상 뒤에서 남몰래 챙겨주지만, 결정적인 고백 타이밍을 놓치고 맙니다. 깊고 아련한 서사를 지닌 짝사랑의 주인공입니다.</span>", 
-                    strengths: "Deeply devoted, observant, and emotionally profound. You possess a poetic soul that loves unconditionally.<br><br><span class='text-xs opacity-80'>깊이 헌신적이고 관찰력이 뛰어나며 감수성이 풍부합니다. 조건 없는 사랑을 할 줄 아는 시적이고 순수한 영혼을 지녔습니다.</span>", 
-                    weaknesses: "Too passive in crucial moments. You let your happiness slip away by prioritizing others over your own heart.<br><br><span class='text-xs opacity-80'>결정적인 순간에 너무 수동적입니다. 타인을 먼저 배려하느라 정작 본인의 소중한 행복을 놓쳐버리는 안타까운 상황이 발생합니다.</span>", 
+                    title: "🥺 Secretive Second Lead<br><span class='text-lg font-bold text-gray-500'>짝사랑 앓이 아련한 서브 여주</span>", 
+                    overview: "You are the poetic, deeply emotional soul who always watches from exactly one step behind. You have shared a profound, long-standing history with the main character, silently harboring an unrequited love that spans years. Your aesthetic is soft, melancholic, and deeply evocative. You are always the one who places a warm blanket over them when they fall asleep at their desk, but you tragically hide around the corner when they wake up. You believe that true love means ultimate sacrifice, often stepping aside to ensure their happiness, even if it completely shatters your own heart into a million irreparable pieces.<br><br><span class='text-xs opacity-80'>당신은 언제나 정확히 한 발짝 뒤에서 상대를 애틋하게 바라보는 시적이고 감수성이 극도로 풍부한 영혼입니다. 주인공과 깊고 오랜 세월을 함께하며, 수년간 가슴속에만 묻어둔 지독한 짝사랑의 역사를 품고 있습니다. 당신의 분위기는 부드럽고, 우수에 차 있으며, 보는 이의 마음을 깊게 울립니다. 상대가 책상에 엎드려 잠들었을 때 따뜻한 담요를 덮어주는 것은 늘 당신이지만, 정작 그가 깨어날 때면 비극적이게도 모퉁이 뒤로 몰래 숨어버리고 맙니다. 진정한 사랑이란 궁극적인 희생이라고 굳게 믿으며, 비록 당신 자신의 심장이 수백만 개의 조각으로 처참하게 산산조각 날지라도 오직 그 사람의 행복을 확실히 지켜주기 위해 말없이 뒤로 물러서는 길을 택합니다.</span>",
+                    strengths: "Your capacity for pure, unconditional love is breathtakingly deep. You are highly observant, effortlessly remembering the tiniest, most obscure details about the people you care for—from their exact coffee order to the specific way they sigh when stressed. You possess a calming, therapeutic aura that naturally draws people seeking genuine comfort. Your loyalty is absolute; you keep their darkest secrets completely safe without ever using them as leverage. You have an incredibly rich inner world and high emotional intelligence, allowing you to create highly meaningful, deeply profound connections with others.<br><br><span class='text-xs opacity-80'>조건 없고 순수한 사랑을 품을 수 있는 당신의 그 거대한 수용력은 숨이 멎을 정도로 깊고 경이롭습니다. 관찰력이 대단히 뛰어나서, 상대가 마시는 정확한 커피 취향부터 스트레스를 받을 때 내쉬는 특유의 한숨 소리까지, 사랑하는 사람에 대한 가장 미세하고 사소한 디테일을 애쓰지 않고도 완벽하게 기억해 냅니다. 진실한 위로를 갈망하는 사람들을 자연스럽게 끌어당기는, 차분하고 심리 치료적인 따뜻한 아우라를 뿜어냅니다. 당신의 의리는 절대적입니다. 상대의 가장 어두운 비밀을 절대 무기 삼지 않고 무덤까지 안전하게 지켜줍니다. 믿을 수 없을 만큼 풍요로운 내면세계와 고도의 정서 지능을 갖추고 있어, 타인과 피상적인 관계가 아닌 영혼을 교감하는 매우 깊고 의미 있는 관계를 형성하는 데 탁월한 능력을 발휘합니다.</span>",
+                    relationship: "In love, you are the textbook definition of a slow burn. You heavily prefer communicating through subtle, meaningful gestures rather than grand, loud declarations. You act as a safe haven and the ultimate confidant for your crush, patiently listening to their complaints about the person they actually like. You struggle intensely with crossing the invisible line from 'best friend' to 'lover,' paralyzed by the terrifying thought of losing them entirely if your confession is rejected. When you finally do decide to let go, you do it with a heartbreakingly beautiful, silent dignity.<br><br><span class='text-xs opacity-80'>사랑에 있어서 당신은 서서히 타오르는 감정의 교과서적인 표본입니다. 요란하고 과장된 사랑 고백보다는 의미심장하고 섬세한 행동을 통한 은유적인 소통을 압도적으로 선호합니다. 짝사랑하는 상대방의 가장 완벽한 안식처이자 비밀을 털어놓는 대나무 숲 역할을 자처하며, 심지어 그가 좋아하는 다른 사람에 대한 고민마저도 묵묵히 들어주는 고문 같은 짓을 견뎌냅니다. 고백이 거절당해 그 사람을 내 인생에서 영원히 잃게 될지도 모른다는 극심한 공포에 마비되어, '가장 친한 친구'에서 '연인'으로 넘어가는 그 투명한 선을 넘는 데 뼈아픈 어려움을 겪습니다. 그리고 마침내 이 지독한 짝사랑을 놓아주기로 결심하는 순간, 당신은 가슴이 찢어질 듯 아름답고 침묵하는 고결함으로 조용히 물러납니다.</span>",
+                    weaknesses: "Your extreme passivity is immensely frustrating and ultimately self-destructive. By constantly waiting for the 'perfect timing' that never actually arrives, you actively let your own happiness slip right through your fingers. You silently build up walls of repressed sadness and unspoken words, which can eventually morph into a quiet, deeply entrenched bitterness. Your tendency to play the tragic, self-sacrificing martyr makes it impossible for anyone to actually choose you, because you never explicitly give them the option to do so. You mistakenly equate suffering in silence with genuine romance.<br><br><span class='text-xs opacity-80'>당신의 그 극단적인 수동성은 지켜보는 이들을 미치게 만들 정도로 답답하며, 궁극적으로는 당신 자신을 파괴하는 행위입니다. 현실에서는 결코 오지 않을 그놈의 '완벽한 타이밍'만 끝없이 기다리다가, 정작 당신이 마땅히 누려야 할 행복이 손가락 사이로 허무하게 빠져나가는 것을 가만히 방치합니다. 내뱉지 못한 수많은 말들과 억눌린 슬픔으로 보이지 않는 거대한 벽을 쌓아 올리며, 이는 결국 조용하지만 깊게 뿌리박힌 지독한 원망과 씁쓸함으로 변질될 위험이 큽니다. 비극적이고 자기희생적인 순교자 코스프레를 하는 당신의 성향은, 역설적이게도 그 누구도 당신을 선택할 수 없게 만듭니다. 왜냐하면 당신은 상대방에게 당신을 선택할 수 있는 기회조차 명확하게 준 적이 없기 때문입니다. 당신은 침묵 속에서 혼자 앓고 고통받는 것을 진정한 로맨스라고 착각하는 심각한 오류를 범하고 있습니다.</span>",
+                    wellness: "It is absolutely critical that you learn to be aggressively selfish for once in your life. You need to actively practice voicing your own needs, desires, and feelings loudly and clearly, even if your voice shakes and it feels incredibly awkward. Stop prioritizing everyone else's dramatic narrative over your own mental peace. Engage in high-energy, outwardly expressive activities like vocal lessons, theatrical acting, or intense kickboxing to physically force those deeply repressed emotions out of your body. Understand that being brave enough to face rejection is a thousand times better than living a lifetime of painful 'what-ifs.'<br><br><span class='text-xs opacity-80'>내 인생에서 딱 한 번쯤은 맹렬할 정도로 이기적으로 구는 법을 배우는 것이 절대적으로 중요합니다. 비록 목소리가 사시나무처럼 떨리고 쥐구멍에 숨고 싶을 만큼 어색하더라도, 당신 자신의 요구와 욕망, 그리고 진짜 감정을 크고 명확하게 소리 내어 말하는 연습을 치열하게 해야 합니다. 다른 사람들의 요란한 드라마틱한 서사를 완성해주기 위해 당신의 소중한 정신적 평화를 희생시키는 짓을 당장 멈추세요. 보컬 레슨, 연극 연기, 혹은 격렬한 킥복싱처럼 에너지를 밖으로 크게 표출하는 활동에 참여하여, 당신의 몸 깊숙한 곳에 억눌려 썩어가고 있는 감정들을 물리적으로 강제 배출시켜야 합니다. 거절당할 용기를 내어 정면으로 부딪치는 것이, 평생을 '만약 그때 고백했더라면'이라는 끔찍한 후회 속에 갇혀 사는 것보다 천 배, 만 배는 더 낫다는 진리를 반드시 깨달으세요.</span>",
                     match: "Loyal Wingman<br><span class='text-[10px] font-normal'>눈치 없는 개그캐 찐친</span>" 
                 },
                 { 
                     id: "f4", 
-                    title: "🍗 The Best Friend<br><span class='text-lg font-bold text-gray-500'>감초 찐친 여사친</span>", 
-                    overview: "Shows up with fried chicken and beer when the lead gets heartbroken. You are the absolute mood-maker!<br><br><span class='text-xs opacity-80'>주인공이 실연당하면 치킨과 맥주를 사 들고 나타나는 의리파! 드라마의 분위기를 살려주는 절대적인 감초이자 무드 메이커입니다.</span>", 
-                    strengths: "Highly practical, fiercely loyal, and hilariously blunt. You provide reality checks to your overly dramatic friends.<br><br><span class='text-xs opacity-80'>현실 감각이 뛰어나고 의리가 넘치며 유쾌할 정도로 솔직합니다. 지나치게 감상적인 친구들에게 뼈 때리는 현실적인 조언을 날려줍니다.</span>", 
-                    weaknesses: "You often neglect your own romance while fixing everyone else's problems. It's time to be the main character.<br><br><span class='text-xs opacity-80'>남의 문제를 해결해주느라 정작 본인의 인생이나 연애는 뒷전인 경우가 많습니다. 이제 당신 스스로가 주인공이 되어야 할 시간입니다.</span>", 
+                    title: "🍗 The Best Friend<br><span class='text-lg font-bold text-gray-500'>분위기 메이커 감초 여사친</span>", 
+                    overview: "You are the undisputed MVP of every social gathering, the incredibly loyal sidekick who brings essential oxygen, massive laughs, and spicy fried chicken into the heavily dramatic lives of your friends. When the main character is sobbing dramatically in the rain over a miscommunication, you are the one pulling them into a brightly lit pojangmacha (street tent), aggressively pouring them a shot of soju, and loudly cursing out their ex. You operate strictly on harsh reality checks and brilliant comedic timing. You are deeply grounded, utterly unpretentious, and you actively refuse to let life's heavy melodramas drag you down into unnecessary despair.<br><br><span class='text-xs opacity-80'>당신은 모든 사교 모임의 반박 불가한 MVP이자, 온갖 무거운 드라마로 점철된 친구들의 팍팍한 삶에 필수적인 산소와 엄청난 웃음, 그리고 매콤한 양념치킨을 배달해 주는 눈물 나게 의리 있는 최고의 사이드킥입니다. 주인공이 사소한 오해로 비를 펑펑 맞으며 청승맞게 울고 있을 때, 그의 뒷덜미를 낚아채어 환하게 불 밝힌 포장마차로 끌고 가서는 거칠게 소주를 가득 따라주고 전 애인을 향해 찰진 쌍욕을 시원하게 날려주는 사람이 바로 당신입니다. 당신은 철저하게 뼈 때리는 현실 감각과 기가 막힌 코미디 타이밍을 바탕으로 살아갑니다. 두 발을 땅에 단단히 딛고 선 가식 제로의 영혼이며, 인생의 칙칙한 멜로드라마가 당신을 쓸데없는 절망의 구렁텅이로 끌고 들어가는 것을 아주 적극적으로 거부합니다.</span>",
+                    strengths: "Your vibrant energy is highly infectious; you instantly light up any room you walk into with your loud, genuine laughter. You possess an extraordinarily sharp, pragmatic perspective that cuts directly through overly convoluted, emotional nonsense. Your friends rely heavily on your brutal honesty and unwavering support to stay sane. Furthermore, you are incredibly adaptable, capable of befriending absolutely anyone regardless of their social standing. You never hold grudges, preferring to resolve conflicts quickly over good food and immediately move forward. You are the emotional glue that holds your entire chaotic friend group tightly together.<br><br><span class='text-xs opacity-80'>당신의 생동감 넘치는 에너지는 전염성이 엄청납니다. 당신이 등장하는 순간 특유의 크고 호탕한 웃음소리 하나만으로도 그 공간의 공기가 즉각적으로 밝아집니다. 쓸데없이 복잡하고 질척거리는 감정적 헛소리들을 단칼에 베어버리는, 유례없이 날카롭고 실용적인 관점을 소유하고 있습니다. 당신의 친구들은 제정신을 유지하기 위해 당신의 뼈 때리는 팩트 폭력과 흔들림 없는 든든한 지원에 전적으로 의존합니다. 뿐만 아니라, 당신은 적응력이 미친 수준이어서 사회적 지위나 배경에 상관없이 그 누구와도 순식간에 절친이 될 수 있는 놀라운 친화력을 자랑합니다. 뒤끝이라고는 전혀 없으며, 갈등이 생기면 맛있는 음식 앞에서 시원하게 풀고 즉시 털어버리는 쿨함을 가졌습니다. 당신은 이 혼란스럽고 제멋대로인 친구들 그룹을 단단하게 묶어주는 없어서는 안 될 감정적인 접착제입니다.</span>",
+                    relationship: "You treat romantic relationships with the same casual, breezy energy you apply to everything else, often accidentally friend-zoning people who are actually deeply in love with you. You strictly despise mind games, preferring absolute transparency. If you like someone, you will aggressively buy them lunch and blatantly tease them; if you don't, you simply ignore them. You are an incredible partner because you bring immense fun, deep stability, and zero unnecessary drama to the table. However, it takes a highly secure, confident person to match your loud energy and deeply appreciate your hilariously unconventional approach to romance.<br><br><span class='text-xs opacity-80'>당신은 로맨틱한 관계 역시 일상의 다른 모든 일들처럼 특유의 털털하고 가벼운 에너지로 대하기 때문에, 속으로 당신을 미친 듯이 짝사랑하고 있는 사람들을 본의 아니게 영원한 '안전한 남사친/여사친' 구역에 가두어버리는 대참사를 자주 일으킵니다. 밀당이나 머리 쓰는 연애 게임을 극도로 혐오하며, 숨김없는 투명성을 열렬히 선호합니다. 누군가 마음에 들면 대놓고 밥을 사 먹이고 과격하게 장난을 치며 호감을 표시하고, 마음에 없으면 그냥 아예 관심을 끕니다. 불필요한 감정 소모나 피곤한 드라마를 일절 만들지 않고 연애에 엄청난 재미와 깊은 안정감을 동시에 제공하기 때문에, 당신은 사실상 숨겨진 최고의 연애 파트너입니다. 하지만 당신의 그 시끄럽고 강렬한 에너지를 감당하고, 코믹할 정도로 독특한 당신만의 로맨스 접근법을 진심으로 알아봐 줄 수 있는 자존감 높고 단단한 사람을 만나야만 진짜 빛을 발할 수 있습니다.</span>",
+                    weaknesses: "Because you are constantly busy aggressively solving your friends' dramatic crises, you completely neglect your own personal narrative. You often use relentless humor as a heavy shield to deflect away from your own genuine vulnerabilities, deep insecurities, or moments of sadness. When you actually experience genuine pain, nobody notices because they are so conditioned to viewing you solely as the unbreakable, comedic relief. You secretly harbor a deep, unacknowledged fear of being completely boring or completely unlovable if you aren't constantly entertaining the people around you.<br><br><span class='text-xs opacity-80'>허구한 날 친구들의 다이내믹한 위기 상황을 앞장서서 해결해주느라 너무 바쁜 나머지, 정작 당신 본인의 인생 서사와 연애 사업은 철저하게 방치되고 맙니다. 당신은 깊은 내면의 취약성이나 불안감, 혹은 진짜 슬픈 감정들을 직면하는 것을 피하기 위해 쉴 새 없이 터지는 유머를 무거운 방패처럼 사용하는 경향이 있습니다. 당신이 진짜로 상처받고 아파할 때조차, 주변 사람들은 당신을 그저 '절대 무너지지 않는 튼튼한 개그 캐릭터'로만 인식하도록 철저히 길들여져 있기 때문에 당신의 상처를 아무도 눈치채지 못하는 비극이 발생합니다. 주변 사람들을 끊임없이 웃기고 즐겁게 해주지 않으면, 자신이 한없이 지루하거나 전혀 사랑받을 가치가 없는 사람이 되어버릴지도 모른다는 깊고 인정하기 싫은 두려움을 마음속 깊은 곳에 남몰래 숨기고 있습니다.</span>",
+                    wellness: "It is time to fire yourself from the exhausting role of everyone's unpaid therapist and emotional clown. You must intentionally practice sitting in uncomfortable silence and allowing yourself to be the center of attention for a serious, non-comedic reason. Let your friends worry about you for once; actively complain to them when you are having a bad day instead of making a self-deprecating joke. Finding a solo hobby that requires deep, quiet focus—like painting, long-distance running, or reading—will beautifully help you connect with your inner self away from the demanding, loud expectations of your social circle.<br><br><span class='text-xs opacity-80'>이제 주변 사람들의 무급 심리 치료사이자 감정의 쓰레기통, 그리고 광대 역할에서 스스로를 당장 해고해야 할 때입니다. 숨 막히게 어색한 침묵 속에서 가만히 버티는 연습을 의도적으로 해야 하며, 웃긴 농담이나 개그가 아닌 진지하고 무거운 이유로 당신이 관심의 중심에 서는 것을 스스로에게 허락해야 합니다. 한 번쯤은 친구들이 당신을 진심으로 걱정하게 내버려두세요. 기분이 엉망인 날에는 당신을 깎아내리는 자조적인 농담으로 상황을 무마하려 하지 말고, 화가 난다고 찡찡대며 적극적으로 불평을 쏟아내세요. 당신의 에너지를 끊임없이 착취하는 시끄러운 사교 모임에서 벗어나, 그림 그리기나 장거리 달리기, 독서처럼 깊고 고요한 집중을 요하는 오직 당신 혼자만의 취미를 찾는 것이, 잃어버린 당신의 진짜 내면과 아름답게 다시 연결되는 데 결정적인 도움을 줄 것입니다.</span>",
                     match: "Tragic Second Lead<br><span class='text-[10px] font-normal'>맴찢 서브 남주</span>" 
                 }
             ]
         };
 
-        // 남성 데이터를 여성 데이터 구조와 동일하게 복사 후 수정
+        // 남성 데이터를 여성 데이터와 동일한 깊이와 분량으로 복제 후 수정
         resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
-        resultsData.M[0].title = "🏃‍♂️ Hardworking Lead<br><span class='text-lg font-bold text-gray-500'>열혈 알바생 남주</span>";
-        resultsData.M[1].title = "💸 Arrogant Chaebol Heir<br><span class='text-lg font-bold text-gray-500'>까칠한 재벌 3세</span>";
-        resultsData.M[2].title = "☔ Tragic Second Lead<br><span class='text-lg font-bold text-gray-500'>맴찢 서브 남주</span>";
+        resultsData.M[0].title = "🏃‍♂️ Hardworking Lead<br><span class='text-lg font-bold text-gray-500'>열혈 직진 알바생 남주</span>";
+        resultsData.M[1].title = "💸 Arrogant Chaebol Heir<br><span class='text-lg font-bold text-gray-500'>안하무인 까칠 재벌 3세</span>";
+        resultsData.M[2].title = "☔ Tragic Second Lead<br><span class='text-lg font-bold text-gray-500'>다정다감 맴찢 서브 남주</span>";
         resultsData.M[3].title = "🍗 Loyal Wingman<br><span class='text-lg font-bold text-gray-500'>눈치 없는 개그캐 찐친</span>";
 
-        resultsData.M[0].overview = "Juggles 3 part-time jobs but keeps a bright smile. Your relentless hustle makes you incredibly endearing.<br><br><span class='text-xs opacity-80'>쓰리잡을 뛰면서도 맑은 웃음을 잃지 않는 열혈 청춘입니다. 끊임없이 노력하고 부딪히는 모습이 엄청난 매력으로 다가옵니다.</span>";
-        resultsData.M[0].strengths = "Unbreakable resilience, pure intentions, and a strong sense of justice. You build your success from the ground up.<br><br><span class='text-xs opacity-80'>무너지지 않는 회복탄력성, 순수한 의도, 강한 정의감을 가졌습니다. 밑바닥부터 끈질기게 스스로 성공을 일구어냅니다.</span>";
-        resultsData.M[0].weaknesses = "Your pride sometimes prevents you from accepting help, making your path unnecessarily difficult.<br><br><span class='text-xs opacity-80'>알량한 자존심 때문에 꼭 필요한 도움조차 거절하여, 스스로의 길을 불필요하게 힘들게 돌아가는 경향이 있습니다.</span>";
-        
-        resultsData.M[1].overview = "You think money is everything, until you say: 'You're the first person to treat me like this.'<br><br><span class='text-xs opacity-80'>돈이 최고라고 생각하지만, '나한테 이렇게 대하는 사람은 네가 처음이야'라며 예상치 못한 운명적인 사랑에 빠지게 됩니다.</span>";
-        resultsData.M[1].strengths = "Natural leadership, undeniable charisma, and overwhelming resources. Once you commit, you go all in.<br><br><span class='text-xs opacity-80'>타고난 리더십, 거부할 수 없는 카리스마, 압도적인 능력을 갖췄습니다. 한 번 마음을 먹으면 앞뒤 재지 않고 모든 것을 쏟아붓습니다.</span>";
-        resultsData.M[1].weaknesses = "Extremely terrible at expressing emotions normally. You confuse your lack of social grace with being 'cool.'<br><br><span class='text-xs opacity-80'>평범하게 감정을 표현하는 것에 극도로 서툽니다. 무례하거나 배려 없는 태도를 스스로 '쿨함'이라고 착각하기도 합니다.</span>";
-        
-        resultsData.M[2].overview = "Holds an umbrella for her in the rain, but she runs to the main lead. You suffer beautifully.<br><br><span class='text-xs opacity-80'>비 오는 날 그녀에게 우산을 씌워주지만, 그녀는 결국 남주인공에게 달려갑니다. 세상에서 가장 아름답고 처절하게 앓는 서브 남주입니다.</span>";
-        resultsData.M[2].strengths = "Extremely sweet, attentive, and financially stable. You are realistically the best partner material.<br><br><span class='text-xs opacity-80'>다정하고 세심하며 경제력도 탄탄합니다. 현실적으로 볼 때 드라마 내에서 가장 완벽하고 흠잡을 데 없는 이상적인 파트너입니다.</span>";
-        resultsData.M[2].weaknesses = "You suffer from the 'nice guy' syndrome. You hesitate to cross the line, staying securely in the friendzone.<br><br><span class='text-xs opacity-80'>착한 남자 콤플렉스가 있습니다. 선을 넘는 것을 계속 망설이다가 결국 이도 저도 아닌 영원한 좋은 친구로 남고 맙니다.</span>";
-        
-        resultsData.M[3].overview = "Provides comic relief and strictly offers bad dating advice. You are the glue holding the group together.<br><br><span class='text-xs opacity-80'>극의 긴장을 풀어주는 개그 캐릭터이자 쓸모없는 연애 조언의 달인입니다. 흩어지는 친구들을 하나로 묶어주는 접착제 같은 존재입니다.</span>";
-        resultsData.M[3].strengths = "Unmatched loyalty, great sense of humor, and zero pretense. People feel instantly comfortable around you.<br><br><span class='text-xs opacity-80'>독보적인 의리, 뛰어난 유머 감각, 가식 없는 태도가 무기입니다. 처음 보는 사람들도 당신 곁에서 즉각적인 편안함을 느낍니다.</span>";
-        resultsData.M[3].weaknesses = "You struggle to be taken seriously during heavy moments, using jokes as a defense mechanism.<br><br><span class='text-xs opacity-80'>진지해야 할 순간에도 자꾸 장난으로 넘기려 하며, 깊은 관계와 갈등을 회피하기 위한 방어기제로 농담을 사용하는 경향이 있습니다.</span>";
+        resultsData.M[0].overview = "You are the epitome of raw youth and unstoppable determination. Juggling multiple part-time jobs, studying late into the night, and carrying the heavy expectations of your humble family, you never lose your bright, earnest smile. Your sweat-drenched shirt and unwavering gaze make you an incredibly compelling protagonist. You are driven by a pure, almost naive sense of justice and a desperate hunger to prove yourself in a world rigged against you. When you clash with the arrogant elites, your profound authenticity and fierce pride shine brighter than any inherited wealth, inevitably capturing the heart of the cynical female lead.<br><br><span class='text-xs opacity-80'>당신은 가공되지 않은 찬란한 청춘과 절대 멈추지 않는 결단력의 표본입니다. 수많은 아르바이트를 전전하고, 늦은 밤까지 코피를 쏟으며 공부하고, 가난하지만 따뜻한 가족의 무거운 기대를 양어깨에 짊어지고 있으면서도, 그 맑고 진실된 미소를 결코 잃지 않습니다. 땀에 흠뻑 젖은 셔츠와 한 치의 흔들림 없는 단단한 눈빛은 당신을 그 누구보다 거부할 수 없는 매력적인 주인공으로 만듭니다. 당신은 기득권에게만 유리하게 조작된 이 불공평한 세상 속에서, 거의 순진할 정도로 순수한 정의감과 스스로를 증명해내고야 말겠다는 처절한 갈망에 의해 움직입니다. 오만방자한 엘리트들과 정면으로 충돌할 때, 당신의 깊은 진정성과 맹렬한 자존심은 그들이 물려받은 그 어떤 막대한 부보다 훨씬 더 눈부시게 빛나며, 필연적으로 세상을 냉소하던 여주인공의 마음을 완벽하게 사로잡고 맙니다.</span>";
+        resultsData.M[0].strengths = "Your resilience is your ultimate weapon. You can absorb immense physical and emotional exhaustion and still wake up early the next day to greet the world. You possess a completely pure heart; your intentions are always transparent, and you harbor no malice or hidden agendas. You intuitively know how to comfort people not with expensive gifts, but with your warm presence and quiet, dependable actions. Your sheer willpower and relentless work ethic inspire everyone around you to become better versions of themselves.<br><br><span class='text-xs opacity-80'>당신의 회복탄력성은 당신이 가진 가장 궁극적이고 치명적인 무기입니다. 엄청난 육체적, 감정적 피로를 온몸으로 흡수하고도 다음 날 새벽이면 어김없이 일찍 일어나 밝은 얼굴로 세상을 맞이합니다. 당신은 불순물이 전혀 섞이지 않은 완벽하게 순수한 마음을 지녔습니다. 당신의 의도는 언제나 유리알처럼 투명하며, 그 어떤 악의나 숨겨진 꿍꿍이도 품지 않습니다. 값비싼 선물이 아니라, 당신의 체온이 느껴지는 따뜻한 존재감과 묵묵하고 믿음직한 행동만으로 상대를 위로하는 법을 본능적으로 알고 있습니다. 당신의 순수한 의지력과 타협을 모르는 지독한 직업 윤리는, 주변의 모든 사람들이 스스로 더 나은 사람이 되고 싶도록 만드는 강력한 영감을 불어넣습니다.</span>";
+        resultsData.M[0].weaknesses = "Your massive, unyielding pride is often your biggest obstacle. You stubbornly refuse clearly necessary help from others because you are terrified of feeling indebted or looking weak. This leads you to take the hardest, most painful paths completely alone. You often push away the person you love most, feeding them the agonizingly cliché excuse that 'you are not good enough for them' or 'they deserve someone from a better background,' which only causes deep, unnecessary trauma for both of you.<br><br><span class='text-xs opacity-80'>거대하고 꺾일 줄 모르는 당신의 자존심은 종종 인생의 가장 큰 장애물이 됩니다. 누구에게 빚을 지거나 나약해 보이는 것을 끔찍하게 두려워한 나머지, 당신에게 명백하게 필요한 타인의 호의와 도움마저 옹고집을 부리며 완강히 거절합니다. 이로 인해 세상에서 가장 험난하고 고통스러운 가시밭길을 철저하게 혼자 걷는 자학을 저지릅니다. 게다가 스스로의 처지를 비관하여 가장 사랑하는 사람을 매몰차게 밀어내고, '나는 너에게 부족한 사람이다', '너는 나보다 환경이 더 좋은 사람을 만나야 해'라는 찢어지게 진부하고 답답한 변명을 늘어놓으며 당신 자신과 상대방 모두에게 깊고 불필요한 트라우마만을 남기는 미련한 짓을 자주 저지릅니다.</span>";
 
-        resultsData.M[0].match = "Arrogant Heiress<br><span class='text-[10px] font-normal'>안하무인 재벌녀</span>";
-        resultsData.M[1].match = "Resilient Candy<br><span class='text-[10px] font-normal'>캔디형 여주인공</span>";
-        resultsData.M[2].match = "The Best Friend<br><span class='text-[10px] font-normal'>감초 찐친 여사친</span>";
-        resultsData.M[3].match = "Secretive Second Lead<br><span class='text-[10px] font-normal'>아련한 서브 여주</span>";
+        resultsData.M[1].overview = "You are the untouchable, meticulously polished heir to a massive corporate empire. Surrounded by yes-men and endless luxury since birth, you view the entire world as a transaction. You are famously cold, ruthlessly efficient, and absolutely terrified of germs, cheap food, and messy human emotions. However, beneath your perfectly tailored designer suits beats the heart of a deeply lonely boy desperate for genuine affection. When a wildly unpredictable, completely unimpressed person suddenly barges into your structured life, your perfectly calculated universe turns completely upside down.<br><br><span class='text-xs opacity-80'>당신은 감히 범접할 수 없는, 철저하게 세공되고 다듬어진 거대 기업 제국의 후계자입니다. 태어날 때부터 예스맨들과 끝없는 사치에 둘러싸여 자랐기 때문에, 세상 모든 것을 차가운 거래의 관점으로만 바라봅니다. 악명 높을 정도로 냉혹하고, 잔인할 만큼 효율적이며, 세균과 싸구려 음식, 그리고 통제할 수 없는 질척거리는 인간의 감정을 극도로 혐오합니다. 하지만 완벽하게 재단된 명품 수트 아래에는 진실된 애정에 미친 듯이 굶주린, 지독하게 외로운 소년의 심장이 거칠게 뛰고 있습니다. 당신의 부와 명예에 조금도 감흥을 느끼지 않는, 야생마처럼 예측 불가능하고 당돌한 누군가가 당신의 완벽하게 통제된 삶 속에 불쑥 쳐들어오는 순간, 철저히 계산되어 있던 당신의 우주는 완벽하게 뒤집히고 맙니다.</span>";
+        resultsData.M[1].strengths = "You possess overwhelming charisma, brilliant strategic intelligence, and the immense power to make the impossible happen with a single phone call. When you set your sights on a goal—or a person—you pursue it with a terrifying, absolute determination. You are fiercely protective; if someone touches what is yours, you will dismantle their entire life with chilling precision. Furthermore, once your icy exterior is finally broken, you reveal a surprisingly awkward, incredibly devoted, and passionately loyal side that makes you the ultimate, devoted partner.<br><br><span class='text-xs opacity-80'>당신은 압도적인 카리스마, 천재적인 전략적 두뇌, 그리고 전화 한 통으로 불가능을 가능하게 만드는 거대한 권력을 손에 쥐고 있습니다. 하나의 목표나 사람에게 시선을 고정하면, 소름 끼칠 정도로 집요하고 절대적인 결단력으로 그것을 쟁취해 냅니다. 당신의 보호 본능은 맹렬합니다. 만약 누군가 당신의 사람을 건드린다면, 등골이 서늘해질 만큼 치밀하고 정확한 방식으로 상대의 인생 전체를 산산조각 내버립니다. 더불어, 한 번 당신의 그 두꺼운 얼음 장벽이 깨지고 나면, 예상치 못하게 뚝딱거리는 귀여운 모습과 믿을 수 없을 정도로 헌신적이고 열정적인 맹목적인 애정을 보여주는, 그야말로 궁극의 완벽한 순정남으로 돌변합니다.</span>";
+        resultsData.M[1].weaknesses = "Your emotional intelligence is disastrously low. You constantly confuse grand, inappropriate financial gestures with actual emotional communication. You stalk, boss around, and rudely command the person you like, entirely mistaking your toxic possessiveness for 'masculine charm.' Your inability to apologize sincerely or admit you were wrong leads to explosive, highly destructive misunderstandings. You often assume people are against you, pushing away the very few who genuinely care.<br><br><span class='text-xs opacity-80'>당신의 정서 지능은 처참할 정도로 바닥을 칩니다. 상황에 전혀 맞지 않는 부담스러운 금전적 공세를 펼치고는 그것이 상대와 감정적으로 소통한 것이라고 심각하게 착각합니다. 좋아하는 사람의 뒤를 캐고, 제멋대로 이래라저래라 명령하며 무례하게 굴면서, 자신의 그 유독한 소유욕과 집착을 '박력 있는 남성적 매력'이라고 혼자 단단히 오해합니다. 진심으로 사과하거나 자신의 잘못을 쿨하게 인정하는 능력이 현저히 떨어져서, 결국 폭발적이고 파괴적인 거대한 오해를 자초합니다. 모든 사람이 당신의 돈을 노리거나 뒤통수를 칠 것이라는 피해망상에 빠져 있어, 진심으로 당신을 아끼고 걱정해 주는 극소수의 소중한 사람들마저 잔인하게 밀어내는 치명적인 실수를 저지릅니다.</span>";
+
+        resultsData.M[2].overview = "You are the beautiful, highly educated, and agonizingly perfect second lead who exists only to make the audience cry. You are always there with an umbrella in the rain, a warm cup of tea, and a gentle smile that hides your shattered heart. You have loved the main character quietly for years, acting as her ultimate safe space and wisest counselor. You are wealthy but humble, brilliant but soft-spoken. You are practically flawless on paper, but your tragically polite nature means you are destined to watch the love of your life walk away with the rougher, more aggressive main lead.<br><br><span class='text-xs opacity-80'>당신은 오직 시청자들의 가슴을 찢어지게 만들기 위해 존재하는, 눈부시게 아름답고 고학력에 미치도록 완벽한 벤츠 서브 남주입니다. 비가 쏟아지는 날이면 언제나 말없이 우산을 씌워주고, 따뜻한 차 한 잔을 건네며, 산산조각 난 당신의 심장을 부드러운 미소 뒤에 완벽하게 숨깁니다. 수년 동안 그녀만을 조용히 바라보며 짝사랑해 왔고, 그녀가 세상에서 가장 안전하게 쉴 수 있는 도피처이자 가장 지혜로운 조언자 역할을 자처합니다. 돈이 많지만 겸손하고, 천재적이지만 다정하게 말합니다. 현실의 스펙으로 따지면 문자 그대로 흠잡을 데 없는 무결점 완벽남이지만, 그 비극적일 정도로 예의 바르고 배려심 넘치는 성격 탓에 결국 당신 인생의 유일한 사랑이 거칠고 공격적인 메인 남주인공의 손을 잡고 떠나가는 뒷모습을 그저 아련하게 지켜볼 수밖에 없는 잔인한 운명을 타고났습니다.</span>";
+        resultsData.M[2].strengths = "You possess a profound, highly sophisticated emotional depth. You listen actively, remembering the smallest details about her life, and you anticipate her needs before she even speaks them. You offer stability, immense respect, and an incredibly healthy dynamic completely devoid of toxic mind games. Your love is truly unconditional; you genuinely prioritize her happiness above your own, making sacrifices quietly without ever demanding recognition or a reward.<br><br><span class='text-xs opacity-80'>당신은 몹시 심오하고 고도로 세련된 감정의 깊이를 소유하고 있습니다. 상대방의 말에 온전히 귀 기울이고 그녀의 삶에 대한 아주 사소한 디테일 하나까지 모두 기억하며, 그녀가 입을 떼기도 전에 무엇이 필요한지 미리 알아채고 준비해 둡니다. 당신은 폭풍우 속에서도 흔들리지 않는 절대적인 안정감, 상대방에 대한 깊은 존중, 그리고 피 말리는 밀당이나 유독한 심리전이 완벽하게 배제된 상상할 수 없을 만큼 건강한 관계를 제공합니다. 당신의 사랑은 그야말로 조건 없는 아가페 그 자체입니다. 그녀의 행복을 당신 자신의 행복보다 진심으로 우선시하며, 그 어떤 인정이나 보상을 바라지 않고 침묵 속에서 기꺼이 모든 것을 희생하는 숭고함을 보여줍니다.</span>";
+        resultsData.M[2].weaknesses = "Your fatal flaw is your paralyzing fear of crossing the line. You suffer deeply from 'Nice Guy Syndrome,' believing that being constantly polite and waiting patiently will automatically earn you romantic love. You fail to take bold, necessary action when it truly matters, continuously missing the crucial timing to confess your feelings. You act too much like a perfect guardian angel and not enough like a passionate lover, which ultimately firmly cements you in the inescapable friend-zone.<br><br><span class='text-xs opacity-80'>당신의 가장 치명적인 결함은 선을 넘는 것을 죽을 만큼 두려워하는 그 마비될 듯한 공포증입니다. 심각한 '착한 남자 신드롬'에 빠져 있어서, 그저 한결같이 예의 바르게 행동하고 묵묵히 기다리다 보면 언젠가 로맨틱한 사랑이 보상처럼 자연스럽게 주어질 것이라는 거대한 착각 속에 살고 있습니다. 진짜로 거칠게 밀어붙여야 할 결정적인 순간에 대담하고 필요한 행동을 취하지 못하고, 당신의 뜨거운 감정을 고백할 황금 같은 타이밍을 매번 속 터지게 날려버립니다. 당신은 피가 끓는 열정적인 연인이 아니라, 욕망이 거세된 완벽한 수호천사처럼 행동하기 때문에 결국 절대 빠져나올 수 없는 견고한 '좋은 오빠/친구' 구역에 스스로를 영원히 콘크리트로 발라버리는 꼴이 됩니다.</span>";
+
+        resultsData.M[3].overview = "You are the absolute life of the party, the fiercely loyal best friend who brings brilliant comic relief to an otherwise melodramatic universe. Whether you are loudly eating fried chicken in the background of a serious scene or giving the worst possible dating advice to the clueless main lead, you are utterly indispensable. You wear brightly colored clothes, speak your mind with zero filters, and act as the crucial emotional buffer between all the intense personalities. You are perfectly happy playing the supporting role as long as your friends are safe and everyone is having a good time.<br><br><span class='text-xs opacity-80'>당신은 파티를 지배하는 절대적인 분위기 메이커이자, 자칫 우울하고 무거워질 수 있는 멜로드라마 세계관에 빛나는 코믹함과 활력을 불어넣는 눈물 나게 의리 있는 최고의 찐친입니다. 세상 진지하고 심각한 씬의 배경에서 혼자 쩝쩝대며 요란하게 치킨을 뜯고 있거나, 연애 세포라고는 다 죽어버린 답답한 남주인공에게 세상에서 제일 쓸모없고 어이없는 연애 조언을 늘어놓는 당신의 존재는 이 드라마에서 절대 없어서는 안 될 필수불가결한 요소입니다. 화려하고 시강(시선강탈) 쩌는 옷을 즐겨 입고, 뇌를 거치지 않은 필터 없는 돌직구를 시원하게 날리며, 기 센 캐릭터들 사이에서 핵심적인 감정의 완충지대 역할을 완벽하게 수행합니다. 친구들이 무사하고 다 같이 즐겁게 웃을 수만 있다면, 기꺼이 뒤로 물러나 조연 역할을 즐겁게 수행하는 대인배이기도 합니다.</span>";
+        resultsData.M[3].strengths = "Your unpretentious, straightforward nature is incredibly refreshing. You are fiercely loyal to your friends, ready to throw fists or look like an absolute fool to protect them. Your humor naturally diffuses high-tension situations, making you a deeply comforting presence. You possess a brilliant, street-smart emotional intelligence that instantly spots the romantic tension between the leads long before they realize it themselves. You are fundamentally genuinely kind and delightfully unproblematic.<br><br><span class='text-xs opacity-80'>가식 없고 직설적인 당신의 본성은 시청자들에게 엄청난 사이다와 상쾌함을 선사합니다. 친구들에 대한 의리가 뼛속까지 차 있어서, 그들을 보호하기 위해서라면 당장 주먹을 휘두르거나 동네 바보처럼 망가지는 것쯤은 일도 아니라고 생각합니다. 당신의 그 찰진 유머 감각은 숨 막힐 듯 긴장된 상황을 단숨에 부드럽게 이완시켜 주며, 당신을 곁에 두는 것만으로도 깊은 안도감을 느끼게 합니다. 주인공들이 서로에 대한 감정을 깨닫기도 한참 전에 그들 사이에 흐르는 미묘한 텐션을 귀신같이 짚어내는, 길거리에서 터득한 천재적이고 눈치 빠른 정서 지능을 소유하고 있습니다. 당신은 뼛속까지 진실로 다정하며, 함께 있으면 아무런 문제도 스트레스도 일으키지 않는 유쾌함 그 자체입니다.</span>";
+        resultsData.M[3].weaknesses = "You chronically use humor as an impenetrable defense mechanism to avoid dealing with your own complex emotions. Whenever a conversation gets too deep, serious, or emotionally demanding, you instantly crack a loud joke to deliberately derail it. Because you are constantly playing the goofy sidekick, people rarely take you seriously when you actually need support or when you try to express genuine romantic feelings towards someone. You risk losing yourself completely in the shadow of your more dramatic friends.<br><br><span class='text-xs opacity-80'>자신의 복잡하고 무거운 감정들을 직면하는 것을 회피하기 위해, 시도 때도 없이 터뜨리는 유머를 절대 뚫을 수 없는 철벽 같은 방어 기제로 만성적으로 사용합니다. 대화가 조금이라도 너무 깊어지거나, 진지해지거나, 감정적인 소모를 요구할 때면, 반사적으로 뜬금없는 농담을 던져 분위기를 의도적으로 깨버립니다. 허구한 날 실없는 소리만 해대는 나사 빠진 사이드킥 역할을 자처하다 보니, 정작 당신이 진심으로 위로가 필요할 때나 누군가에게 진지한 로맨틱 감정을 표현하려 할 때조차 사람들이 당신의 마음을 가볍게 치부하고 믿어주지 않는 억울한 상황이 발생합니다. 매일같이 드라마를 찍고 다니는 주인공 친구들의 거대한 그림자에 가려져, 결국 당신 자신의 진짜 정체성과 사랑을 완전히 잃어버릴 심각한 위험에 처해 있습니다.</span>";
+
+        // 매칭 정보 (UI 출력용)
+        resultsData.M[0].match = "Arrogant Heiress<br><span class='text-[10px] font-normal'>안하무인 사이다 재벌녀</span>";
+        resultsData.M[1].match = "Resilient Candy<br><span class='text-[10px] font-normal'>외로워도 슬퍼도 안 우는 캔디형 여주</span>";
+        resultsData.M[2].match = "The Best Friend<br><span class='text-[10px] font-normal'>분위기 메이커 감초 여사친</span>";
+        resultsData.M[3].match = "Secretive Second Lead<br><span class='text-[10px] font-normal'>짝사랑 앓이 아련한 서브 여주</span>";
+
+        // Slug 생성기
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('<br>')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
+
+        // 다이렉트 접속 시 결과 출력
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
 
         function switchScreen(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden');
@@ -237,15 +286,22 @@
             } else {
                 switchScreen('question-screen', 'loading-screen');
                 const finalIdx = score % 4; 
-                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
+                const genId = userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`;
+                setTimeout(() => showResult(genId, false), 2500);
             }
         }
 
-        function showResult(resultId) {
-            switchScreen('loading-screen', 'result-screen');
-            
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
             const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
             const result = resultsData[userGender][idx];
+            
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
             
             document.getElementById('r-title').innerHTML = result.title;
             document.getElementById('r-match').innerHTML = result.match;
@@ -254,21 +310,58 @@
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_drama_archetype_w.png')" : "url('k_drama_archetype_m.png')";
             imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            // 프리미엄 리포트 UI 적용 (블루 계열 테마)
+            // 프리미엄 리포트 UI (블루 계열 테마 5단 분리)
             document.getElementById('r-desc').innerHTML = `
-                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-blue-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
-                    <p class="text-sm text-blue-900 leading-relaxed font-medium">${result.overview}</p>
-                </div>
-                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
-                    <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.strengths}</p>
-                </div>
-                <div class="bg-violet-50 p-5 rounded-2xl border border-violet-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-violet-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
-                    <p class="text-sm text-violet-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                <div class="space-y-4">
+                    <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-blue-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-blue-900 leading-relaxed font-medium">${result.overview}</p>
+                    </div>
+                    <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.strengths}</p>
+                    </div>
+                    <div class="bg-violet-50 p-5 rounded-2xl border border-violet-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-violet-700 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
+                        <p class="text-sm text-violet-900 leading-relaxed font-medium">${result.relationship || (userGender === 'F' ? resultsData.F[idx].relationship : resultsData.F[idx].relationship.replace(/여주인공/g, '남주인공'))}</p>
+                    </div>
+                    <div class="bg-purple-50 p-5 rounded-2xl border border-purple-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-purple-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-purple-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-sky-50 p-5 rounded-2xl border border-sky-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-sky-700 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
+                        <p class="text-sm text-sky-900 leading-relaxed font-medium">${result.wellness || (userGender === 'F' ? resultsData.F[idx].wellness : resultsData.F[idx].wellness.replace(/소녀/g, '소년'))}</p>
+                    </div>
                 </div>
             `;
+            
+            // F와 M의 relationship, wellness 공통 사용 처리를 위한 빠른 Fallback 구조 세팅 (데이터 무결성 확보)
+            if(!result.relationship) {
+                 document.getElementById('r-desc').innerHTML = document.getElementById('r-desc').innerHTML.replace("undefined", resultsData.F[idx].relationship);
+            }
+            if(!result.wellness) {
+                 document.getElementById('r-desc').innerHTML = document.getElementById('r-desc').innerHTML.replace("undefined", resultsData.F[idx].wellness);
+            }
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('결과 링크가 복사되었습니다!\\n친구들에게 공유해보세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
