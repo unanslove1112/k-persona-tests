@@ -7,20 +7,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
     <style>
-        /* 부드러운 페이드인 애니메이션 추가 */
+        /* 부드러운 페이드인 애니메이션 */
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative selection:bg-purple-200">
         
-        <!-- 1. START SCREEN -->
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-purple-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-purple-600 mb-4 tracking-tight">K-Pop Concept</h1>
             <p class="text-gray-600 mb-8 font-medium">
-                What's your idol debut concept?<br><br>
-                <span class="text-sm text-gray-400">당신의 아이돌 데뷔 콘셉트는 무엇인가요?</span>
+                Find your ultimate idol persona.<br><br>
+                <span class="text-sm text-gray-400">당신의 K-Pop 아이돌 컨셉은?</span>
             </p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-purple-100 mb-8">
                 <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
@@ -31,10 +34,9 @@
             </div>
         </div>
 
-        <!-- 2. QUESTION SCREEN -->
-        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-purple-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-white">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-purple-500 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center fade-in">
                 <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
@@ -45,41 +47,35 @@
             </div>
         </div>
 
-        <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-purple-600 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">
+            <h2 class="text-2xl font-bold mb-2 tracking-tight">
                 Tuning the mic...<br><br>
-                <span class="text-lg opacity-80 font-normal">마이크 세팅 중...</span>
+                <span class="text-lg opacity-80 font-normal">데뷔 무대 준비 중...</span>
             </h2>
         </div>
 
-        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI) -->
-        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
+        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-slate-50">
             <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
                 
-                <!-- 배경 장식 (퍼플 테마) -->
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-50"></div>
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
                 
                 <div class="relative z-10">
                     <div class="text-center mb-6">
-                        <span class="inline-block px-3 py-1 bg-purple-50 text-purple-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Debut Concept Confirmed</span>
+                        <span class="inline-block px-3 py-1.5 bg-purple-800 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md">Premium Debut Profile</span>
                         <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
                     </div>
 
                     <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
 
-                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
-                    <div id="r-desc" class="space-y-4 mb-6"></div>
+                    <div id="r-desc" class="space-y-4 mb-8"></div>
 
-                    <!-- 찰떡 궁합 섹션 -->
-                    <div class="flex items-center justify-between bg-purple-900 rounded-2xl p-4 text-white mb-8 shadow-md">
-                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">COLLAB MATCH</span>
+                    <div class="flex items-center justify-between bg-purple-900 rounded-2xl p-5 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold text-purple-300 uppercase tracking-widest">BEST COLLAB (최고의 유닛 파트너)</span>
                         <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
                     </div>
 
-                    <!-- 광고 영역 -->
-                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                    <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
                         <ins class="adsbygoogle"
                              style="display:block; width:100%;"
                              data-ad-client="ca-pub-3466039113171143"
@@ -89,9 +85,17 @@
                         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
                     </div>
 
-                    <button onclick="location.href='index.html'" class="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
-                        🏠 Go to Lobby
-                    </button>
+                    <div class="space-y-3">
+                        <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-purple-500 to-fuchsia-600 hover:from-purple-600 hover:to-fuchsia-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            결과 공유하기 (Copy Link)
+                        </button>
+                        <button onclick="goLobby()" class="w-full py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all active:scale-95 text-sm">
+                            🏠 다른 테스트 하러 가기 (Lobby)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,109 +105,133 @@
         let userGender = '';
         let currentQ = 0; 
         let score = 0;
+        let currentResultId = '';
 
-        // 질문 데이터 (한영 혼용 HTML 포맷 적용)
         const questions = [
             { 
-                q: "What is your dream debut stage outfit?<br><br><span class='text-sm text-gray-400 font-normal'>당신이 꿈꾸는 데뷔 무대 의상은?</span>", 
-                a: "Fierce leather jackets and silver chains.<br><br><span class='text-sm text-gray-500 font-normal'>강렬한 가죽 재킷과 실버 체인.</span>", 
-                b: "Pastel tones and bright high-teen uniforms.<br><br><span class='text-sm text-gray-500 font-normal'>파스텔 톤과 밝은 하이틴 스쿨룩.</span>" 
+                q: "When you stand on stage, what is your ultimate goal?<br><br><span class='text-sm text-gray-400 font-normal'>무대에 오를 때 당신의 가장 큰 목표는?</span>", 
+                a: "To make the audience smile and feel happy.<br><br><span class='text-sm text-gray-500 font-normal'>관객들을 웃게 하고 행복한 에너지를 전하는 것.</span>", 
+                b: "To deliver a flawless, breathtaking performance.<br><br><span class='text-sm text-gray-500 font-normal'>모두를 압도하는 숨 막히고 완벽한 퍼포먼스를 보여주는 것.</span>" 
             },
             { 
-                q: "Choose your Music Video background!<br><br><span class='text-sm text-gray-400 font-normal'>뮤직비디오 배경을 골라주세요!</span>", 
-                a: "A dark cyberpunk futuristic city.<br><br><span class='text-sm text-gray-500 font-normal'>어두운 사이버펑크 미래 도시.</span>", 
-                b: "A colorful vintage school and roller-rink.<br><br><span class='text-sm text-gray-500 font-normal'>컬러풀한 빈티지 학교와 롤러스케이트장.</span>" 
+                q: "What kind of outfit do you prefer for a music video?<br><br><span class='text-sm text-gray-400 font-normal'>뮤직비디오 촬영 시 선호하는 의상 스타일은?</span>", 
+                a: "Bright, colorful, and trendy streetwear.<br><br><span class='text-sm text-gray-500 font-normal'>밝고 화려하며 트렌디한 스트릿 패션.</span>", 
+                b: "Dark, chic, and elegant tailored suits.<br><br><span class='text-sm text-gray-500 font-normal'>어둡고 시크하며 각이 잡힌 우아한 수트.</span>" 
             },
             { 
-                q: "What's the key point choreography of your song?<br><br><span class='text-sm text-gray-400 font-normal'>타이틀곡의 포인트 안무는?</span>", 
-                a: "Powerful, sharply synchronized moves.<br><br><span class='text-sm text-gray-500 font-normal'>파워풀하고 칼같이 맞는 군무.</span>", 
-                b: "Cute, highly addictive hand gestures.<br><br><span class='text-sm text-gray-500 font-normal'>귀엽고 중독성 강한 손동작 안무.</span>" 
+                q: "During a fan meeting, your approach is...<br><br><span class='text-sm text-gray-400 font-normal'>팬미팅에서 당신의 소통 방식은?</span>", 
+                a: "Talking non-stop, joking, and being deeply relatable.<br><br><span class='text-sm text-gray-500 font-normal'>쉬지 않고 농담을 던지며 친근한 동네 친구처럼 다가간다.</span>", 
+                b: "Giving quiet, intense eye contact and sincere words.<br><br><span class='text-sm text-gray-500 font-normal'>조용하지만 강렬한 눈맞춤과 진심 어린 한마디를 전한다.</span>" 
             },
             { 
-                q: "What is your main role in the group?<br><br><span class='text-sm text-gray-400 font-normal'>그룹 내에서 당신의 메인 포지션은?</span>", 
-                a: "The charismatic leader or main dancer.<br><br><span class='text-sm text-gray-500 font-normal'>카리스마 넘치는 리더 또는 메인 댄서.</span>", 
-                b: "The visual center and energy mood maker.<br><br><span class='text-sm text-gray-500 font-normal'>비주얼 센터이자 에너지 넘치는 무드 메이커.</span>" 
+                q: "If you have a solo dance break, the style is...<br><br><span class='text-sm text-gray-400 font-normal'>당신에게 단독 댄스 브레이크가 주어진다면?</span>", 
+                a: "High-energy, powerful hip-hop or popping.<br><br><span class='text-sm text-gray-500 font-normal'>에너지 넘치고 파워풀한 힙합이나 팝핑.</span>", 
+                b: "Fluid, graceful, and expressive contemporary dance.<br><br><span class='text-sm text-gray-500 font-normal'>부드럽고 우아하며 감정선이 돋보이는 현대 무용.</span>" 
             },
             { 
-                q: "What's the concept for your first comeback?<br><br><span class='text-sm text-gray-400 font-normal'>첫 컴백의 콘셉트는 무엇으로 할까요?</span>", 
-                a: "Dark, rebellious, and intense.<br><br><span class='text-sm text-gray-500 font-normal'>다크하고 반항적이며 강렬한 콘셉트.</span>", 
-                b: "Bright, nostalgic, and emotional.<br><br><span class='text-sm text-gray-500 font-normal'>밝고 향수를 불러일으키는 감성적인 콘셉트.</span>" 
+                q: "The main theme of your debut song is about...<br><br><span class='text-sm text-gray-400 font-normal'>당신의 데뷔곡이 담고 있는 핵심 주제는?</span>", 
+                a: "Youth, first love, and chasing bright dreams.<br><br><span class='text-sm text-gray-500 font-normal'>찬란한 청춘, 첫사랑, 그리고 빛나는 꿈을 쫓는 이야기.</span>", 
+                b: "Overcoming darkness, rebellion, and finding myself.<br><br><span class='text-sm text-gray-500 font-normal'>어둠을 극복하고, 세상에 반항하며 진짜 나를 찾는 이야기.</span>" 
             }
         ];
         
-        // 결과 데이터 (전문 심리 리포트 3단 분리 포맷)
+        // 데이터 확장 (5가지 분석, K-Pop 컨셉에 맞춘 심층적이고 방대한 텍스트)
         const resultsData = {
             F: [
                 { 
                     id: "f1", 
-                    title: "🖤 Fierce Girl Crush<br><span class='text-lg font-bold text-gray-500'>강렬한 걸크러시</span>", 
-                    overview: "Unmatched charisma. You tear up the stage and define what it means to be a powerful icon.<br><br><span class='text-xs opacity-80'>독보적인 카리스마. 무대 위를 압도하며 걸크러시의 정석이 무엇인지 보여주는 강렬한 콘셉트입니다.</span>", 
-                    strengths: "Powerful stage presence, trend-setting fashion, and a strong independent aura. You instantly capture the audience's attention.<br><br><span class='text-xs opacity-80'>파워풀한 무대 장악력, 트렌드를 이끄는 패션, 그리고 강한 독립적인 아우라. 단숨에 관중의 시선을 사로잡습니다.</span>", 
-                    weaknesses: "Your fierce image might make people think you are unapproachable or cold in real life.<br><br><span class='text-xs opacity-80'>워낙 강렬한 이미지 때문에, 실제 성격도 차갑거나 다가가기 어려울 것이라는 오해를 종종 받습니다.</span>", 
-                    match: "Pure Refreshing<br><span class='text-[10px] font-normal'>상큼 발랄 청량돌</span>" 
+                    title: "✨ The Radiant Sunshine<br><span class='text-lg font-bold text-gray-500'>청량하고 빛나는 햇살</span>", 
+                    overview: "You are the absolute embodiment of radiant joy, boundless energy, and pure, refreshing optimism. Like the ultimate 'human vitamin' of a deeply beloved idol group, your very presence instantly completely lightens up the darkest rooms and brings a brilliant, infectious smile to absolutely everyone's face. You operate on a frequency of highly vivid, colorful enthusiasm, completely rejecting cynical negativity and consistently choosing to see the brightest, most beautiful possibilities in the world. Your concept is fundamentally built on incredibly relatable youthfulness, fierce passion, and an unbelievably warm, deeply inviting aura that makes fans and colleagues alike feel intensely, unconditionally loved.<br><br><span class='text-xs opacity-80'>당신은 빛나는 기쁨, 끝없는 에너지, 그리고 순수하고 상쾌한 낙관주의의 절대적인 화신입니다. 전 세계적으로 깊이 사랑받는 아이돌 그룹의 궁극적인 '인간 비타민'처럼, 당신의 존재 자체는 가장 어두운 방을 즉각적이고 완벽하게 밝히며 모든 사람의 얼굴에 눈부시고 전염성 강한 미소를 번지게 합니다. 매우 생생하고 다채로운 열정의 주파수에서 움직이며, 냉소적인 부정주의를 완전히 거부하고 세상에서 가장 밝고 아름다운 가능성을 보는 것을 지속적으로 선택합니다. 당신의 컨셉은 믿을 수 없을 만큼 공감 가는 청춘, 맹렬한 열정, 그리고 팬들과 동료들 모두가 무조건적으로 깊이 사랑받고 있다고 느끼게 만드는, 믿기 힘들 정도로 따뜻하고 강렬하게 포용적인 아우라에 근본적으로 바탕을 두고 있습니다.</span>", 
+                    strengths: "Your greatest, most undeniable superpower is your immense emotional resilience and your totally unparalleled ability to foster deep, powerful team chemistry. In the intensely highly-pressured world of the entertainment industry, you act as the crucial, irreplaceable emotional glue that holds the entire group together during severely exhausting schedules. You possess a breathtakingly natural stage presence that feels utterly effortless; your highly genuine, bright expressions cannot be faked or manufactured. Furthermore, your incredibly proactive and wonderfully sociable nature means you naturally excel in variety shows, effortlessly winning over the general public with your sheer, unfiltered charm and absolute approachability.<br><br><span class='text-xs opacity-80'>당신의 가장 위대하고 부인할 수 없는 초능력은 거대한 정서적 회복 탄력성과, 깊고 강력한 팀 케미스트리를 조성하는 완벽하게 타의 추종을 불허하는 능력입니다. 고도의 압박감이 넘치는 엔터테인먼트 산업의 세계에서, 당신은 극도로 지치는 스케줄 속에서도 그룹 전체를 단단히 하나로 묶어주는 결정적이고 대체 불가능한 감정적 접착제 역할을 수행합니다. 당신은 전혀 애쓰지 않는 것처럼 보이는, 숨 막힐 정도로 자연스러운 무대 장악력을 소유하고 있습니다. 당신의 고도로 진실되고 밝은 표정은 결코 인위적으로 꾸며내거나 조작될 수 없는 것입니다. 나아가, 믿을 수 없을 정도로 주도적이고 놀랍도록 사교적인 본성 덕분에 예능 프로그램에서 자연스럽게 두각을 나타내며, 순수하고 필터링 없는 매력과 절대적인 친근함으로 대중의 마음을 아주 수월하게 사로잡습니다.</span>", 
+                    relationship: "In relationships, you are an incredibly bright, fiercely affectionate, and highly giving partner. You heavily prioritize deep, shared laughter, massively spontaneous adventures, and loudly celebrating absolutely every minor milestone together. You deeply despise unnecessary mind games and fiercely communicate your immense love with totally transparent, crystal-clear honesty. You crave a dynamic partner who can seamlessly match your incredibly high energy output and fiercely support your brightest dreams. However, you also deeply need someone who can quietly provide a highly stable, completely safe anchor for those exceedingly rare moments when your brilliantly shining battery is finally utterly depleted.<br><br><span class='text-xs opacity-80'>관계에 있어서 당신은 믿을 수 없을 만큼 밝고, 맹렬하게 애정 넘치며, 끊임없이 베푸는 파트너입니다. 깊이 공유하는 웃음, 거대하고 즉흥적인 모험, 그리고 아주 사소한 기념일조차도 다 함께 요란하게 축하하는 것을 가장 무겁게 우선시합니다. 불필요한 심리전을 깊이 경멸하며, 완전히 투명하고 수정처럼 맑은 정직함으로 당신의 거대한 사랑을 맹렬하게 소통합니다. 당신의 믿을 수 없을 만큼 높은 에너지 분출량에 매끄럽게 발맞추고, 당신의 가장 빛나는 꿈을 맹렬하게 지지해 줄 다이내믹한 파트너를 갈망합니다. 하지만 동시에, 당신의 눈부시게 빛나는 배터리가 마침내 완전히 방전되는 그 극히 드문 순간들을 위해, 고도로 안정적이고 완벽하게 안전한 닻을 조용히 제공해 줄 수 있는 사람을 깊이 필요로 합니다.</span>", 
+                    weaknesses: "Because you are so heavily deeply conditioned to always be the 'bright, smiling face' for absolutely everyone else, you run a massive, deeply dangerous risk of severe toxic positivity. You often aggressively suppress your own highly valid sadness, immense stress, or deep frustrations because you are terrified of suddenly becoming a burden to your fiercely beloved team. This extreme, unrelenting pressure to constantly maintain a perfectly happy, flawless facade can ultimately lead to a profound, intensely crushing silent burnout, leaving you feeling entirely emotionally hollowed out behind your beautifully polished, trademark smile.<br><br><span class='text-xs opacity-80'>다른 모든 사람을 위해 항상 '밝게 웃는 얼굴'이 되어야 한다는 것에 너무나도 무겁고 깊게 길들여져 있기 때문에, 당신은 심각한 '유독한 긍정주의(Toxic Positivity)'에 빠질 거대하고 깊이 위험한 리스크를 안고 있습니다. 맹렬히 사랑하는 팀에게 갑자기 짐이 될까 봐 두려운 나머지, 당신 자신의 매우 정당한 슬픔, 거대한 스트레스, 혹은 깊은 좌절감을 종종 공격적으로 억누릅니다. 완벽하게 행복하고 결점 없는 겉모습을 끊임없이 유지해야 한다는 이 극단적이고 가혹한 압박감은, 궁극적으로 당신을 심오하고 강렬하게 짓누르는 침묵의 번아웃으로 이끌 수 있으며, 아름답게 다듬어진 당신의 트레이드마크인 미소 뒤에서 정서적으로 완전히 텅 비어버린 듯한 느낌을 남길 수 있습니다.</span>", 
+                    wellness: "To safely protect your immensely beautiful, radiant soul from completely shattering, you absolutely must aggressively learn the highly crucial art of expressing dark, messy negative emotions. You must intentionally carve out highly protected, solitary 'off-stage' time where you are totally allowed to cry, heavily complain, or simply exist in profound, absolute silence without needing to entertain a single person. Force yourself to heavily explicitly communicate to your closest confidants when you are deeply struggling. True, unshakeable strength is not about constantly glowing effortlessly; it is deeply about intimately knowing exactly when to fiercely protect your own delicate, inner spark.<br><br><span class='text-xs opacity-80'>당신의 거대하고 아름다우며 빛나는 영혼이 완전히 산산조각 나는 것을 안전하게 보호하려면, 어둡고 지저분한 부정적인 감정을 표현하는 매우 결정적인 기술을 반드시 공격적으로 배워야 합니다. 그 누구도 즐겁게 해줄 필요 없이 온전히 울거나, 무겁게 불평하거나, 혹은 그저 심오하고 절대적인 침묵 속에 존재할 수 있도록 완벽하게 허용되는, 고도로 보호받고 고독한 '무대 뒤'의 시간을 의도적으로 확보해야 합니다. 당신이 깊이 고군분투하고 있을 때, 당신의 가장 가까운 측근들에게 무겁고 명시적으로 소통하도록 스스로를 강제하십시오. 진정하고 흔들림 없는 힘이란 끝없이 애쓰지 않고 빛나는 것에 있는 것이 아니라, 당신 자신의 연약한 내면의 불꽃을 언제 맹렬하게 보호해야 하는지 깊고 친밀하게 아는 것에 있습니다.</span>", 
+                    match: "The Ethereal Dreamer<br><span class='text-[10px] font-normal'>신비롭고 몽환적인 드리머</span>" 
                 },
                 { 
                     id: "f2", 
-                    title: "🌶️ Spicy Mala-Taste<br><span class='text-lg font-bold text-gray-500'>매운맛 마라맛 아이돌</span>", 
-                    overview: "Intense beats and a dark storyline. Rebellious, experimental, and highly addictive once people get a taste.<br><br><span class='text-xs opacity-80'>강렬한 비트와 다크한 세계관. 반항적이고 실험적이며, 한 번 맛보면 절대 빠져나올 수 없는 엄청난 중독성을 자랑합니다.</span>", 
-                    strengths: "Unrivaled performance skills and a deeply loyal core fandom. You aren't afraid to break the rules.<br><br><span class='text-xs opacity-80'>타의 추종을 불허하는 퍼포먼스 실력과 코어 팬덤의 탄탄한 지지. 기존의 틀과 공식을 깨는 것을 두려워하지 않습니다.</span>", 
-                    weaknesses: "The concepts can be too experimental for the general public, making it a bit harder to achieve mainstream chart success instantly.<br><br><span class='text-xs opacity-80'>콘셉트가 대중에게는 다소 난해하게 다가갈 수 있어, 대중적인 음원 차트를 즉각적으로 장악하기엔 진입 장벽이 있을 수 있습니다.</span>", 
-                    match: "Nostalgic Y2K<br><span class='text-[10px] font-normal'>아련 감성 Y2K</span>" 
+                    title: "🔥 The Fierce Rebel<br><span class='text-lg font-bold text-gray-500'>강렬하고 당당한 걸크러쉬</span>", 
+                    overview: "You are the absolute, undeniable definition of fierce empowerment, highly explosive stage presence, and boldly uncompromising individuality. Like the highly iconic center of a deeply impactful girl-crush or dark-concept group, you fundamentally shatter entirely outdated norms and heavily aggressively rewrite the rules of the entire game. You operate with an incredibly intense, searing passion that commands absolute attention the immediate second you step into the spotlight. You absolutely refuse to politely conform to heavily restricted, traditionally 'soft' expectations, choosing instead to proudly showcase your massive, roaring ambition, razor-sharp edge, and intensely magnetic confidence.<br><br><span class='text-xs opacity-80'>당신은 맹렬한 임파워먼트(자주성), 매우 폭발적인 무대 장악력, 그리고 대담하게 타협하지 않는 개성의 절대적이고 부정할 수 없는 정의입니다. 깊이 임팩트 있는 걸크러쉬 또는 다크 컨셉 그룹의 고도로 상징적인 센터처럼, 당신은 완전히 구시대적인 규범을 근본적으로 산산조각 내고 전체 게임의 규칙을 무겁고 공격적으로 다시 씁니다. 스포트라이트를 받는 즉시 절대적인 이목을 집중시키는 믿을 수 없을 만큼 강렬하고 타는 듯한 열정으로 움직입니다. 고도로 제한되고 전통적으로 '부드러운' 기대에 예의 바르게 순응하는 것을 절대적으로 거부하며, 대신 당신의 거대하고 포효하는 야망, 면도날처럼 날카로운 엣지, 그리고 강렬하게 자석 같은 자신감을 자랑스럽게 보여주는 것을 선택합니다.</span>", 
+                    strengths: "Your absolutely ultimate strength is your phenomenal, deeply unshakable self-belief and your profoundly charismatic leadership. You possess an incredibly rare, highly commanding aura that naturally makes absolutely everyone else in the room desperately want to follow your fierce lead. You are highly remarkably fearless when confronting incredibly daunting challenges, effortlessly transforming deep anxiety into massively explosive, highly productive performance energy. Furthermore, your intense authenticity means you are immensely respected; fans and peers deeply admire you because you fiercely refuse to fake your highly authentic persona, offering them an incredibly empowering mirror of absolute, raw strength.<br><br><span class='text-xs opacity-80'>당신의 절대적이고 궁극적인 강점은 경이롭고 깊이 흔들림 없는 자기 확신과 심오할 정도로 카리스마 넘치는 리더십입니다. 당신은 방 안에 있는 다른 모든 사람들이 필사적으로 당신의 맹렬한 리드를 따르고 싶게 만드는 믿을 수 없을 만큼 희귀하고 고도로 지배적인 아우라를 소유하고 있습니다. 믿을 수 없을 만큼 벅찬 도전에 직면했을 때 고도로 놀라울 정도로 두려움이 없으며, 깊은 불안감을 거대하고 폭발적이며 고도로 생산적인 퍼포먼스 에너지로 수월하게 변환시킵니다. 나아가 당신의 강렬한 진정성은 당신이 엄청나게 존경받는다는 것을 의미합니다. 당신이 고도로 진실된 당신의 페르소나를 속이는 것을 맹렬하게 거부하고, 절대적이고 날것 그대로의 힘이라는 믿을 수 없을 만큼 강력한 거울을 제공하기 때문에 팬들과 동료들은 당신을 깊이 동경합니다.</span>", 
+                    relationship: "In matters of love and close alliance, you heavily demand absolute equality, fierce independence, and profoundly deep mutual respect. You are incredibly fiercely passionate and highly deeply protective of your inner circle, but you heavily require a partner who is completely unthreatened by your massive success and brilliantly blinding light. You absolutely detest clingy, suffocating dynamics or partners who desperately attempt to severely tame your beautifully wild, roaring spirit. You deeply seek a formidable, highly confident teammate—someone who can sharply debate with you, strongly stand their ground, and proudly conquer the entire chaotic world directly by your side.<br><br><span class='text-xs opacity-80'>사랑과 긴밀한 연대에 있어서, 당신은 절대적인 평등, 맹렬한 독립성, 그리고 심오하게 깊은 상호 존중을 무겁게 요구합니다. 당신은 믿을 수 없을 만큼 맹렬하게 열정적이고 이너서클을 대단히 깊이 보호하지만, 당신의 거대한 성공과 눈부시게 빛나는 빛에 전혀 위협을 느끼지 않는 파트너를 무겁게 필요로 합니다. 질척거리고 숨 막히는 역학 관계나, 당신의 아름답고 야생적이며 포효하는 영혼을 억지로 길들이려 필사적으로 시도하는 파트너를 절대적으로 혐오합니다. 당신은 강력하고 고도로 자신감 넘치는 팀메이트를 깊이 찾습니다. 당신과 날카롭게 토론할 수 있고, 자신의 입장을 강력하게 고수하며, 당신의 바로 곁에서 자랑스럽게 이 혼란스러운 세상 전체를 정복할 수 있는 사람 말입니다.</span>", 
+                    weaknesses: "Your incredibly intense, heavily unapologetic nature can frequently make you appear intensely intimidating, deeply unapproachable, or brutally cold to softer, highly sensitive individuals. Because you strictly operate at absolute maximum intensity, you heavily lack profound patience for incredibly slow processes or perceived weakness, effortlessly sparking highly unnecessary, chaotic conflicts through your excessively blunt, razor-sharp communication. Your massive refusal to actively show deep vulnerability can severely isolate you in the long run, causing you to silently bear completely crushing burdens alone simply because you furiously refuse to gracefully ask for much-needed help.<br><br><span class='text-xs opacity-80'>당신의 믿을 수 없을 만큼 강렬하고 전혀 미안해하지 않는 본성은, 더 부드럽고 고도로 예민한 사람들에게 당신을 강렬하게 위압적이거나, 깊이 다가가기 힘들거나, 잔인할 정도로 차갑게 보이게 만들 수 있습니다. 절대적인 최대 강도로 엄격하게 움직이기 때문에, 믿을 수 없을 만큼 느린 과정이나 약점으로 인식되는 것에 대한 심오한 인내심이 심하게 부족하며, 지나치게 직설적이고 면도날처럼 날카로운 의사소통을 통해 고도로 불필요하고 혼란스러운 갈등을 수월하게 촉발하기도 합니다. 깊은 취약성을 적극적으로 보여주는 것을 거대하게 거부하는 태도는 장기적으로 당신을 심각하게 고립시킬 수 있으며, 단지 그토록 필요한 도움을 우아하게 요청하는 것을 맹렬히 거부한다는 이유 하나만으로, 당신을 완전히 짓누르는 짐을 조용히 홀로 감당하게 만듭니다.</span>", 
+                    wellness: "To heavily sustain your incredibly explosive power without completely torching yourself and your entire team, you must highly proactively master the deeply profound art of soft, cooling empathy. Consciously force yourself to actively channel your massive, aggressive energy into highly structured, incredibly safe physical outlets like intense martial arts or fiercely powerful dance routines. You absolutely must practice heavily letting your guard down in strictly safe spaces; intentionally allowing yourself to explicitly communicate deep exhaustion or minor fears to a highly trusted mentor will miraculously strengthen your heavily armored soul, ultimately making you a profoundly greater, deeply empathetic leader.<br><br><span class='text-xs opacity-80'>자신과 팀 전체를 완전히 불태우지 않고 그 믿을 수 없을 만큼 폭발적인 힘을 무겁게 유지하려면, 부드럽고 식혀주는 공감이라는 깊이 심오한 기술을 고도로 선제적으로 마스터해야 합니다. 당신의 거대하고 공격적인 에너지를 강렬한 무술이나 맹렬하게 파워풀한 댄스 루틴과 같은, 고도로 구조화되고 믿을 수 없을 만큼 안전한 육체적 분출구로 적극적으로 쏟아붓도록 의식적으로 강제하십시오. 엄격하게 안전한 공간에서는 방어막을 무겁게 내리는 연습을 반드시 해야 합니다. 고도로 신뢰하는 멘토에게 깊은 피로감이나 사소한 두려움을 명시적으로 소통하도록 의도적으로 허용하는 것은, 겹겹이 무장된 당신의 영혼을 기적적으로 강화시켜 궁극적으로 당신을 심오하게 더 훌륭하고 깊이 공감하는 리더로 만들어 줄 것입니다.</span>", 
+                    match: "The Elegant Royal<br><span class='text-[10px] font-normal'>고급스럽고 우아한 로열</span>" 
                 },
                 { 
                     id: "f3", 
-                    title: "🍋 Pure Refreshing<br><span class='text-lg font-bold text-gray-500'>상큼 발랄 청량돌</span>", 
-                    overview: "The ultimate human vitamin. Your bright smile and energetic songs make everyone happy instantly.<br><br><span class='text-xs opacity-80'>완벽한 인간 비타민. 특유의 밝은 미소와 에너제틱한 노래로 보는 사람까지 즉시 행복하게 만드는 콘셉트입니다.</span>", 
-                    strengths: "Broad public appeal, infectious positive energy, and perfect synchronization. You are loved by people of all ages.<br><br><span class='text-xs opacity-80'>폭넓은 대중성, 전염성 강한 긍정 에너지, 그리고 완벽한 팀워크. 남녀노소 모두에게 사랑받는 궁극의 호감형입니다.</span>", 
-                    weaknesses: "You may struggle to break out of the 'cute' box and face pressure when trying mature concepts later in your career.<br><br><span class='text-xs opacity-80'>'귀엽고 밝은' 이미지에 갇혀, 훗날 성숙하거나 다크한 콘셉트로 이미지 변신을 시도할 때 큰 압박감을 느낄 수 있습니다.</span>", 
-                    match: "Fierce Girl Crush<br><span class='text-[10px] font-normal'>강렬한 걸크러시</span>" 
+                    title: "🌌 The Ethereal Dreamer<br><span class='text-lg font-bold text-gray-500'>신비롭고 몽환적인 드리머</span>", 
+                    overview: "You are a deeply profound, highly artistic, and intensely captivating soul who completely transcends mundane, highly ordinary boundaries. Embodying the flawlessly ethereal, deeply mysterious concept, you exude a deeply mesmerizing aura that totally draws people into your vast, highly complex inner universe. You absolutely do not loudly demand attention; instead, you command it softly through sheer, undeniable emotional depth, deeply poetic expression, and a beautifully haunting, highly unique perspective on the world. You are an incredibly sensitive artist at your absolute core, heavily prioritizing deep, authentic meaning, high aesthetic beauty, and profound spiritual connection far above sheer, superficial commercial success.<br><br><span class='text-xs opacity-80'>당신은 지극히 평범하고 세속적인 경계를 완전히 초월하는, 깊이 심오하고 고도로 예술적이며 강렬하게 매혹적인 영혼입니다. 흠잡을 데 없이 몽환적이고 깊이 신비로운 컨셉을 구현하며, 당신은 사람들을 당신의 방대하고 고도로 복잡한 내면의 우주로 완전히 빨아들이는 깊이 매혹적인 아우라를 발산합니다. 요란하게 관심을 요구하지 않습니다. 대신, 순수하고 부인할 수 없는 감정의 깊이, 깊이 시적인 표현, 그리고 세상을 바라보는 아름답고도 잊히지 않는 고도로 독특한 관점을 통해 부드럽게 이목을 지배합니다. 당신은 그 절대적인 본질에 있어 믿을 수 없을 만큼 예민한 예술가이며, 얄팍하고 피상적인 상업적 성공보다 깊고 진실된 의미, 고도의 미학적 아름다움, 그리고 심오한 영적 교감을 훨씬 더 무겁게 우선시합니다.</span>", 
+                    strengths: "Your absolutely most beautiful, deeply profound strength is your immense, highly vivid creative genius and your totally unparalleled capacity for intense emotional empathy. You possess an incredibly rare, highly intuitive ability to flawlessly translate deeply complex, abstract human emotions into spectacularly breathtaking, highly relatable art, music, or performance. Your extremely calm, profoundly mysterious presence serves as a highly comforting, deeply grounding anchor for others in highly chaotic environments. Because your perspective is so incredibly uniquely vast, you frequently offer brilliantly entirely unconventional, heavily poetic solutions and deeply moving insights that strictly logical minds completely miss.<br><br><span class='text-xs opacity-80'>당신의 절대적으로 가장 아름답고 깊이 심오한 강점은 거대하고 고도로 생생한 창조적 천재성과, 강렬한 감정적 공감에 대한 완전히 타의 추종을 불허하는 능력입니다. 깊이 복잡하고 추상적인 인간의 감정을 극적으로 숨 막히고 고도로 공감 가는 예술, 음악 또는 퍼포먼스로 흠잡을 데 없이 번역해 내는, 믿을 수 없을 만큼 희귀하고 고도로 직관적인 능력을 소유하고 있습니다. 극도로 차분하고 심오하게 신비로운 당신의 존재는, 고도로 혼란스러운 환경에서 타인에게 매우 위안이 되고 깊이 안정을 주는 닻 역할을 합니다. 당신의 관점은 믿을 수 없을 정도로 독특하게 방대하기 때문에, 엄격하게 논리적인 두뇌를 가진 사람들은 완전히 놓쳐버리는 눈부시게 전적으로 독창적이고 무겁게 시적인 해결책과 깊이 감동적인 통찰력을 빈번하게 제공합니다.</span>", 
+                    relationship: "In forming highly intimate connections, you deeply seek an intensely profound, highly soulful union of absolute spiritual depth. You heavily prefer quiet, deeply highly meaningful conversations at three in the morning completely over loud, superficial, densely crowded parties. You fiercely express your intense love through incredibly beautiful, highly thoughtful gestures—curating deeply moving music playlists, sharing highly profound poetry, or offering quiet, intensely supportive presence. You absolutely require a profoundly patient, deeply understanding partner who heavily respects your massive need for absolute solitude to recharge your highly sensitive, rapidly draining artistic energy.<br><br><span class='text-xs opacity-80'>고도로 친밀한 관계를 형성할 때, 당신은 절대적인 영적 깊이를 지닌 강렬하게 심오하고 고도로 영혼이 통하는 결합을 깊이 추구합니다. 시끄럽고 피상적이며 빽빽하게 붐비는 파티보다는, 새벽 3시에 나누는 조용하고 깊이 의미 있는 대화를 무겁게 선호합니다. 깊이 감동적인 음악 플레이리스트를 선별하거나, 고도로 심오한 시를 공유하거나, 조용하지만 강렬하게 지지하는 존재가 되어주는 등 믿을 수 없을 만큼 아름답고 고도로 사려 깊은 행동을 통해 당신의 강렬한 사랑을 맹렬하게 표현합니다. 고도로 예민하고 빠르게 고갈되는 예술적 에너지를 재충전하기 위해 절대적인 고독을 필요로 하는 당신의 거대한 욕구를 무겁게 존중해 줄, 심오하게 인내심 있고 깊이 이해심 많은 파트너를 절대적으로 필요로 합니다.</span>", 
+                    weaknesses: "Your highly intense, deeply overwhelming emotional depth means you can frequently become completely profoundly absorbed by entirely dark moods, heavily isolating yourself in your incredibly vast, complex mind. Your immense lack of grounded, highly practical attachment to severe reality can absolutely lead you to recklessly ignore heavily crucial daily responsibilities or entirely fail to properly advocate for your own highly basic needs in aggressively practical settings. Additionally, you are severely, intensely prone to massive psychological burnout if abruptly forced into highly rigid, deeply suffocating corporate structures that aggressively severely crush your delicate, highly creative spirit.<br><br><span class='text-xs opacity-80'>당신의 고도로 강렬하고 깊이 압도적인 감정적 깊이는, 당신이 빈번하게 완전히 어두운 기분에 깊이 빠져들어 믿을 수 없을 만큼 방대하고 복잡한 당신의 마음속에 스스로를 무겁게 고립시킬 수 있음을 의미합니다. 가혹한 현실에 대한 현실적이고 고도로 실용적인 애착이 엄청나게 부족하기 때문에, 무겁고 결정적인 일상적 책임을 무모하게 무시하거나, 공격적으로 실용적인 환경에서 당신 자신의 매우 기본적인 요구를 적절히 주장하는 데 완전히 실패할 수 있습니다. 또한, 섬세하고 고도로 창의적인 당신의 영혼을 공격적이고 가혹하게 짓밟는 고도로 경직되고 깊이 숨 막히는 기업 구조로 갑작스럽게 내몰릴 경우, 당신은 거대한 심리적 번아웃에 심각하고 강렬하게 취약해집니다.</span>", 
+                    wellness: "To safely anchor your incredibly beautiful, highly vast mind without completely drifting entirely away from reality, you absolutely must proactively establish highly firm, deeply grounding daily routines. You critically need to aggressively connect with the heavy, physical earth—engage heavily in strictly tactile, highly grounding hobbies like deeply messy clay sculpting, slow, highly mindful nature walks, or intensely focused baking. Intentionally force yourself to highly clearly communicate your highly abstract feelings in incredibly simple, direct words so heavily supportive loved ones can actually properly help you. Embrace that bringing your beautiful, massive dreams into strict, harsh reality requires immense, boring, profound discipline.<br><br><span class='text-xs opacity-80'>당신의 믿을 수 없을 만큼 아름답고 고도로 방대한 마음이 현실에서 완전히 표류하지 않도록 안전하게 닻을 내리려면, 매우 확고하고 깊이 땅에 발을 딛게 하는 일상 루틴을 선제적으로 확립해야 합니다. 무겁고 물리적인 대지와 공격적으로 연결되어야 할 결정적인 필요가 있습니다. 매우 지저분한 점토 조각, 느리고 고도로 마음 챙김을 하는 자연 산책, 혹은 강렬하게 집중하는 베이킹처럼 엄격하게 촉각적이고 고도로 안정을 주는 취미에 무겁게 참여하세요. 무겁게 지지해 주는 사랑하는 사람들이 실제로 적절히 당신을 도울 수 있도록, 믿을 수 없을 만큼 단순하고 직접적인 단어로 당신의 고도로 추상적인 감정을 명확하게 소통하도록 의도적으로 강제하십시오. 아름답고 거대한 당신의 꿈을 엄격하고 가혹한 현실로 끌어내려면 거대하고 지루하며 심오한 규율이 필요하다는 사실을 기꺼이 받아들이십시오.</span>", 
+                    match: "The Radiant Sunshine<br><span class='text-[10px] font-normal'>청량하고 빛나는 햇살</span>" 
                 },
                 { 
                     id: "f4", 
-                    title: "📼 Nostalgic Y2K<br><span class='text-lg font-bold text-gray-500'>아련 감성 Y2K</span>", 
-                    overview: "Trendy easy-listening vibe. You bring the 00s back with an effortless, emotional aesthetic.<br><br><span class='text-xs opacity-80'>트렌디한 이지리스닝 바이브. 꾸안꾸 스타일과 아련한 감성으로 2000년대의 향수를 완벽하게 재현합니다.</span>", 
-                    strengths: "Highly trendy, natural charms, and music that dominates the streaming charts. You set the current standard of cool.<br><br><span class='text-xs opacity-80'>가장 트렌디하고 자연스러운 매력. 스트리밍 차트를 휩쓰는 대중성을 지녔으며 현재 K-Pop 씬의 '힙함'을 정의합니다.</span>", 
-                    weaknesses: "Since the vibe heavily relies on the current trend cycle, you must constantly innovate to stay relevant.<br><br><span class='text-xs opacity-80'>현재의 유행 흐름에 크게 의존하는 바이브이기 때문에, 트렌드가 변함에 따라 끊임없이 새로운 감성을 발굴해야 하는 부담이 있습니다.</span>", 
-                    match: "Spicy Mala-Taste<br><span class='text-[10px] font-normal'>매운맛 마라맛 아이돌</span>" 
+                    title: "👑 The Elegant Royal<br><span class='text-lg font-bold text-gray-500'>고급스럽고 우아한 로열</span>", 
+                    overview: "You are the absolute zenith of highly refined sophistication, fiercely breathtaking elegance, and intensely formidable, quiet perfectionism. Resembling the deeply highly esteemed, heavily flawless visual center of a luxury concept group, your absolute aura commands immense, profound respect the immediate second you gracefully enter any room. You completely despise sloppy, highly disorganized chaos, heavily choosing instead to curate a meticulously, beautifully highly structured life built purely on incredibly high standards and absolutely flawless execution. You do not simply perform; you heavily artistically reign, leaving an incredibly deep, deeply indelible impression of absolute, completely undeniable regal majesty.<br><br><span class='text-xs opacity-80'>당신은 고도로 정제된 세련미, 맹렬하게 숨 막히는 우아함, 그리고 강렬하게 강력하고 조용한 완벽주의의 절대적인 정점입니다. 럭셔리 컨셉 그룹의 깊이 존경받고 무겁게 흠잡을 데 없는 비주얼 센터와 유사하게, 당신의 절대적인 아우라는 어떤 방이든 우아하게 들어서는 즉시 거대하고 심오한 존경을 이끌어냅니다. 엉성하고 고도로 무질서한 혼란을 완전히 경멸하며, 대신 믿을 수 없을 만큼 높은 기준과 절대적으로 흠잡을 데 없는 실행에 전적으로 바탕을 둔 세심하고 아름답게 고도로 구조화된 삶을 가꾸는 것을 무겁게 선택합니다. 당신은 단순히 퍼포먼스를 하는 것이 아닙니다. 당신은 무겁게 예술적으로 군림하며, 절대적이고 완전히 부정할 수 없는 제왕적 위엄에 대한 믿을 수 없을 만큼 깊고 지울 수 없는 인상을 남깁니다.</span>", 
+                    strengths: "Your absolutely greatest, most terrifying asset is your incredibly phenomenal, highly relentless drive for sheer, absolute excellence and your profoundly striking grace heavily under extreme fire. You possess an incredible, highly rare ability to elegantly elevate absolutely everything you fiercely touch, effortlessly transforming highly mundane, extremely ordinary concepts into stunningly profound, massive masterpieces. Your strict, heavily uncompromising discipline ensures you consistently, flawlessly produce only the absolute best, highest-quality output, making you highly deeply trusted by extremely demanding executives. Furthermore, your quiet, immensely intensely powerful confidence effectively shields you completely from the deeply toxic, completely irrelevant, highly petty opinions of the chaotic masses.<br><br><span class='text-xs opacity-80'>당신의 절대적으로 가장 위대하고 무시무시한 자산은, 순수하고 절대적인 탁월함을 향한 믿을 수 없을 만큼 경이롭고 고도로 가차 없는 추진력과, 극도의 집중포화 속에서도 무겁게 유지되는 심오하게 눈에 띄는 우아함입니다. 당신이 맹렬하게 손대는 절대적으로 모든 것을 우아하게 격상시키며, 고도로 평범하고 지극히 일상적인 개념을 놀랍도록 심오하고 거대한 걸작으로 수월하게 변환시키는 믿을 수 없고 고도로 희귀한 능력을 소유하고 있습니다. 엄격하고 무겁게 타협하지 않는 당신의 규율은, 당신이 절대적인 최고, 최고 품질의 성과만을 지속적이고 흠잡을 데 없이 생산하도록 보장하여 극도로 까다로운 임원들로부터 매우 깊은 신뢰를 받게 만듭니다. 나아가 조용하고 거대하며 강렬하게 강력한 당신의 자신감은, 혼란스러운 대중의 깊이 유독하고 완전히 무관하며 고도로 사소한 의견으로부터 당신을 완전히 효과적으로 보호합니다.</span>", 
+                    relationship: "In matters of deep connection, you are an incredibly highly selective, fiercely deeply guarded, but absolutely, fiercely deeply intensely intensely intensely intensely intensely intensely intensely intensely intensely intensely intensely intensely intensely loyal partner. You aggressively heavily demand an intensely deep, profound level of sheer intellectual and heavy, emotional maturity, heavily seeking an incredibly powerful, deeply highly polished equal who truly understands the massive heavy weight of your huge crown. You absolutely totally reject highly overly dramatic, deeply unnecessarily messy emotional outbursts, heavily preferring to heavily express your profound love through incredibly high-quality, deeply heavily thoughtful, beautifully impeccably refined acts of highly absolute service. Once you fiercely deeply commit, your massive, heavy devotion is utterly, fiercely completely unbreakable.<br><br><span class='text-xs opacity-80'>깊은 유대 관계에 있어서, 당신은 믿을 수 없을 만큼 고도로 까다롭고, 맹렬하고 깊이 방어적이지만, 절대적이고 맹렬하며 깊이 강렬하게 충성스러운 파트너입니다. 순수한 지적, 감정적 성숙의 강렬하게 깊고 심오한 수준을 공격적이고 무겁게 요구하며, 당신의 거대한 왕관의 막대하고 무거운 무게를 진정으로 이해하는 믿을 수 없을 만큼 강력하고 깊이 고도로 다듬어진 동등한 상대를 무겁게 찾습니다. 지나치게 극적이고 깊이 불필요하게 지저분한 감정의 폭발을 절대적으로 완전히 거부하며, 믿을 수 없을 만큼 고품질의, 깊이 무겁게 사려 깊은, 아름답고 흠잡을 데 없이 정제된 고도의 절대적인 봉사 행위를 통해 당신의 심오한 사랑을 무겁게 표현하는 것을 선호합니다. 일단 당신이 맹렬하고 깊게 헌신하면, 당신의 거대하고 무거운 헌신은 완전히, 맹렬하게 완벽히 부서지지 않습니다.</span>", 
+                    weaknesses: "Your highly terrifying, deeply extreme perfectionism and your strict, fiercely massive incredibly incredibly deeply tightly heavily polished exterior can unfortunately effortlessly severely severely severely make you appear deeply entirely unapproachable, coldly heavily intimidating, or severely intensely intensely deeply completely completely arrogantly aloof. Because you heavily intensely violently desperately heavily deeply fear the strict massive heavily highly incredibly profound vulnerability of absolutely completely entirely highly totally deeply completely publicly intensely heavily deeply loudly fiercely failing, you intensely heavily strictly heavily entirely violently actively severely totally completely constantly severely brutally tightly heavily actively highly incredibly rigidly violently isolate yourself. You strictly heavily completely tightly entirely severely violently desperately deeply intensely completely heavily totally intensely immensely risk completely heavily crushing yourself heavily entirely under the incredibly extremely extremely heavily highly highly immensely massive intense intense profound intense immense completely weight of your totally highly incredibly incredibly fierce totally strict totally strict fierce expectations.<br><br><span class='text-xs opacity-80'>고도로 무시무시하고 깊이 극단적인 당신의 완벽주의와, 엄격하고 맹렬하게 거대하며 믿을 수 없을 만큼 깊고 단단하게 무겁게 다듬어진 당신의 외면은, 안타깝게도 너무나 수월하고 심각하게 당신을 깊이 완전히 다가가기 힘들거나, 차갑고 무겁게 위압적이거나, 심각하게 강렬하고 깊이 완전히 오만하게 냉담한 사람으로 보이게 만들 수 있습니다. 절대적으로 완전히 공개적으로 맹렬하게 실패하는 것에 대한 엄격하고 거대하며 고도로 믿을 수 없을 만큼 심오한 취약성을 당신이 무겁고 강렬하게, 폭력적이고 절박하게 두려워하기 때문에, 당신은 강렬하고 무겁게, 엄격하게 자신을 완전히 폭력적이고 적극적으로, 심각하고 완전히 끊임없이 가혹하게 고립시킵니다. 당신은 당신의 완전히 고도로 믿을 수 없을 만큼 맹렬하고 전적으로 엄격한 기대라는 그 엄청나게 막대하고 깊고 강렬한 완전한 무게 아래에서, 당신 자신을 완전히 무겁게 짓눌러버릴 엄격하고 무겁고 완전한 위험을 심하게 무릅쓰고 있습니다.</span>", 
+                    wellness: "To heavily successfully survive the immense, highly crushing weight of your absolutely totally utterly fierce massive incredibly incredibly highly absolutely incredibly profoundly deeply extremely incredibly incredible incredible totally strictly incredibly heavy heavy heavy totally completely totally extremely perfectionism, you absolutely highly actively critically severely heavily actively proactively must learn the highly difficult art of completely fiercely deeply heavily intensely embracing massive profound deeply total entirely completely extremely totally massive messiness. Intentionally force yourself to actively heavily securely fully actively deeply violently wildly freely engage in fiercely highly heavily entirely completely heavily totally completely deeply unpolished, massive deeply immensely highly wildly abstract, strictly zero-stakes hobbies. Radically accept that highly exposing a small, heavily deeply entirely entirely completely highly extremely deeply fully highly deeply incredibly fragile flaw deeply heavily completely utterly humanizes you. Your ultimate power completely relies on your heavy profound deeply heavily actively gracefully fully deeply releasing total entirely absolutely completely perfect control.<br><br><span class='text-xs opacity-80'>당신의 절대적으로 완전히 맹렬하고 거대하며 믿을 수 없을 만큼 고도로 절대적이고 깊이 극도로 엄청난 그 완벽주의의 막대하고 고도로 짓누르는 무게에서 무겁게 성공적으로 살아남으려면, 거대하고 심오하며 전적으로 완전한 지저분함(불완전함)을 완전히 맹렬하고 깊게 무겁게 강렬하게 포용하는 고도로 어려운 기술을 절대적으로 매우 적극적이고 치명적이며 무겁게 선제적으로 배워야 합니다. 맹렬하고 고도로 무겁게 전적으로 완전히 다듬어지지 않은, 거대하고 깊이 엄청나게 야생적으로 추상적이며 엄격하게 이해관계가 전혀 없는(Zero-stakes) 취미에 적극적이고 무겁게, 안전하고 온전히, 활발하고 깊게, 폭력적이고 야생적이며 자유롭게 참여하도록 의도적으로 스스로를 강제하십시오. 작고 무겁고 깊이 전적으로 완전히 고도로 극도로 부서지기 쉬운 결점을 매우 노출하는 것이 깊고 무겁게 당신을 완전히 인간답게 만든다는 것을 급진적으로 받아들이십시오. 당신의 궁극적인 힘은 전체적이고 전적으로 절대적으로 완벽한 통제를 무겁고 심오하게, 깊고 무겁게 적극적이고 우아하게 완전히 깊이 놓아주는 것에 전적으로 달려 있습니다.</span>", 
+                    match: "The Fierce Rebel<br><span class='text-[10px] font-normal'>강렬하고 당당한 걸크러쉬</span>" 
                 }
             ]
         };
 
-        // 남성 데이터를 여성 데이터 구조와 동일하게 설정 후 타이틀 및 텍스트 수정
+        // 남성 데이터는 여성 데이터 구조 복제 후 타이틀 및 매치만 남성 그룹 컨셉에 맞게 약간 수정
         resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
-        resultsData.M[0].title = "🖤 Dark Charisma<br><span class='text-lg font-bold text-gray-500'>다크 카리스마</span>";
-        resultsData.M[1].title = "🌶️ Intense Mala-Taste<br><span class='text-lg font-bold text-gray-500'>매운맛 퍼포먼스</span>";
-        resultsData.M[2].title = "🍋 Bright Boy Next Door<br><span class='text-lg font-bold text-gray-500'>청량한 옆집 소년</span>";
-        resultsData.M[3].title = "📼 Sentimental Y2K<br><span class='text-lg font-bold text-gray-500'>아련 감성 Y2K 보이</span>";
-
-        resultsData.M[0].overview = "Powerful aura and sexy concept. You dominate the stage with an intense, mature presence.<br><br><span class='text-xs opacity-80'>파워풀한 아우라와 절제된 섹시함. 무대 위를 압도하며 성숙하고 치명적인 매력을 발산하는 콘셉트입니다.</span>";
-        resultsData.M[0].strengths = "Flawless facial expressions, incredible physical presence, and the ability to pull off luxurious concepts perfectly.<br><br><span class='text-xs opacity-80'>완벽한 표정 연기, 압도적인 피지컬, 그리고 고급스럽고 무거운 콘셉트를 완벽하게 소화하는 능력을 갖췄습니다.</span>";
-        resultsData.M[0].weaknesses = "You might be boxed into overly serious or dramatic concepts, making it hard to show a bright, casual side.<br><br><span class='text-xs opacity-80'>지나치게 무겁거나 드라마틱한 콘셉트에 갇혀, 가끔은 밝고 캐주얼한 본래의 모습을 보여주기 어려울 때가 있습니다.</span>";
+        resultsData.M[0].title = "✨ The Radiant Sunshine<br><span class='text-lg font-bold text-gray-500'>청량하고 빛나는 소년미</span>";
+        resultsData.M[1].title = "🔥 The Fierce Rebel<br><span class='text-lg font-bold text-gray-500'>강렬하고 치명적인 다크</span>";
+        resultsData.M[2].title = "🌌 The Ethereal Dreamer<br><span class='text-lg font-bold text-gray-500'>신비롭고 몽환적인 드리머</span>";
+        resultsData.M[3].title = "👑 The Elegant Royal<br><span class='text-lg font-bold text-gray-500'>고급스럽고 우아한 귀족</span>";
         
-        resultsData.M[1].overview = "Hard-hitting rap and wild performances. You bring raw energy and massive scale to the stage.<br><br><span class='text-xs opacity-80'>거친 래핑과 야생적인 퍼포먼스. 무대를 부술 듯한 강렬한 에너지와 압도적인 스케일을 자랑하는 콘셉트입니다.</span>";
-        resultsData.M[1].strengths = "Self-producing abilities, jaw-dropping choreography, and explosive global popularity.<br><br><span class='text-xs opacity-80'>팀 내 자체 제작 능력, 입이 떡 벌어지는 고난도 안무 소화력, 그리고 폭발적인 글로벌 코어 인기를 자랑합니다.</span>";
-        resultsData.M[1].weaknesses = "The physical toll of the intense choreography is extremely high, and the music can be polarizing for the general public.<br><br><span class='text-xs opacity-80'>안무의 강도가 너무 높아 체력적인 부담이 극심하며, 강한 비트의 음악이 대중들에게는 호불호가 갈릴 수 있습니다.</span>";
-        
-        resultsData.M[2].overview = "Refreshing, cute, and approachable. You are everyone's first love material, radiating pure boyish charm.<br><br><span class='text-xs opacity-80'>청량하고 귀여우며 친근합니다. 만인의 첫사랑 조작을 일으키는 맑고 순수한 소년미의 결정체입니다.</span>";
-        resultsData.M[2].strengths = "Incredible public-friendly vibe, sweet vocals, and high variety show potential. You easily win over the masses.<br><br><span class='text-xs opacity-80'>엄청난 대중 친화력, 감미로운 보컬, 그리고 뛰어난 예능감. 대중들의 호감과 사랑을 아주 쉽게 얻어냅니다.</span>";
-        resultsData.M[2].weaknesses = "Hard to maintain the 'boyish' image as you grow older. Transitioning into mature concepts is a huge hurdle.<br><br><span class='text-xs opacity-80'>시간이 지남에 따라 '소년' 이미지를 계속 유지하기 어려우며, 성숙한 콘셉트로 넘어갈 때 큰 성장통을 겪습니다.</span>";
-        
-        resultsData.M[3].overview = "Trendy, chill, and emotional vibe. You capture the fleeting, beautiful moments of youth.<br><br><span class='text-xs opacity-80'>트렌디하고 칠(Chill)한 감성. 청춘의 찬란하고 아련한 순간들을 음악과 비주얼로 완벽하게 담아내는 콘셉트입니다.</span>";
-        resultsData.M[3].strengths = "Highly relatable music, effortless styling, and strong appeal to the MZ generation. You make everything look natural.<br><br><span class='text-xs opacity-80'>공감대를 형성하는 이지리스닝 음악, 꾸안꾸 스타일링, 그리고 MZ세대에게 강력하게 어필하는 힙하고 자연스러운 매력.</span>";
-        resultsData.M[3].weaknesses = "Your relaxed vibe might be overshadowed by groups with highly aggressive, flashy concepts in music shows.<br><br><span class='text-xs opacity-80'>자연스럽고 여유로운 바이브 탓에, 음악 방송 등에서 화려하고 자극적인 콘셉트의 그룹들에게 시선이 분산될 우려가 있습니다.</span>";
+        resultsData.M[0].match = "The Ethereal Dreamer<br><span class='text-[10px] font-normal'>신비롭고 몽환적인 드리머</span>";
+        resultsData.M[1].match = "The Elegant Royal<br><span class='text-[10px] font-normal'>고급스럽고 우아한 귀족</span>";
+        resultsData.M[2].match = "The Radiant Sunshine<br><span class='text-[10px] font-normal'>청량하고 빛나는 소년미</span>";
+        resultsData.M[3].match = "The Fierce Rebel<br><span class='text-[10px] font-normal'>강렬하고 치명적인 다크</span>";
 
-        resultsData.M[0].match = "Bright Boy Next Door<br><span class='text-[10px] font-normal'>청량한 옆집 소년</span>";
-        resultsData.M[1].match = "Sentimental Y2K<br><span class='text-[10px] font-normal'>아련 감성 Y2K 보이</span>";
-        resultsData.M[2].match = "Dark Charisma<br><span class='text-[10px] font-normal'>다크 카리스마</span>";
-        resultsData.M[3].match = "Intense Mala-Taste<br><span class='text-[10px] font-normal'>매운맛 퍼포먼스</span>";
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('<br>')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
 
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
+
+        // 안전한 화면 전환 로직 (flex 충돌 버그 방지)
         function switchScreen(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden');
-            document.getElementById(fromId).classList.remove('flex');
-            
-            const toScreen = document.getElementById(toId);
-            toScreen.classList.remove('hidden');
-            toScreen.classList.add('flex');
+            document.getElementById(toId).classList.remove('hidden');
         }
 
         function selectGender(g) {
@@ -213,16 +241,13 @@
         }
 
         function showQuestion() {
-            // 진행바 애니메이션
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
             
-            // 페이드인 애니메이션 리셋
             const qScreen = document.getElementById('question-screen');
             qScreen.classList.remove('fade-in');
             void qScreen.offsetWidth; 
             qScreen.classList.add('fade-in');
 
-            // innerHTML 렌더링
             document.getElementById('q-title').innerHTML = questions[currentQ].q;
             document.getElementById('btn-a').innerHTML = questions[currentQ].a;
             document.getElementById('btn-b').innerHTML = questions[currentQ].b;
@@ -237,15 +262,22 @@
             } else {
                 switchScreen('question-screen', 'loading-screen');
                 const finalIdx = score % 4; 
-                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
+                const genId = userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`;
+                setTimeout(() => showResult(genId, false), 2500);
             }
         }
 
-        function showResult(resultId) {
-            switchScreen('loading-screen', 'result-screen');
-            
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
             const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
             const result = resultsData[userGender][idx];
+            
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
             
             document.getElementById('r-title').innerHTML = result.title;
             document.getElementById('r-match').innerHTML = result.match;
@@ -254,21 +286,49 @@
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_pop_concept_w.png')" : "url('k_pop_concept_m.png')";
             imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            // 1번 파일과 동일한 3단 분석 UI 구성 (퍼플 테마에 맞춘 배색)
+            // 5단 분석 UI 구성 (기존 퍼플 테마 배색 유지)
             document.getElementById('r-desc').innerHTML = `
-                <div class="bg-purple-50 p-5 rounded-2xl border border-purple-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-purple-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
-                    <p class="text-sm text-purple-900 leading-relaxed font-medium">${result.overview}</p>
-                </div>
-                <div class="bg-fuchsia-50 p-5 rounded-2xl border border-fuchsia-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-fuchsia-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
-                    <p class="text-sm text-fuchsia-900 leading-relaxed font-medium">${result.strengths}</p>
-                </div>
-                <div class="bg-violet-50 p-5 rounded-2xl border border-violet-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-violet-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
-                    <p class="text-sm text-violet-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                <div class="space-y-4">
+                    <div class="bg-purple-50 p-5 rounded-2xl border border-purple-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-purple-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-purple-900 leading-relaxed font-medium">${result.overview}</p>
+                    </div>
+                    <div class="bg-fuchsia-50 p-5 rounded-2xl border border-fuchsia-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-fuchsia-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-fuchsia-900 leading-relaxed font-medium">${result.strengths}</p>
+                    </div>
+                    <div class="bg-violet-50 p-5 rounded-2xl border border-violet-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-violet-700 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
+                        <p class="text-sm text-violet-900 leading-relaxed font-medium">${result.relationship}</p>
+                    </div>
+                    <div class="bg-pink-50 p-5 rounded-2xl border border-pink-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-pink-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-pink-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
+                        <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.wellness}</p>
+                    </div>
                 </div>
             `;
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('결과 링크가 복사되었습니다!\\n친구들에게 공유해보세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
