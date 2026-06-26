@@ -6,72 +6,109 @@
     <title>K-Superpower Drama Test</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
+    <style>
+        .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #14b8a6; border-radius: 10px; } /* Teal-500 */
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
-        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-teal-50 to-white">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative selection:bg-teal-200">
+        
+        <!-- 1. START SCREEN -->
+        <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-teal-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-teal-600 mb-4 tracking-tight">K-Superpower Drama</h1>
             <p class="text-gray-600 mb-8 font-medium whitespace-pre-line">If you were the main character with a hidden power?
             (내가 초능력 드라마의 주인공이라면?)</p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-teal-100 mb-8">
                 <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm">👨 Male</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm">👩 Female</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-blue-100 hover:bg-blue-200 text-blue-700 font-bold py-4 rounded-xl shadow-sm transition-all active:scale-95">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold py-4 rounded-xl shadow-sm transition-all active:scale-95">👩 Female</button>
                 </div>
             </div>
         </div>
 
-        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+        <!-- 2. QUESTION SCREEN -->
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-white">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-teal-500 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
-            <div class="flex-1 flex flex-col justify-center">
-                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed whitespace-pre-line">Question text</h2>
+            <div class="flex-1 flex flex-col justify-center fade-in" id="q-container">
+                <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed whitespace-pre-line"></h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-teal-50 border border-gray-200 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-teal-50 border border-gray-200 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-teal-50 border border-gray-200 hover:border-teal-300 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-teal-50 border border-gray-200 hover:border-teal-300 p-5 rounded-xl shadow-sm whitespace-pre-line leading-relaxed transition-all active:scale-95"></button>
                 </div>
             </div>
         </div>
 
-        <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-teal-500 text-white">
+        <!-- 3. LOADING SCREEN -->
+        <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-teal-600 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2 whitespace-pre-line">Awakening your power...
+            <h2 class="text-2xl font-bold mb-2 tracking-tight whitespace-pre-line">Awakening your power...
             (초능력 각성 중...)</h2>
         </div>
 
-        <div id="result-screen" class="hidden px-6 py-10 min-h-screen bg-gray-50">
-            <div class="text-center mb-6">
-                <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 whitespace-pre-line">Title</h1>
-            </div>
-            <div id="r-img-div" class="w-full aspect-square bg-cover bg-no-repeat rounded-2xl mx-auto shadow-inner border border-white/50 mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 mb-6">
-                <p id="r-desc" class="text-gray-600 text-center mb-4 text-sm whitespace-pre-line leading-relaxed"></p>
-                <div class="bg-teal-50 rounded-xl p-4 text-center">
-                    <p class="text-xs text-teal-500 font-bold mb-1">PERFECT PARTNER</p>
-                    <p id="r-match" class="font-bold text-teal-700"></p>
+        <!-- 4. RESULT SCREEN -->
+        <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
+            <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
+                
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-teal-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+                
+                <div class="relative z-10">
+                    <div class="text-center mb-6">
+                        <span class="inline-block px-3 py-1.5 bg-teal-800 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md">Superpower Awakened</span>
+                        <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight whitespace-pre-line"></h1>
+                    </div>
+
+                    <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+
+                    <!-- 5가지 전문 분석 리포트 영역 -->
+                    <div id="r-desc" class="space-y-4 mb-8"></div>
+
+                    <!-- 찰떡 궁합 섹션 -->
+                    <div class="flex items-center justify-between bg-teal-900 rounded-2xl p-5 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold text-teal-300 uppercase tracking-widest">PERFECT PARTNER (환상의 콤비)</span>
+                        <span id="r-match" class="font-bold text-sm tracking-tight text-right whitespace-pre-line"></span>
+                    </div>
+
+                    <!-- 광고 영역 -->
+                    <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
+                        <ins class="adsbygoogle"
+                             style="display:block; width:100%;"
+                             data-ad-client="ca-pub-3466039113171143"
+                             data-ad-slot="여기에_슬롯ID_입력"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+                    </div>
+
+                    <!-- 액션 버튼 영역 -->
+                    <div class="space-y-3">
+                        <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-teal-500 to-emerald-500 hover:from-teal-600 hover:to-emerald-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            결과 공유하기 (Copy Link)
+                        </button>
+                        <button onclick="goLobby()" class="w-full py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all active:scale-95 text-sm">
+                            🏠 처음으로 돌아가기 (Lobby)
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            <div class="mb-6 text-center">
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-3466039113171143"
-                     data-ad-slot="여기에_슬롯ID_입력"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-                <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
-            </div>
-
-            <div class="space-y-3 mb-8">
-                <button onclick="location.href='index.html'" class="w-full bg-teal-500 text-white font-bold py-4 rounded-xl shadow-md hover:bg-teal-600">🏠 Go to Lobby</button>
             </div>
         </div>
     </div>
 
     <script>
         let userGender = '';
+        let currentQ = 0; 
+        let score = 0;
+        let currentResultId = '';
+
         const questions = [
             { 
                 q: "You see someone crying alone in an alleyway.\n(골목길에서 혼자 울고 있는 사람을 발견했다.)", 
@@ -102,30 +139,115 @@
         
         const resultsData = {
             F: [
-                { id: "f1", title: "⏳ The Time Controller\n(시간의 지배자)", desc: "A perfectionist who wants to fix every mistake. You always plan ahead.\n(과거를 되돌리고 싶은 완벽주의자. 항상 앞날을 계획하고 통제하려 합니다.)", match: "The Gentle Healer" },
-                { id: "f2", title: "🧠 The Mind Reader\n(속마음 리더)", desc: "Highly perceptive. You know exactly what people need before they say it.\n(눈치가 100단! 사람들이 말하기 전에 그들의 진짜 속마음과 니즈를 파악합니다.)", match: "The Super Strength" },
-                { id: "f3", title: "💥 The Super Strength\n(천하장사 해결사)", desc: "Action over words! You bravely step up to solve problems for everyone.\n(말보다 행동! 불의를 보면 참지 못하고 앞장서서 문제를 부숴버리는 해결사입니다.)", match: "The Mind Reader" },
-                { id: "f4", title: "🌿 The Gentle Healer\n(치유의 능력자)", desc: "A true pacifist. Your warm presence alone comforts those around you.\n(진정한 평화주의자. 곁에 있는 것만으로도 사람들의 마음을 따뜻하게 치유해 줍니다.)", match: "The Time Controller" }
-            ],
-            M: [
-                { id: "m1", title: "⏳ The Time Traveler\n(시간의 지배자)", desc: "You regret past mistakes and constantly try to optimize your life.\n(실수를 용납하지 않는 전략가. 항상 더 완벽한 선택을 하기 위해 고민합니다.)", match: "The Gentle Healer" },
-                { id: "m2", title: "🧠 The Mind Reader\n(속마음 리더)", desc: "Sharp and empathetic. You can easily detect lies and hidden emotions.\n(예리한 통찰력! 거짓말과 숨겨진 감정을 단번에 알아채는 인간 탐지기입니다.)", match: "The Super Strength" },
-                { id: "m3", title: "💥 The Powerhouse\n(천하장사 해결사)", desc: "A reliable protector. You use your strong energy to defend your loved ones.\n(든든한 수호자. 넘치는 에너지와 행동력으로 사랑하는 사람들을 지켜냅니다.)", match: "The Mind Reader" },
-                { id: "m4", title: "🌿 The Miracle Healer\n(치유의 능력자)", desc: "Kind and supportive. You silently fix what is broken in the world.\n(다정함이 곧 무기. 상처받은 사람들을 조용히 보듬어주고 세상을 따뜻하게 만듭니다.)", match: "The Time Traveler" }
+                { 
+                    id: "f1", 
+                    title: "⏳ The Time Controller\n(시간의 지배자)", 
+                    overview: "You are an ultimate perfectionist and a highly strategic thinker who firmly believes that every variable in life can and should be controlled. In the grand drama of your life, you act as both the lead character and the meticulous director. You analyze past failures profoundly to ensure they are never repeated, constantly seeking the absolute optimal path forward. Your deeply rooted desire to manipulate time stems from an overwhelming sense of responsibility; you silently wish to protect yourself and your loved ones from the unpredictable, harsh chaos of reality.\n\n<span class='text-xs opacity-80'>당신은 삶의 모든 변수를 철저히 통제할 수 있다고 믿는 궁극의 완벽주의자이자 고도로 전략적인 사상가입니다. 당신 인생이라는 거대한 드라마 속에서, 당신은 주연 배우인 동시에 흠잡을 데 없이 치밀한 감독의 역할을 수행합니다. 과거의 뼈아픈 실패를 심도 있게 분석하여 동일한 실수가 절대 반복되지 않도록 만들며, 항상 앞으로 나아갈 수 있는 절대적인 최적의 경로를 끊임없이 모색합니다. 시간을 조종하고 싶어 하는 당신의 깊은 내면의 욕망은 압도적인 책임감에서 비롯됩니다. 당신은 현실의 예측 불가능하고 가혹한 혼란으로부터 스스로와 사랑하는 사람들을 완벽하게 보호하기를 조용히, 그러나 강렬하게 열망합니다.</span>",
+                    strengths: "Your greatest power is your extraordinary foresight and unmatched analytical capabilities. While others are wildly panicking in the face of sudden crises, you possess the incredible ability to remain entirely calm, quickly rewinding the scenario in your mind to calculate the most flawless solution. You are exceptionally organized, heavily detail-oriented, and possess an almost supernatural ability to anticipate future trends and potential risks long before they actually manifest. Your life is a masterclass in efficiency, effectively turning chaotic situations into highly structured, successful outcomes.\n\n<span class='text-xs opacity-80'>당신의 가장 위대한 힘은 비범한 선견지명과 타의 추종을 불허하는 뛰어난 분석 능력입니다. 다른 사람들이 갑작스러운 위기 앞에서 통제력을 잃고 패닉에 빠질 때, 당신은 머릿속으로 시나리오를 빠르게 되감아 가장 완벽하고 결함 없는 해결책을 계산해 내는 놀라운 침착함을 유지합니다. 예외적으로 체계적이고 디테일에 극도로 강하며, 미래의 트렌드나 잠재적인 위험 요소가 실제로 표면화되기 훨씬 전에 이를 미리 예측해 내는 거의 초능력에 가까운 직관을 지니고 있습니다. 당신의 삶은 그 자체로 효율성의 마스터클래스이며, 아무리 혼란스러운 상황이라도 고도로 구조화되고 성공적인 결과물로 기어코 탈바꿈시키는 능력을 자랑합니다.</span>",
+                    relationship: "In relationships, you are extremely selective and heavily guard your inner circle. Because you fear the messy, uncontrollable nature of human emotions, you tend to over-analyze every single social interaction, constantly trying to 'fix' relationship dynamics as if they were complex puzzles. Once you commit, however, you are fiercely loyal and will tirelessly work behind the scenes to ensure your partner's success and happiness. You thrive best with someone who deeply appreciates your meticulous planning and offers unconditional emotional warmth to effectively melt your heavily guarded, analytical exterior.\n\n<span class='text-xs opacity-80'>인간관계에 있어서 당신은 극도로 까다로우며 당신의 이너서클을 철저하게 방어합니다. 통제할 수 없고 지저분하게 얽히기 쉬운 인간 감정의 본질을 두려워하기 때문에, 모든 사회적 상호작용을 지나치게 분석하고 관계의 역학을 마치 복잡한 퍼즐을 풀듯 끊임없이 '수정'하고 통제하려는 경향이 있습니다. 하지만 누군가에게 진심으로 헌신하기로 결심하면, 맹렬하게 의리를 지키며 파트너의 눈부신 성공과 행복을 보장하기 위해 보이지 않는 곳에서 지치지 않고 헌신적으로 노력합니다. 당신의 치밀한 계획을 깊이 존중해 주고, 무조건적이고 넉넉한 감정적 온기를 제공하여 당신의 굳게 닫힌 분석적인 외면을 부드럽게 녹여줄 수 있는 사람과 가장 완벽한 시너지를 냅니다.</span>",
+                    weaknesses: "Your relentless pursuit of an absolutely error-free life can easily lead to severe decision paralysis and overwhelming anxiety. You frequently trap yourself in an endless loop of 'what-ifs,' agonizing endlessly over minor past choices rather than confidently moving forward. This intense fear of making the wrong move often prevents you from enjoying the spontaneous, beautiful unpredictability of the present moment. You must realize that not everything can be perfectly scripted, and that true growth often magically happens precisely within the messy, unedited mistakes you are trying so desperately to erase.\n\n<span class='text-xs opacity-80'>단 하나의 오차도 없는 완벽한 삶을 향한 끝없는 집착은, 종종 심각한 결정 장애와 당신을 짓누르는 극심한 불안감으로 이어지기 쉽습니다. 과거의 사소한 선택들에 대해 끝없이 괴로워하며 '만약 그랬더라면'이라는 뫼비우스의 띠 같은 자책의 굴레에 스스로를 가두어, 자신 있게 앞으로 나아가지 못할 때가 많습니다. 잘못된 결정을 내리는 것에 대한 이러한 강렬한 공포는, 종종 예측 불가능성에서 오는 현재 순간의 충동적이고 눈부신 아름다움을 만끽하지 못하게 막습니다. 모든 상황이 당신의 완벽한 대본대로 흘러갈 수는 없으며, 진정한 내면의 성장은 아이러니하게도 당신이 그토록 필사적으로 지우려 했던 엉망진창이고 편집되지 않은 실수들 속에서 마법처럼 피어난다는 사실을 깨달아야 합니다.</span>",
+                    wellness: "To find true peace, you must intentionally practice the uncomfortable art of radical acceptance and profound mindfulness. Deliberately engage in activities where you have absolutely zero control over the final outcome, such as expressive fluid art, unchoreographed intuitive dancing, or simply wandering aimlessly through a new neighborhood without a map. Meditation focused entirely on remaining grounded in the present moment will powerfully short-circuit your exhausted, over-calculating brain. Forgive yourself completely for your past imperfections; your beautiful humanity lies deeply in your flaws, not in your heavily curated perfection.\n\n<span class='text-xs opacity-80'>진정한 영혼의 평화를 찾기 위해서는, 과감한 수용과 심오한 마음 챙김이라는 다소 불편하지만 필수적인 기술을 의도적으로 연습해야만 합니다. 물감의 우연한 번짐을 즐기는 플루이드 아트, 정해진 안무가 없는 직관적인 춤, 혹은 지도 없이 낯선 동네를 목적 없이 유유자적하게 걷는 것과 같이 최종 결과를 전혀 통제할 수 없는 활동에 일부러 몸을 던져보세요. 오직 현재의 순간에만 온전히 뿌리를 내리는 데 집중하는 명상은, 과부하가 걸려 지쳐버린 당신의 분석적인 뇌를 강력하게 쉬게 해 줄 것입니다. 과거의 불완전했던 당신 자신을 온전히 용서하세요. 당신이 가진 가장 아름다운 인간미는 정교하게 편집되고 연출된 완벽함이 아니라, 당신의 결점과 취약성 그 깊은 곳에 찬란하게 자리 잡고 있습니다.</span>",
+                    match: "🌿 The Gentle Healer\n(치유의 능력자)" 
+                },
+                { 
+                    id: "f2", 
+                    title: "🧠 The Mind Reader\n(속마음 리더)", 
+                    overview: "You are a profoundly empathetic, highly intuitive soul navigating the world with an incredibly delicate emotional radar. Like a human lie detector endowed with immense psychological depth, you effortlessly perceive the hidden, unspoken truths, silent pains, and true motivations of everyone around you. You look far past superficial masks and listen actively to the spaces between people's words. Because you process both your own emotions and the heavy energetic vibrations of the room at such a remarkably deep level, your life is a vividly colorful, intensely emotional journey filled with profound human connections.\n\n<span class='text-xs opacity-80'>당신은 세상의 미세한 흐름을 믿을 수 없을 만큼 섬세한 감정의 레이더로 탐색하며 살아가는, 깊은 공감 능력과 뛰어난 직관을 지닌 영혼입니다. 거대한 심리적 깊이를 부여받은 인간 거짓말 탐지기처럼, 당신은 애쓰지 않아도 주변 사람들의 숨겨진 진실, 말하지 않은 고통, 그리고 가장 깊은 내면의 동기를 단숨에 꿰뚫어 봅니다. 사람들의 얄팍한 피상적인 가면 그 너머를 응시하며, 단어와 단어 사이에 숨겨진 침묵의 의미를 적극적으로 경청합니다. 당신 자신의 감정뿐만 아니라 그 공간을 채우고 있는 타인들의 무거운 에너지 파동까지 예외적으로 깊은 수준에서 처리하기 때문에, 당신의 삶은 심오하고 진실한 인간적 교감으로 가득 찬 선명하고 강렬하게 감정적인 여정 그 자체입니다.</span>",
+                    strengths: "Your emotional intelligence is absolutely off the charts, making you a master of highly sophisticated communication and deep conflict resolution. You possess a magical, innate ability to make people feel profoundly seen, deeply understood, and inherently safe within minutes of meeting you. Because you intuitively know exactly what people need before they even articulate it, you naturally build incredibly strong, deeply loyal networks. You are inherently adaptable, capable of seamlessly adjusting your energy to genuinely comfort the heartbroken or powerfully inspire the lost, making you an irreplaceable, brilliant light in any social group.\n\n<span class='text-xs opacity-80'>당신의 감성 지능(EQ)은 문자 그대로 측정 불가 수준으로 압도적이며, 이는 당신을 고도로 정교한 소통과 깊은 갈등 해결의 완벽한 마스터로 만들어 줍니다. 만난 지 단 몇 분 만에 상대방이 자신이 온전히 존중받고, 깊이 이해받으며, 본질적으로 완벽하게 안전하다고 느끼게 만드는 마법 같고 타고난 재능을 소유하고 있습니다. 사람들이 미처 말로 표현하기도 전에 그들이 진정으로 무엇을 필요로 하는지 직관적으로 알아차리기 때문에, 믿을 수 없을 만큼 견고하고 깊은 충성심으로 뭉친 인간관계 네트워크를 자연스럽게 구축합니다. 상황에 맞춰 유연하게 대처하는 능력이 뛰어나, 상처받은 마음을 진심으로 위로하거나 길을 잃은 자들에게 강력한 영감을 주기 위해 당신의 에너지를 매끄럽게 조율할 수 있습니다. 이는 당신을 그 어떤 사회적 그룹에서도 절대 대체할 수 없는 찬란한 빛으로 만듭니다.</span>",
+                    relationship: "In matters of the heart, you crave intense, absolute emotional transparency and a profound soul-to-soul connection. Superficial small talk entirely exhausts you; you want to dive immediately into someone's deepest fears and highest dreams. However, because you are so hypersensitive to every subtle shift in your partner's mood, you often carry the heavy emotional weight of the entire relationship. You need a highly communicative, incredibly grounding partner who is mature enough to be completely honest with you, and strong enough to firmly protect your incredibly big, vulnerable heart from being relentlessly drained.\n\n<span class='text-xs opacity-80'>사랑과 관계에 있어서 당신은 강렬하고도 절대적인 감정적 투명성, 그리고 영혼과 영혼이 맞닿는 심오한 교감을 미친 듯이 갈망합니다. 의미 없는 가벼운 스몰 토크는 당신의 기를 완전히 빨아들일 뿐이며, 당신은 언제나 상대방의 가장 깊은 두려움과 원대한 꿈속으로 주저 없이 뛰어들기를 원합니다. 그러나 파트너의 미세한 감정 변화 하나하나에 너무나도 예민하게 반응하기 때문에, 관계 전체의 무거운 감정적 짐을 당신 혼자서 모조리 짊어지는 경우가 허다합니다. 당신에게는 당신에게 완벽하게 솔직할 수 있을 만큼 성숙하고, 당신의 그 엄청나게 크고 취약한 마음이 무자비하게 소모되지 않도록 단호하게 지켜줄 수 있는, 의사소통 능력이 뛰어나고 단단히 중심이 잡힌 파트너가 절대적으로 필요합니다.</span>",
+                    weaknesses: "Your exceptional gift is simultaneously your greatest, most exhausting curse. Absorbing everyone else's chaotic emotions can easily lead to severe empathy fatigue and a complete loss of your own distinct identity. You frequently prioritize healing others to the extreme detriment of your own mental health, silently burning out while pretending everything is perfectly fine. You often significantly overthink minor interpersonal interactions, heavily projecting complicated narratives onto simple situations. Setting strict boundaries feels incredibly guilty to you, but without them, you risk being completely consumed by the loud emotional noise of the world.\n\n<span class='text-xs opacity-80'>당신의 그 경이로운 재능은 동시에 당신을 가장 지치게 만드는 끔찍한 저주이기도 합니다. 타인의 혼란스러운 감정을 스펀지처럼 무분별하게 흡수하는 것은 극심한 공감 피로와 당신 고유의 정체성 상실로 너무나 쉽게 이어질 수 있습니다. 자신의 정신 건강을 극도로 해치면서까지 다른 사람들을 치유하는 것을 우선시하며, 겉으로는 모든 것이 완벽하게 괜찮은 척하면서 속으로는 소리 없이 새카맣게 타들어가며 번아웃을 겪습니다. 사소한 대인관계의 상호작용조차 심각하게 과도하게 생각하여, 단순한 상황에도 복잡하고 무거운 이야기들을 과도하게 투영하곤 합니다. 누군가에게 엄격한 선을 긋는 것을 견딜 수 없는 죄책감으로 여기지만, 단단한 경계선이 없다면 당신은 세상의 시끄러운 감정적 소음에 완전히 집어삼켜질 위험이 매우 큽니다.</span>",
+                    wellness: "Crucially, you must learn the highly vital difference between caring *for* someone and actively carrying their heavy emotional baggage. Regular, intentional solitude is not a luxury for you; it is absolute survival. Create a profound, quiet physical sanctuary where no one else's chaotic energy is allowed to enter. Practice daily emotional cleansing rituals, like highly expressive journaling or immersive water therapy (like long, hot solitary baths) to literally wash away the accumulated psychic debris of the day. Consistently vocalize your own deeply buried needs; you fundamentally deserve the exact same immense compassion that you so freely give to the world.\n\n<span class='text-xs opacity-80'>누군가를 진심으로 아끼고 돌보는 것과, 그들의 무거운 감정적 쓰레기까지 당신이 대신 짊어지는 것 사이의 결정적이고 중요한 차이를 반드시 배워야만 합니다. 정기적이고 의도적인 고독은 당신에게 단순한 사치가 아니라 절대적인 생존 필수품입니다. 그 어떤 타인의 혼란스러운 에너지도 절대 침범할 수 없는, 철저히 고요하고 신성한 당신만의 물리적 도피처를 만드세요. 내면의 감정을 가감 없이 쏟아내는 일기 쓰기나, 하루 동안 겹겹이 쌓인 타인의 정신적 잔해를 문자 그대로 씻어내는 긴 반신욕과 같은 몰입형 수(水) 테라피 등 일상적인 감정 정화 의식을 실천하세요. 당신 내면 깊숙이 묻어둔 당신만의 진짜 욕구를 밖으로 소리 내어 표현하는 연습을 끊임없이 하세요. 당신은 당신이 세상에 그토록 아낌없이 베푸는 그 거대한 연민을, 정확히 똑같은 크기로 돌려받을 자격이 충분히 있는 소중한 존재입니다.</span>",
+                    match: "💥 The Super Strength\n(천하장사 해결사)" 
+                },
+                { 
+                    id: "f3", 
+                    title: "💥 The Super Strength\n(천하장사 해결사)", 
+                    overview: "You are a brilliantly unstoppable force of nature, driven by an intensely passionate, righteous heart and a powerful bias toward immediate, bold action. You absolutely despise stagnation, empty theorizing, and passive waiting; when a difficult problem arises, you are the first to bravely charge forward and violently smash the obstacles into pieces. Your vibrant energy is incredibly infectious, boldly illuminating every room you enter. You embody the classic hero archetype—fearless, intensely straightforward, profoundly honest, and fiercely dedicated to protecting the innocent and relentlessly advancing your grand, ambitious goals.\n\n<span class='text-xs opacity-80'>당신은 강렬하게 열정적이고 정의로운 심장, 그리고 즉각적이고 대담한 행동을 향한 강력한 추진력으로 움직이는 절대 막을 수 없는 빛나는 자연의 힘과도 같은 존재입니다. 제자리에 고여있는 정체 상태, 탁상공론에 불과한 공허한 이론, 그리고 수동적인 기다림을 병적으로 혐오합니다. 까다로운 문제가 발생했을 때, 당신은 그 누구보다 앞장서서 용감하게 돌진하여 모든 장애물을 산산조각 내버리는 첫 번째 사람입니다. 당신의 생동감 넘치는 에너지는 믿을 수 없을 만큼 전염성이 강해, 당신이 들어서는 모든 공간을 대담하게 환히 밝힙니다. 두려움이 없고, 극도로 직설적이며, 심오하게 정직하고, 무고한 사람들을 맹렬히 보호하며 당신의 거창하고 야심 찬 목표를 향해 끊임없이 전진하는 완벽한 고전적 영웅의 원형을 구현하고 있습니다.</span>",
+                    strengths: "Your unwavering, rock-solid courage and monumental execution skills are your definitive, greatest assets. You possess a rare, highly magnetic charisma that naturally rallies people deeply to your noble cause. Instead of overcomplicating issues, you expertly cut straight to the core, offering highly practical, highly effective solutions delivered with fierce confidence. Your profound physical and mental resilience allows you to bounce back instantly from massive failures that would permanently crush ordinary people. Above all, your absolute loyalty to your chosen tribe makes you an impossibly reliable, fearless defender in times of extreme crisis.\n\n<span class='text-xs opacity-80'>당신의 한 치의 흔들림 없는 바위 같은 용기와 기념비적인 실행력은 당신을 정의하는 가장 위대한 자산입니다. 사람들을 당신의 숭고한 대의명분 아래 자연스럽게 깊이 결집시키는 희귀하고 강력한 자석 같은 카리스마를 소유하고 있습니다. 문제의 본질을 불필요하게 꼬아서 복잡하게 만드는 대신, 핵심만을 전문가처럼 정확히 관통하여 맹렬한 자신감과 함께 지극히 실용적이고 고도로 효과적인 해결책을 단숨에 제시합니다. 당신의 심오한 육체적, 정신적 회복탄력성은 평범한 사람들이라면 영구적으로 무너져 내릴 만한 거대한 실패 앞에서도 즉각적으로 다시 튀어 오를 수 있게 해 줍니다. 무엇보다도, 당신이 선택한 부족(사람들)에 대한 당신의 절대적인 충성심은, 극단적인 위기의 순간에 당신을 도저히 믿지 않을 수 없는 두려움 없는 완벽한 수호자로 만들어 줍니다.</span>",
+                    relationship: "In relationships, you are intensely passionate, highly expressive, and immensely protective. You love with extreme loudness and absolute clarity, leaving absolutely no room for confusing ambiguity or exhausting mind games. You enthusiastically champion your partner's dreams, often aggressively pushing them to realize their full, vast potential. However, you can become easily frustrated by partners who are overly passive, highly indecisive, or slow to act. You need a deeply dynamic, equally confident co-pilot who can match your incredibly high-octane energy and boldly join you in conquering the world head-on.\n\n<span class='text-xs opacity-80'>관계에 있어서 당신은 숨 막힐 정도로 열정적이고, 감정 표현에 거침이 없으며, 상대를 무서울 정도로 철저히 보호하려 합니다. 혼란스러운 모호함이나 기를 빨아먹는 소모적인 밀당 따위가 끼어들 틈을 절대 주지 않고, 극도로 요란하고 절대적으로 명확하게 사랑을 표현합니다. 파트너의 꿈을 당신의 일처럼 열광적으로 지지하며, 종종 그들이 가진 방대한 잠재력을 완전히 실현할 수 있도록 공격적으로 밀어붙이기도 합니다. 하지만 지나치게 수동적이거나 극도로 우유부단하며 행동이 느린 파트너를 만나면 쉽게 좌절하고 답답함을 느낄 수 있습니다. 당신의 그 옥탄가 높은 엄청난 에너지에 주눅 들지 않고 발을 맞추며, 당신과 함께 대담하게 세상을 정면으로 정복해 나갈 수 있는 몹시 역동적이고 동등한 자신감을 가진 완벽한 부조종사가 필요합니다.</span>",
+                    weaknesses: "Your relentless need for immediate forward momentum often results in severe impulsiveness and a dangerous lack of highly necessary strategic foresight. You sometimes recklessly rush into highly complex situations like a powerful bulldozer, inadvertently destroying delicate emotional nuances or unnecessarily alienating more sensitive, quiet individuals. Your intensely competitive nature can sometimes mutate into aggressive stubbornness, making it incredibly difficult for you to gracefully admit when you are fundamentally wrong. You must realize that not every single problem is a nail desperately requiring your massive hammer to fix.\n\n<span class='text-xs opacity-80'>즉각적으로 앞으로 치고 나가려는 끊임없는 충동은, 종종 심각한 경솔함과 절대적으로 필요한 전략적 선견지명의 위험한 결여로 이어지기도 합니다. 고도로 복잡하게 얽힌 상황에 때로는 강력한 불도저처럼 무모하게 돌진하여, 본의 아니게 섬세한 감정적 뉘앙스들을 산산조각 내거나 더 예민하고 조용한 성향의 사람들에게 불필요한 위압감과 소외감을 줄 수 있습니다. 당신의 맹렬한 승부욕은 때때로 공격적이고 고집스러운 아집으로 변질되어, 당신이 근본적으로 틀렸을 때 이를 우아하게 인정하고 물러서는 것을 믿을 수 없을 만큼 어렵게 만듭니다. 이 세상의 모든 문제가 당신의 그 거대한 망치로 때려잡아야만 해결되는 못은 아니라는 사실을 반드시, 뼈저리게 깨달아야 합니다.</span>",
+                    wellness: "To heavily sustain your incredibly fiery spirit without violently burning out, you must actively learn the profound discipline of deliberate pacing. Channel your explosive, raw physical energy into intensely demanding sports, but rigorously balance it with profoundly grounding practices like slow breathwork, strategic chess, or highly mindful stretching. Before you make any major, life-altering decision, aggressively force yourself to pause for 24 hours to let logic catch up with your intense emotion. True, enduring power is not just about raw, explosive impact; it is equally about supreme control, deep patience, and quiet, unyielding endurance.\n\n<span class='text-xs opacity-80'>당신의 그 믿을 수 없을 만큼 불타오르는 영혼이 맹렬하게 타버려 재가 되지 않도록 안정적으로 유지하려면, 의도적으로 속도를 조절하는 심오한 규율을 적극적으로 훈련해야 합니다. 폭발적이고 날것 그대로인 육체적 에너지를 한계까지 몰아붙이는 격렬한 스포츠로 분출하되, 느린 호흡법, 전략적 사고를 요하는 체스, 혹은 고도의 마음 챙김이 동반된 정적인 스트레칭과 같이 중심을 단단히 잡아주는 활동과 엄격하게 균형을 맞춰야 합니다. 삶을 송두리째 바꿀 만한 중대한 결정을 내리기 전에는, 차가운 논리가 당신의 뜨거운 감정을 따라잡을 수 있도록 강제적으로 24시간 동안 일시 정지 버튼을 누르는 훈련을 하세요. 진정으로 영속적인 진정한 힘은 단순히 거칠고 폭발적인 타격력에만 있는 것이 아닙니다. 그것은 완벽한 통제력, 심연과도 같은 깊은 인내심, 그리고 조용히 꺾이지 않는 지구력에 똑같이 존재한다는 것을 기억하세요.</span>",
+                    match: "🧠 The Mind Reader\n(속마음 리더)" 
+                },
+                { 
+                    id: "f4", 
+                    title: "🌿 The Gentle Healer\n(치유의 능력자)", 
+                    overview: "You are a profoundly calming, inherently restorative presence in a chaotic, fast-paced world, radiating a deeply soothing aura that effortlessly mends broken spirits and fractured relationships. You navigate life with extreme, profound gentleness and an infinite well of quiet, enduring patience. Rather than dominating the spotlight with loud aggression, you firmly believe in the immense, transformative power of silent support, deep unconditional acceptance, and profound holistic growth. Your old, incredibly pure soul seeks fundamental harmony above all else, making you the ultimate, irreplaceable emotional sanctuary for anyone exhausted by the harshness of modern reality.\n\n<span class='text-xs opacity-80'>당신은 혼란스럽고 숨 가쁘게 돌아가는 이 세상에서 깊은 평온과 본질적인 회복력을 선사하는 존재로, 부서진 영혼과 산산조각 난 관계를 애쓰지 않고도 봉합해 내는 깊고 따뜻한 오라를 뿜어냅니다. 극한의 심오한 부드러움과 끝없이 솟아나는 고요하고 인내심 넘치는 샘물을 품고 인생을 항해합니다. 시끄러운 공격성으로 화려한 스포트라이트를 독점하려 하기보다는, 침묵 속의 묵묵한 지지, 무조건적이고 깊은 수용, 그리고 본질적이고 총체적인 성장이 가진 거대하고도 변혁적인 힘을 굳게 믿습니다. 당신의 성숙하고 믿을 수 없을 만큼 순수한 영혼은 그 어떤 것보다도 근본적인 조화를 가장 최우선으로 추구하며, 이는 당신을 현대 사회의 가혹함에 지쳐버린 모든 이들에게 절대 대체할 수 없는 궁극의 감정적 안식처로 만들어 줍니다.</span>",
+                    strengths: "Your greatest, most magical capability is your profound, unwavering ability to foster deep healing and highly organic growth in any environment you enter. You possess a unique, quiet resilience that allows you to absorb immense negativity without easily becoming deeply cynical. People inherently trust you with their darkest, most vulnerable secrets because you offer a completely non-judgmental, profoundly safe space. Your immense capacity for extreme forgiveness and your gentle, highly nurturing approach successfully bring out the absolute best, most authentic versions of everyone you continuously interact with.\n\n<span class='text-xs opacity-80'>당신의 가장 위대하고 마법 같은 능력은, 당신이 발을 들이는 그 어떤 환경에서도 깊은 치유와 고도로 유기적인 성장을 촉진해 내는 흔들림 없는 심오한 재능입니다. 거대한 부정적인 에너지를 묵묵히 흡수하면서도 결코 쉽게 냉소적으로 변하지 않는, 당신만의 고유하고 조용한 회복탄력성을 소유하고 있습니다. 당신은 일말의 편견이나 섣부른 판단이 배제된, 완벽하게 안전하고 깊이 있는 공간을 제공하기 때문에, 사람들은 본능적으로 자신의 가장 어둡고 취약한 비밀을 당신에게 온전히 털어놓으며 신뢰합니다. 극단적인 용서에 대한 당신의 거대한 수용력과 한없이 부드럽고 헌신적인 접근 방식은, 당신과 지속적으로 교류하는 모든 사람들의 가장 훌륭하고 진실된 모습을 성공적으로 이끌어내는 기적을 만듭니다.</span>",
+                    relationship: "In intimacy, you are entirely devoted, incredibly selfless, and profoundly nurturing. You build highly stable, deeply meaningful relationships entirely based on unconditional mutual trust, extreme spiritual warmth, and a shared desire for absolute peace. However, because you naturally default to continuously giving, you frequently attract highly broken or emotionally demanding individuals who subconsciously view you solely as their personal, endless rehab center. You vitally need a partner who explicitly recognizes your immense, silent sacrifices and actively, generously pours love back into your deeply depleted cup, rather than just constantly taking from it.\n\n<span class='text-xs opacity-80'>친밀한 관계에 있어서 당신은 자신을 완전히 헌신하고, 믿을 수 없을 만큼 이타적이며, 깊이 있게 상대를 보살핍니다. 무조건적인 상호 신뢰, 극도로 영적인 따뜻함, 그리고 절대적인 평화에 대한 공통된 열망을 온전한 기반으로 삼아 고도로 안정적이고 의미 깊은 관계를 구축합니다. 하지만 끝없이 내어주는 것이 당신의 자연스러운 기본값이기 때문에, 무의식적으로 당신을 자신만의 끝없는 개인 재활 센터로만 여기는, 몹시 망가져 있거나 감정적 요구가 비정상적으로 많은 사람들을 자석처럼 끌어당기는 경향이 짙습니다. 당신에게는 당신의 거대하고 침묵하는 희생을 명확하게 인지하고, 끊임없이 당신의 에너지를 빼앗아가기만 하는 것이 아니라 바닥난 당신의 잔에 적극적이고 관대하게 사랑을 다시 채워줄 수 있는 파트너가 절대적으로, 생존의 문제만큼 필요합니다.</span>",
+                    weaknesses: "Your extreme, almost phobic avoidance of intense conflict often forces you to quietly swallow your own legitimate pain to forcefully maintain an artificial, highly fragile peace. By constantly over-accommodating others' loud needs, you run the severe risk of completely losing your own voice and firmly establishing deeply unhealthy, co-dependent dynamics. You often heavily struggle to establish firm boundaries, falsely fearing that saying a strict 'no' makes you a deeply bad or unloving person. This profound self-neglect can eventually lead to immense, silent physical exhaustion and deep, unexpressed resentment.\n\n<span class='text-xs opacity-80'>격렬한 갈등에 대한 거의 공포증에 가까운 극단적인 회피 성향은, 종종 인위적이고 몹시 부서지기 쉬운 거짓 평화를 억지로 유지하기 위해 당신 자신의 정당한 고통을 묵묵히 삼켜버리도록 강요합니다. 다른 사람들의 시끄러운 요구에 끊임없이 과도하게 순응함으로써, 당신 고유의 목소리를 완전히 잃어버리고 매우 불건전하고 상호 의존적인 관계의 굴레를 견고하게 형성할 심각한 위험에 처해 있습니다. 단호하게 '아니오'라고 말하는 것이 당신을 몹시 나쁘거나 사랑이 없는 사람으로 만든다는 잘못된 두려움 때문에, 단단한 경계선을 설정하는 데 엄청난 어려움을 겪습니다. 이러한 심오한 수준의 자기 방치는 결국 감당할 수 없는 거대한 육체적 침묵의 번아웃과 밖으로 표출되지 못한 깊고 차가운 원망으로 이어질 수 있습니다.</span>",
+                    wellness: "Your ultimate healing journey absolutely must begin with decisively directing your immense superpower of compassion strictly inward. You must learn that prioritizing your own essential well-being is not inherently selfish; it is incredibly necessary for your absolute survival. Dedicate your weekends entirely to deeply restorative, solitary practices—such as cultivating a lush botanical garden, engaging in holistic sound bath meditation, or simply sleeping undisturbed. Vigorously practice the highly uncomfortable art of politely but firmly declining requests. True, enduring harmony is absolutely impossible if your own inner world is silently collapsing from heavy exhaustion.\n\n<span class='text-xs opacity-80'>당신의 궁극적인 치유의 여정은, 당신이 가진 거대한 연민의 초능력을 단호하고 엄격하게 당신 내면으로 돌리는 것에서부터 반드시 시작되어야 합니다. 당신 자신의 필수적인 안녕을 최우선으로 삼는 것이 본질적으로 이기적인 행동이 아니라, 당신의 절대적인 생존을 위해 믿을 수 없을 만큼 필수불가결하다는 사실을 뼈저리게 배워야만 합니다. 주말에는 싱그러운 식물 가꾸기, 온몸을 감싸는 홀리스틱 사운드 배스(싱잉볼) 명상에 참여하기, 혹은 누구의 방해도 받지 않고 그저 깊은 잠에 빠져드는 등 영혼을 깊이 회복시키는 고독한 활동에 온전히 헌신하세요. 타인의 무리한 부탁을 예의 바르면서도 아주 단호하게 거절하는, 그 몹시 불편한 기술을 격렬하게 연습해야 합니다. 당신의 내면 세계가 무거운 피로에 짓눌려 소리 없이 무너져 내리고 있다면, 진정으로 영속적인 조화란 절대적으로 불가능하다는 것을 명심하세요.</span>",
+                    match: "⏳ The Time Controller\n(시간의 지배자)" 
+                }
             ]
         };
 
-        let currentQ = 0; let score = 0;
+        // 복제 및 남성형 타이틀/매칭 정보 업데이트
+        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
+        resultsData.M[0].title = "⏳ The Time Traveler\n(시간의 지배자)";
+        resultsData.M[1].title = "🧠 The Mind Reader\n(속마음 리더)";
+        resultsData.M[2].title = "💥 The Powerhouse\n(천하장사 해결사)";
+        resultsData.M[3].title = "🌿 The Miracle Healer\n(치유의 능력자)";
+        
+        resultsData.M[0].match = "🌿 The Miracle Healer\n(치유의 능력자)";
+        resultsData.M[1].match = "💥 The Powerhouse\n(천하장사 해결사)";
+        resultsData.M[2].match = "🧠 The Mind Reader\n(속마음 리더)";
+        resultsData.M[3].match = "⏳ The Time Traveler\n(시간의 지배자)";
+
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('\n')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
+
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
+
+        function switchScreen(fromId, toId) {
+            document.getElementById(fromId).classList.add('hidden');
+            document.getElementById(toId).classList.remove('hidden');
+        }
 
         function selectGender(g) {
             userGender = g;
-            document.getElementById('start-screen').classList.add('hidden');
-            document.getElementById('question-screen').classList.remove('hidden');
+            switchScreen('start-screen', 'question-screen');
             showQuestion();
         }
 
         function showQuestion() {
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
+            
+            const qContainer = document.getElementById('q-container');
+            qContainer.classList.remove('fade-in');
+            void qContainer.offsetWidth; 
+            qContainer.classList.add('fade-in');
+
             document.getElementById('q-title').innerText = questions[currentQ].q;
             document.getElementById('btn-a').innerText = questions[currentQ].a;
             document.getElementById('btn-b').innerText = questions[currentQ].b;
@@ -134,30 +256,79 @@
         function answer(val) {
             if(val === 0) score++;
             currentQ++;
-            if(currentQ < questions.length) showQuestion();
-            else {
-                document.getElementById('question-screen').classList.add('hidden');
-                document.getElementById('loading-screen').classList.remove('hidden');
-                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2000);
+            
+            if(currentQ < questions.length) {
+                showQuestion();
+            } else {
+                switchScreen('question-screen', 'loading-screen');
+                const finalIdx = score % 4; 
+                const genId = userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`;
+                setTimeout(() => showResult(genId, false), 2500);
             }
         }
 
-        function showResult(resultId) {
-            document.getElementById('loading-screen').classList.add('hidden');
-            document.getElementById('result-screen').classList.remove('hidden');
-            const result = resultsData[userGender].find(r => r.id === resultId);
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
+            const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
+            const result = resultsData[userGender][idx];
+            
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
             
             document.getElementById('r-title').innerText = result.title;
-            document.getElementById('r-desc').innerText = result.desc;
             document.getElementById('r-match').innerText = result.match;
             
             const imgDiv = document.getElementById('r-img-div');
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_superpower_drama_w.png')" : "url('k_superpower_drama_m.png')";
-            imgDiv.style.backgroundSize = "200% 200%";
-            imgDiv.style.backgroundColor = "transparent";
+            imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            const posArray = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"];
-            imgDiv.style.backgroundPosition = posArray[resultsData[userGender].findIndex(r => r.id === resultId)];
+            // Teal 컬러 테마에 맞춘 5가지 상세 결과 레이아웃
+            document.getElementById('r-desc').innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-teal-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-teal-900 leading-relaxed font-medium whitespace-pre-line">${result.overview}</p>
+                    </div>
+                    <div class="bg-cyan-50 p-5 rounded-2xl border border-cyan-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-cyan-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-cyan-900 leading-relaxed font-medium whitespace-pre-line">${result.strengths}</p>
+                    </div>
+                    <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-blue-700 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
+                        <p class="text-sm text-blue-900 leading-relaxed font-medium whitespace-pre-line">${result.relationship}</p>
+                    </div>
+                    <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-indigo-900 leading-relaxed font-medium whitespace-pre-line">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-sky-50 p-5 rounded-2xl border border-sky-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-sky-700 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
+                        <p class="text-sm text-sky-900 leading-relaxed font-medium whitespace-pre-line">${result.wellness}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('결과 링크가 복사되었습니다!\\n친구들에게 공유해보세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
