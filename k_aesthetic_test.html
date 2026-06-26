@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-Aesthetic Style Test</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
     <style>
         /* 부드러운 페이드인 애니메이션 */
@@ -21,7 +19,6 @@
 <body class="bg-gray-100 text-gray-900 font-sans antialiased">
     <div class="max-w-md mx-auto min-h-screen bg-white shadow-2xl overflow-hidden relative selection:bg-pink-200">
         
-        <!-- 1. START SCREEN -->
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-pink-50 to-white fade-in">
             <div class="inline-block px-3 py-1 bg-pink-100 text-pink-600 text-xs font-bold uppercase tracking-widest rounded-full mb-4 mx-auto">Premium Test</div>
             <h1 class="text-4xl font-extrabold text-slate-800 mb-4 tracking-tight">K-Aesthetic</h1>
@@ -38,7 +35,6 @@
             </div>
         </div>
 
-        <!-- 2. QUESTION SCREEN -->
         <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-white">
             <div class="w-full bg-slate-100 rounded-full h-2 mb-10 overflow-hidden">
                 <div id="progress-bar" class="bg-gradient-to-r from-pink-400 to-rose-500 h-full rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
@@ -52,7 +48,6 @@
             </div>
         </div>
 
-        <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-slate-900 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-pink-500 border-r-4 border-r-transparent mb-6"></div>
             <h2 class="text-2xl font-bold mb-2 tracking-tight">
@@ -62,33 +57,26 @@
             <p class="text-slate-400 mt-2 text-sm">Generating your premium report.</p>
         </div>
 
-        <!-- 4. RESULT SCREEN -->
         <div id="result-screen" class="hidden px-4 py-8 min-h-screen bg-slate-50">
             <div class="w-full bg-white rounded-[2rem] shadow-xl p-5 md:p-6 relative overflow-hidden ring-1 ring-slate-100 fade-in">
                 
-                <!-- 배경 장식 -->
                 <div class="absolute -top-16 -right-16 w-48 h-48 bg-gradient-to-br from-pink-200 to-rose-100 rounded-full blur-3xl opacity-40 pointer-events-none"></div>
                 
                 <div class="relative z-10">
-                    <!-- 헤더 -->
                     <div class="text-center mb-6">
                         <span class="inline-block px-4 py-1.5 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md">Premium Analysis</span>
                         <h1 id="r-title" class="text-2xl font-extrabold text-slate-800 leading-tight"></h1>
                     </div>
 
-                    <!-- 결과 이미지 -->
                     <div id="r-img-div" class="w-full aspect-square bg-slate-100 bg-cover bg-no-repeat rounded-3xl shadow-inner mb-8 border border-slate-100" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
 
-                    <!-- 전문 심리 분석 리포트 섹션 -->
                     <div id="r-desc" class="space-y-4 mb-8"></div>
 
-                    <!-- 찰떡 궁합 섹션 -->
                     <div class="flex items-center justify-between bg-slate-900 rounded-2xl p-5 text-white mb-8 shadow-lg border border-slate-800">
                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">BEST MATCH (찰떡 케미)</span>
                         <span id="r-match" class="font-bold text-sm tracking-tight text-right text-pink-300"></span>
                     </div>
 
-                    <!-- 광고 영역 (AdSense) -->
                     <div class="mb-8 text-center bg-slate-50 rounded-2xl border border-dashed border-slate-300 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
                         <ins class="adsbygoogle"
                              style="display:block; width:100%;"
@@ -99,7 +87,6 @@
                         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
                     </div>
 
-                    <!-- 액션 버튼 영역 -->
                     <div class="space-y-3">
                         <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -155,46 +142,47 @@
                 { 
                     id: "f1", 
                     title: "🎸 Hongdae Indie<br><span class='text-lg font-bold text-slate-500'>홍대 인디 힙스터</span>", 
-                    overview: "You prioritize non-conformist subcultural identity over mainstream logic. You express internal creative chaos through raw, vintage-layered fashion. <br><br><span class='text-xs opacity-80'>주류 사회의 획일화된 논리보다는 비주얼적 서브컬처와 본인만의 자아를 중시합니다. 메인스트림의 유행을 거부하고 나만의 예술적 감성을 사랑하며, 빈티지와 락시크 무드를 통해 내면의 창조적 혼돈을 거침없이 표현하는 자유로운 영혼의 소유자입니다.</span>", 
-                    strengths: "Absolute authenticity and high aesthetic bravery. You define what is cool by simply being yourself. <br><br><span class='text-xs opacity-80'>타인의 시선을 비웃는 듯한 독보적인 개성과 힙한 아우라가 강력한 무기입니다. 어떤 트렌드에도 휘둘리지 않고 자신만의 스타일을 굳건히 지켜내는 용기가 돋보입니다.</span>", 
-                    relationship: "You seek deep, intellectual connections over superficial crowds. <br><br><span class='text-xs opacity-80'>피상적인 인맥보다는 깊이 있고 지적인 교감을 나눌 수 있는 소수의 '진짜' 관계를 갈망합니다. 가식 없는 사람들과 대화할 때 가장 큰 편안함을 느낍니다.</span>",
-                    weaknesses: "You may fall into snobbish elitism, dropping things once they become popular. <br><br><span class='text-xs opacity-80'>대중적인 취향을 은근히 무시하는 '홍대병' 성향이 있습니다. 남들과 무조건 달라야 한다는 강박이 오히려 스스로의 자아를 피곤하게 만들 수 있으니 주의하세요.</span>", 
-                    wellness: "Listen to underground indie tracks or visit a quiet, hidden LP bar. <br><br><span class='text-xs opacity-80'>창조적인 고립이 당신을 구원합니다. 복잡한 생각을 비우고 싶을 땐, 남들이 모르는 숨겨진 골목의 공간에서 인디 음악에 흠뻑 빠져드는 시간을 가지세요.</span>",
-                    match: "Hannam Old Money<br><span class='text-[10px] font-normal'>한남동 올드머니</span>" 
+                    overview: "You intensely prioritize a non-conformist subcultural identity over traditional, mainstream logic. You are an exceptionally free spirit who absolutely despises the cookie-cutter trends aggressively forced by society. Instead, you beautifully express your internal creative chaos through raw, vintage-layered fashion, heavy silver accessories, and perfectly curated messy aesthetics. Your lifestyle is a profound artistic statement, deliberately seeking out the hidden, the underground, and the beautifully imperfect aspects of modern life. You don't follow trends; you actively deconstruct them to build your incredibly unique universe.\n\n<span class='text-xs opacity-80'>당신은 주류 사회의 획일화된 논리보다는 비주얼적 서브컬처와 본인만의 확고한 자아를 극도로 중시하는 예외적으로 자유로운 영혼입니다. 사회가 공격적으로 강요하는 찍어낸 듯한 트렌드를 절대적으로 혐오하며, 대신 빈티지 레이어드 룩, 볼드한 실버 액세서리, 그리고 정교하게 연출된 정돈되지 않은 미학을 통해 내면의 창조적인 혼돈을 눈부시게 표현합니다. 당신의 라이프스타일은 그 자체로 심오한 예술적 선언이며, 현대 사회의 숨겨진 것들, 언더그라운드 문화, 그리고 아름답게 불완전한 요소들을 의도적으로 탐구합니다. 유행을 그저 맹목적으로 따르지 않고, 오히려 이를 적극적으로 해체하여 당신만의 놀랍도록 독특한 우주를 구축해 냅니다.</span>", 
+                    strengths: "Your most formidable weapon is your absolute authenticity and extraordinarily high aesthetic bravery. While others anxiously seek mass approval, you confidently define what is 'cool' simply by unapologetically being yourself. You possess a brilliant, deeply artistic eye that can effortlessly transform a cheap thrift store find into a high-fashion masterpiece. This fierce independence makes you a natural, highly influential muse to those around you, heavily inspiring others to boldly break out of their own boring stylistic comfort zones.\n\n<span class='text-xs opacity-80'>당신의 가장 강력한 무기는 타인의 시선을 완벽히 비웃는 듯한 절대적인 진정성과 비범할 정도로 높은 미적 용기입니다. 다른 사람들이 대중의 인정에 목말라 불안해할 때, 당신은 그저 거침없이 '나 자신'으로 존재함으로써 '힙함'의 정의를 스스로 완벽하게 확립합니다. 허름한 구제 샵에서 건진 저렴한 아이템조차 단숨에 하이패션 마스터피스로 탈바꿈시키는 눈부시고 심도 깊은 예술적 안목을 소유하고 있습니다. 이러한 맹렬한 독립성은 주변 사람들에게 자연스럽고도 매우 강력한 영향력을 미치는 뮤즈로서 작용하며, 타인들이 자신의 지루하고 안전한 스타일의 굴레에서 대담하게 벗어나도록 강렬한 영감을 줍니다.</span>", 
+                    relationship: "In your social life, you constantly seek deeply profound, highly intellectual connections over engaging with loud, superficial crowds. Small talk about generic topics entirely drains your soul; you crave passionate midnight debates about underground indie music, obscure vintage films, or disruptive modern art. You keep your inner circle extremely tight and fiercely protected, choosing to surround yourself only with individuals who fundamentally understand your extremely complex, multi-layered, and beautifully chaotic internal world.\n\n<span class='text-xs opacity-80'>사회생활에 있어서 당신은 시끄럽고 피상적인 다수의 인맥과 교류하는 것보다 심오하고 지적인 교감을 끊임없이 갈망합니다. 뻔한 주제의 가벼운 스몰 토크는 당신의 영혼을 완전히 고갈시킬 뿐입니다. 대신, 언더그라운드 인디 음악, 잘 알려지지 않은 난해한 독립 영화, 혹은 파격적인 현대 미술에 대한 자정의 열정적인 토론을 미친 듯이 원합니다. 당신은 이너서클을 극도로 좁게 유지하며 맹렬하게 보호하고, 당신의 대단히 복잡하고 다층적이며 아름답게 혼란스러운 내면세계를 본질적으로 이해하는 소수의 '진짜' 사람들과만 교류하기를 주저 없이 선택합니다.</span>",
+                    weaknesses: "Your relentless pursuit of strict individuality can occasionally trap you in deeply toxic, snobbish elitism—often referred to as 'Hongdae Disease.' You have a very dangerous tendency to instantly drop music, brands, or places the moment they become slightly popular, strictly out of a compulsive need to remain 'different.' This heavy contrarian mindset can unintentionally alienate you from genuinely good experiences and heavily isolate you from people who merely want to share widely loved, joyful things with you.\n\n<span class='text-xs opacity-80'>엄격한 개성에 대한 끊임없는 집착은, 종종 당신을 '홍대병'이라 불리는 심각하게 유해한 엘리트주의에 가두어버릴 위험이 있습니다. 오직 '남들과 달라야 한다'는 강박적인 욕구 때문에, 당신이 즐기던 음악, 브랜드, 공간들이 조금이라도 대중적으로 유명해지는 순간 이를 즉각적으로 버리려는 매우 위험한 성향을 가지고 있습니다. 이러한 심한 청개구리 같은 마인드셋은 본의 아니게 당신이 진정으로 훌륭한 경험을 누릴 기회를 박탈하며, 단지 대중적으로 사랑받는 즐거운 것들을 당신과 순수하게 나누고 싶어 하는 사람들로부터 당신을 심각하게 고립시킬 수 있습니다.</span>", 
+                    wellness: "To effectively recharge your deeply sensitive, heavily artistic soul, you absolutely must embrace intentional, highly creative isolation. The ultimate sanctuary for your exhausted mind is completely disconnecting from all social judgments. Spend your evenings getting lost in wildly chaotic underground indie tracks, intensely painting in total solitude, or quietly sipping whiskey in a heavily obscured, dark LP bar where absolutely nobody knows your name. Pure, unadulterated creative expression without an audience is your ultimate, profound healing mechanism.\n\n<span class='text-xs opacity-80'>당신의 깊고 예민하며 극도로 예술적인 영혼을 효과적으로 재충전하기 위해서는, 의도적이고 창조적인 고립을 절대적으로 수용해야만 합니다. 지친 마음을 위한 궁극의 안식처는 세상의 모든 사회적 판단으로부터 완벽하게 단절되는 것입니다. 늦은 밤 거칠고 혼란스러운 언더그라운드 인디 트랙에 완전히 길을 잃거나, 철저한 고독 속에서 미친 듯이 그림을 그리거나, 아무도 당신의 이름을 모르는 깊숙이 숨겨진 어두운 LP 바에서 조용히 위스키를 음미하세요. 관객이 존재하지 않는 순수하고 불순물 없는 온전한 창조적 표현이야말로 당신을 위한 궁극적이고 심오한 치유의 메커니즘입니다.</span>",
+                    match: "Hannam Preppy<br><span class='text-[10px] font-normal'>한남동 시티보이 남친룩</span>" 
                 },
                 { 
                     id: "f2", 
                     title: "🛹 Seongsu Streetwear<br><span class='text-lg font-bold text-slate-500'>성수 미니멀 스트리트</span>", 
-                    overview: "You process structural minimalism and practical utility with a high urban edge. You blend architectural industrial aesthetics with everyday luxury. <br><br><span class='text-xs opacity-80'>차가운 인더스트리얼 무드와 편안한 스트리트룩을 믹스매치하는 감각적인 바이브를 지녔습니다. 무심한 듯 힙한 꾸안꾸의 정석을 보여주며, 실용성과 도시적인 엣지의 완벽한 균형을 아는 가장 힙한 트렌드세터입니다.</span>", 
-                    strengths: "Incredible casual fluid styling and modern sociability. You navigate work and leisure effortlessly. <br><br><span class='text-xs opacity-80'>가장 트렌디한 고프코어 룩을 완벽히 소화해내는 센스는 물론, 공간과 상황에 맞춰 유연하게 대처하는 현대적인 사교 능력을 갖췄습니다.</span>", 
-                    relationship: "You are adaptable and enjoy networking in the newest pop-up stores or trendy cafes. <br><br><span class='text-xs opacity-80'>트렌디하고 핫한 공간에서 사람들과 어울리며 에너지를 얻습니다. 팝업 스토어나 힙한 카페에서 감각적인 대화를 나누며 네트워크를 넓혀가는 인싸 스타일입니다.</span>",
-                    weaknesses: "You are hyper-dependent on contextual validation from the current trend bubble. <br><br><span class='text-xs opacity-80'>인스타 감성과 핫플 소비에 중독되어 타인의 시선과 유행에 지나치게 민감할 수 있습니다. 인증샷이 없으면 묘한 불안감을 느끼는 '트렌드 강박'을 경계하세요.</span>", 
-                    wellness: "A tech-free walk in a modern art gallery without the need to take pictures. <br><br><span class='text-xs opacity-80'>끝없는 트렌드 추적에서 벗어나는 디톡스가 필요합니다. 스마트폰을 내려놓고 고요한 현대 미술관을 산책하며 오롯이 현재의 감각에만 집중해 보세요.</span>",
-                    match: "Gangnam Chic<br><span class='text-[10px] font-normal'>강남 모던 시크</span>" 
+                    overview: "You brilliantly process structural minimalism and highly practical utility with an incredibly sharp urban edge. You are the ultimate modern trendsetter who flawlessly blends cold, architectural industrial aesthetics with everyday, comfortable luxury. You firmly reject heavily restricted, uncomfortable formal wear, heavily favoring the 'Gorpcore' or refined streetwear vibe that practically allows you to transition perfectly from a casual daytime tech-startup meeting to an incredibly hyped nighttime DJ party without changing a single item of clothing. Your incredibly keen radar for what is currently 'hot' is practically unmatched.\n\n<span class='text-xs opacity-80'>당신은 구조적인 미니멀리즘과 실용성을 믿을 수 없을 만큼 날카로운 도시적 엣지로 훌륭하게 소화해 냅니다. 차갑고 건축학적인 인더스트리얼 미학과 편안한 일상 속 럭셔리를 흠잡을 데 없이 믹스매치하는 궁극의 현대적 트렌드세터입니다. 활동을 심하게 제약하는 불편한 포멀룩을 단호하게 거부하며, 낮에는 캐주얼한 IT 스타트업 미팅에 참석하고 밤에는 힙한 DJ 파티에 가더라도 옷을 갈아입을 필요가 완벽히 없는 '고프코어'나 세련된 스트리트웨어 바이브를 강력하게 선호합니다. 현재 무엇이 가장 '핫'한지 귀신같이 짚어내는 당신의 예리한 트렌드 레이더는 타의 추종을 불허합니다.</span>", 
+                    strengths: "Your greatest power lies in your incredible, highly fluid styling versatility and your brilliantly modern, effortless sociability. You possess an almost supernatural ability to look intensely stylish while appearing as though you didn't try at all. You are deeply tapped into the contemporary cultural zeitgeist, always knowing exactly where the coolest new pop-up stores, secret exhibitions, or heavily hyped sneaker drops are happening. This exceptional adaptability makes you heavily magnetic, effortlessly commanding absolute attention the moment you confidently step onto the bustling streets.\n\n<span class='text-xs opacity-80'>당신의 가장 위대한 힘은 믿을 수 없을 만큼 유연한 스타일링 스펙트럼과 몹시 현대적이고 애쓰지 않는 듯한 세련된 사교성에 있습니다. 전혀 꾸미지 않은 것처럼 보이면서도 극도로 스타일리시해 보이는, 거의 초능력에 가까운 '꾸안꾸'의 정석을 완벽하게 보여줍니다. 당신은 현대 문화의 시대정신에 깊숙이 접속되어 있어, 가장 힙한 신상 팝업 스토어, 비밀스러운 전시회, 혹은 한정판 스니커즈 발매가 어디서 열리는지 항상 정확히 알고 있습니다. 이러한 예외적인 적응력은 당신을 매우 매력적인 자석처럼 만들며, 번화한 거리에 자신감 있게 들어서는 순간 모든 이의 시선을 무심하게 완벽히 압도합니다.</span>", 
+                    relationship: "You absolutely thrive in highly dynamic, visually stimulating environments and genuinely enjoy networking with equally trendy individuals. Your ideal relationships are built on shared aesthetic values and exciting experiences, such as exploring brand new, hype-driven cafes or collaborating on creative side-projects. While your massive social network is incredibly wide and highly vibrant, you prefer maintaining a cool, completely drama-free distance, avoiding relationships that feel excessively heavy, heavily restrictive, or severely emotionally draining.\n\n<span class='text-xs opacity-80'>당신은 고도로 역동적이고 시각적인 자극이 넘치는 환경에서 완벽하게 에너지를 얻으며, 트렌디한 감각을 공유하는 사람들과의 네트워킹을 진심으로 즐깁니다. 가장 핫한 신상 카페의 오픈런을 함께 뛰거나 창의적인 사이드 프로젝트를 도모하는 등, 공통의 미적 가치와 흥미로운 경험을 기반으로 관계를 구축합니다. 당신의 방대한 소셜 네트워크는 믿을 수 없을 만큼 넓고 활기가 넘치지만, 관계에 있어서는 지나치게 무겁거나, 당신을 심하게 구속하거나, 감정을 심각하게 소모시키는 상황을 피하며 쿨하고 드라마 없는 산뜻한 거리를 유지하는 것을 압도적으로 선호합니다.</span>",
+                    weaknesses: "Your deep, heavy reliance on the fast-paced cultural wave means you can become hyper-dependent on contextual validation from the current, ever-shifting trend bubble. The intense, relentless 'FOMO' (Fear Of Missing Out) frequently drives you to massive aesthetic exhaustion. You often heavily tie your fundamental self-worth to whether your highly curated Instagram feed is perfectly aligned with the latest hype, silently inducing severe anxiety if you fall even slightly behind the incredibly exhausting, high-speed pace of modern urban trends.\n\n<span class='text-xs opacity-80'>빠르게 변화하는 문화적 파도에 대한 깊고 무거운 의존성은, 끊임없이 변동하는 현재 트렌드 거품 속에서 상황적 인정에 극도로 집착하게 만들 수 있습니다. 유행에 뒤처지는 것에 대한 강렬하고 가차 없는 '포모(FOMO)' 증후군은 종종 당신을 엄청난 미적 번아웃으로 몰아넣습니다. 정교하게 큐레이션 된 당신의 인스타그램 피드가 최신 유행과 완벽하게 일치하는지에 따라 근본적인 자존감을 심하게 엮는 경향이 있으며, 이 숨 막히게 빠른 현대 도시 트렌드의 속도에서 조금이라도 뒤처지면 내면의 심각한 불안감을 소리 없이 유발하곤 합니다.</span>", 
+                    wellness: "To effectively survive your heavily visually over-stimulated life, you strictly require a profound 'Trend Detox.' Intentionally leave your deeply addictive smartphone at home and take a completely tech-free, highly silent walk through an empty modern art gallery or a completely quiet forest. You must violently break the intensely toxic habit of feeling the absolute necessity to document and aggressively broadcast every single stylish moment. Re-learn the lost, beautiful art of experiencing raw, physical reality purely for yourself, heavily unburdened by the crushing pressure of social media performance.\n\n<span class='text-xs opacity-80'>시각적으로 극심하게 과잉 자극된 당신의 삶에서 효과적으로 살아남으려면, 심오한 수준의 '트렌드 디톡스'가 엄격하게 필요합니다. 깊은 중독성을 가진 스마트폰을 의도적으로 집에 두고, 텅 빈 현대 미술관이나 고요한 숲 속을 기술의 개입이 전혀 없는 완벽한 침묵 상태로 산책하세요. 모든 스타일리시한 순간을 강박적으로 기록하고 공격적으로 전시해야만 한다는 매우 유해한 습관을 과감하게 깨부숴야 합니다. 소셜 미디어 퍼포먼스라는 짓누르는 압박감에서 완전히 벗어나, 날것 그대로의 물리적 현실을 오직 당신 자신만을 위해 온전히 경험하는 잃어버린 아름다운 기술을 다시금 배워야 합니다.</span>",
+                    match: "Gangnam Classic<br><span class='text-[10px] font-normal'>강남 댄디 클래식</span>" 
                 },
                 { 
                     id: "f3", 
                     title: "🍸 Gangnam Chic<br><span class='text-lg font-bold text-slate-500'>강남 모던 시크</span>", 
-                    overview: "You adopt a highly curated, quiet luxury defense framework. You value silent class structures, high-material minimalism, and aristocratic restraint. <br><br><span class='text-xs opacity-80'>드러내지 않는 고급스러움과 절제된 미학을 추구하는 '조용한 럭셔리'의 표본입니다. 과한 로고플레이 대신 완벽한 실루엣과 하이 퀄리티 소재로 승부하며, 타협하지 않는 우아함과 프로페셔널한 스탠스를 유지합니다.</span>", 
-                    strengths: "Flawless elegant poise, sophisticated taste profiles, and clean behavioral manners. <br><br><span class='text-xs opacity-80'>우아하고 차분한 애티튜드가 몸에 깊이 배어 있습니다. 유행에 휩쓸리지 않는 클래식함과 정갈한 매너로, 다가가기 힘들지만 존경심을 자아내는 아우라를 풍깁니다.</span>", 
-                    relationship: "You maintain polite, respectful distances, loyal to a few trusted peers. <br><br><span class='text-xs opacity-80'>적당한 거리를 유지하며 예의를 갖추는 성숙한 관계를 지향합니다. 수준이 맞고 상호 존중이 가능한 소수의 지인들과 프라이빗하게 교류하는 것을 선호합니다.</span>",
-                    weaknesses: "Your obsession with keeping up a flawless façade prevents raw human connection. <br><br><span class='text-xs opacity-80'>빈틈없는 완벽한 모습만 보여주려다 보니 대인관계에서 다소 차가워 보일 수 있습니다. 흠결이나 약점을 드러내는 것을 두려워하는 완벽주의를 내려놓을 필요가 있습니다.</span>", 
-                    wellness: "A quiet spa day or enjoying a slow, luxurious self-care routine resets your mind. <br><br><span class='text-xs opacity-80'>고급스럽고 프라이빗한 감각적 힐링이 가장 효과적입니다. 예약제 스파나 조용한 라운지에서 프리미엄 티를 음미하며 완벽주의의 긴장을 천천히 풀어내세요.</span>",
-                    match: "Seongsu Streetwear<br><span class='text-[10px] font-normal'>성수 미니멀 스트리트</span>" 
+                    overview: "You heavily adopt a highly curated, remarkably flawless 'quiet luxury' defense framework. You absolutely despise cheap flashiness, aggressive logo-mania, and loud, unrefined behavior. Instead, you profoundly value silent class structures, exceptionally high-material minimalism, and sharp, aristocratic restraint. Your aesthetic heavily revolves around impeccably tailored neutral tones, highly premium fabrics like fine silk or pure cashmere, and completely maintaining an icy, hyper-professional, and undeniably powerful stance that instantly commands deep respect from the very moment you enter any room.\n\n<span class='text-xs opacity-80'>당신은 고도로 큐레이션 된, 놀랍도록 흠잡을 데 없는 '조용한 럭셔리(Quiet Luxury)'라는 방어 체계를 강력하게 채택하고 있습니다. 싼티 나는 화려함, 공격적인 로고 플레이, 그리고 시끄럽고 세련되지 못한 행동거지를 경멸합니다. 대신 침묵 속의 품격 있는 구조, 예외적으로 고급스러운 소재의 미니멀리즘, 날카롭고 귀족적인 절제미를 심오하게 가치 있게 여깁니다. 완벽하게 테일러링 된 뉴트럴 톤, 최고급 실크나 퓨어 캐시미어 같은 프리미엄 패브릭, 그리고 공간에 들어서는 그 순간 즉각적으로 깊은 존경심을 자아내는 차갑고 극도로 프로페셔널하며 압도적인 스탠스를 유지하는 것이 당신 미학의 전부입니다.</span>", 
+                    strengths: "Your supreme strengths are your flawlessly elegant poise, deeply sophisticated taste profiles, and incredibly clean, highly disciplined behavioral boundaries. You possess an immense, highly intimidating aura of competence that makes people instinctively trust your absolute judgment. You never let highly chaotic emotional situations publicly crack your perfectly serene facade. In a world completely obsessed with fast, cheap, disposable culture, you represent the enduring, highly refined pinnacle of timeless elegance, naturally rising to elite leadership positions because you simply exude undeniable excellence.\n\n<span class='text-xs opacity-80'>당신의 궁극적인 강점은 결점 없이 우아한 자태, 깊이 있게 세련된 취향 프로필, 그리고 믿을 수 없을 만큼 깔끔하고 철저히 훈련된 행동의 경계선입니다. 사람들을 본능적으로 당신의 절대적인 판단을 신뢰하게 만드는 거대하고도 압도적인 능력의 아우라를 소유하고 있습니다. 아무리 혼란스러운 감정적 위기 상황이라도 당신의 완벽하고 평온한 외면을 대중 앞에서 무너뜨리도록 결코 허락하지 않습니다. 싸고 소모적인 인스턴트 문화에 완전히 미쳐버린 세상 속에서, 당신은 영원히 변치 않는 고도로 정제된 클래식한 우아함의 정점을 대변하며, 흠잡을 데 없는 탁월함을 자연스럽게 뿜어내어 자연스레 엘리트 리더의 위치에 오릅니다.</span>", 
+                    relationship: "You carefully maintain extremely polite, highly respectful, but deliberately calculated distances from others, strictly remaining loyal only to a very select few, heavily trusted peers. You heavily value high-quality, profoundly deep networking over collecting masses of superficial acquaintances. A perfect interaction for you is a completely quiet, deeply intellectual conversation over exceptionally fine wine in a heavily exclusive, private lounge. You deeply respect people who maintain extreme emotional control and absolutely abhor individuals who cross heavily established boundaries or act with reckless unpredictability.\n\n<span class='text-xs opacity-80'>타인과 극도로 정중하고 예의 바르면서도 의도적으로 철저히 계산된 거리를 유지하며, 오직 엄격하게 검증된 극소수의 신뢰하는 지인들에게만 굳건한 충성심을 보입니다. 피상적인 지인들을 수없이 수집하는 것보다 고품질의 심도 깊은 네트워킹에 엄청난 가치를 둡니다. 당신에게 가장 완벽한 교류란, 철저히 프라이빗하고 배타적인 고급 라운지에서 최고급 와인을 곁들이며 나누는 완벽하게 조용하고 지적인 대화입니다. 극단적인 감정 통제력을 유지하는 사람들을 깊이 존경하며, 확고하게 설정된 선을 무례하게 넘거나 예측 불가능하고 경솔하게 행동하는 사람들을 철저하게 혐오합니다.</span>",
+                    weaknesses: "Your absolute, heavy obsession with constantly maintaining a flawless, uncrackable facade frequently prevents raw, deeply genuine human connection. The extreme weight of perfectionism you aggressively impose upon yourself silently breeds highly intense, deeply hidden internal pressure. Because you are so heavily terrified of displaying any messy vulnerability, you often intentionally push away people who genuinely want to emotionally care for you, falsely interpreting their loving attempts to get close as a dangerous threat to your highly controlled, icy armor.\n\n<span class='text-xs opacity-80'>흠집 하나 없는 완벽한 겉모습을 끊임없이 유지하려는 강렬하고 절대적인 집착은 종종 날것 그대로의 가장 진실된 인간적 교감을 원천적으로 가로막습니다. 당신 스스로에게 공격적으로 부여하는 그 완벽주의의 극단적인 무게는, 겉으로는 보이지 않는 매우 강렬하고 심오한 내면의 압박감을 소리 없이 키워냅니다. 지저분한 취약성을 타인에게 들키는 것을 극도로 두려워하기 때문에, 당신의 차갑게 통제된 갑옷을 뚫고 다가와 진심으로 보살펴 주려는 사람들의 따뜻한 시도조차 위험한 위협으로 잘못 해석하여 의도적으로 매몰차게 밀어내곤 합니다.</span>", 
+                    wellness: "To effectively melt your heavily accumulated, icy perfectionist tension, you urgently require highly luxurious, heavily controlled sensory relaxation. Booking an entirely quiet, highly premium spa day, or rigorously engaging in a slow, extremely meticulous nighttime self-care routine with heavily expensive, deeply fragrant skincare products is your ultimate medicine. You must completely give yourself profound permission to be beautifully lazy and comfortably unpolished when entirely alone behind closed doors. Stop violently performing perfection when absolutely no one is watching.\n\n<span class='text-xs opacity-80'>무겁게 층층이 쌓인 완벽주의의 차가운 긴장을 효과적으로 녹여내기 위해서는, 고도로 통제된 럭셔리한 감각적 휴식이 시급하게 필요합니다. 완벽하게 조용하고 프라이빗한 프리미엄 스파를 예약하거나, 최고급 향이 담긴 고가의 스킨케어 제품으로 극도로 세심하고 느린 나이트 루틴에 몰입하는 것이 당신을 위한 궁극의 처방전입니다. 굳게 닫힌 방문 뒤 혼자 있는 시간만큼은, 스스로에게 한없이 게으르고 편안하게 헝클어져도 좋다는 심오한 허락을 완전히 내려주어야 합니다. 그 누구도 당신을 지켜보지 않는 곳에서까지 완벽을 연기하기 위해 당신 스스로를 무자비하게 학대하는 것을 당장 멈추세요.</span>",
+                    match: "Seongsu Gorpcore<br><span class='text-[10px] font-normal'>성수 고프고어 스트리트</span>" 
                 },
                 { 
                     id: "f4", 
                     title: "🦢 Hannam Old Money<br><span class='text-lg font-bold text-slate-500'>한남동 올드머니</span>", 
-                    overview: "You function with a highly warm, romantic-nostalgic emotional engine. You seek safety in fairytale textures, floral-pastel layers, and elegant softness. <br><br><span class='text-xs opacity-80'>아기자기하고 따뜻한 파스텔톤과 동화 같은 낭만적 무드를 깊이 사랑합니다. 트위드 자켓과 진주 목걸이처럼 클래식하면서도 러블리한 감성을 추구하며, 일상 속 작은 아름다움을 발견하는 데 탁월한 재능이 있습니다.</span>", 
-                    strengths: "Extreme relational warmth, high comforting power, and organic visual softness. <br><br><span class='text-xs opacity-80'>각박한 세상 속에서 보기 드문 무해함과 다정함을 뿜어냅니다. 곁에 있는 사람의 뾰족한 마음까지 몽글몽글하게 녹여버리는 엄청난 공감 능력의 소유자입니다.</span>", 
-                    relationship: "You are the ultimate caregiver, showering your friends with unconditional warmth. <br><br><span class='text-xs opacity-80'>다정함이 곧 무기입니다. 누군가를 돌보고 챙겨주는 것을 진심으로 즐기며, 아낌없는 애정과 따뜻한 말 한마디로 주변 사람들과 깊고 끈끈한 유대감을 형성합니다.</span>",
-                    weaknesses: "You filter out harsh systematic truths, falling into deep melancholy when life breaks your fantasies. <br><br><span class='text-xs opacity-80'>냉정하고 삭막한 현실의 문제를 직시하길 회피하려는 성향이 강합니다. 본인만의 환상이 깨질 때 쉽게 무너져 내리는 유리멘탈을 보완하기 위해 현실 감각을 키워야 합니다.</span>", 
-                    wellness: "Baking, arranging fresh flowers, or watching a classic movie wrapped in a soft blanket. <br><br><span class='text-xs opacity-80'>시각적이고 촉각적인 포근함이 최고의 위로가 됩니다. 달콤한 베이킹을 하거나 예쁜 꽃꽂이를 즐기며, 부드러운 담요를 덮고 로맨스 영화에 푹 빠져보세요.</span>",
-                    match: "Hongdae Indie<br><span class='text-[10px] font-normal'>홍대 인디 힙스터</span>" 
+                    overview: "You function entirely with a highly warm, intensely romantic-nostalgic emotional engine. In a deeply harsh and deeply cynical modern world, you actively seek profound safety in heavily romanticized fairytale textures, exquisite floral-pastel layers, and an aura of highly elegant, unthreatening softness. Your highly curated aesthetic focuses completely on bright, delicate beauty—such as tweed jackets, pure pearls, and heavily ribboned accessories. You view your entire life as a beautifully directed, deeply soft romantic movie, heavily emphasizing extreme graciousness, profound kindness, and deeply traditional, sweet elegance.\n\n<span class='text-xs opacity-80'>당신은 온전하게 매우 따뜻하고 강렬하게 낭만적이며 향수 어린 감정 엔진으로 움직입니다. 극도로 가혹하고 냉소적인 현대 세계에서, 당신은 철저하게 낭만화된 동화 같은 질감, 눈부신 플로럴 파스텔 레이어, 그리고 전혀 위협적이지 않은 매우 우아하고 부드러운 오라 속에서 심오한 안전감을 적극적으로 찾아 헤맵니다. 당신의 고도로 큐레이션 된 미학은 트위드 재킷, 순수함을 상징하는 진주, 우아한 리본 장식 등 밝고 섬세한 아름다움에 완벽하게 집중되어 있습니다. 당신의 삶 전체를 아름답게 연출된 한 편의 부드러운 로맨스 영화로 바라보며, 지극한 우아함, 심오한 다정함, 그리고 깊이 있게 전통적이고 사랑스러운 기품을 강력하게 강조합니다.</span>", 
+                    strengths: "Your absolutely greatest capabilities are your extreme relational warmth, heavily comforting emotional power, and brilliantly organic visual softness. You genuinely possess the deeply rare, highly magical ability to instantly disarm heavily guarded people with your intensely pure, inherently bright smile. You are the absolute master of creating highly cozy, beautifully welcoming aesthetics that successfully make absolutely everyone around you feel deeply safe, profoundly loved, and emotionally held. Your highly optimistic, romantic view of the world is an incredibly powerful, deeply necessary antidote to societal heavy cynicism.\n\n<span class='text-xs opacity-80'>당신의 절대적으로 가장 위대한 능력은 극한의 관계적 따뜻함, 사람을 무장해제시키는 거대한 감정적 위로의 힘, 그리고 눈부시게 유기적인 시각적 부드러움입니다. 당신은 특유의 몹시 순수하고 본질적으로 밝은 미소로 방어적인 사람들의 경계를 단숨에 허물어뜨리는 깊고 희귀한 마법 같은 능력을 진심으로 소유하고 있습니다. 주변의 모든 사람들이 자신이 완벽하게 안전하고, 깊이 사랑받고 있으며, 감정적으로 따뜻하게 안겨 있다고 느끼게 만드는 고도로 아늑하고 환대하는 미학을 창조하는 절대적인 마스터입니다. 세상을 바라보는 당신의 지극히 낙관적이고 낭만적인 시선은, 사회에 팽배한 무거운 냉소주의를 치료하는 믿을 수 없을 만큼 강력하고 필수적인 해독제입니다.</span>", 
+                    relationship: "In highly intimate circles, you operate as the ultimate, deeply devoted caregiver, constantly showering your friends and heavily cherished partners with incredibly unconditional, sunny warmth. You fundamentally build relationships on deeply shared romantic ideals, sweet, meaningful gifts, and deeply affirming emotional exchanges. You aggressively abhor heavily dramatic, highly toxic conflicts and consistently strive to create heavily harmonious, perfectly beautiful dynamics where everyone feels comfortably coddled in your profoundly soft, highly emotional pastel universe.\n\n<span class='text-xs opacity-80'>가장 친밀한 관계 내에서 당신은 무한히 헌신하는 궁극의 치유자로 행동하며, 친구들과 깊이 아끼는 파트너에게 믿을 수 없을 만큼 무조건적이고 햇살 같은 따스함을 끊임없이 쏟아붓습니다. 낭만적인 이상주의를 깊이 공유하고, 달콤하고 의미 있는 선물을 주고받으며, 감정을 따뜻하게 긍정하는 교류를 바탕으로 근본적인 관계를 굳건히 구축합니다. 파국으로 치닫는 유해하고 몹시 극적인 갈등을 격렬하게 혐오하며, 모든 사람이 당신의 한없이 부드럽고 감성적인 파스텔톤 우주 속에서 편안하게 보호받고 있다고 느끼는, 완벽하게 조화롭고 눈부시게 아름다운 관계의 역학을 만들기 위해 일관되게 노력합니다.</span>",
+                    weaknesses: "Because you so heavily filter out the harsh, aggressively cold, systematic truths of reality, you frequently fall into incredibly deep, heavily paralyzing melancholy when real life violently breaks your carefully constructed aesthetic fantasies. Your intense fear of destroying your beautiful, peaceful bubble often heavily prevents you from addressing deeply necessary, heavily uncomfortable realities. You can be severely hurt by even the slightest, heavily unintentional coldness from others, often internalizing minor aesthetic disruptions as highly massive emotional rejections.\n\n<span class='text-xs opacity-80'>현실의 가혹하고 공격적일 만큼 차가운 구조적인 진실들을 지나치게 강력하게 필터링해버리기 때문에, 거친 현실이 당신이 세심하게 공들여 쌓아 올린 미적 환상을 폭력적으로 산산조각 낼 때 종종 믿을 수 없을 만큼 깊고 마비될 정도의 극심한 우울감에 빠지곤 합니다. 당신의 아름답고 평화로운 환상의 거품을 터뜨리는 것에 대한 강렬한 두려움은, 종종 심오하게 필요하지만 몹시 불편한 현실의 문제들을 직면하는 것을 심각하게 방해합니다. 타인의 아주 사소하고 전혀 의도치 않은 작은 차가움에도 치명적인 상처를 입으며, 종종 사소한 미적 균열조차 감정적으로 엄청난 거절을 당한 것으로 무겁게 내면화하는 유리 멘탈의 성향이 있습니다.</span>", 
+                    wellness: "To effectively heal your frequently bruised, deeply romantic heart without entirely losing your highly beautiful softness, you must intensely lean into extremely comforting, deeply tactile, offline activities. Engaging completely in heavily slow-paced, deeply sensory hobbies—like precisely arranging fresh, highly vibrant spring flowers, patiently baking deeply sweet pastries from scratch, or simply lying heavily wrapped in completely plush blankets while watching deeply classic romance films—will perfectly restore your heavily depleted emotional reserves.\n\n<span class='text-xs opacity-80'>툭하면 멍드는 당신의 깊고 낭만적인 심장을, 당신이 가진 그 찬란하고 아름다운 부드러움을 완전히 잃지 않으면서 효과적으로 치유하기 위해서는 극도로 편안하고 깊은 촉각을 자극하는 오프라인 활동에 강렬하게 기대야만 합니다. 눈부시게 생생한 봄꽃들을 세심하게 다듬어 꽃꽂이를 하거나, 인내심을 가지고 달콤한 베이킹을 처음부터 끝까지 직접 해내거나, 그저 폭신하고 두꺼운 담요에 몸을 칭칭 감은 채 오래된 고전 로맨스 영화를 넋을 놓고 바라보는 등 고도로 감각적이고 느린 템포의 취미에 온전히 몰입하는 것은 바닥나버린 당신의 감정적 에너지를 완벽하게 회복시켜 줄 것입니다.</span>",
+                    match: "Hongdae Grunge<br><span class='text-[10px] font-normal'>홍대 그런지 락시크</span>" 
                 }
             ]
         };
 
+        // 남성형 데이터 복사 및 매칭 텍스트 수정
         resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
         resultsData.M[0].title = "🎸 Hongdae Grunge<br><span class='text-lg font-bold text-slate-500'>홍대 그런지 락시크</span>";
         resultsData.M[1].title = "🛹 Seongsu Gorpcore<br><span class='text-lg font-bold text-slate-500'>성수 고프고어 스트리트</span>";
@@ -305,23 +293,23 @@
                 <div class="space-y-4">
                     <div class="bg-pink-50 p-5 rounded-2xl border border-pink-100 shadow-sm">
                         <h4 class="text-[10px] font-black text-pink-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
-                        <p class="text-sm text-pink-900 leading-relaxed font-medium">${result.overview}</p>
+                        <p class="text-sm text-pink-900 leading-relaxed font-medium whitespace-pre-line">${result.overview}</p>
                     </div>
                     <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
                         <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
-                        <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.strengths}</p>
+                        <p class="text-sm text-indigo-900 leading-relaxed font-medium whitespace-pre-line">${result.strengths}</p>
                     </div>
                     <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm">
                         <h4 class="text-[10px] font-black text-blue-700 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
-                        <p class="text-sm text-blue-900 leading-relaxed font-medium">${result.relationship}</p>
+                        <p class="text-sm text-blue-900 leading-relaxed font-medium whitespace-pre-line">${result.relationship}</p>
                     </div>
                     <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm">
                         <h4 class="text-[10px] font-black text-rose-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
-                        <p class="text-sm text-rose-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                        <p class="text-sm text-rose-900 leading-relaxed font-medium whitespace-pre-line">${result.weaknesses}</p>
                     </div>
                     <div class="bg-teal-50 p-5 rounded-2xl border border-teal-100 shadow-sm">
                         <h4 class="text-[10px] font-black text-teal-700 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
-                        <p class="text-sm text-teal-900 leading-relaxed font-medium">${result.wellness}</p>
+                        <p class="text-sm text-teal-900 leading-relaxed font-medium whitespace-pre-line">${result.wellness}</p>
                     </div>
                 </div>
             `;
