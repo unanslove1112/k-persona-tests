@@ -9,10 +9,14 @@
     <style>
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 스크롤바 커스텀 (다크/레드 테마) */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #ef4444; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-slate-900 text-gray-100 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-slate-800 shadow-lg overflow-hidden relative border-x border-slate-700">
+    <div class="max-w-md mx-auto min-h-screen bg-slate-800 shadow-lg overflow-hidden relative border-x border-slate-700 selection:bg-red-900 selection:text-white">
         
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-red-900 to-slate-900 fade-in">
             <h1 class="text-4xl font-extrabold text-red-500 mb-4 tracking-tight">K-Webtoon Soul</h1>
@@ -30,8 +34,8 @@
         </div>
 
         <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-slate-900">
-            <div class="w-full bg-slate-700 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-red-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            <div class="w-full bg-slate-700 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-red-500 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center fade-in">
                 <h2 id="q-title" class="text-xl font-bold text-white mb-8 leading-relaxed"></h2>
@@ -44,7 +48,7 @@
 
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-red-900 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">
+            <h2 class="text-2xl font-bold mb-2 tracking-tight">
                 Syncing with the System...<br><br>
                 <span class="text-lg opacity-80 font-normal">시스템 동기화 중...</span>
             </h2>
@@ -52,57 +56,185 @@
 
         <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-slate-900">
             <div class="w-full bg-slate-800 rounded-[2rem] shadow-2xl p-6 relative overflow-hidden border border-slate-700 fade-in">
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-red-900 rounded-full blur-3xl opacity-30"></div>
+                
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-red-900 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+                
                 <div class="relative z-10">
                     <div class="text-center mb-6">
-                        <span class="inline-block px-3 py-1 bg-slate-700 text-red-400 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Character Unlocked</span>
+                        <span class="inline-block px-3 py-1.5 bg-slate-700 text-red-400 text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md border border-slate-600">Premium Analysis</span>
                         <h1 id="r-title" class="text-2xl font-extrabold text-red-500 leading-tight"></h1>
                     </div>
+
                     <div id="r-img-div" class="w-full aspect-square bg-slate-900 bg-cover bg-no-repeat rounded-[1.5rem] shadow-[0_0_15px_rgba(239,68,68,0.3)] border border-red-500/30 mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
-                    <div id="r-desc" class="space-y-4 mb-6"></div>
-                    <div class="flex items-center justify-between bg-slate-900 rounded-2xl p-4 text-white mb-8 border border-slate-700 shadow-md">
-                        <span class="text-[10px] font-bold text-red-400 opacity-80 uppercase tracking-widest">FATED COMPANION</span>
+
+                    <div id="r-desc" class="space-y-4 mb-8"></div>
+
+                    <div class="flex items-center justify-between bg-slate-900 rounded-2xl p-5 text-white mb-8 border border-slate-700 shadow-md">
+                        <span class="text-[10px] font-bold text-red-400 opacity-80 uppercase tracking-widest">FATED COMPANION (운명의 동료)</span>
                         <span id="r-match" class="font-bold text-sm tracking-tight text-right text-red-100"></span>
                     </div>
-                    <div class="mb-6 text-center bg-slate-800 rounded-xl border border-dashed border-slate-600 p-2 min-h-[100px] flex items-center justify-center">
-                        <ins class="adsbygoogle" style="display:block; width:100%;" data-ad-client="ca-pub-3466039113171143" data-ad-slot="여기에_슬롯ID_입력" data-ad-format="auto" data-full-width-responsive="true"></ins>
+
+                    <div class="mb-8 text-center bg-slate-800 rounded-xl border border-dashed border-slate-600 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
+                        <ins class="adsbygoogle"
+                             style="display:block; width:100%;"
+                             data-ad-client="ca-pub-3466039113171143"
+                             data-ad-slot="여기에_슬롯ID_입력"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
                         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
                     </div>
-                    <button onclick="location.href='index.html'" class="w-full py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
-                        🏠 Exit System
-                    </button>
+
+                    <div class="space-y-3">
+                        <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-red-600 to-rose-700 hover:from-red-700 hover:to-rose-800 text-white font-bold rounded-xl shadow-[0_0_15px_rgba(239,68,68,0.4)] transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            상태창 공유하기 (Copy Link)
+                        </button>
+                        <button onclick="goLobby()" class="w-full py-4 bg-slate-700 hover:bg-slate-600 text-gray-200 font-bold rounded-xl border border-slate-600 transition-all active:scale-95 text-sm">
+                            🏠 시스템 종료 (Exit System)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        let userGender = ''; let currentQ = 0; let score = 0;
+        let userGender = '';
+        let currentQ = 0; 
+        let score = 0;
+        let currentResultId = '';
 
         const questions = [
-            { q: "You wake up in a webtoon. Where are you?<br><br><span class='text-sm text-slate-400 font-normal'>눈을 떠보니 웹툰 속. 지금 당신이 있는 곳은?</span>", a: "A fancy European-style castle with maids.<br><br><span class='text-sm text-slate-300 font-normal'>화려한 드레스와 하녀들이 있는 유럽풍 대저택.</span>", b: "A modern city where a 'System Window' pops up.<br><br><span class='text-sm text-slate-300 font-normal'>허공에 파란색 '시스템 창'이 떠 있는 현대 도시.</span>" },
-            { q: "You check your starting stats and skills.<br><br><span class='text-sm text-slate-400 font-normal'>당신의 초기 스탯과 스킬을 확인했다.</span>", a: "Level 1, but with infinite growth potential.<br><br><span class='text-sm text-slate-300 font-normal'>현재 레벨 1이지만 무한한 성장 가능성을 지녔다.</span>", b: "Max level, hiding my true power from everyone.<br><br><span class='text-sm text-slate-300 font-normal'>이미 만렙. 사람들에게 진짜 힘을 숨기고 있다.</span>" },
-            { q: "A suspicious character approaches you.<br><br><span class='text-sm text-slate-400 font-normal'>수상한 인물이 당신에게 접근해 온다면?</span>", a: "Keep them close to gather info and use them.<br><br><span class='text-sm text-slate-300 font-normal'>의도를 파악하고 역으로 이용하기 위해 곁에 둔다.</span>", b: "Ignore them entirely and go my own way.<br><br><span class='text-sm text-slate-300 font-normal'>귀찮은 일에 엮이기 싫어 철저하게 무시하고 갈 길 간다.</span>" },
-            { q: "What's your ultimate goal in this world?<br><br><span class='text-sm text-slate-400 font-normal'>이 세계에서 당신의 최종 목표는?</span>", a: "Reach the top and conquer the world.<br><br><span class='text-sm text-slate-300 font-normal'>최고의 자리에 올라 이 세계를 정복하는 것.</span>", b: "Survive quietly and live a peaceful life.<br><br><span class='text-sm text-slate-300 font-normal'>조용히 살아남아 평화롭고 돈 많은 백수로 사는 것.</span>" },
-            { q: "You found a hidden treasure chest in a dungeon.<br><br><span class='text-sm text-slate-400 font-normal'>던전에서 숨겨진 보물상자를 발견했다.</span>", a: "Open it immediately. Risk equals reward!<br><br><span class='text-sm text-slate-300 font-normal'>하이 리스크 하이 리턴! 당장 열어본다.</span>", b: "Check carefully for any hidden traps first.<br><br><span class='text-sm text-slate-300 font-normal'>함정이 없는지 시스템 스킬로 꼼꼼히 확인부터 한다.</span>" }
+            { 
+                q: "You wake up in a webtoon. Where are you?<br><br><span class='text-sm text-slate-400 font-normal'>눈을 떠보니 웹툰 속. 지금 당신이 있는 곳은?</span>", 
+                a: "A fancy European-style castle with maids.<br><br><span class='text-sm text-slate-300 font-normal'>화려한 드레스와 하녀들이 있는 유럽풍 대저택.</span>", 
+                b: "A modern city where a 'System Window' pops up.<br><br><span class='text-sm text-slate-300 font-normal'>허공에 파란색 '시스템 창'이 떠 있는 현대 도시.</span>" 
+            },
+            { 
+                q: "You check your starting stats and skills.<br><br><span class='text-sm text-slate-400 font-normal'>당신의 초기 스탯과 스킬을 확인했다.</span>", 
+                a: "Level 1, but with infinite growth potential.<br><br><span class='text-sm text-slate-300 font-normal'>현재 레벨 1이지만 무한한 성장 가능성을 지녔다.</span>", 
+                b: "Max level, hiding my true power from everyone.<br><br><span class='text-sm text-slate-300 font-normal'>이미 만렙. 사람들에게 진짜 힘을 숨기고 있다.</span>" 
+            },
+            { 
+                q: "A suspicious character approaches you.<br><br><span class='text-sm text-slate-400 font-normal'>수상한 인물이 당신에게 접근해 온다면?</span>", 
+                a: "Keep them close to gather info and use them.<br><br><span class='text-sm text-slate-300 font-normal'>의도를 파악하고 역으로 이용하기 위해 곁에 둔다.</span>", 
+                b: "Ignore them entirely and go my own way.<br><br><span class='text-sm text-slate-300 font-normal'>귀찮은 일에 엮이기 싫어 철저하게 무시하고 갈 길 간다.</span>" 
+            },
+            { 
+                q: "What's your ultimate goal in this world?<br><br><span class='text-sm text-slate-400 font-normal'>이 세계에서 당신의 최종 목표는?</span>", 
+                a: "Reach the top and conquer the world.<br><br><span class='text-sm text-slate-300 font-normal'>최고의 자리에 올라 이 세계를 정복하는 것.</span>", 
+                b: "Survive quietly and live a peaceful life.<br><br><span class='text-sm text-slate-300 font-normal'>조용히 살아남아 평화롭고 돈 많은 백수로 사는 것.</span>" 
+            },
+            { 
+                q: "You found a hidden treasure chest in a dungeon.<br><br><span class='text-sm text-slate-400 font-normal'>던전에서 숨겨진 보물상자를 발견했다.</span>", 
+                a: "Open it immediately. Risk equals reward!<br><br><span class='text-sm text-slate-300 font-normal'>하이 리스크 하이 리턴! 당장 열어본다.</span>", 
+                b: "Check carefully for any hidden traps first.<br><br><span class='text-sm text-slate-300 font-normal'>함정이 없는지 시스템 스킬로 꼼꼼히 확인부터 한다.</span>" 
+            }
         ];
         
+        // 데이터 확장 (5가지 분석, 방대한 분량의 K-웹툰 로판/판타지 클리셰 분석 적용)
         const resultsData = {
             F: [
-                { id: "f1", title: "👑 The Misunderstood Villainess<br><span class='text-lg font-bold text-red-400'>오해받는 악녀</span>", overview: "Fierce, strategic, and secretly soft. You wear a mask of a villain to protect what's yours.<br><br><span class='text-xs opacity-80'>강렬하고 전략적이지만 은근히 다정합니다. 내 사람들을 지키기 위해 기꺼이 악녀의 가면을 쓰는 츤데레입니다.</span>", strengths: "High political intelligence, flawless fashion sense, and you never let anyone look down on you.<br><br><span class='text-xs opacity-80'>뛰어난 정치적 두뇌, 완벽한 패션 감각. 그 누구도 당신을 함부로 무시하거나 짓밟을 수 없습니다.</span>", weaknesses: "You push people away to protect them, leading to unnecessary misunderstandings and loneliness.<br><br><span class='text-xs opacity-80'>사람들을 보호하려 오히려 밀어내기 때문에, 불필요한 오해를 사고 스스로를 지독한 외로움에 빠뜨립니다.</span>", match: "The Mysterious Mastermind<br><span class='text-[10px] font-normal'>흑막 엑스트라</span>" },
-                { id: "f2", title: "🗡️ The Max-Level Player<br><span class='text-lg font-bold text-red-400'>만렙 회귀자</span>", overview: "Efficient, unstoppable, and goal-oriented. You've lived this life before, and this time, you won't fail.<br><br><span class='text-xs opacity-80'>효율적이고 거침없으며 목표 지향적입니다. 이미 한 번 겪어본 생, 이번 회차에서는 절대 실패하지 않습니다.</span>", strengths: "Overpowering combat skills, zero hesitation, and perfect foresight to secure all the hidden items.<br><br><span class='text-xs opacity-80'>압도적인 무력, 망설임 없는 결단력. 미래를 알고 있어 모든 히든 피스와 기회를 독식하는 사기캐입니다.</span>", weaknesses: "You treat people like NPCs. Your lack of empathy might isolate you from true emotional connections.<br><br><span class='text-xs opacity-80'>주변 사람들을 체스 말이나 NPC처럼 대하는 경향이 있어, 진정한 감정적 교류나 인간미가 부족해 보일 수 있습니다.</span>", match: "The Hidden Saintess<br><span class='text-[10px] font-normal'>숨겨진 성녀</span>" },
-                { id: "f3", title: "✨ The Hidden Saintess<br><span class='text-lg font-bold text-red-400'>숨겨진 성녀</span>", overview: "Healing, empathetic, and everyone's salvation. Your gentle power brings hope to a ruined world.<br><br><span class='text-xs opacity-80'>치유하고 공감하는 모두의 구원자. 당신의 따뜻하고 상냥한 힘은 멸망해가는 세계에 한 줄기 빛이 됩니다.</span>", strengths: "Infinite divine power, high likability, and the ability to purify even the darkest corrupted souls.<br><br><span class='text-xs opacity-80'>무한한 신성력, 모두에게 사랑받는 호감도. 아무리 타락한 흑막이라도 당신 앞에서는 무장해제됩니다.</span>", weaknesses: "You are overly self-sacrificing and often manipulated by greedy empires or temples.<br><br><span class='text-xs opacity-80'>지나치게 자기희생적입니다. 탐욕스러운 제국이나 신전 등 권력자들에게 착취당하고 이용당하기 가장 쉬운 타겟입니다.</span>", match: "The Max-Level Player<br><span class='text-[10px] font-normal'>만렙 회귀자</span>" },
-                { id: "f4", title: "🎭 The Mysterious Mastermind<br><span class='text-lg font-bold text-red-400'>흑막 엑스트라</span>", overview: "Manipulative, smart, and stays in the shadows. You control the main characters like chess pieces.<br><br><span class='text-xs opacity-80'>조종하고, 계획하며, 어둠 속에 숨어 있습니다. 주인공들을 체스 말처럼 다루며 세계의 진짜 흐름을 통제합니다.</span>", strengths: "Genius-level intellect, wealth, and a perfect poker face. Nobody knows your true intentions.<br><br><span class='text-xs opacity-80'>천재적인 두뇌, 막대한 재력, 그리고 완벽한 포커페이스. 그 누구도 당신의 진짜 의도를 알아채지 못합니다.</span>", weaknesses: "You overcomplicate simple things and trust absolutely no one, making your life highly stressful.<br><br><span class='text-xs opacity-80'>단순한 일도 지나치게 복잡하게 생각하며 그 누구도 믿지 않아, 스스로의 삶을 매우 피곤하고 스트레스 받게 만듭니다.</span>", match: "The Misunderstood Villainess<br><span class='text-[10px] font-normal'>오해받는 악녀</span>" }
+                { 
+                    id: "f1", 
+                    title: "👑 Misunderstood Villainess<br><span class='text-lg font-bold text-red-400'>가문을 살리려는 오해받는 악녀</span>", 
+                    overview: "You have reincarnated as the quintessential 'Villainess' of a Romance Fantasy webtoon. Possessing memories of your past life and knowing the tragic original plot, you have decided to completely flip the script. Instead of clinging to the useless crown prince, you are busy hoarding wealth, investing in hidden talents, and striking deals with the terrifying Duke of the North. You wear a mask of arrogance and cold elegance to protect yourself and your people from a highly toxic noble society. Though the original heroine might cry at your harsh words, readers know you are actually saving everyone behind the scenes. You are fiercely pragmatic, incredibly stylish, and utterly determined to survive your destined 'death flag.'<br><br><span class='text-xs opacity-80'>당신은 전형적인 로맨스 판타지 웹툰의 '악녀'로 빙의했습니다. 전생의 기억과 원작의 비극적인 결말을 모두 알고 있는 당신은, 무능한 황태자에게 매달리는 대신 가문의 재산을 불리고, 숨겨진 인재들을 스카우트하며, 북부 대공과 계약을 맺는 등 살길을 도모하느라 하루 24시간이 모자랍니다. 독이 가득한 귀족 사회에서 자신과 내 사람들을 지키기 위해 오만하고 차가운 우아함이라는 완벽한 가면을 쓰고 있습니다. 원작의 여주인공은 당신의 차가운 말에 눈물을 흘릴지 모르지만, 당신이 보이지 않는 곳에서 모두를 파멸로부터 구원하고 있다는 사실을 독자들은 알고 있습니다. 지독하게 현실적이고, 압도적으로 세련되었으며, 예정된 '사망 플래그'를 부수기 위해 수단과 방법을 가리지 않는 매력적인 지배자입니다.</span>",
+                    strengths: "Your greatest strength is your absolute immunity to the emotional manipulation of the 'original' plot. You possess a brilliant political mind, unmatched financial acumen, and a flawless poker face. You know exactly how to use your 'villainess' reputation to your advantage—intimidating corrupt aristocrats and commanding absolute loyalty from your servants. Furthermore, your aesthetic is unparalleled; every teacup you hold and every dress you wear sets a new trend. You are a survivor who relies on intelligence and cold hard cash rather than waiting for a prince to save you.<br><br><span class='text-xs opacity-80'>당신의 가장 위대한 강점은 원작의 억지스러운 감정적 전개와 가스라이팅에 완벽한 면역을 가지고 있다는 것입니다. 천재적인 정치적 두뇌, 타의 추종을 불허하는 재테크 능력, 그리고 완벽한 포커페이스를 소유하고 있습니다. 썩어빠진 귀족들을 협박하고 고용인들로부터 절대적인 충성을 얻어내기 위해 자신의 '악녀' 평판을 어떻게 역이용해야 하는지 본능적으로 알고 있습니다. 무엇보다 당신의 미적 감각은 압도적이어서, 당신이 드는 찻잔과 입는 드레스 하나하나가 제국의 새로운 유행이 됩니다. 백마 탄 왕자의 구원을 기다리는 대신, 자신의 지능과 막대한 자본력으로 스스로 운명을 개척하는 진정한 생존자입니다.</span>",
+                    relationship: "You are severely allergic to cliché romances. You outright reject the arrogant original male leads, finding their toxic behavior completely exhausting. Instead, you are naturally drawn to the quiet, dangerously loyal 'sub-leads'—like the cursed Grand Duke, the master of the magic tower, or your devoted personal knight. You treat romance as a strategic contract first, but once you let someone past your heavily guarded emotional walls, you are fiercely protective. You communicate your love through acts of absolute power, like destroying the family of anyone who dares to insult your partner.<br><br><span class='text-xs opacity-80'>당신은 진부하고 뻔한 로맨스에 심각한 알레르기가 있습니다. 오만하고 유독한 원작의 남주인공들은 쳐다보기도 피곤해하며 가차 없이 쓰레기통에 버립니다. 그 대신, 저주받은 북부 대공, 마탑주, 혹은 당신에게 절대 복종하는 호위 기사처럼 조용하지만 치명적으로 충성스러운 '서브 남주'들에게 자연스럽게 이끌립니다. 처음에는 연애마저도 철저한 전략적 계약으로 시작하지만, 철통같이 방어된 감정의 벽을 허물고 누군가를 받아들이는 순간 맹렬한 보호자가 됩니다. 당신의 파트너를 감히 모욕하는 자의 가문을 그날로 멸문시켜 버리는 식의, 압도적인 권력을 통한 행동으로 거친 사랑을 증명합니다.</span>",
+                    weaknesses: "Your hyper-vigilance and constant anticipation of betrayal make it incredibly difficult for you to experience genuine peace. You suffer from a severe case of 'over-preparation,' taking on massive burdens entirely alone because you believe delegating will lead to ruin. By constantly pushing people away 'for their own good' to protect them from your villainous reputation, you create entirely avoidable, incredibly frustrating misunderstandings. You often fail to realize that you have already successfully changed the plot, causing you to live in unnecessary anxiety.<br><br><span class='text-xs opacity-80'>언제 배신당할지 모른다는 극도의 경계심 때문에, 당신은 단 하루도 마음 편히 두 다리를 뻗고 쉬지 못합니다. 모든 변수를 혼자 통제해야만 직성이 풀리는 심각한 '과잉 준비 증후군'에 시달리며, 남에게 일을 맡기면 파멸할 것이라는 강박에 엄청난 짐을 홀로 짊어집니다. 나의 악명으로부터 내 사람들을 보호하겠다며 '너를 위해서'라는 명목으로 계속해서 그들을 밀어내는 바람에, 해결할 수 있는 오해를 오히려 꼬이게 만들어 주변을 답답하게 만듭니다. 원작의 비극을 이미 당신의 힘으로 완벽하게 비틀어 놓았음에도, 여전히 사망 플래그의 환영에 사로잡혀 불필요한 불안 속에서 자신을 혹사시키는 경향이 있습니다.</span>",
+                    wellness: "To truly break free from your reincarnation curse, you must learn to trust the reality you have built rather than the plot of the original book. Delegate your estate management duties for a weekend and take a completely unplanned, luxurious vacation without any secret assassination plots or business deals attached. Stop treating every single conversation as a political chess match. Allow yourself to eat a ridiculous amount of sweet desserts without worrying about maintaining your intimidating aura. Wellness for you means finally accepting that you are allowed to have a happy ending.<br><br><span class='text-xs opacity-80'>빙의된 운명의 저주에서 진정으로 해방되기 위해서는, 원작 소설의 텍스트가 아니라 당신이 피땀 흘려 직접 쌓아 올린 현재의 현실을 믿는 법을 배워야 합니다. 주말에는 영지 관리 업무를 부하들에게 과감하게 위임하고, 암살 위협이나 비즈니스 계약 따위는 전혀 없는 무계획적이고 사치스러운 휴가를 떠나세요. 모든 대화를 정치적 체스 게임처럼 팽팽하게 긴장하며 분석하는 짓을 당장 멈춰야 합니다. 악녀 특유의 도도한 아우라가 무너질까 봐 참지 말고, 당분이 가득 찬 달콤한 디저트를 산더미처럼 쌓아놓고 마음껏 즐기는 것을 허락하세요. 당신에게 웰빙이란, 당신 역시 행복한 결말을 맞이할 자격이 충분하다는 사실을 마침내 인정하는 것입니다.</span>",
+                    match: "Mysterious Mastermind<br><span class='text-[10px] font-normal'>흑막 엑스트라</span>" 
+                },
+                { 
+                    id: "f2", 
+                    title: "🗡️ The Max-Level Player<br><span class='text-lg font-bold text-red-400'>힘을 숨긴 만렙 회귀자</span>", 
+                    overview: "You are the protagonist of a high-stakes System/Hunter webtoon. You have seen the destruction of the world, died a miserable death, and have suddenly regressed back to Level 1—but with the ultimate cheat code: you possess all the knowledge of the future. While others are panicking over the sudden appearance of monsters and the 'System Window,' you are efficiently hoarding every hidden skill, legendary item, and dungeon clear reward. You operate with cold, ruthless efficiency. You pretend to be a weak, ordinary person, hiding your massive magical aura and god-tier abilities from the corrupt hunter guilds, striking only when the timing guarantees maximum profit.<br><br><span class='text-xs opacity-80'>당신은 목숨이 오가는 시스템/헌터물 웹툰의 진정한 주인공입니다. 세계의 멸망을 직접 목격하고 비참한 죽음을 맞이한 뒤, 기적적으로 레벨 1의 과거로 회귀했습니다. 하지만 당신에게는 미래의 모든 지식이라는 궁극의 치트키가 있습니다. 몬스터와 파란색 '시스템 창'의 갑작스러운 등장에 다른 사람들이 패닉에 빠져 있을 때, 당신은 기계적인 효율성으로 세상의 모든 히든 스킬, 전설급 아이템, 그리고 던전 클리어 보상을 독식하며 쓸어 담습니다. 차갑고 무자비할 정도로 계산적으로 움직입니다. 부패한 대형 헌터 길드들의 눈을 속이기 위해 겉으로는 F급의 연약하고 평범한 일반인인 척 엄청난 마나와 신급 능력을 숨기고 다니며, 오직 막대한 이익과 복수가 보장된 완벽한 타이밍에만 조용히 움직입니다.</span>",
+                    strengths: "Your combat prowess and strategic mind are unparalleled. Because you know the future, you never fall into traps, and you instantly recognize who will betray you and who will become a valuable ally. You possess an unbreakable mental fortitude, forged through the literal apocalypse. Your ability to exploit the 'System' to gain overpowered (OP) status makes you a one-person army. You don't rely on luck; every victory is carefully calculated. Your cold, competent demeanor naturally causes powerful beings, from guild masters to literal gods (Constellations), to obsess over sponsoring you.<br><br><span class='text-xs opacity-80'>당신의 전투 능력과 전략적 두뇌는 타의 추종을 불허합니다. 미래를 알고 있기 때문에 뻔한 함정에 결코 빠지지 않으며, 누가 내 뒤통수를 칠 배신자인지, 누가 미래에 엄청난 전력이 될 동료인지 첫눈에 완벽하게 꿰뚫어 봅니다. 문자 그대로의 종말을 겪으며 벼려진, 절대 부서지지 않는 강철 같은 정신력을 소유하고 있습니다. '시스템'의 허점을 집요하게 파고들어 압도적인 사기캐(OP)로 거듭나는 당신은 그 자체로 걸어 다니는 1인 군단입니다. 요행을 바라지 않으며, 모든 승리는 철저한 계산의 결과입니다. 특유의 차갑고 유능한 태도는 대형 길드장부터 하늘의 성좌(신)들까지 당신을 후원하고 싶어 안달 나게 만드는 치명적인 매력을 발산합니다.</span>",
+                    relationship: "Romantic relationships are viewed merely as a 'status buff' or an unnecessary distraction to your ultimate goal of survival. You treat your companions like essential party members in an RPG, meticulously analyzing their stats and usefulness. You are completely oblivious to the intense romantic feelings of those around you—from the obsessed villain to your deeply devoted sidekick. You express care by throwing an ultra-rare healing potion at their face without looking back or by silently slaughtering the boss monster that threatened them. You only truly connect with those who can keep up with your brutal, monstrous pace.<br><br><span class='text-xs opacity-80'>당신에게 로맨스란 그저 약간의 '스탯 버프'이거나, 궁극적인 생존과 복수라는 목표에 방해되는 불필요한 노이즈일 뿐입니다. 주변 동료들을 마치 RPG 게임의 파티원처럼 대하며, 그들의 스탯과 효용 가치를 냉정하게 분석합니다. 당신에게 미친듯이 집착하는 악역부터 목숨을 바쳐 충성하는 조력자까지, 주변에서 뿜어내는 뜨거운 로맨틱한 기류를 어이없을 정도로 전혀 눈치채지 못합니다. 상대방의 얼굴에 전설급 회복 물약을 무심하게 툭 던져주거나, 그를 위협하던 보스 몬스터를 말없이 토막 내버리는 것으로 나만의 거친 애정을 표현합니다. 당신의 그 무자비하고 괴물 같은 성장 속도를 따라올 수 있는 극소수의 강자들과만 진정한 유대감을 형성합니다.</span>",
+                    weaknesses: "Your trauma from your past life makes you incredibly detached and dangerously paranoid. By treating everyone as NPCs or tools for the future, you completely strip away your own humanity. Your absolute refusal to share your burdens creates a highly toxic dynamic where your companions feel utterly useless and left behind. Furthermore, your obsession with optimization means you completely ignore the concept of rest; you grind in dungeons until you are physically destroyed, mistaking infinite regression or healing skills as an excuse to perpetually torture your own body.<br><br><span class='text-xs opacity-80'>전생의 끔찍한 트라우마는 당신을 극도로 무감각하고 위험할 정도로 피해망상적인 사람으로 만들었습니다. 모든 사람을 다가올 미래를 위한 도구(NPC)로만 취급하다 보니, 정작 당신 자신의 인간성을 완전히 잃어버릴 위험에 처해 있습니다. 그 어떤 짐도 타인과 나누려 하지 않는 지독한 독고다이 성향은, 파티원들이 스스로를 무능하다고 자책하며 깊은 절망에 빠지게 만드는 유독한 관계를 형성합니다. 나아가 효율과 최적화에 대한 병적인 집착 때문에 '휴식'이라는 개념 자체를 뇌에서 삭제해 버렸습니다. 무한 회귀나 사기적인 힐링 스킬이 있다는 핑계로, 육체가 너덜너덜해질 때까지 던전에서 구르며 스스로의 몸을 영원히 고문하는 짓을 멈추지 않습니다.</span>",
+                    wellness: "To retain your humanity, you must occasionally mute the 'System Window' and engage with the world without calculating EXP or item drop rates. Force yourself to participate in a trivial, completely non-combat related activity with your guildmates, like going out for an embarrassingly normal dinner or watching a movie. Practice communicating your traumatic past to at least one person, so you don't have to carry the weight of a destroyed timeline alone. Remember that surviving the apocalypse is meaningless if you lose your soul in the process; healing your mind is just as critical as leveling up your sword skills.<br><br><span class='text-xs opacity-80'>당신의 위태로운 인간성을 유지하기 위해서는, 가끔은 의도적으로 '시스템 창'을 음소거하고 경험치나 아이템 드랍률을 계산하지 않은 채 세상을 온전히 마주해야 합니다. 길드원들과 함께 전투와는 1%도 상관없는 몹시 사소하고 일상적인 활동—민망할 정도로 평범한 회식을 하거나 영화를 보는 것—에 억지로라도 참여하세요. 멸망해버린 시간선의 무거운 짐을 혼자 다 짊어지지 않도록, 당신의 끔찍했던 과거 트라우마를 단 한 사람에게라도 솔직하게 털어놓는 연습이 필요합니다. 아무리 종말에서 살아남고 복수에 성공한다 한들, 그 과정에서 당신의 영혼이 괴물로 변해버린다면 아무런 의미가 없다는 것을 기억하세요. 내면을 치유하는 것은 검술 레벨을 올리는 것만큼이나 치명적으로 중요합니다.</span>",
+                    match: "Hidden Saintess<br><span class='text-[10px] font-normal'>숨겨진 성녀</span>" 
+                },
+                { 
+                    id: "f3", 
+                    title: "✨ The Hidden Saintess<br><span class='text-lg font-bold text-red-400'>흑막을 갱생시키는 숨겨진 성녀</span>", 
+                    overview: "You are the ultimate beacon of light in a dark, cursed fantasy world. Hidden away in an abusive household or a filthy slum, you were unaware that you possess the purest, most overpowering divine healing energy in the continent. Unlike the fake, corrupted saintess currently residing in the grand temple, your power requires no incantations—your very tears and touch can purify the darkest demonic curses. When you accidentally save the life of the terrifying, blood-soaked Grand Duke or the manic villain, you suddenly become the absolute center of obsession for the empire's most dangerous men. Your aesthetic is soft, ethereal, and overflowing with an almost suffocating aura of absolute purity and self-sacrifice.<br><br><span class='text-xs opacity-80'>당신은 어둡고 저주받은 판타지 세계를 밝히는 궁극의 빛입니다. 학대받는 가문이나 더러운 빈민가에 숨겨져 자라며, 자신이 대륙에서 가장 순수하고 압도적인 신성력을 가진 진짜 성녀라는 사실을 전혀 모르고 살아왔습니다. 화려한 신전에 앉아있는 타락한 가짜 성녀와는 달리, 당신의 힘은 그 어떤 복잡한 주문도 필요로 하지 않습니다. 그저 당신의 눈물 한 방울과 따뜻한 손길 한 번이면 가장 끔찍한 마기의 저주조차 눈 녹듯 정화됩니다. 피에 젖어 폭주하던 무시무시한 대공이나 미쳐버린 흑막의 목숨을 우연히 구해주게 되면서, 당신은 순식간에 제국에서 가장 위험한 남자들의 맹목적인 집착과 사랑을 한몸에 받는 중심에 서게 됩니다. 당신의 분위기는 부드럽고 신비로우며, 때로는 숨이 막힐 정도로 고결한 절대적 순수함과 자기희생의 아우라로 가득 차 있습니다.</span>",
+                    strengths: "Your empathy is a literal superpower. You have an infinite capacity to understand, forgive, and heal deeply traumatized souls, turning the most psychotic villains into your devoted, loyal guard dogs. Your divine power is an absolute cheat code that can bring people back from the brink of death. You possess a quiet, unbreakable inner resilience; despite suffering unimaginable hardships in your early life, your spirit remains completely untainted. People are naturally drawn to your genuine warmth, meaning you effortlessly gather a powerful army of influential protectors without ever having to lift a sword or play political games.<br><br><span class='text-xs opacity-80'>당신의 공감 능력은 그 자체로 초능력입니다. 끔찍한 상처를 입은 영혼들을 깊이 이해하고 용서하며 치유하는 무한한 포용력을 지녀, 가장 사이코패스 같은 악당조차 당신 앞에서는 순한 양이자 목숨을 바치는 충견으로 길들여버립니다. 당신의 신성력은 죽음의 문턱에 선 사람조차 끌어올리는 절대적인 치트키입니다. 조용하지만 절대 부서지지 않는 내면의 회복력을 지니고 있어, 어린 시절 상상할 수 없는 고난과 핍박을 겪었음에도 영혼이 조금도 탁해지지 않았습니다. 사람들은 당신의 거짓 없는 따뜻함에 본능적으로 이끌리기 때문에, 당신은 칼을 휘두르거나 더러운 정치질을 할 필요 없이 그저 숨만 쉬고 있어도 제국 최고의 실력자들이 자발적으로 당신의 방패막이를 자처하게 만듭니다.</span>",
+                    relationship: "You are the epicenter of intense, possessive romance. You attract deeply broken, incredibly powerful individuals who view you as their sole salvation. Your lovers are often deeply terrifying to the rest of the world but become pathetic, weeping messes begging for your affection behind closed doors. You heal their cursed bodies, and in return, they offer you the world, obsessively destroying anyone who dares to make you frown. However, your immense naivety regarding their dark, murderous tendencies often leads to massive misunderstandings, as you try to reform partners who secretly continue to eliminate your enemies behind your back.<br><br><span class='text-xs opacity-80'>당신은 맹렬하고 소유욕 넘치는 치정 로맨스의 완벽한 중심입니다. 영혼이 산산조각 난, 그러나 압도적인 무력을 지닌 남자들이 당신을 자신의 유일한 구원으로 여기며 나방처럼 뛰어듭니다. 당신의 연인들은 세상 모두가 벌벌 떠는 잔혹한 괴물이지만, 오직 당신의 침실 문을 닫고 나면 당신의 애정을 구걸하며 눈물을 흘리는 처절하고 불쌍한 존재로 전락합니다. 당신이 그들의 저주받은 육체를 치유해 주면, 그들은 그 대가로 세상의 모든 것을 당신의 발밑에 바치고 당신의 심기를 거스르는 자들을 광적으로 찢어발깁니다. 하지만 파트너의 잔혹하고 살인적인 본성을 눈치채지 못하는 당신의 맹목적인 순진함은, 뒤에서 당신의 적들을 은밀하게 썰고 다니는 연인을 계속해서 '불쌍하고 착한 사람'으로 착각하여 갱생시키려 드는 거대한 오해의 늪을 만들어냅니다.</span>",
+                    weaknesses: "Your pathological altruism is your biggest downfall. You suffer from a severe 'Messiah Complex,' readily sacrificing your own health, lifespan, and happiness to heal others, completely ignoring your own physical limits. Because you see the good in absolutely everyone, you are easily kidnapped, manipulated, or emotionally blackmailed by corrupt temples and fake families. Your extreme passivity forces the people who love you to constantly commit atrocities just to keep you safe from a world that constantly tries to exploit your pure nature.<br><br><span class='text-xs opacity-80'>병적인 수준의 이타심이 당신을 파멸로 이끄는 가장 큰 약점입니다. 심각한 '메시아 콤플렉스'를 앓고 있어, 타인을 치유하기 위해서라면 자신의 건강, 수명, 그리고 행복 따위는 기꺼이 깎아내며 자신의 육체적 한계를 철저히 무시합니다. 세상 모든 사람의 내면에 선함이 있다고 굳게 믿는 답답할 정도의 순진함 때문에, 타락한 신전이나 가짜 가족들에게 너무나 쉽게 납치당하고, 조종당하며, 감정적으로 착취당합니다. 당신의 그 극단적인 수동성과 백치미는, 당신의 순수한 본성을 끝없이 이용하려는 잔인한 세상으로부터 당신을 지키기 위해, 결국 당신을 사랑하는 사람들이 당신 몰래 끊임없는 학살과 악행을 저지르게 만드는 모순을 낳습니다.</span>",
+                    wellness: "You absolutely must learn that you cannot, and should not, save everyone. It is crucial to establish firm, aggressive boundaries; practice using your holy power to smite your enemies occasionally, rather than just healing them. Realize that shedding tears for your abusers is a massive waste of your divine energy. Take time to be profoundly selfish. Demand expensive gifts from your obsessed Grand Duke, command the temple to back off, and prioritize your own comfort. True saintliness does not require perpetual suffering; a healthy, happy saintess is far more powerful than a dying martyr.<br><br><span class='text-xs opacity-80'>당신은 세상 모든 사람을 구원할 수도 없고, 구원해서도 안 된다는 냉혹한 진리를 뼈저리게 깨달아야 합니다. 단호하고 공격적인 경계선을 설정하는 것이 필수적입니다. 맨날 눈물만 뚝뚝 흘리며 남을 치유하지만 말고, 가끔은 그 엄청난 신성력으로 당신을 괴롭히는 적들의 명치를 강하게 꿰뚫어 버리는 맹렬한 연습을 하세요. 당신을 학대했던 쓰레기들을 위해 자비로운 눈물을 흘리는 것은 당신의 고귀한 신성력을 하수구에 버리는 짓임을 명심하세요. 마음껏 이기적으로 구는 시간을 가지세요. 당신에게 미쳐있는 대공에게 당당하게 최고급 다이아몬드를 요구하고, 당신을 이용하려는 신전의 늙은 사제들에게 입을 다물라고 명령하며, 오직 당신 자신의 안위를 최우선으로 챙기세요. 진정한 성녀가 되기 위해 영원히 고통받을 필요는 없습니다. 피를 토하며 죽어가는 순교자보다, 건강하고 뻔뻔하게 행복한 성녀가 세상을 구하는 데 훨씬 더 유능합니다.</span>",
+                    match: "Max-Level Player<br><span class='text-[10px] font-normal'>만렙 회귀자</span>" 
+                },
+                { 
+                    id: "f4", 
+                    title: "🎭 The Mysterious Mastermind<br><span class='text-lg font-bold text-red-400'>모든 걸 조종하는 흑막 엑스트라</span>", 
+                    overview: "You reincarnated as a supposedly 'insignificant extra' in a massive academy or political webtoon, but armed with the original novel's text, you have evolved into the ultimate hidden mastermind. You operate entirely in the shadows, sitting comfortably in a plush leather chair, sipping expensive black tea while the original protagonists desperately fight the battles you orchestrated. You possess endless secret identities—an underground informant, a wealthy anonymous sponsor, the masked head of a dark guild. You treat the entire world as a highly complex chessboard, predicting 50 moves ahead and ensuring that, no matter who wins the war, the ultimate profit always flows directly into your pockets.<br><br><span class='text-xs opacity-80'>당신은 방대한 세계관의 아카데미물이나 정치 웹툰에서 이름조차 나오지 않는 '먼지 같은 엑스트라'로 빙의했지만, 원작 소설의 텍스트라는 무기를 쥐고 세계의 이면을 통제하는 궁극의 숨겨진 흑막으로 진화했습니다. 철저하게 어둠 속에서 움직이며, 최고급 가죽 의자에 편안하게 기대앉아 값비싼 홍차를 홀짝이는 동안, 밖에서는 당신이 설계한 판 위에서 원작 주인공들이 피 터지게 싸우며 구르고 있습니다. 뒷골목의 전설적인 정보상, 막대한 부를 지닌 익명의 후원자, 가면을 쓴 암흑 길드의 수장 등 끝없이 많은 비밀 신분을 소유하고 있습니다. 세상 전체를 고도로 복잡한 체스판으로 취급하며, 앞으로 일어날 50수의 변수를 미리 예측하여 전쟁에서 누가 승리하든 결국 최종적인 막대한 이익은 온전히 당신의 주머니로 쏟아지도록 완벽하게 판을 짭니다.</span>",
+                    strengths: "Your unmatched intelligence and absolute emotional control make you untouchable. You are completely devoid of the impulsive 'main character syndrome'—you never rush into danger unnecessarily, always employing proxies and meticulously layered backup plans. Your ability to gaslight and manipulate powerful figures into thinking your ideas are actually their own is a terrifying art form. You have successfully weaponized information, understanding that a single whispered secret can destroy an empire faster than a thousand swords. You remain perfectly calm even when reality deviates from the original plot, instantly calculating a new route to victory.<br><br><span class='text-xs opacity-80'>당신의 타의 추종을 불허하는 천재적인 지능과 완벽한 감정 통제 능력은 당신을 그 누구도 건드릴 수 없는 언터처블로 만듭니다. 생각 없이 몸부터 나가는 멍청한 '주인공 병'이 전혀 없기 때문에, 결코 불필요하게 위험한 전장에 직접 나서지 않으며 항상 쓸만한 대리인을 내세우고 소름 돋을 정도로 치밀한 다중 플랜 B를 준비해 둡니다. 강력한 권력자들을 교묘하게 가스라이팅하여, 당신의 의도대로 움직이면서도 그것이 자신들의 훌륭한 선택이라고 착각하게 만드는 조종술은 가히 예술의 경지에 올랐습니다. '정보'를 완벽하게 무기화하여, 제국을 무너뜨리는 데는 천 자루의 검보다 은밀하게 속삭여진 비밀 하나가 훨씬 더 빠르고 치명적이라는 사실을 꿰뚫고 있습니다. 원작의 흐름이 틀어지는 돌발 상황 앞에서도 완벽하게 평정을 유지하며, 1초 만에 승리를 위한 새로운 루트를 재계산해 냅니다.</span>",
+                    relationship: "You approach relationships with intense suspicion and calculated pragmatism. You do not do 'friends'; you only have 'useful assets' and 'potential threats.' You express interest in someone not by confessing your love, but by silently removing all the obstacles in their life or casually handing them a monopoly over the continent's trade routes. When you actually find someone who can match your terrifying intellect and see through your numerous masks, the relationship becomes a highly stimulating, tension-filled game of cat-and-mouse. You are fiercely protective of your 'assets,' unleashing absolute psychological destruction upon anyone who touches them.<br><br><span class='text-xs opacity-80'>당신은 인간관계를 극도의 의심과 치밀하게 계산된 실용주의의 관점으로만 접근합니다. 당신의 사전에 순수한 '친구'란 존재하지 않으며, 오직 '쓸모 있는 체스 말'과 '잠재적 위협'만이 존재할 뿐입니다. 누군가에게 호감을 느낄 때 유치하게 사랑을 고백하는 대신, 그 사람 인생의 모든 장애물을 보이지 않는 곳에서 조용히 썰어버리거나, 대륙의 무역 독점권을 아무렇지 않게 툭 던져주는 식의 미친 스케일로 애정을 표현합니다. 당신의 그 소름 끼치는 두뇌 회전을 따라잡고 수많은 가면 속 진짜 얼굴을 꿰뚫어 보는 호적수를 만났을 때, 두 사람의 관계는 심장이 터질 듯한 텐션의 쫓고 쫓기는 지적인 심리 게임으로 변모합니다. 당신은 당신의 '소유물'에 대한 보호 본능이 대단히 강하여, 내 체스 말을 감히 건드리는 자에게는 육체적 죽음을 넘어선 완벽한 정신적 파멸을 선사합니다.</span>",
+                    weaknesses: "Your absolute refusal to trust anyone leads to an incredibly isolated, high-stress existence. Because you rely so heavily on manipulation, you are utterly terrified of genuine, unpredictable emotional vulnerability. You overcomplicate the simplest interactions, assuming every kind gesture from others is a hidden trap. When your meticulously crafted plans inevitably face an illogical, highly emotional variable (usually the actual protagonist acting stupidly), you experience extreme internal breakdowns. You often forget how to be a normal human being, burying your true self so deeply beneath personas that you lose sight of who you actually are.<br><br><span class='text-xs opacity-80'>아무도 믿지 않으려는 극단적인 통제 성향은 당신을 끔찍하게 고립시키고 극도로 피곤한 삶으로 몰아넣습니다. 타인을 조종하고 속이는 데 너무 익숙해진 나머지, 역으로 계산되지 않은 진실되고 순수한 감정이 훅 들어올 때 극한의 공포와 고장 난 리액션을 보입니다. 세상에서 가장 단순하고 다정한 호의조차 뒤에 숨겨진 함정이나 독살 시도가 아닐까 끝없이 의심하며 스스로를 갉아먹습니다. 완벽하게 짜인 당신의 체스판에 도저히 논리적으로 설명할 수 없는 감정적인 변수(주로 원작 주인공의 멍청하고 충동적인 행동)가 난입할 때, 겉으로는 웃고 있지만 속으로는 극심한 멘탈 붕괴를 겪습니다. 끊임없이 다중 신분과 가면을 바꿔 쓰며 연기하느라 바빠서 평범한 인간으로 숨 쉬는 법을 잊어버렸고, 가끔은 거울 속에 비친 수많은 자아 중 대체 어느 것이 진짜 나인지 길을 잃고 맙니다.</span>",
+                    wellness: "You need to violently force yourself to surrender control, even just for a moment. Give your brain a desperately needed rest by engaging in an activity where you cannot manipulate the outcome—like taking care of a completely stupid, unpredictable stray animal, or playing a game of pure luck rather than chess. Practice telling the complete, unvarnished truth to at least one person, strictly without any hidden agendas or layers of irony. Understand that being slightly caught off guard by life's surprises is not a failure of planning, but rather the very essence of actually being alive.<br><br><span class='text-xs opacity-80'>당신은 강박적인 통제욕을 폭력적일 정도로 강제로 내려놓는 연습을 해야 합니다. 당신의 그 터질 듯한 두뇌에 절실한 휴식을 주기 위해, 당신의 조작질이나 전략이 전혀 통하지 않는 활동—완벽하게 멍청하고 예측 불가능한 길고양이를 돌본다거나, 체스가 아닌 순전히 100% 운빨로만 결정되는 단순한 주사위 게임을 하는 것—에 억지로라도 몰두해 보세요. 아주 작은 일이라도 좋으니, 숨겨진 꿍꿍이나 이중적인 뉘앙스 없이 날것 그대로의 투명한 진실만을 단 한 사람에게 솔직하게 말하는 훈련이 필요합니다. 인생에서 일어나는 예기치 못한 돌발 상황에 뒤통수를 맞는 것은 당신의 완벽한 계획이 실패한 것이 아니라, 그저 당신이 지금 피가 도는 생생한 삶을 살아내고 있다는 아름다운 증거임을 온전히 받아들이세요.</span>",
+                    match: "Misunderstood Villainess<br><span class='text-[10px] font-normal'>오해받는 악녀</span>" 
+                }
             ]
         };
-        // 남성 데이터를 여성 데이터 구조와 동일하게 설정
+
+        // 남성 데이터를 여성 데이터 기반으로 구조를 복제한 후 맞춤형 키워드 및 로판/판타지/무협 클리셰로 완전 확장 변환
         resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
-        resultsData.M[0].title = "👑 The Misunderstood Villain<br><span class='text-lg font-bold text-red-400'>오해받는 악당</span>";
-        resultsData.M[2].title = "✨ The Hidden Guide<br><span class='text-lg font-bold text-red-400'>숨겨진 가이드</span>";
-        resultsData.M[0].match = "The Mysterious Mastermind<br><span class='text-[10px] font-normal'>흑막 엑스트라</span>";
+        
+        resultsData.M[0].title = "👑 Misunderstood Villain<br><span class='text-lg font-bold text-red-400'>가문을 살리려는 오해받는 악당/저주받은 대공</span>";
+        resultsData.M[1].title = "🗡️ The Max-Level Player<br><span class='text-lg font-bold text-red-400'>힘을 숨긴 만렙 회귀자/먼치킨</span>";
+        resultsData.M[2].title = "✨ The Hidden Guide<br><span class='text-lg font-bold text-red-400'>S급 에스퍼를 길들이는 숨겨진 가이드</span>";
+        resultsData.M[3].title = "🎭 Mysterious Mastermind<br><span class='text-lg font-bold text-red-400'>모든 걸 조종하는 흑막 엑스트라</span>";
+
+        resultsData.M[0].overview = "You have reincarnated as the terrifying villain or the cursed 'Duke of the North' in a massive fantasy webtoon. Possessing knowledge of the catastrophic ending, you have discarded the original protagonist's naive methods. Instead, you wear the heavy mask of a tyrant to crush corrupt nobles, monopolize trade routes, and build an unstoppable military force to prevent the upcoming apocalypse. You are severely misunderstood; the empire trembles at your name, calling you a bloodthirsty monster, but in reality, your sword is only ever drawn to protect your territory and your people. You carry the entire weight of the world's survival on your broad shoulders, enduring the endless cold and hatred in absolute, stoic silence.<br><br><span class='text-xs opacity-80'>당신은 거대한 판타지 웹툰 속 피도 눈물도 없는 악당, 혹은 저주받은 '북부 대공'으로 빙의했습니다. 다가올 참혹한 멸망의 결말을 알고 있는 당신은, 답답한 원작 주인공의 순진한 방식을 가차 없이 폐기했습니다. 그 대신 폭군의 무거운 가면을 뒤집어쓰고 썩어빠진 귀족들을 무자비하게 짓밟으며, 상권을 독점하고 절대적인 군사력을 길러 다가올 종말을 홀로 막아내려 합니다. 당신은 세상에서 가장 심각하게 오해받고 있는 존재입니다. 제국 전체가 당신의 이름만 들어도 피에 굶주린 괴물이라며 공포에 떨지만, 사실 당신의 차가운 검은 오직 당신의 영지와 소중한 사람들을 보호하기 위해서만 뽑힙니다. 멸망해가는 세계를 구해야 한다는 무시무시한 무게를 홀로 넓은 어깨에 짊어진 채, 쏟아지는 세상의 증오와 지독한 추위를 묵묵히 견뎌내는 고독한 지배자입니다.</span>";
+        resultsData.M[0].strengths = "Your commanding presence and absolute martial prowess are legendary. You don't play political games with words; you dominate the board with overwhelming power and strategic military brilliance. You have an impenetrable poker face and a resolve of steel, meaning you never succumb to the toxic emotional manipulation of the royal family. You inspire absolute, fanatical loyalty from your knights and subordinates, who are the only ones who see the exhausted, deeply responsible man beneath the terrifying monstrous armor. Your aesthetic of dark cloaks, cold red eyes, and ruthless efficiency makes you an irresistible figure of dark fantasy.<br><br><span class='text-xs opacity-80'>당신의 압도적인 존재감과 대륙 최강의 무력은 이미 전설의 반열에 올랐습니다. 치사하게 혀를 놀리는 정치질 따위는 하지 않으며, 오직 압도적인 힘과 천재적인 군사 전략으로 체스판 자체를 박살 내고 지배해 버립니다. 찔러도 피 한 방울 나오지 않을 것 같은 포커페이스와 강철 같은 의지를 지녀, 황실의 얄팍하고 유독한 가스라이팅 따위에는 눈 하나 깜짝하지 않습니다. 당신의 호위 기사들과 부하들로부터 종교에 가까운 광적인 충성을 끌어내며, 오직 그들만이 무시무시한 괴물의 갑옷 아래 숨겨진, 책임감에 짓눌려 피로한 진짜 남자의 모습을 알고 있습니다. 흩날리는 검은 망토, 차가운 붉은 눈동자, 그리고 무자비한 효율성으로 무장한 당신의 비주얼은 다크 판타지 장르의 거부할 수 없는 궁극의 매력을 발산합니다.</span>";
+        resultsData.M[0].weaknesses = "Your extreme self-isolation and chronic inability to communicate your true intentions create tragic, exhausting misunderstandings. By choosing to play the villain to shoulder everyone's hatred, you constantly push away the very people who desperately want to ease your burden. You are fundamentally incapable of expressing softness; your attempts at care usually involve terrifying threats of violence against anyone who bothers the person you like. You ignore your own severe trauma and physical exhaustion, believing that a monster doesn't have the right to feel pain.<br><br><span class='text-xs opacity-80'>스스로를 극단적으로 고립시키고 진짜 속마음을 입 밖으로 꺼내지 못하는 당신의 고질적인 소통 장애는, 비극적이고 피 말리는 거대한 오해들을 끝없이 낳습니다. 세상의 모든 증오를 홀로 감당하기 위해 기꺼이 악역을 자처하는 바람에, 정작 당신의 무거운 짐을 나누어지고 싶어 하는 소중한 사람들마저 거칠게 밀어내어 상처를 줍니다. 당신은 근본적으로 다정함을 표현하는 기능이 고장 나 있습니다. 좋아하는 사람을 챙겨준답시고 하는 행동이 고작, 그 사람을 귀찮게 하는 자들의 목을 베어버리겠다는 살벌한 협박을 하는 식입니다. '나 같은 괴물은 아플 자격도 없다'는 지독한 자기혐오에 빠져, 몸이 부서지고 끔찍한 트라우마에 시달리면서도 자신의 한계를 철저히 무시하고 묵살해 버립니다.</span>";
+
+        resultsData.M[2].overview = "You have reincarnated as a remarkably rare, ultra-powerful Guide in an Esper/Guide universe, or the sole purifier in a world corrupted by dark mana. While the aggressively powerful Espers and S-class Hunters are going berserk, coughing up blood and destroying cities, you possess the only soothing energy capable of saving them from their agonizing mental collapse. Hidden behind a calm, slightly exhausted demeanor, your mere physical touch can instantly neutralize catastrophic magical rampages. You are the eye of the storm—the quiet, grounding sanctuary that completely tames the most violent, psychotic superhumans, making them dangerously obsessed and entirely dependent on your existence.<br><br><span class='text-xs opacity-80'>당신은 에스퍼/가이드 세계관에서 수억 분의 일 확률로 태어나는 희귀한 S급 가이드, 혹은 마기에 오염된 세상의 유일한 정화자로 빙의했습니다. 통제력을 잃은 폭군 에스퍼들과 S급 헌터들이 피를 토하며 도시를 때려 부수고 폭주할 때, 오직 당신만이 그들의 끔찍한 정신 붕괴를 막고 구원할 수 있는 궁극의 치유 에너지를 소유하고 있습니다. 평온하고 어딘가 피곤해 보이는 나른한 외면 뒤에 숨겨진 당신의 가벼운 스킨십 한 번이면, 재앙급의 마력 폭주조차 순식간에 진압됩니다. 당신은 거대한 폭풍의 눈 그 자체입니다. 세상에서 가장 폭력적이고 미쳐 날뛰는 초인들을 단숨에 길들이고, 그들이 오직 당신의 숨결과 존재에만 위험할 정도로 집착하고 절대적으로 의존하게 만드는, 유일하고 완벽한 안식처입니다.</span>";
+        resultsData.M[2].strengths = "Your emotional stability and grounding aura are your absolute superpowers. You never flinch in the face of terrifying, blood-soaked Espers; instead, you treat their apocalyptic meltdowns like minor tantrums, expertly pulling them back to sanity with a firm, calming touch. You have an overwhelming capacity for empathy, intuitively understanding the intense pain hidden behind their violent outbursts. Your power doesn't rely on flashy swords or spells, yet you hold the leash to the strongest weapons in the empire. You command effortless respect, offering a profound sense of safety and home to those who have only known war and destruction.<br><br><span class='text-xs opacity-80'>당신의 바위 같은 정서적 안정감과 상대를 진정시키는 아우라는 그 무엇과도 바꿀 수 없는 절대적인 초능력입니다. 피를 뒤집어쓰고 살기를 뿜어내는 끔찍한 에스퍼 앞에서도 눈 하나 깜짝하지 않으며, 그들의 멸망급 폭주를 그저 어린애의 투정쯤으로 취급하며 단호하고 차분한 손길로 그들의 이성을 완벽하게 잡아끌어 올립니다. 그들의 폭력적인 겉모습 이면에 숨겨진 처절한 고통을 본능적으로 꿰뚫어 보는 압도적인 공감 능력을 지녔습니다. 당신의 힘은 화려한 검술이나 마법이 아니지만, 역설적으로 제국에서 가장 강력하고 위험한 인간 병기들의 목줄을 단단히 쥐고 통제합니다. 평생을 참혹한 전쟁과 파괴 속에서만 살아온 이들에게 영혼의 고향이자 완벽한 안전 지대를 제공하며, 애쓰지 않아도 자연스럽게 모두의 경외를 이끌어냅니다.</span>";
+        resultsData.M[2].weaknesses = "Your extreme tolerance for the toxic behavior of your Espers means you constantly sacrifice your own boundaries. You treat your body like an unlimited battery pack for others, ignoring your severe fatigue until you literally collapse from guiding overload. Because your partners view you as their sole lifeline, their affection quickly morphs into terrifying, suffocating confinement; they will aggressively isolate you from the rest of the world out of intense jealousy and fear of losing you. Your inability to say 'no' traps you in a cycle of constantly managing other people's explosive emotional baggage at the cost of your own freedom.<br><br><span class='text-xs opacity-80'>에스퍼들의 유독하고 집착적인 행동을 한없이 받아주다 보니, 정작 당신 자신을 지켜야 할 최소한의 방어선마저 끊임없이 희생하고 내어주게 됩니다. 자신의 몸을 타인을 위한 무한 배터리 취급하며, 가이딩 과부하로 쓰러져 피를 토할 때까지 자신의 극심한 피로를 무식하게 방치합니다. 파트너들이 당신을 생명줄 그 자체로 여기기 때문에, 그들의 애정은 순식간에 숨 막히고 끔찍한 감금과 집착으로 변질되기 일쑤입니다. 당신을 잃을지도 모른다는 극도의 공포와 광적인 질투심에 휩싸인 그들은 당신을 세상으로부터 철저히 고립시키려 듭니다. 남의 부탁을 모질게 거절하지 못하는 그 성격 탓에, 결국 당신 자신의 자유를 산산조각 내면서까지 다른 이들의 폭발적인 감정 쓰레기를 영원히 수습해야 하는 가혹한 굴레에 갇히고 맙니다.</span>";
+
+        resultsData.M[0].match = "Mysterious Mastermind<br><span class='text-[10px] font-normal'>흑막 엑스트라</span>";
         resultsData.M[1].match = "The Hidden Guide<br><span class='text-[10px] font-normal'>숨겨진 가이드</span>";
         resultsData.M[2].match = "The Max-Level Player<br><span class='text-[10px] font-normal'>만렙 회귀자</span>";
-        resultsData.M[3].match = "The Misunderstood Villain<br><span class='text-[10px] font-normal'>오해받는 악당</span>";
+        resultsData.M[3].match = "Misunderstood Villain<br><span class='text-[10px] font-normal'>오해받는 악당</span>";
+
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('<br>')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
+
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
 
         function switchScreen(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden');
@@ -131,30 +263,74 @@
                 setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2500);
             }
         }
-        function showResult(resultId) {
-            switchScreen('loading-screen', 'result-screen');
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
             const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
             const result = resultsData[userGender][idx];
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
+            
             document.getElementById('r-title').innerHTML = result.title;
             document.getElementById('r-match').innerHTML = result.match;
             const imgDiv = document.getElementById('r-img-div');
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_webtoon_w.png')" : "url('k_webtoon_m.png')";
             imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
+            // 프리미엄 리포트 UI 적용 (다크/레드 테마 5단 구성)
             document.getElementById('r-desc').innerHTML = `
-                <div class="bg-slate-800 p-5 rounded-2xl border border-red-500/30 shadow-sm">
-                    <h4 class="text-[10px] font-black text-red-400 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
-                    <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.overview}</p>
-                </div>
-                <div class="bg-slate-800 p-5 rounded-2xl border border-rose-500/30 shadow-sm">
-                    <h4 class="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
-                    <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.strengths}</p>
-                </div>
-                <div class="bg-slate-800 p-5 rounded-2xl border border-slate-500/30 shadow-sm">
-                    <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
-                    <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.weaknesses}</p>
+                <div class="space-y-4">
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-red-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-red-400 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.overview}</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-rose-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-rose-400 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.strengths}</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-fuchsia-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-fuchsia-400 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.relationship || (userGender === 'F' ? resultsData.F[idx].relationship : resultsData.F[idx].relationship.replace(/성녀/g, '가이드'))}</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-orange-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-orange-400 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-slate-800/80 p-5 rounded-2xl border border-sky-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-sky-400 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
+                        <p class="text-sm text-slate-300 leading-relaxed font-medium">${result.wellness || (userGender === 'F' ? resultsData.F[idx].wellness : resultsData.F[idx].wellness.replace(/성녀/g, '가이드'))}</p>
+                    </div>
                 </div>
             `;
+            
+            // 공통 사용 처리를 위한 빠른 Fallback 구조 세팅 (데이터 무결성 확보)
+            if(!result.relationship) {
+                 document.getElementById('r-desc').innerHTML = document.getElementById('r-desc').innerHTML.replace("undefined", resultsData.F[idx].relationship);
+            }
+            if(!result.wellness) {
+                 document.getElementById('r-desc').innerHTML = document.getElementById('r-desc').innerHTML.replace("undefined", resultsData.F[idx].wellness);
+            }
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('시스템 알림: 상태창 링크가 복사되었습니다!\\n동료들에게 공유하여 파티를 구성하세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
