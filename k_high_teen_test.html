@@ -7,80 +7,74 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
     <style>
-        /* 부드러운 페이드인 애니메이션 추가 */
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 스크롤바 커스텀 (인디고 테마) */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative selection:bg-indigo-200">
         
-        <!-- 1. START SCREEN -->
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-indigo-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-indigo-600 mb-4 tracking-tight">K-High Teen</h1>
             <p class="text-gray-600 mb-8 font-medium">
-                What's your Korean high school persona?<br><br>
-                <span class="text-sm text-gray-400">당신의 한국 하이틴 캐릭터는 무엇인가요?</span>
+                Which K-High Teen character are you?<br><br>
+                <span class="text-sm text-gray-400">당신은 하이틴 로맨스물 속 어떤 주인공인가요?</span>
             </p>
             <div class="bg-white p-6 rounded-2xl shadow-sm border border-indigo-100 mb-8">
-                <h2 class="text-xl font-bold mb-4">Step 1: Select Your Gender</h2>
+                <h2 class="text-xl font-bold mb-4">Step 1: Select Gender</h2>
                 <div class="flex gap-4">
-                    <button onclick="selectGender('M')" class="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👨 Male</button>
-                    <button onclick="selectGender('F')" class="flex-1 bg-pink-50 hover:bg-pink-100 text-pink-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👩 Female</button>
+                    <button onclick="selectGender('M')" class="flex-1 bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👨 Male</button>
+                    <button onclick="selectGender('F')" class="flex-1 bg-purple-100 hover:bg-purple-200 text-purple-700 font-bold py-5 rounded-xl shadow-sm transition-all active:scale-95">👩 Female</button>
                 </div>
             </div>
         </div>
 
-        <!-- 2. QUESTION SCREEN -->
-        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-white">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center fade-in">
                 <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-indigo-50 border border-gray-200 hover:border-indigo-300 p-5 rounded-xl transition shadow-sm leading-relaxed active:scale-95"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-indigo-50 border border-gray-200 hover:border-indigo-300 p-5 rounded-xl transition shadow-sm leading-relaxed active:scale-95"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-indigo-50 border border-gray-200 hover:border-indigo-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-indigo-50 border border-gray-200 hover:border-indigo-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
                 </div>
             </div>
         </div>
 
-        <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-indigo-600 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">
-                Analyzing your vibe...<br><br>
-                <span class="text-lg opacity-80 font-normal">하이틴 바이브 분석 중...</span>
+            <h2 class="text-2xl font-bold mb-2 tracking-tight">
+                Allocating your class...<br><br>
+                <span class="text-lg opacity-80 font-normal">새 학기 반 배정 중...</span>
             </h2>
-            <p class="text-indigo-200 mt-2 text-sm font-medium">Preparing your school ID card.</p>
         </div>
 
-        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI) -->
         <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
             <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
                 
-                <!-- 배경 장식 (인디고 테마) -->
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-indigo-100 rounded-full blur-3xl opacity-50"></div>
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-indigo-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
                 
                 <div class="relative z-10">
                     <div class="text-center mb-6">
-                        <span class="inline-block px-3 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Your K-High Teen Persona</span>
+                        <span class="inline-block px-3 py-1.5 bg-indigo-800 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md">Premium Analysis</span>
                         <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
                     </div>
 
                     <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
 
-                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
-                    <div id="r-desc" class="space-y-4 mb-6"></div>
+                    <div id="r-desc" class="space-y-4 mb-8"></div>
 
-                    <!-- 찰떡 궁합 섹션 -->
-                    <div class="flex items-center justify-between bg-indigo-900 rounded-2xl p-4 text-white mb-8 shadow-md">
-                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">BEST MATCH</span>
+                    <div class="flex items-center justify-between bg-indigo-900 rounded-2xl p-5 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold text-indigo-300 uppercase tracking-widest">BEST MATCH (환상의 짝꿍)</span>
                         <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
                     </div>
 
-                    <!-- 광고 영역 -->
-                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                    <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
                         <ins class="adsbygoogle"
                              style="display:block; width:100%;"
                              data-ad-client="ca-pub-3466039113171143"
@@ -90,9 +84,17 @@
                         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
                     </div>
 
-                    <button onclick="location.href='index.html'" class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
-                        🏠 Go to Lobby
-                    </button>
+                    <div class="space-y-3">
+                        <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12 Kettle벨 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            결과 공유하기 (Copy Link)
+                        </button>
+                        <button onclick="goLobby()" class="w-full py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all active:scale-95 text-sm">
+                            🏠 다른 테스트 하러 가기 (Lobby)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,101 +104,134 @@
         let userGender = '';
         let currentQ = 0; 
         let score = 0;
+        let currentResultId = '';
 
-        // 질문 데이터 (한영 혼용 포맷)
         const questions = [
             { 
-                q: "You're 1 minute late! You turn the corner with toast in your mouth and bump into someone!<br><br><span class='text-sm text-gray-400 font-normal'>지각 1분 전! 식빵을 입에 물고 모퉁이를 돌다 누군가와 부딪혔다!</span>", 
-                a: "Make eye contact while picking up their books.<br><br><span class='text-sm text-gray-500 font-normal'>떨어진 책을 주워주며 우연히 눈을 맞춘다.</span>", 
-                b: "Quickly apologize and sprint to the gate.<br><br><span class='text-sm text-gray-500 font-normal'>다급하게 사과만 남기고 교문을 향해 전력 질주한다.</span>" 
+                q: "On the first day of the new semester, your sit preference is...<br><br><span class='text-sm text-gray-400 font-normal'>새 학기 첫날, 당신이 가장 앉고 싶은 자리는?</span>", 
+                a: "The center seat where everyone can see you clearly.<br><br><span class='text-sm text-gray-500 font-normal'>모두의 시선이 집중되는 교실 정중앙 자리.</span>", 
+                b: "The window seat in the very back row to observe quietly.<br><br><span class='text-sm text-gray-500 font-normal'>창밖을 바라보며 조용히 관찰할 수 있는 맨 뒷자리.</span>" 
             },
             { 
-                q: "It's finally lunchtime. Where are you heading?<br><br><span class='text-sm text-gray-400 font-normal'>드디어 점심시간. 당신이 향하는 곳은?</span>", 
-                a: "The noisy cafeteria to fight for spicy tteokbokki.<br><br><span class='text-sm text-gray-500 font-normal'>매운 떡볶이를 사수하기 위해 시끌벅적한 매점으로 간다.</span>", 
-                b: "The quiet rooftop or a corner in the library.<br><br><span class='text-sm text-gray-500 font-normal'>바람이 선선한 옥상이나 도서관 구석 자리로 간다.</span>" 
+                q: "A transfer student arrives and makes eye contact with you!<br><br><span class='text-sm text-gray-400 font-normal'>비주얼 폭발 전학생이 오자마자 나와 눈이 마주쳤다면?</span>", 
+                a: "Smile confidently and wave your hand first.<br><br><span class='text-sm text-gray-500 font-normal'>당당하게 미소를 지으며 먼저 손을 흔들어준다.</span>", 
+                b: "Look away quickly and pretend to study intensely.<br><br><span class='text-sm text-gray-500 font-normal'>황급히 시선을 피하고 공부하는 척 책을 펼친다.</span>" 
             },
             { 
-                q: "Your friend says: 'I was so stressed, I bought a new idol album.'<br><br><span class='text-sm text-gray-400 font-normal'>친구가 '나 스트레스 받아서 아이돌 앨범 샀어'라고 한다면?</span>", 
-                a: "'What happened? Why were you stressed?'<br><br><span class='text-sm text-gray-500 font-normal'>'무슨 일 있어? 왜 스트레스 받았어?' (감정 공감)</span>", 
-                b: "'Which group? Did you get your bias photocard?'<br><br><span class='text-sm text-gray-500 font-normal'>'누구 거? 최애 포카는 나왔어?' (사실 확인)</span>" 
+                q: "When prepping for the school festival audition...<br><br><span class='text-sm text-gray-400 font-normal'>학교 축제 오디션을 준비할 때 당신의 포지션은?</span>", 
+                a: "The main center character standing under the spotlight.<br><br><span class='text-sm text-gray-500 font-normal'>조명을 한몸에 받는 화려한 메인 센터 주인공.</span>", 
+                b: "The brilliant director managing everything behind the curtain.<br><br><span class='text-sm text-gray-500 font-normal'>무대 뒤에서 모든 것을 완벽히 조율하는 총괄 기획자.</span>" 
             },
             { 
-                q: "School festival is coming! What's your role?<br><br><span class='text-sm text-gray-400 font-normal'>학교 축제가 다가온다! 당신의 역할은?</span>", 
-                a: "Center of the dance/band club performing on stage.<br><br><span class='text-sm text-gray-500 font-normal'>무대 위에서 스포트라이트를 받는 댄스/밴드부 센터.</span>", 
-                b: "The brain managing the budget behind the scenes.<br><br><span class='text-sm text-gray-500 font-normal'>무대 뒤에서 묵묵히 기획과 예산을 담당하는 브레인.</span>" 
+                q: "You accidentally overhear someone badmouthing your best friend.<br><br><span class='text-sm text-gray-400 font-normal'>누군가 내 소중한 절친을 험담하는 것을 우연히 들었다면?</span>", 
+                a: "Confront them instantly and demand an immediate apology.<br><br><span class='text-sm text-gray-500 font-normal'>그 자리에서 당장 따져 물으며 사과를 요구한다.</span>", 
+                b: "Gather solid evidence first to fully neutralize them later.<br><br><span class='text-sm text-gray-500 font-normal'>철저하게 증거를 수집한 뒤 완벽하게 역공할 준비를 한다.</span>" 
             },
             { 
-                q: "A junior confesses to you with a handwritten letter.<br><br><span class='text-sm text-gray-400 font-normal'>후배가 정성스러운 손편지로 고백을 해왔다.</span>", 
-                a: "Feel touched and carefully write a warm reply.<br><br><span class='text-sm text-gray-500 font-normal'>크게 감동하여 따뜻하고 다정한 답장을 신중하게 써준다.</span>", 
-                b: "Logically explain why you can't date right now.<br><br><span class='text-sm text-gray-500 font-normal'>지금은 연애를 할 수 없는 이유를 논리적으로 설명한다.</span>" 
+                q: "What is your dream final scene for graduation day?<br><br><span class='text-sm text-gray-400 font-normal'>내가 꿈꾸는 대망의 고등학교 졸업식 마지막 장면은?</span>", 
+                a: "Receiving a grand, dramatic confession in front of the crowd.<br><br><span class='text-sm text-gray-500 font-normal'>수많은 인파 속에서 영화 같은 공개 고백을 받는 장면.</span>", 
+                b: "Walking away quietly with a small group of true friends.<br><br><span class='text-sm text-gray-500 font-normal'>진짜 내 사람들과 교문을 걸어 나오며 조용히 미소 짓는 장면.</span>" 
             }
         ];
         
-        // 결과 데이터 (전문 심리 리포트 3단 분리 포맷)
         const resultsData = {
             F: [
                 { 
                     id: "f1", 
-                    title: "☀️ Sunshine Transfer Student<br><span class='text-lg font-bold text-gray-500'>햇살 같은 전학생</span>", 
-                    overview: "The ultimate social butterfly. You captured everyone's attention on your very first day with your bright energy!<br><br><span class='text-xs opacity-80'>최고의 인싸 재질. 전학 온 첫날부터 특유의 맑고 밝은 에너지로 반 친구들의 시선을 단숨에 사로잡았습니다.</span>", 
-                    strengths: "Infectious optimism and open-mindedness. You make everyone around you feel comfortable and loved.<br><br><span class='text-xs opacity-80'>전염성 강한 긍정 에너지와 열린 마음의 소유자입니다. 주변 사람들을 무장해제 시키고 편안하게 만들어줍니다.</span>", 
-                    weaknesses: "You might suppress your own sadness to keep the group happy. Remember, it's okay to have bad days.<br><br><span class='text-xs opacity-80'>모두를 즐겁게 해야 한다는 생각에 본인의 슬픔을 무의식중에 숨길 때가 있습니다. 가끔은 우울해도 괜찮다는 걸 기억하세요.</span>", 
-                    match: "Tsundere Class President<br><span class='text-[10px] font-normal'>츤데레 반장</span>" 
+                    title: "👑 High Teen Queen Bee<br><span class='text-lg font-bold text-gray-500'>학교를 지배하는 탑티어 하이틴 퀸카</span>", 
+                    overview: "You are the absolute epicentre of the school's social hierarchy. Every hallway transforms into a fashion runway the moment you step foot in it, and your social media notifications never cease to buzz. You possess an innate, unteachable star quality that instantly commands the room, leaving everyone either desperately wanting to be you or trying to be in your inner circle. Your style is always flawless, your confidence is blinding, and you manipulate the social landscape with effortless grace. You don't just follow trends; you define them for the entire student body. However, beneath this heavily envied, glamorous armor lies a fiercely protective individual who deeply fears losing relevance and struggles to find friends who love the real person behind the perfect crown.<br><br><span class='text-xs opacity-80'>당신은 학교 사교계의 움직이는 중심축이자 절대적인 권력자입니다. 당신이 발걸음을 내딛는 순간 모든 복도는 즉시 화려한 패션쇼 런웨이로 변하며, 스마트폰의 SNS 알림은 1초도 쉬지 않고 울려댑니다. 사람들을 단숨에 사로잡는 천부적인 스타성을 지니고 있어, 교실 안의 모든 이들은 당신처럼 되고 싶어 하거나 어떻게든 당신의 핵심 무리에 끼고 싶어 안달이 나 있습니다. 당신의 스타일은 언제나 완벽함 그 자체이며, 뿜어져 나오는 자신감은 눈이 부실 정도입니다. 트렌드를 단순히 따르는 것을 넘어, 전교생의 유행을 직접 창조하고 선도합니다. 하지만 이토록 화려하고 부러움을 한몸에 받는 왕관 뒤에는, 혹시나 대중에게 잊혀지거나 도태되지 않을까 하는 남모를 두려움과, 완벽한 포장지가 아닌 내면의 진짜 내 모습을 사랑해 줄 진짜 친구를 갈망하는 깊은 외로움이 숨어 있습니다.</span>",
+                    strengths: "Your greatest strength is an unparalleled, magnetic charisma paired with exceptional high social intelligence. You read social dynamics instantly, knowing exactly how to command authority and charm anyone from a strict principal to a rebellious transfer student. You are extremely driven, highly organized, and hold yourself to an incredibly high standard, ensuring you excel not just in popularity but in your creative endeavors. When you channel your immense influence positively, you become an incredibly powerful force for justice, defending your true friends with a fierce, unbreakable loyalty that completely neutralizes any bully in the school.<br><br><span class='text-xs opacity-80'>당신의 가장 위대한 강점은 타의 추종을 불허하는 압도적인 카리스마와 고도의 사회적 지능입니다. 집단 내의 역학 관계를 본능적으로 단숨에 파악하며, 대쪽 같은 교장 선생님부터 통제 불가능한 반항아 전학생까지 그 누구라도 나에게 매료시키는 기가 막힌 방법을 알고 있습니다. 엄청난 열정의 소유자이자 완벽주의자이기에 인기에만 연연하지 않고 자신이 맡은 예술적, 창의적 활동에서도 항상 최고의 결과물을 만들어냅니다. 당신의 이 거대한 영향력을 긍정적인 방향으로 발휘하기 시작하면, 학교 내 그 어떤 악질 일진이나 괴롭힘도 단숨에 진압해 버리며, 내 사람들을 완벽하게 보호하는 가장 강력하고 정의로운 구원자가 됩니다.</span>",
+                    relationship: "In romance and friendships, you are intensely loyal but highly defensive. You initially test people with high-class standards and witty banter because you are terrified of being used for your status or influence. You express affection through grand, highly visible gestures—like orchestrating exclusive birthday events or styling your friends in the best looks. When you finally find someone who treats you like an ordinary human being and challenges your ego, you fall in love with an intense, unwavering devotion, willing to risk your entire social standing to protect them.<br><br><span class='text-xs opacity-80'>대인 관계와 연애에 있어서 당신은 극도로 의리가 넘치지만, 동시에 방어 기제가 매우 높습니다. 내 배경이나 영향력만을 보고 접근하는 불순한 인간들을 걸러내기 위해, 처음에는 일부러 도도한 태도와 날카로운 대화법으로 상대를 시험합니다. 당신의 애정 표현은 매우 화려하고 대담하여, 내 사람을 위한 서프라이즈 파티를 기획하거나 친구의 스타일을 최고로 변신시켜 주는 방식을 즐깁니다. 내 화려한 포장지에 전혀 주눅 들지 않고 내 자존심을 유쾌하게 건드리는 진짜 진정성 있는 사람을 만나는 순간, 당신은 자신의 모든 사회적 지위와 명예를 기꺼이 걸고서라도 그 사랑을 끝까지 지켜내는 엄청난 순정파로 돌변합니다.</span>",
+                    weaknesses: "Your deep-seated fear of vulnerability makes you look incredibly cold, detached, and superficial to outsiders. You struggle severely with admitting mistakes, often letting your massive pride ruin beautiful friendships before you can bring yourself to apologize. Your obsession with keeping up a flawless public image leads to extreme emotional exhaustion. You are prone to 'performative happiness,' pretending everything is perfect on screen while silently suffering from deep loneliness in empty rooms.<br><br><span class='text-xs opacity-80'>내면의 취약함을 들키는 것에 대한 극심한 공포 때문에, 타인에게 때로 지나치게 차갑고, 계산적이며, 피상적인 사람이라는 오해를 받습니다. 자신의 잘못이나 실수를 인정하는 것을 끔찍하게 어려워하여, 먼저 고개를 숙이고 미안하다고 말하기 전에 자존심을 세우다 소중한 관계를 허무하게 박살 내기도 합니다. 완벽한 모습만을 대중에게 보여야 한다는 강박증은 극심한 정신적 번아웃을 유발합니다. 카메라 앞이나 사람들 앞에서는 세상에서 가장 행복한 척 연기하지만, 정작 혼자 남겨진 방 안에서는 깊은 공허함과 외로움에 시달리는 '전시형 행복'에 갇히기 쉽습니다.</span>",
+                    wellness: "To find genuine inner peace, you must deliberately unplug from the digital world and social approval. Spend quiet days completely makeup-free, wearing baggy hoodies, and engaging in solo creative hobbies where nobody is watching or evaluating you. Practice the uncomfortable art of being raw and imperfect with at least one person you trust completely. Realize that a crown is a heavy and exhausting thing to wear 24/7; you are intrinsically beautiful and profoundly worthy of love even when you are just an ordinary teenager doing absolutely nothing.<br><br><span class='text-xs opacity-80'>진정한 내면의 평화를 얻기 위해서는 온 세상의 시선과 SNS의 좋아요 숫기로부터 의도적으로 전원을 꺼야 합니다. 화장기가 전혀 없는 맨얼굴에 편안한 후드티를 뒤집어쓰고, 그 누구의 평가도 없는 고요한 공간에서 오직 자신만을 위한 소박한 취미에 몰두해 보세요. 내가 완벽하지 않고 망가진 모습일지라도 있는 그대로 투명하게 보여줄 수 있는 신뢰 가득한 단 한 사람을 만들고, 내면의 유약함을 공유하는 연습을 해야 합니다. 왕관을 24시간 내내 쓰고 사는 것은 영혼을 갉아먹는 지치는 일입니다. 당신은 아무런 스펙도, 화려한 인기도 없는, 그저 평범한 청춘의 모습 그대로일 때도 이미 가슴 시리도록 아름답고 사랑받을 자격이 차고 넘친다는 사실을 명심하세요.</span>",
+                    match: "Brilliant Nerd<br><span class='text-[10px] font-normal'>전교 1등 브레인 너드</span>" 
                 },
                 { 
                     id: "f2", 
-                    title: "👓 Tsundere Class President<br><span class='text-lg font-bold text-gray-500'>츤데레 반장</span>", 
-                    overview: "Cold on the outside, warm on the inside. You strictly enforce the rules but secretly leave banana milk on your crush's desk.<br><br><span class='text-xs opacity-80'>겉바속촉의 정석. 규칙을 엄격하게 따지지만, 좋아하는 사람 책상 위에는 몰래 바나나맛 우유를 올려두는 타입입니다.</span>", 
-                    strengths: "Highly responsible, observant, and deeply loyal. Once you care about someone, you protect them silently.<br><br><span class='text-xs opacity-80'>엄청난 책임감과 관찰력, 깊은 의리를 가졌습니다. 한 번 내 사람이라고 생각하면 뒤에서 묵묵히 책임지고 챙겨줍니다.</span>", 
-                    weaknesses: "Terrible at expressing honest feelings. You often miss out on things because you overthink and hesitate.<br><br><span class='text-xs opacity-80'>솔직한 감정 표현에 극도로 서툽니다. 너무 많이 생각하고 주저하다가 좋은 기회나 타이밍을 놓치기도 합니다.</span>", 
-                    match: "Sunshine Transfer Student<br><span class='text-[10px] font-normal'>햇살 같은 전학생</span>" 
+                    title: "🧠 Brilliant Nerd<br><span class='text-lg font-bold text-gray-500'>안경 뒤에 미모를 숨긴 전교 1등 브레인</span>", 
+                    overview: "You are the quiet, hyper-focused intellectual powerhouse of the school. Safely hidden behind a neat stack of textbooks, heavy eyeglasses, and a perfectly clean uniform, you intentionally choose to remain invisible to the chaotic social drama around you. You process life through cold logic, immense data, and academic perfection, effortlessly maintaining the top rank in the school. While others are busy planning high school parties, you are solving complex equations or mapping out ivy league strategies. Yet, beneath your hyper-rational, detached exterior lies a deeply observant and surprisingly romantic soul, waiting for someone to break through your intellectual walls and appreciate the passionate, incredibly beautiful world you hide inside.<br><br><span class='text-xs opacity-80'>당신은 겉으로는 조용해 보이지만 전교를 뒤흔드는 엄청난 지적 능력을 숨겨둔 탑클래스 브레인입니다. 두꺼운 참고서 탑과 단정한 안경, 흐트러짐 없는 교복 뒤로 자신을 철저히 숨긴 채, 학교 내의 유치하고 시끄러운 사교계 드라마로부터 의도적으로 한 발짝 물러나 있습니다. 세상 모든 일을 차가운 논리와 정확한 데이터, 그리고 학업적 완벽주의를 통해 필터링하며 전교 1등 자리를 단 한 번도 놓치지 않습니다. 남들이 화려한 파티와 연애 사업에 정신이 팔려 있을 때, 당신은 고난도 방정식을 풀며 미래의 거대한 커리어 전략을 세웁니다. 하지만 이토록 초성실하고 이성적인 외면 아래에는, 주변의 모든 관계를 날카롭게 관찰하는 섬세함과 누구보다 뜨거운 로맨틱한 환상이 숨어 있으며, 내 지적인 장벽을 허물고 안경 뒤에 숨겨진 진짜 매력을 알아봐 줄 운명의 상대를 기다리고 있습니다.</span>",
+                    strengths: "Your focus and cognitive analytical power are practically superhuman. You possess an unbreakable mental discipline that allows you to achieve any long-term goal you set for yourself. You are highly reliable, fiercely organized, and completely immune to the shallow peer pressure that sidetracks most teenagers. Your dark-horse potential is staggering—when you choose to finally step into the light or take off your glasses for a special event, your hidden aesthetic elegance and brilliant wit leave the entire school completely speechless and starstruck.<br><br><span class='text-xs opacity-80'>당신의 고도의 집중력과 상황 분석 능력은 가히 초인적인 수준입니다. 한 번 마음먹은 장기적인 목표는 그 어떤 역경이 있어도 기필코 달성해 내는 무쇠 같은 멘탈 관리 능력을 지니고 있습니다. 책임감이 매우 강하고 계획성이 철저하며, 또래 집단의 철없는 압박이나 유치한 유행 따위에는 눈 하나 깜짝하지 않는 굳건함이 있습니다. 당신이 가진 반전 매력은 가히 파괴적입니다. 축제나 특별한 날, 마침내 무대 위로 올라서거나 안경을 벗고 본연의 숨겨진 비주얼과 위트를 과감하게 드러내는 순간, 전교생과 퀸카/킹카들은 온몸에 전율을 느끼며 당신의 매력에 완전히 압도당하게 됩니다.</span>",
+                    relationship: "In romance, you are a deeply cautious overthinker who calculates heartbeats like mathematical variables. You express love through acts of service—silently creating the ultimate study guides for your crush or staying up late to help them solve their life problems. You despise fake personalities and are naturally drawn to people who are completely raw, authentic, and emotionally expressive. Once your high standards are met and you trust someone, you become a fiercely protective, deeply understanding partner who offers a level of intellectual and emotional stability that no one else can match.<br><br><span class='text-xs opacity-80'>로맨스에 있어서 당신은 호감도를 수학 공식처럼 철저히 계산하고 분석하는 지독한 생각 과다형간 과다형 인간입니다. 말로만 하는 번지르르한 고백 대신, 좋아하는 상대를 위해 밤을 새워 완벽한 핵심 요약 노트를 만들어 주거나 그 사람의 고민을 논리적으로 해결해 주는 실질적인 행동으로 사랑을 증명합니다. 가식적인 인물들을 본능적으로 혐오하며, 오히려 가공되지 않은 날것의 솔직함과 풍부한 감정을 가진 사람에게 강렬하게 이끌립니다. 당신의 까다로운 기준을 통과해 마침내 마음의 문을 열게 된 상대에게는, 그 누구도 흉내 낼 수 없는 깊은 지적, 정서적 안정감을 선사하는 우직하고 평생 믿을 수 있는 최고의 연인이 됩니다.</span>",
+                    weaknesses: "Your chronic overthinking frequently leads to acute analysis paralysis, causing you to completely miss perfect romantic opportunities. You often mask your deep emotional insecurities behind a wall of cold intellectual arrogance, dismissively treating human emotions as illogical nonsense when you feel threatened. You tend to completely neglect your physical well-being and social life, retreating into your academic comfort zone whenever real-world relationships become messy or challenging.<br><br><span class='text-xs opacity-80'>매사에 생각이 너무 많다 보니 결국 '분석 마비' 상태에 빠져, 눈앞에 찾아온 완벽한 로맨틱한 타이밍을 허무하게 날려버리곤 합니다. 내면의 감정적 불안감을 감추기 위해 일부러 더 차갑고 똑똑한 척 오만을 떨기도 하며, 내 마음이 상처받을 것 같으면 인간의 소중한 감정을 비논리적인 시간 낭비라며 억지 폄하하는 방어 기제를 씁니다. 인간관계가 조금이라도 복잡해지거나 내 통제를 벗어나면, 대화로 풀기보다 자신의 안전한 책상 안쪽으로 숨어버려 스스로를 고립시키는 나쁜 버릇이 있습니다.</span>",
+                    wellness: "True mental wellness for you requires learning to embrace the beautiful, chaotic randomness of youth. Intentionally step away from your textbooks and engage in purely physical, non-graded creative activities like contemporary dance, abstract painting, or messy baking where there is no 'correct answer.' Practice accepting your heavy emotions without needing to logically justify them; it is completely okay to cry or feel angry without an equation. Allow yourself to fail gracefully and realize that your human worth is rooted in your beautiful heart, not your perfect transcript.<br><br><span class='text-xs opacity-80'>당신에게 진정한 웰빙이란 청춘의 가장 아름답고 혼란스러운 무작위성을 있는 그대로 포용하는 법을 배우는 것입니다. 가끔은 책장을 과감히 덮고, 점수나 등수가 매겨지지 않는 순수한 신체 활동이나 예술—현대무용, 추상화 그리기, 베이킹 등—에 온몸을 던져보세요. 인생에는 '정답'이 없는 순간이 훨씬 더 많습니다. 내면의 감정이 요동칠 때 그것을 굳이 논리적으로 설명하려 애쓰지 말고, 슬프면 울고 좋으면 소리 지르는 감정의 해방을 스스로에게 허락하세요. 실패해도 괜찮습니다. 당신의 진짜 가치는 완벽한 성적표 점수가 아니라, 안경 뒤에 숨겨진 그 순수하고 아름다운 영혼의 깊이에 맞닿아 있습니다.</span>",
+                    match: "High Teen Queen Bee<br><span class='text-[10px] font-normal'>탑티어 하이틴 퀸카</span>" 
                 },
                 { 
                     id: "f3", 
-                    title: "🎸 Rebellious Band Leader<br><span class='text-lg font-bold text-gray-500'>반항적인 밴드부 보컬</span>", 
-                    overview: "Dangerous charm. You might sleep through math class, but the moment you step on stage, everyone is mesmerized.<br><br><span class='text-xs opacity-80'>위험한 매력의 소유자. 수학 시간에는 엎드려 자지만, 축제 무대 위에 오르는 순간 모든 학생들의 마음을 훔칩니다.</span>", 
-                    strengths: "Authentic, artistically gifted, and fiercely independent. You don't care about rumors and stay true to yourself.<br><br><span class='text-xs opacity-80'>가식 없고 예술적 재능이 뛰어나며 독립심이 강합니다. 남들의 시선이나 소문에 연연하지 않고 오직 나만의 길을 갑니다.</span>", 
-                    weaknesses: "You put up walls too easily. People might find you intimidating or hard to approach at first.<br><br><span class='text-xs opacity-80'>마음의 벽을 너무 쉽게 칩니다. 사람들이 당신의 첫인상을 너무 차갑거나 다가가기 어렵다고 오해할 수 있습니다.</span>", 
-                    match: "Quiet Library Angel<br><span class='text-[10px] font-normal'>도서관 천사</span>" 
+                    title: "🏍️ Melancholic Rebel<br><span class='text-lg font-bold text-gray-500'>가죽 자켓을 입은 고독한 반항아 아웃사이더</span>", 
+                    overview: "You are the ultimate Enigma of the school, the leather-jacket-wearing rebel who sits in the shadows of the back row, completely ignoring the teacher's voice. Armed with an icy glare, heavy black combat boots, and a fierce air of complete indifference, you keep the entire world at a distance. You actively refuse to participate in the petty social games of high school, choosing instead the freedom of your own company. Yet, your brooding silence is highly intoxicating, making you the subject of endless rumors and intense infatuation. Beneath that razor-sharp, dangerous exterior is a deeply wounded, intensely artistic, and fiercely romantic soul that harbors an incredible capacity for devotion for the one person brave enough to climb over your high defensive walls.<br><br><span class='text-xs opacity-80'>당신은 학교 최고의 미스터리이자, 교실 맨 뒷자리 그늘에 앉아 선생님의 잔소리를 가볍게 씹어버리는 고독한 반항아입니다. 시크한 가죽 자켓과 무거운 워커, 그리고 세상사 무관심하다는 특유의 서늘한 눈빛으로 무장한 채 온 세상과 거리를 둡니다. 고등학교의 유치한 파벌 싸움이나 사교계 게임 따위에는 절대 끼지 않으며, 차라리 고독한 자유를 만끽하는 편을 택합니다. 하지만 당신이 풍기는 그 차갑고 위험한 아우라는 기묘할 정도로 치명적이어서, 전교생들 사이에서 끊임없는 소문과 동경의 대상이 됩니다. 날카롭고 반항적인 외면 깊은 곳에는 사실 과거의 짙은 상처와 예술적인 감수성, 그리고 내 높은 마음의 벽을 두려워하지 않고 먼저 손을 내밀어 줄 단 한 사람을 위해 목숨까지 바칠 수 있는 지독한 순정주의가 요동치고 있습니다.</span>",
+                    strengths: "Your authenticity is your superpower; you possess a rare, unshakable moral compass and a total refusal to compromise your identity for anyone. You possess an intensely keen artistic eye—whether expressed through music, raw street style, or literature. You are fiercely independent, completely self-reliant, and highly protective of underdogs. If you witness anyone taking advantage of the weak, your dangerous protective instinct instantly activates, allowing you to crush social injustices with absolute, fearless confidence that commands immediate respect from even your worst enemies.<br><br><span class='text-xs opacity-80'>당신의 가식 없는 날것 그대로의 솔직함은 가장 강력한 무기입니다. 남들의 시선에 나를 맞추거나 타협하는 짓을 혐오하며, 나만의 뚜렷한 정체성을 끝까지 지켜내는 굳건함이 있습니다. 음악, 스트릿 패션, 혹은 문학 등 장르를 불문하고 세상을 다르게 보는 뛰어난 예술적 통찰력을 지니고 있습니다. 독립심이 하늘을 찌르며, 특히 학교 내에서 소외당하거나 약한 친구들을 남몰래 챙기는 츤데레 매력이 있습니다. 누군가 권력을 쥐고 약자를 괴롭히는 꼴을 목격하는 순간, 당신의 위험천만한 보호 본능이 발동하여 적들이 감히 대항할 수 없는 압도적인 포스로 판을 뒤엎어버립니다.</span>",
+                    relationship: "In romance, you are the legendary embodiment of the 'dangerous slow burn.' You aggressively push suitors away initially, testing if they possess the resilience to handle your darkest days. You communicate love not with sweet, empty words, but with high-stakes, unforgettable actions—like presenting your helmet to someone for a wild escape, or appearing out of nowhere to defend them in a crisis. When you finally fall, your love is total, obsessive, and fiercely possessive; you love with a profound intensity that leaves an indelible mark on their entire life.<br><br><span class='text-xs opacity-80'>연애에 있어 당신은 그 이름도 찬란한 '위험하고 치명적인 치정 로맨스'의 주인공입니다. 처음에는 상처받기 싫어 일부러 더 거칠게 밀어내며, 내 어두운 내면까지 감당할 수 있는 단단한 사람인지 시험합니다. 달콤하고 가벼운 말재주 대신, 위기의 순간 어디선가 바람처럼 나타나 나를 구해주거나 자신의 헬멧을 머리에 씌워주며 오토바이 뒷자리에 태워 탈출하는 등의 묵직하고 잊을 수 없는 행동으로 사랑을 증명합니다. 마음을 완전히 허락한 연인에게는 영혼을 통째로 바치는 맹목적이고 뜨거운 사랑을 퍼붓습니다.</span>",
+                    weaknesses: "Your absolute reliance on a cold emotional wall often sabotages beautiful connections before they can even breathe. You fall into self-destructive cycles easily, aggressively sabotaging your own happiness because you mistakenly believe you are inherently 'bad news' or unworthy of a peaceful life. Your defensive reflex to transform deep sadness or emotional fear into volatile, icy anger creates deep, painful misunderstandings with the very people who genuinely want to heal your heart.<br><br><span class='text-xs opacity-80'>감정을 꽁꽁 걸어 잠그는 거대한 벽 때문에, 나를 진심으로 아끼는 사람들이 다가오다가 상처받고 떠나가게 만듭니다. '어차피 나는 거친 아웃사이더니까 평온한 행복은 안 어울려'라는 비관적인 착각에 빠져, 찾아온 행복을 스스로 걷어차는 자학적인 악순환에 빠지기 쉽습니다. 내면의 깊은 두려움과 슬픔을 솔직하게 말하지 못하고, 겉으로는 홧김에 가시 돋친 냉소와 폭발적인 분노로 표출해 버려 나를 치유해주고 싶어 하는 이들에게 깊은 상처를 남기곤 합니다.</span>",
+                    wellness: "To genuinely heal your spirit, you must fundamentally learn that structural vulnerability is a profound form of bravery, not weakness. Find highly productive, explosive outlets for your intense emotional storms—such as playing electric guitar in a garage band, writing raw poetry, or intense martial arts. Stop fleeing from those who try to offer you a warm, soft blanket of affection. Allow yourself to step off your defensive motorcycle, sit in a quiet garden, and accept that you are deeply worthy of a peaceful, safe, and beautifully ordinary love.<br><br><span class='text-xs opacity-80'>진정으로 마음의 상처를 치유하기 위해서는 자신의 아픔을 솔직하게 고백하는 것이 나약함이 아니라 가장 위대한 '용기'임을 깨달아야 합니다. 가슴속에서 요동치는 정서적 폭풍을 일렉 기타 연주, 거친 시 쓰기, 혹은 격렬한 격투기처럼 생산적이고 폭발적인 에너지로 승화시켜 보세요. 내 어두운 면을 감싸 안아주려는 따뜻한 호의로부터 비겁하게 도망치지 마세요. 가끔은 날 선 오토바이 시동을 끄고 조용한 잔디밭에 앉아, 당신도 아무 걱정 없이 평화롭고 안전하며 지독하게 평범한 행복을 누릴 자격이 있는 소중한 사람임을 가만히 받아들이는 연습이 필요합니다.</span>",
+                    match: "Sunshine Sidekick<br><span class='text-[10px] font-normal'>활력소 만렙 해맑은 감초 친구</span>" 
                 },
                 { 
                     id: "f4", 
-                    title: "📚 Quiet Library Angel<br><span class='text-lg font-bold text-gray-500'>조용한 도서관 천사</span>", 
-                    overview: "Master observer. You don't speak much, but your calming presence and thoughtful advice make you an invaluable friend.<br><br><span class='text-xs opacity-80'>도서관 창가 자리의 요정. 말수는 적지만, 차분한 분위기와 사려 깊은 조언으로 친구들에게 없어선 안 될 존재입니다.</span>", 
-                    strengths: "Deep empathy, excellent listener, and emotionally mature. You provide a safe haven for chaotic teen emotions.<br><br><span class='text-xs opacity-80'>깊은 공감 능력, 훌륭한 경청 태도, 성숙한 감정선. 폭풍 같은 10대들의 감정을 넉넉하게 포용해 주는 안전한 안식처입니다.</span>", 
-                    weaknesses: "You avoid the spotlight so much that your own efforts often go unnoticed. Don't be afraid to shine.<br><br><span class='text-xs opacity-80'>주목받는 것을 너무 피하다 보니 정작 본인의 노력이나 매력이 가려질 때가 많습니다. 가끔은 당당하게 나서도 좋습니다.</span>", 
-                    match: "Rebellious Band Leader<br><span class='text-[10px] font-normal'>반항적인 밴드부 보컬</span>" 
+                    title: "🍗 Sunshine Sidekick<br><span class='text-lg font-bold text-gray-500'>학교의 인간 비타민, 활력소 만렙 해맑은 감초 친구</span>", 
+                    overview: "You are the vibrant, laughing golden retriever of the school community. Armed with a pocket full of snacks, an endless supply of dramatic high-pitched gasps, and a heart too big for your chest, you light up every room you stumble into. You are the absolute queen of comedic timing and the ultimate loyalty partner. While the lead characters are busy crying over complicated love triangles, you are organizing the lunch group, shamelessly cheering for the school team, and ensuring nobody ever eats alone. You possess a rare, unfiltered authenticity that completely shatters social pretense, making you the comforting safe haven where everyone goes when they need to remember how to laugh.<br><br><span class='text-xs opacity-80'>당신은 학교 전체를 환하게 밝히는 인간 비타민이자 주체할 수 없는 깨방정의 소유자, 골든 리트리버형 인간입니다. 주머니에는 항상 간식이 가득 차 있고, 사소한 일에도 특유의 우주 최강 리액션을 발산하며 온 사방에 긍정 에너지를 뿌리고 다닙니다. 당신은 학교 내 최고의 코미디 넘버원이자, 의리 하면 절대 빼놓을 수 없는 마당발 찐친입니다. 주인공들이 복잡한 삼각관계로 질질 짜며 멜로드라마를 찍고 있을 때, 당신은 매점 신메뉴를 털거나 교내 체육대회 응원단장을 자처하며 분위기를 반전시킵니다. 가식과 허세가 제로인 당신의 맑고 순수한 영혼은, 세상의 엄격한 가식에 지친 학교 친구들이 아무 생각 없이 찾아와 배꼽 잡고 웃으며 위로받을 수 있는 가장 따뜻하고 안전한 대피소가 되어줍니다.</span>",
+                    strengths: "Your emotional resilience and empathetic energy are legendary. You have the unique ability to break the ice in any highly toxic environment, melting the coldest corporate high-society egos with your sheer, joyful warmth. You are incredibly observant of people's subtle sadness; you can spot a hidden tear from across the cafeteria and will immediately deploy ridiculous jokes or comforting food to heal them. You hold no malice, never play toxic mind games, and your absolute purity makes you fiercely protective of your inner circle with a surprising, fierce bravery whenever they are genuinely threatened.<br><br><span class='text-xs opacity-80'>당신의 어마무시한 회복탄력성과 타인의 슬픔을 달래주는 공감 능력은 그야말로 독보적입니다. 아무리 무겁고 싹바가지 없는 얼음장 같은 분위기도 당신의 말 한마디면 순식간에 사르르 녹아내립니다. 의외로 사람들의 미세한 감정 변화를 기가 막히게 잘 포착해서, 급식실 저 멀리서 시무룩해 있는 친구를 보면 기필코 튀어가 간식을 쥐여주며 웃기고야 마는 천사 같은 면모가 있습니다. 뒤끝이 전혀 없고 투명하며, 평소에는 흐리멍덩해 보일지라도 진짜 내 친구가 억울한 일이나 위협을 당하면 상대를 가차 없이 물어뜯어 버리는 엄청난 반전 용기를 발휘하기도 합니다.</span>",
+                    relationship: "In romance, you are the ultimate 'accidental friend-zoner' because you treat your crushes with the same loud, playful energy as your childhood best friends. You intensely value open, joyful communication and want a relationship rooted in laughter, shared late-night fast-food runs, and zero toxic drama. Because you constantly make people laugh, it takes a highly secure, deeply intuitive partner to look past your comedic armor, look into your eyes, and notice the beautiful, quiet romantic yearning that you hide behind the continuous smiles.<br><br><span class='text-xs opacity-80'>연애에 있어서 당신은 숨겨진 마성의 캐릭터이지만, 동시에 좋아하는 사람마저 동네 찐친 다루듯 과격하게 장난치고 놀려먹는 바람에 의도치 않게 철벽을 쳐버리는 연애 하수이기도 합니다. 무조건 같이 있으면 즐겁고, 야식 메뉴로 떡볶이를 같이 때릴 수 있는 편안하고 스트레스 없는 연애를 갈망합니다. 늘 주변을 웃기느라 바쁘다 보니, 내면의 깊은 외로움과 진지한 로맨틱 판타지를 알아채 주는 사람이 드뭅니다. 당신의 장난기 가득한 가면을 걷어내고 눈동자를 가만히 바라보며 \"오늘 진짜 네 기분은 어때?\"라고 진지하게 물어봐 주는 속 깊고 어른스러운 사람을 만나야 진정한 행복을 느낍니다.</span>",
+                    weaknesses: "Your severe 'people-pleaser complex' causes you to constantly burn your own emotional fuel to keep others warm. You heavily repress your own fears, tears, and academic anxieties because you are terrified that being sad will make you a burden or destroy your status as the group's sunshine. You are frequently taken for granted by your more dramatic friends, who treat you merely as a convenient comedic distraction rather than a complex human being with deep emotional needs.<br><br><span class='text-xs opacity-80'>주변 사람들을 항상 즐겁게 해줘야 한다는 '광대 공포증/착한 아이 콤플렉스'에 시달리느라, 정작 내 영혼이 새까맣게 타들어 가는 것은 방치하곤 합니다. 내가 우울하거나 눈물을 보이면 주변 분위기를 망치거나 친구들에게 짐이 될까 봐, 슬픈 감정과 학업 스트레스를 속으로 무작정 꾹꾹 눌러 담습니다. 이 때문에 이기적인 주인공 친구들에게 필요할 때만 불러내서 감정의 쓰레기통이나 분위기 띄우기용 소모품으로 이용당하고 혼자 돌아서서 씁쓸해하는 상처를 자주 받습니다.</span>",
+                    wellness: "To restore your emotional balance, you critically need to create a strict boundary between your social entertainment persona and your real private self. Practice the beautiful art of saying 'No' without experiencing an ounce of guilt. Engage in highly soothing, solitary wellness activities where you don't have to talk or perform—like forest hiking, reading fantasy novels in a quiet room, or listening to relaxing ambient music. Give yourself permission to have a completely bad day, to frown, and to let others take care of you for a change. Realize that you don't need to shine like the sun every single second to be profoundly loved.<br><br><span class='text-xs opacity-80'>무너진 멘탈을 회복하기 위해 당신에게 가장 필요한 것은 남들을 웃기는 광대 역할에서 벗어나 오롯이 나만의 감정을 지키는 단호한 선을 긋는 것입니다. 타인의 부탁에 죄책감 없이 당당하게 \"싫어!\"라고 거절하는 연습을 하세요. 굳이 말을 많이 하거나 에너지를 쏟지 않아도 되는 조용한 혼자만의 치유 시간—숲길 산책, 판타지 소설 정독, 혹은 잔잔한 음악 감상—을 매일 확보해야 합니다. 가끔은 대놓고 인상을 쓰거나 하루 종일 징징대도 괜찮습니다. 늘 태양처럼 밝게 빛나지 않아도, 비가 오고 어두운 구름이 낀 당신의 모습 그대로도 세상 사람들은 당신을 여전히 사랑한다는 깊은 신뢰를 가슴에 새기세요.</span>",
+                    match: "Melancholic Rebel<br><span class='text-[10px] font-normal'>고독한 반항아 아웃사이더</span>" 
                 }
             ]
         };
 
-        // 남성 데이터를 여성 데이터 구조와 동일하게 설정 후 텍스트 수정
+        // 남성 데이터를 여성 데이터 기반으로 구조를 복제한 후 맞춤형 키워드로 완전 확장 변환
         resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
-        resultsData.M[0].title = "🐶 Golden Retriever Junior<br><span class='text-lg font-bold text-gray-500'>대형견 연하남</span>";
-        resultsData.M[1].title = "🧊 Cold Chaebol Heir<br><span class='text-lg font-bold text-gray-500'>냉미남 재벌 2세</span>";
-        resultsData.M[2].title = "🎸 Bad Boy Musician<br><span class='text-lg font-bold text-gray-500'>반항적인 밴드부 남주</span>";
-        resultsData.M[3].title = "🎧 Mysterious Senior<br><span class='text-lg font-bold text-gray-500'>신비주의 이어폰 선배</span>";
+        resultsData.M[0].title = "👑 High Teen Kingka<br><span class='text-lg font-bold text-gray-500'>전교생의 워너비, 탑티어 하이틴 킹카</span>";
+        resultsData.M[1].title = "🧠 Genius Brain<br><span class='text-lg font-bold text-gray-500'>안경 뒤에 천재성을 숨긴 전교 1등 대치동 브레인</span>";
+        resultsData.M[2].title = "🏍️ Lonely Rider<br><span class='text-lg font-bold text-gray-500'>바이크를 타는 고독한 반항아 라이더</span>";
+        resultsData.M[3].title = "🍗 Beagle Sidekick<br><span class='text-lg font-bold text-gray-500'>비글미 폭발하는 에너자이저 눈치 없는 찐친</span>";
 
-        resultsData.M[0].overview = "Bright and energetic. You follow your favorite upperclassman around like a happy puppy.<br><br><span class='text-xs opacity-80'>밝고 에너지 넘치는 직진남. 좋아하는 선배 뒤를 강아지처럼 졸졸 따라다니는 무해하고 사랑스러운 후배입니다.</span>";
-        resultsData.M[0].strengths = "Unapologetically affectionate and highly expressive. Your pure heart easily breaks down people's defenses.<br><br><span class='text-xs opacity-80'>눈치 보지 않는 애정 표현과 넘치는 활기. 당신의 순수한 진심은 철벽같은 사람의 마음도 쉽게 허물어버립니다.</span>";
-        resultsData.M[0].weaknesses = "You can be a bit clumsy and emotionally impulsive, sometimes failing to read the room during serious situations.<br><br><span class='text-xs opacity-80'>가끔은 눈치가 부족하고 감정적으로 충동적입니다. 진지한 상황에서 분위기를 파악하지 못해 실수할 때가 있습니다.</span>";
-        
-        resultsData.M[1].overview = "Rich and untouchable, but you only show your soft and vulnerable side to that one special person.<br><br><span class='text-xs opacity-80'>범접 불가한 아우라를 풍기지만, 오직 단 한 사람, 특별한 그녀에게만 부드럽고 헌신적인 모습을 보여주는 순정남입니다.</span>";
-        resultsData.M[1].strengths = "Elite focus, unshakable confidence, and extreme loyalty. You have the power and will to protect what is yours.<br><br><span class='text-xs opacity-80'>엘리트다운 집중력, 흔들림 없는 자신감, 그리고 지독한 순정. 내 사람을 지키기 위해서라면 무엇이든 할 수 있습니다.</span>";
-        resultsData.M[1].weaknesses = "Lack of empathy for normal people's struggles. Your extreme jealousy can sometimes be overwhelming.<br><br><span class='text-xs opacity-80'>평범한 사람들의 일상적인 고민에 깊이 공감하지 못합니다. 가끔 통제할 수 없는 소유욕과 질투심이 문제를 일으킵니다.</span>";
-        
-        resultsData.M[2].overview = "Always getting into trouble and covered in band-aids, but your guitar skills make everyone swoon.<br><br><span class='text-xs opacity-80'>얼굴엔 항상 반창고를 붙이고 다니는 반항아. 하지만 무대 위에서 기타를 칠 때면 모두가 사랑에 빠지고 맙니다.</span>";
-        resultsData.M[2].strengths = "Raw talent, protective instinct, and a free spirit. You live by your own rules and protect the weak.<br><br><span class='text-xs opacity-80'>타고난 재능, 약자를 보호하는 본능, 얽매이지 않는 자유로운 영혼. 불의를 참지 않고 자신만의 룰에 따라 움직입니다.</span>";
-        resultsData.M[2].weaknesses = "You solve problems with your fists or by running away, rather than communicating properly.<br><br><span class='text-xs opacity-80'>갈등이 생겼을 때 대화로 풀기보다는 화를 내며 자리를 피하거나 거칠게 행동하여 오해를 사는 경우가 많습니다.</span>";
-        
-        resultsData.M[3].overview = "Always listening to music alone. You quietly appear out of nowhere to help when someone is in trouble.<br><br><span class='text-xs opacity-80'>항상 창가에서 이어폰을 꽂고 있는 신비주의 선배. 누군가 곤경에 처했을 때 어디선가 조용히 나타나 도움을 주고 사라집니다.</span>";
-        resultsData.M[3].strengths = "Calm, deeply perceptive, and reliable. You provide mature solutions without judging others.<br><br><span class='text-xs opacity-80'>차분하고 통찰력이 깊으며 믿음직스럽습니다. 타인을 함부로 판단하지 않고 묵묵히, 그러나 확실하게 도와줍니다.</span>";
-        resultsData.M[3].weaknesses = "You keep too much distance. Your mysterious vibe makes it hard for people to truly get close to you.<br><br><span class='text-xs opacity-80'>타인과 지나치게 거리를 둡니다. 특유의 신비주의 때문에 사람들이 당신에게 진정으로 다가가는 것을 어려워합니다.</span>";
+        resultsData.M[0].overview = "You are the crowned sovereign of the high school universe. An elite athlete, a charismatic student leader, and the undisputed main character of every party, your existence is legendary. You operate with supreme confidence, assuming the best tables and the absolute center of attention are your birthright. Yet, behind the bright flashlights and endless group chats, you carry crushing expectations from your family to maintain perfect prominence, leaving you secretly terrified of failure and longing for a love that doesn't care about your public trophy life.<br><br><span class='text-xs opacity-80'>당신은 고등학교 생태계의 꼭대기에 군림하는 황제이자 킹카입니다. 완벽한 스포츠 스타 피지컬, 학생회를 이끄는 리더십, 그리고 모든 파티의 중심에 서는 압도적인 존재감으로 전교생의 동경을 한몸에 받습니다. 자신이 세상의 중심이라는 사실을 너무나 자연스럽게 받아들이며 당당하게 살아갑니다. 하지만 쏟아지는 스포트라이트와 끝없는 단톡방의 찬사 뒤에는, 가문의 명예를 지키고 완벽함을 유지해야 한다는 숨 막히는 압박감이 양어깨를 짓누르고 있습니다. 완벽함이 깨져 실패하는 것에 대한 극심한 공포가 있으며, 나의 화려한 트로피 같은 조건이 아닌 땀 흘리고 망가진 진짜 소년의 내면을 따뜻하게 안아줄 진실한 사랑을 애타게 갈망합니다.</span>";
+        resultsData.M[1].overview = "You are the quiet, hyper-rational strategic mind of the school. Safely ensconced behind coding screens, physics papers, and a neatly pressed uniform, you look down at the chaotic social drama of your peers as trivial mathematical noise. You systematically hold the absolute top academic ranking, operating entirely on data and cold precision. However, beneath your deeply detached, highly intellectual walls beats the heart of an incredibly romantic idealist, waiting for someone unpredictable enough to break your equations and reveal the deeply passionate protector hidden behind the glasses.<br><br><span class='text-xs opacity-80'>당신은 교실 구석에서 조용히 코딩 화면과 물리학 논문을 들여다보며, 또래들의 요란한 사교계 드라마를 유치한 수학적 노이즈로 취급하는 하이클래스 브레인입니다. 전교 1등이라는 지위를 완벽한 데이터 분석력과 이성적 통찰로 완벽하게 수호합니다. 하지만 이토록 빈틈없고 차가운 이성의 장벽 아래에는, 사실 나의 모든 정교한 예측 공식을 단숨에 깨부숴 줄 엉뚱하고 사랑스러운 누군가를 기다리는 뜨거운 로맨틱 이상주의자가 숨어 있습니다. 안경 너머 내 진짜 매력과 열정을 알아봐 주는 상대를 위해 내 모든 브레인을 가동하여 그를 지켜내는 든든한 구원자입니다.</span>";
+        resultsData.M[2].overview = "You are the brooding, leather-jacket-wearing enigma who lives completely by his own rules. Sitting in the shadowed corner of the back row, completely tuned out of the school's structural system, you rule through a terrifying, fiercely magnetic silence. Rumors swirl around your late-night motorcycle rides and dark past, yet you ignore them with complete disdain. Beneath this dangerous, fiercely unyielding visual armor lies a deeply wounded, intensely artistic prince who possesses an infinite capacity for absolute devotion to the one person brave enough to hold your hand in the dark.<br><br><span class='text-xs opacity-80'>당신은 학교의 모든 규칙과 교칙을 가볍게 무시하고 자신만의 법대로 살아가는 고독한 가죽 자켓의 반항아 라이더입니다. 교실 맨 뒷자리 그늘진 구석에 앉아 무서운 아우라와 서늘한 묵묵함으로 교실 전체를 긴장하게 만듭니다. 한밤중 폭주하는 오토바이 소리와 베일에 싸인 어두운 과거에 대한 소문이 꼬리에 꼬리를 물지만, 당신은 코웃음을 치며 무시할 뿐입니다. 하지만 이토록 위험하고 꺾일 것 같지 않은 강철 같은 비주얼 뒤에는, 과거의 짙은 트라우마로 얼룩진 여린 소년과 내 어두운 우주 속으로 겁 없이 걸어 들어와 손을 잡아줄 단 한 사람을 위해 전부를 내던질 수 있는 지독한 순정이 요동치고 있습니다.</span>";
+        resultsData.M[3].overview = "You are the wildly spinning hyperactive beagle of the school, the undisputed MVP of sheer joy and comedic gold. Armed with a backpack full of gaming gear, zero conversational filters, and an unshakeable determination to make everyone laugh, you are completely essential to the student body. While the serious leads are drowning in dramatic tears and intense rivalries, you are breaking the tension with brilliant comedic timing, epic internet trends, and ensuring no one ever takes life too seriously. You are the ultimate loyal wingman, the literal emotional heartbeat of your friend circle.<br><br><span class='text-xs opacity-80'>당신은 주체할 수 없는 비글미와 저세상 텐션으로 무장한 전교 최고의 에너자이저이자 분위기 메이커입니다. 가방에는 항상 게임 장비와 간식이 굴러다니고, 필터링 없는 사이다 입담으로 교실을 웃음바다로 만듭니다. 주인공들이 복잡한 삼각관계와 라이벌 구도로 심각하게 똥폼을 잡고 있을 때, 당신은 기가 막힌 타이밍의 농담과 몸개그로 찬물을 끼얹으며 분위기를 유쾌하게 리셋시킵니다. 의리 하나만큼은 은하계 최고인 윙맨이자, 내 친구들의 정신 건강을 책임지는 없어서는 안 될 감정적 산소 호흡기 같은 존재입니다.</span>";
 
-        resultsData.M[0].match = "Tsundere Class President<br><span class='text-[10px] font-normal'>츤데레 반장</span>";
-        resultsData.M[1].match = "Sunshine Transfer Student<br><span class='text-[10px] font-normal'>햇살 같은 전학생</span>";
-        resultsData.M[2].match = "Quiet Library Angel<br><span class='text-[10px] font-normal'>조용한 도서관 천사</span>";
-        resultsData.M[3].match = "Rebellious Band Leader<br><span class='text-[10px] font-normal'>반항적인 밴드부 보컬</span>";
+        resultsData.M[0].match = "🧠 Brilliant Nerd<br><span class='text-[10px] font-normal'>안경 뒤에 미모를 숨긴 전교 1등 브레인</span>";
+        resultsData.M[1].match = "👑 High Teen Queen Bee<br><span class='text-[10px] font-normal'>학교를 지배하는 탑티어 하이틴 퀸카</span>";
+        resultsData.M[2].match = "🍗 Sunshine Sidekick<br><span class='text-[10px] font-normal'>학교의 인간 비타민 감초 여사친</span>";
+        resultsData.M[3].match = "🏍️ Melancholic Rebel<br><span class='text-[10px] font-normal'>가죽 자켓을 입은 고독한 반항아 아웃사이더</span>";
+
+        // Slug 생성기
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('<br>')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
+
+        // 다이렉트 해시 URL 접속 제어
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
 
         function switchScreen(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden');
@@ -214,16 +249,13 @@
         }
 
         function showQuestion() {
-            // 진행바
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
             
-            // 페이드인 리셋
             const qScreen = document.getElementById('question-screen');
             qScreen.classList.remove('fade-in');
             void qScreen.offsetWidth; 
             qScreen.classList.add('fade-in');
 
-            // innerHTML 렌더링
             document.getElementById('q-title').innerHTML = questions[currentQ].q;
             document.getElementById('btn-a').innerHTML = questions[currentQ].a;
             document.getElementById('btn-b').innerHTML = questions[currentQ].b;
@@ -238,39 +270,73 @@
             } else {
                 switchScreen('question-screen', 'loading-screen');
                 const finalIdx = score % 4; 
-                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
+                const genId = userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`;
+                setTimeout(() => showResult(genId, false), 2500);
             }
         }
 
-        function showResult(resultId) {
-            switchScreen('loading-screen', 'result-screen');
-            
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
             const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
             const result = resultsData[userGender][idx];
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
             
             document.getElementById('r-title').innerHTML = result.title;
             document.getElementById('r-match').innerHTML = result.match;
             
             const imgDiv = document.getElementById('r-img-div');
-            // 원본 파일의 .jpeg 확장자 유지
+            // 원본 파일의 .jpeg 확장자 엄격 유지
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_high_teen_w.jpeg')" : "url('k_high_teen_m.jpeg')";
             imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            // 프리미엄 리포트 UI 적용 (인디고 테마)
+            // 프리미엄 리포트 UI 적용 (인디고/퍼플 테마 5단 구성)
             document.getElementById('r-desc').innerHTML = `
-                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
-                    <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.overview}</p>
-                </div>
-                <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-blue-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
-                    <p class="text-sm text-blue-900 leading-relaxed font-medium">${result.strengths}</p>
-                </div>
-                <div class="bg-violet-50 p-5 rounded-2xl border border-violet-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-violet-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
-                    <p class="text-sm text-violet-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                <div class="space-y-4">
+                    <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.overview}</p>
+                    </div>
+                    <div class="bg-purple-50 p-5 rounded-2xl border border-purple-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-purple-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-purple-900 leading-relaxed font-medium">${result.strengths}</p>
+                    </div>
+                    <div class="bg-violet-50 p-5 rounded-2xl border border-violet-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-violet-700 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
+                        <p class="text-sm text-violet-900 leading-relaxed font-medium">${result.relationship}</p>
+                    </div>
+                    <div class="bg-fuchsia-50 p-5 rounded-2xl border border-fuchsia-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-fuchsia-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-fuchsia-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-sky-50 p-5 rounded-2xl border border-sky-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-sky-700 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
+                        <p class="text-sm text-sky-900 leading-relaxed font-medium">${result.wellness}</p>
+                    </div>
                 </div>
             `;
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('결과 링크가 복사되었습니다!\\n친구들에게 공유해보세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
