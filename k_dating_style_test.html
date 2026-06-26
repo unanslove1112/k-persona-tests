@@ -7,13 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
     <style>
-        /* 부드러운 페이드인 애니메이션 추가 */
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #f43f5e; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative selection:bg-rose-200">
         
         <!-- 1. START SCREEN -->
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-rose-50 to-white fade-in">
@@ -32,9 +35,9 @@
         </div>
 
         <!-- 2. QUESTION SCREEN -->
-        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
-            <div class="w-full bg-gray-100 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-rose-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-white">
+            <div class="w-full bg-gray-100 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-rose-500 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center fade-in">
                 <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
@@ -48,38 +51,38 @@
         <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-rose-500 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">
+            <h2 class="text-2xl font-bold mb-2 tracking-tight">
                 Checking chemistry...<br><br>
                 <span class="text-lg opacity-80 font-normal">연애 세포 분석 중...</span>
             </h2>
         </div>
 
-        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI) -->
+        <!-- 4. RESULT SCREEN -->
         <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-slate-50">
             <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
                 
-                <!-- 배경 장식 (로즈 테마) -->
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-rose-100 rounded-full blur-3xl opacity-50"></div>
+                <!-- 배경 장식 -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-rose-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
                 
                 <div class="relative z-10">
                     <div class="text-center mb-6">
-                        <span class="inline-block px-3 py-1 bg-rose-50 text-rose-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Analysis Complete</span>
+                        <span class="inline-block px-3 py-1.5 bg-rose-800 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md">Premium Analysis</span>
                         <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
                     </div>
 
                     <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
 
-                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
-                    <div id="r-desc" class="space-y-4 mb-6"></div>
+                    <!-- 전문 심리 분석 리포트 섹션 -->
+                    <div id="r-desc" class="space-y-4 mb-8"></div>
 
                     <!-- 찰떡 궁합 섹션 -->
-                    <div class="flex items-center justify-between bg-rose-900 rounded-2xl p-4 text-white mb-8 shadow-md">
-                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">SOULMATE MATCH</span>
+                    <div class="flex items-center justify-between bg-rose-900 rounded-2xl p-5 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold text-rose-300 uppercase tracking-widest">SOULMATE MATCH (찰떡 궁합)</span>
                         <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
                     </div>
 
                     <!-- 광고 영역 -->
-                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                    <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
                         <ins class="adsbygoogle"
                              style="display:block; width:100%;"
                              data-ad-client="ca-pub-3466039113171143"
@@ -89,9 +92,18 @@
                         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
                     </div>
 
-                    <button onclick="location.href='index.html'" class="w-full py-4 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
-                        🏠 Go to Lobby
-                    </button>
+                    <!-- 액션 버튼 영역 -->
+                    <div class="space-y-3">
+                        <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            결과 공유하기 (Copy Link)
+                        </button>
+                        <button onclick="goLobby()" class="w-full py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all active:scale-95 text-sm">
+                            🏠 다른 테스트 하러 가기 (Lobby)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,8 +113,8 @@
         let userGender = '';
         let currentQ = 0; 
         let score = 0;
+        let currentResultId = '';
 
-        // 질문 데이터 (깔끔한 HTML 태그를 이용한 한영 혼용 포맷)
         const questions = [
             { 
                 q: "You meet someone totally your type at a cafe!<br><br><span class='text-sm text-gray-400 font-normal'>카페에서 완전 내 이상형을 발견했다!</span>", 
@@ -131,45 +143,51 @@
             }
         ];
         
-        // 결과 데이터 (전문 심리 리포트 3단 분리 포맷 적용)
         const resultsData = {
             F: [
                 { 
                     id: "f1", 
                     title: "🚜 The Confident Bulldozer<br><span class='text-lg font-bold text-gray-500'>직진 불도저</span>", 
-                    overview: "Honest and bold! You don't play games. When you find someone you like, you pursue them with absolute clarity and honesty.<br><br><span class='text-xs opacity-80'>밀당은 없습니다! 마음에 드는 사람을 발견하면 재지 않고 절대적인 확신과 솔직함으로 직진하는 당당한 스타일입니다.</span>", 
-                    strengths: "Your transparency builds deep trust. Partners never have to second-guess your feelings or intentions.<br><br><span class='text-xs opacity-80'>당신의 투명함은 관계에서 깊은 신뢰를 형성합니다. 연인이 당신의 마음이나 의도를 끊임없이 의심하고 추측할 필요가 없습니다.</span>", 
-                    weaknesses: "Your high pacing might overwhelm cautious partners. Sometimes you need to adjust your speed to match theirs.<br><br><span class='text-xs opacity-80'>당신의 거침없는 속도는 조심스러운 상대에게 자칫 부담감을 줄 수 있습니다. 가끔은 상대방의 템포에 맞춰 속도를 조절하는 지혜가 필요합니다.</span>", 
+                    overview: "You are an absolute, unstoppable force of nature when it comes to romance. You completely refuse to participate in exhausting mind games, unnecessary playing hard-to-get strategies, or ambiguous situationships. When you find someone who genuinely captures your intense interest, you pursue them with crystal-clear intentions and bold, unfiltered honesty. You firmly believe that life is simply too short to hide your true feelings, and you view vulnerability not as a weakness, but as a profound display of confidence. You navigate the complex dating world like a high-speed train, bringing a refreshing wave of certainty and undeniable passion to every connection you make.<br><br><span class='text-xs opacity-80'>당신은 사랑에 있어서 절대 멈출 수 없는 거대한 자연의 힘과도 같습니다. 피곤한 밀당이나, 불필요하게 튕기는 전략, 혹은 애매모호한 어장관리 같은 관계에는 참여하기를 전면 거부합니다. 진심으로 당신의 강렬한 흥미를 끄는 사람을 발견하면, 수정처럼 맑은 의도와 필터링 없는 대담한 솔직함으로 직진합니다. 인생은 진짜 감정을 숨기기엔 너무 짧다고 굳게 믿으며, 감정을 솔직하게 드러내는 취약성을 약점이 아닌 엄청난 자신감의 표현으로 여깁니다. 당신은 마치 고속열차처럼 복잡한 연애 생태계를 거침없이 가로지르며, 당신이 맺는 모든 관계에 상쾌한 확신과 부정할 수 없는 뜨거운 열정의 파도를 몰고 옵니다.</span>",
+                    strengths: "Your absolute transparency is, without a doubt, your most powerful and attractive weapon. Your partners never have to spend agonizing hours decoding your cryptic text messages or second-guessing your true intentions, which creates an incredibly secure and stress-free environment. Your high self-esteem allows you to handle rejection gracefully, viewing it merely as a redirection rather than a personal failure. Furthermore, your proactive nature means you are fantastic at actively planning exciting dates, making decisive choices, and keeping the vital spark of the relationship intensely alive through sheer willpower and dynamic enthusiasm.<br><br><span class='text-xs opacity-80'>당신의 완벽한 투명함은 의심할 여지 없이 가장 강력하고 매력적인 무기입니다. 파트너는 당신의 알쏭달쏭한 카톡을 해독하거나 당신의 진짜 의도를 추측하느라 고통스러운 시간을 보낼 필요가 전혀 없으며, 이는 놀라울 정도로 안정적이고 스트레스 없는 환경을 조성합니다. 높은 자존감 덕분에 거절당하더라도 우아하게 대처하며, 이를 개인적인 실패가 아닌 그저 다른 방향으로의 전환으로 쿨하게 받아들입니다. 나아가, 당신의 주도적인 성향은 흥미진진한 데이트를 적극적으로 계획하고 결단력 있게 선택을 내리며, 순수한 의지력과 역동적인 열정을 통해 관계의 핵심적인 불꽃을 맹렬하게 살려두는 데 탁월한 능력을 발휘합니다.</span>",
+                    relationship: "In a committed partnership, you are fiercely loyal, incredibly protective, and relentlessly supportive. You take the lead naturally, effortlessly planning extravagant weekend getaways and surprising your partner with bold romantic gestures. You expect the same level of fiery dedication in return and cannot tolerate lukewarm feelings or chronic indecisiveness. You want a relationship that constantly moves forward, evolves, and faces the world head-on as a united, unbreakable power couple. Communication with you is always direct; if there is a problem, you prefer to tackle it immediately, lay all the cards on the table, and fiercely fight for a fast resolution rather than letting resentment quietly fester.<br><br><span class='text-xs opacity-80'>헌신적인 파트너십 안에서 당신은 맹렬하게 충실하고, 놀라울 정도로 보호본능이 강하며, 끊임없이 지지를 보냅니다. 자연스럽게 관계를 주도하여 화려한 주말여행을 수월하게 계획하고 대담한 로맨틱 이벤트로 파트너를 깜짝 놀라게 합니다. 당신은 상대방에게도 그에 상응하는 뜨거운 헌신을 기대하며, 미지근한 감정이나 만성적인 우유부단함은 결코 용납하지 못합니다. 끊임없이 앞으로 나아가고, 진화하며, 하나 된 강력한 파워 커플로서 세상과 정면으로 맞서는 관계를 원합니다. 당신과의 소통은 언제나 직설적입니다. 문제가 생기면 앙금이 조용히 곪아가도록 내버려 두기보다는, 즉시 정면 돌파하여 모든 패를 테이블 위에 올려놓고 빠른 해결을 위해 치열하게 싸우는 것을 선호합니다.</span>",
+                    weaknesses: "Your blistering pace and intense directness can sometimes severely overwhelm more cautious, introverted, or emotionally guarded partners. Your absolute demand for quick, clear answers might inadvertently pressure someone who simply needs more time to carefully process their complex emotions. Because you operate at a hundred miles an hour, you might occasionally completely miss the subtle, quiet emotional cues or unstated needs of a partner who struggles to communicate as aggressively as you do. Additionally, if the relationship inevitably hits a dull, routine plateau, your constant need for high-velocity forward momentum might make you feel restless, easily bored, and prematurely dissatisfied.<br><br><span class='text-xs opacity-80'>당신의 맹렬한 속도와 강렬한 직진 성향은 때때로 조심스럽거나, 내향적이거나, 감정적으로 방어적인 파트너를 심각하게 압도할 수 있습니다. 빠르고 명확한 대답을 요구하는 당신의 절대적인 태도는, 복잡한 감정을 신중하게 처리하기 위해 그저 시간이 조금 더 필요한 사람에게 무의식적인 압박을 가할 수 있습니다. 당신은 시속 100마일로 질주하기 때문에, 당신만큼 적극적으로 소통하지 못하는 파트너의 미묘하고 조용한 감정적 신호나 말하지 못한 필요를 완전히 놓쳐버릴 위험이 있습니다. 또한, 관계가 불가피하게 지루하고 일상적인 정체기에 접어들었을 때, 끊임없이 앞으로 나아가려는 고속의 추진력에 대한 갈망 때문에 쉽게 불안해하고, 지루함을 느끼며, 성급하게 불만족에 빠질 수 있습니다.</span>",
+                    wellness: "To maintain a healthy, deeply balanced dynamic, you must actively practice the delicate, often difficult art of patience. Dedicate explicit time to activities that deliberately force you to slow down your mental engine, such as mindful meditation, long solitary walks, or simply sitting silently without an immediate agenda. Remind yourself constantly that love is a marathon, not a sprint, and that sometimes the most profound emotional connections are formed during periods of quiet stillness, not just during exciting milestones. Learn to actively listen without immediately formulating a solution; simply holding a safe, patient space for your partner to exist can be the most romantic gesture of all.<br><br><span class='text-xs opacity-80'>건강하고 깊이 있게 균형 잡힌 관계 역학을 유지하기 위해서는, 섬세하고 종종 어렵게 느껴지는 인내의 기술을 적극적으로 연습해야 합니다. 마음 챙김 명상, 길고 고독한 산책, 혹은 당면한 목적 없이 그저 조용히 앉아있는 등 의도적으로 당신의 정신적 엔진을 늦추도록 강제하는 활동에 분명한 시간을 할애하세요. 사랑은 단거리 전력 질주가 아니라 마라톤이며, 때로는 흥미진진한 목표를 달성할 때보다 조용한 정적의 시간 속에서 가장 깊은 감정적 유대가 형성된다는 사실을 끊임없이 스스로에게 상기시켜야 합니다. 즉각적으로 해결책을 공식화하지 않고 그저 적극적으로 경청하는 법을 배우세요. 파트너가 있는 그대로 존재할 수 있도록 안전하고 인내심 있는 공간을 묵묵히 지켜주는 것이야말로 세상에서 가장 로맨틱한 행동이 될 수 있습니다.</span>",
                     match: "The Perfect Observer<br><span class='text-[10px] font-normal'>섬세한 관찰자</span>" 
                 },
                 { 
                     id: "f2", 
                     title: "👀 The Perfect Observer<br><span class='text-lg font-bold text-gray-500'>섬세한 관찰자</span>", 
-                    overview: "You read the room perfectly. You express love through quiet, thoughtful actions rather than loud words.<br><br><span class='text-xs opacity-80'>눈치가 빠르고 분위기를 완벽하게 읽어냅니다. 요란하고 거창한 말보다는 조용하고 사려 깊은 행동으로 사랑을 표현하는 타입입니다.</span>", 
-                    strengths: "You make your partner feel truly seen and deeply cared for in everyday moments through small details.<br><br><span class='text-xs opacity-80'>사소한 디테일을 놓치지 않는 배려심 덕분에, 연인은 일상 속에서 진정으로 이해받고 세심하게 사랑받고 있다고 느낍니다.</span>", 
-                    weaknesses: "You might hide your own needs to maintain peace, leading to unspoken resentment over time.<br><br><span class='text-xs opacity-80'>평화를 유지하기 위해 정작 본인의 욕구는 꾹꾹 숨기는 경향이 있습니다. 이러다 보면 말하지 못한 서운함이 마음속에 쌓일 수 있습니다.</span>", 
+                    overview: "You are a brilliant master of emotional intelligence and profound, silent empathy. Rather than making loud, dramatic declarations of love, you express your deep affection through incredibly meticulous, quiet actions and an unwavering, attentive presence. You possess a unique, almost psychic ability to flawlessly read the atmosphere, noticing the tiniest shifts in your partner's mood, tone of voice, or body language long before they even realize it themselves. You are incredibly deliberate in your romantic choices, carefully observing someone's true character and consistency over time before ever fully unlocking your deeply guarded heart to them.<br><br><span class='text-xs opacity-80'>당신은 뛰어난 감성 지능과 깊고 조용한 공감 능력을 지닌 완벽한 마스터입니다. 요란하고 극적인 사랑의 고백보다는, 믿을 수 없을 만큼 세심하고 조용한 행동과 흔들림 없이 곁을 지키는 묵직한 존재감을 통해 깊은 애정을 표현합니다. 파트너가 스스로 깨닫기도 훨씬 전에 그들의 기분, 목소리 톤, 혹은 미세한 바디랭귀지의 아주 작은 변화까지도 완벽하게 읽어내는 거의 초능력에 가까운 고유한 능력을 소유하고 있습니다. 당신은 연애 상대의 선택에 있어서 믿을 수 없을 만큼 신중하며, 깊이 방어막을 친 당신의 심장을 온전히 열어주기 전까지 상대방의 진정한 인성과 일관성을 오랜 시간 동안 주의 깊게 관찰하고 검증합니다.</span>",
+                    strengths: "Your ultimate superpower is your astonishing ability to make your partner feel completely, unequivocally understood without them ever having to exhaustively explain themselves. Your thoughtful nature means you remember the absolute smallest details—their precise coffee order, the exact date of their stressful presentation, or the specific way they like to be comforted when anxious. You bring an immense, deeply soothing sense of peace, stability, and absolute psychological safety to the relationship. You are an exceptionally excellent listener, offering a judgment-free, incredibly comforting sanctuary where your partner can genuinely be their most authentic, unpolished self.<br><br><span class='text-xs opacity-80'>당신의 궁극적인 초능력은 파트너가 자신을 구구절절 피곤하게 설명하지 않아도, 당신에게 완벽하고도 명백하게 이해받고 있다고 느끼게 만드는 경이로운 능력입니다. 사려 깊은 천성 덕분에 파트너의 정확한 커피 취향, 스트레스받는 프레젠테이션의 날짜, 불안할 때 위로받고 싶어 하는 구체적인 방식 등 아주 사소한 디테일을 절대 잊지 않습니다. 당신은 관계에 엄청나고 깊이 진정되는 평화로움, 굳건한 안정감, 그리고 완벽한 심리적 안전감을 불어넣습니다. 예외적으로 훌륭한 경청자인 당신은 판단의 잣대 없이 무한한 위안을 주는 안식처를 제공하며, 파트너가 가장 진실하고 다듬어지지 않은 본연의 모습으로 기꺼이 존재할 수 있게 해줍니다.</span>",
+                    relationship: "You build romantic relationships slowly, laying down a highly durable foundation of profound mutual understanding, shared quiet comfort, and unwavering reliability. You heavily prefer deep, meaningful late-night conversations over chaotic, superficial parties. In your view, love isn't just about intense passion; it's about seamlessly intertwining two lives to create a deeply harmonious, frictionless daily routine. You express your devotion by seamlessly taking care of the practical burdens in your partner's life, anticipating their needs, and acting as their silent, unwavering pillar of absolute strength during life’s inevitable, turbulent storms.<br><br><span class='text-xs opacity-80'>당신은 깊은 상호 이해, 공유된 조용한 편안함, 그리고 흔들림 없는 신뢰라는 매우 견고한 기초를 다지며 로맨틱한 관계를 아주 천천히 구축해 나갑니다. 혼란스럽고 피상적인 파티보다는 깊고 의미 있는 심야의 진지한 대화를 압도적으로 선호합니다. 당신의 관점에서 사랑이란 단순히 타오르는 격렬한 열정만이 아니라, 두 사람의 삶을 매끄럽게 엮어 매우 조화롭고 마찰 없는 완벽한 일상을 창조하는 것입니다. 파트너 삶의 현실적인 무게를 말없이 덜어주고, 그들의 필요를 미리 예측하며, 인생의 불가피하고 격렬한 폭풍우 속에서 침묵하는 흔들림 없는 절대적인 강인한 기둥이 되어줌으로써 당신의 헌신을 증명합니다.</span>",
+                    weaknesses: "In your relentless, almost obsessive effort to gracefully maintain harmony and avoid conflict at all costs, you frequently suppress your own highly valid needs, legitimate frustrations, and personal desires. You have a dangerous tendency to over-analyze every single micro-expression your partner makes, which can easily spiral into unnecessary, exhausting anxiety about problems that don't actually exist. Because you are so highly skilled at reading others, you silently, unfairly expect your partner to magically read your mind as well, leading to deep, unexpressed resentment when they inevitably fail to notice your deeply buried emotional struggles.<br><br><span class='text-xs opacity-80'>어떤 대가를 치르더라도 우아하게 평화를 유지하고 갈등을 피하려는 당신의 끊임없고 거의 강박적인 노력 속에서, 정작 당신 자신의 매우 정당한 욕구, 타당한 좌절감, 개인적인 소망을 빈번하게 억누르게 됩니다. 파트너가 짓는 모든 미세한 표정 하나하나를 과도하게 분석하는 위험한 성향이 있어, 이는 종종 실제로 존재하지도 않는 문제에 대한 불필요하고 소모적인 극심한 불안감으로 쉽게 악화될 수 있습니다. 타인의 마음을 읽는 데 너무나도 능숙하기 때문에, 역으로 파트너 역시 마법처럼 당신의 마음을 읽어주기를 무언의 불공평한 기대로 품게 되며, 그들이 당신의 깊숙이 묻힌 감정적 투쟁을 당연히 알아채지 못할 때 말로 표현하지 못한 깊은 분노와 서운함이 쌓이게 됩니다.</span>",
+                    wellness: "You absolutely must learn to aggressively prioritize your own emotional well-being before you completely burn out. Practice vocally asserting your needs in small, manageable steps, starting with expressing trivial preferences and explicitly stating when your feelings are hurt. Remind yourself daily that healthy, constructive conflict is actually vital for a relationship to grow; it is not the end of the world. Engage in grounding, individual hobbies that completely take you out of your overactive, analytical head—such as intense physical exercise, messy expressive art, or journaling your raw, unedited emotions solely for yourself.<br><br><span class='text-xs opacity-80'>완전히 번아웃되어 무너지기 전에, 당신 자신의 감정적 웰빙을 공격적일 정도로 최우선으로 챙기는 법을 반드시 배워야 합니다. 사소한 선호도를 표현하거나 감정이 상했을 때 이를 명확히 밝히는 것부터 시작하여, 감당할 수 있는 작은 단계부터 자신의 요구사항을 목소리 내어 주장하는 연습을 하세요. 건강하고 건설적인 갈등은 사실 관계가 성장하는 데 필수적이며, 결코 세상의 끝이 아니라는 사실을 매일 스스로에게 상기시키십시오. 격렬한 육체적 운동, 지저분하고 자유로운 표현 예술, 혹은 오직 자신만을 위해 날것 그대로의 감정을 일기장에 쏟아내는 등 과도하게 활성화된 분석적인 머릿속에서 완전히 벗어나게 해 줄 몰입감 있는 개인적인 취미 생활을 반드시 가져야 합니다.</span>",
                     match: "The Cool Analyst<br><span class='text-[10px] font-normal'>이성적인 분석가</span>" 
                 },
                 { 
                     id: "f3", 
                     title: "🧊 The Cool Analyst<br><span class='text-lg font-bold text-gray-500'>이성적인 분석가</span>", 
-                    overview: "You seek a mature, stable partnership built on logic, mutual respect, and personal growth.<br><br><span class='text-xs opacity-80'>과도한 감정 소모를 싫어합니다. 상호 존중과 개인의 성장을 바탕으로 한 논리적이고 성숙하며 안정적인 관계를 추구합니다.</span>", 
-                    strengths: "Excellent conflict resolution skills. You don't let temporary emotional drama ruin a fundamentally good relationship.<br><br><span class='text-xs opacity-80'>뛰어난 갈등 해결 능력을 지녔습니다. 일시적인 감정의 충돌이나 서운함 때문에 근본적으로 좋은 관계를 섣불리 망치지 않습니다.</span>", 
-                    weaknesses: "Your partner might sometimes find you emotionally detached or too practical during sensitive moments.<br><br><span class='text-xs opacity-80'>무조건적인 공감이 필요한 예민한 순간에, 연인이 당신을 감정적으로 너무 메마르거나 지나치게 현실적이라고 느낄 수 있습니다.</span>", 
+                    overview: "You are the absolute epitome of rational love, continuously seeking a mature, highly stable, and profoundly intellectually stimulating partnership. You explicitly view love not as a chaotic whirlwind of uncontrollable, messy emotions, but as a beautiful, highly collaborative life project between two equal, independent adults. You approach the unpredictable dating world with a highly practical, strategic mindset, carefully evaluating whether a potential partner aligns with your long-term core values, ambitious life goals, and fundamental lifestyle. You incredibly value absolute mental clarity, direct honesty, and unwavering consistency far above fleeting romantic sparks or dramatic cinematic gestures.<br><br><span class='text-xs opacity-80'>당신은 끊임없이 성숙하고 고도로 안정적이며 지적으로 깊은 자극을 주는 파트너십을 추구하는 합리적인 사랑의 절대적인 표본입니다. 사랑을 통제 불가능하고 혼란스러운 감정의 소용돌이가 아니라, 동등하고 독립적인 두 어른 사이의 아름답고 고도로 협력적인 인생 프로젝트로 명확히 바라봅니다. 예측 불가능한 연애 세계에 매우 실용적이고 전략적인 사고방식으로 접근하며, 잠재적인 파트너가 당신의 장기적인 핵심 가치, 야심 찬 인생 목표, 그리고 근본적인 라이프스타일과 완벽하게 일치하는지 신중하게 평가합니다. 덧없이 스쳐 가는 찰나의 로맨틱한 불꽃이나 영화 같은 극적인 이벤트보다, 절대적인 정신적 명료함, 직설적인 정직성, 그리고 흔들림 없는 일관성을 훨씬 더 가치 있게 여깁니다.</span>",
+                    strengths: "Your absolute greatest asset is your unparalleled, incredibly effective conflict-resolution ability. When disagreements inevitably arise, you never resort to petty emotional drama, aggressive manipulation, or irrational shouting matches. Instead, you gracefully deconstruct the complex problem, analyze the root causes logically, and work systematically to find a fair, highly practical compromise. Your partner can implicitly trust that you will remain incredibly cool, calm, and powerfully collected during life's worst crises. You provide an immensely stable, secure bedrock for the relationship, ensuring that the partnership is constantly improving, growing stronger, and moving efficiently in a positive, unified direction.<br><br><span class='text-xs opacity-80'>당신의 절대적이고 가장 위대한 자산은 타의 추종을 불허하는, 믿을 수 없을 만큼 효과적인 갈등 해결 능력입니다. 불가피하게 의견 충돌이 발생했을 때, 당신은 유치한 감정싸움, 공격적인 조종, 혹은 비이성적인 고함치기에 결코 의존하지 않습니다. 대신 복잡한 문제를 우아하게 해체하고, 근본 원인을 논리적으로 분석하며, 공정하고 매우 실용적인 타협점을 찾기 위해 체계적으로 노력합니다. 파트너는 인생 최악의 위기 상황에서도 당신이 믿을 수 없을 정도로 차갑고, 차분하며, 강력하게 평정심을 유지할 것이라고 맹목적으로 신뢰할 수 있습니다. 당신은 관계에 엄청나게 안정적이고 든든한 기반을 제공하며, 파트너십이 끊임없이 개선되고, 더 강해지며, 긍정적이고 통합된 방향으로 효율적으로 나아가도록 보장합니다.</span>",
+                    relationship: "In a relationship, you heavily prioritize maintaining strict personal space, continuous individual self-improvement, and deep mutual respect. You are absolutely not looking for someone to emotionally 'complete' you; you are already complete. You seek a formidable teammate. You express your profound love through incredibly practical acts of service—meticulously organizing a joint financial plan, fixing broken things around the house, or logically solving a stressful logistical problem for your partner. You highly respect a partner who has their own fierce ambitions, robust independent hobbies, and who can engage in sharp, highly intellectual debates with you without taking things personally.<br><br><span class='text-xs opacity-80'>관계에 있어서 당신은 엄격한 개인 공간의 유지, 지속적인 개인적 자기 계발, 그리고 깊은 상호 존중을 가장 무겁게 우선시합니다. 당신은 감정적으로 당신을 '완성'시켜 줄 사람을 절대 찾지 않습니다. 당신은 이미 스스로 완전하기 때문입니다. 당신은 강력하고 뛰어난 팀메이트를 원합니다. 치밀하게 공동의 재무 계획을 세워주거나, 집안의 고장 난 물건을 고쳐주거나, 파트너의 스트레스받는 현실적 문제를 논리적으로 단번에 해결해 주는 등 믿을 수 없을 만큼 실용적인 봉사를 통해 깊은 사랑을 표현합니다. 확고한 자신만의 야망과 탄탄한 독립적인 취미를 가지고 있으며, 사적인 감정 개입 없이 당신과 날카롭고 고도로 지적인 토론을 즐길 수 있는 파트너를 진심으로 존경합니다.</span>",
+                    weaknesses: "Your extreme, almost rigid reliance on logic and cold facts can sometimes make you appear severely emotionally detached, incredibly cold, or overly robotic during highly sensitive moments when your partner simply needs blind emotional validation and a warm hug, not a bullet-point solution. You might dangerously dismiss your partner's seemingly irrational feelings as 'inefficient' or 'unnecessary,' deeply invalidating their genuine emotional experience. Furthermore, your tendency to over-intellectualize complex emotions means you often struggle to simply feel your own pain or joy, preferring to analyze the feelings from a safe, sterile distance rather than truly experiencing them.<br><br><span class='text-xs opacity-80'>파트너가 그저 맹목적인 감정적 공감과 따뜻한 포옹을 필요로 하는 매우 예민한 순간에, 논리와 차가운 팩트에 극단적이고 경직될 정도로 의존하는 당신의 태도는 때로 심각하게 감정이 결여되어 있거나, 무섭도록 차갑거나, 지나치게 로봇처럼 보이게 만들 수 있습니다. 파트너의 겉보기에 비이성적인 감정을 '비효율적'이거나 '불필요한' 것으로 위험하게 치부하여, 그들의 진실한 감정적 경험을 깊이 짓밟을 우려가 있습니다. 나아가, 복잡한 감정마저도 과도하게 지성화하려는 당신의 성향은, 정작 당신 자신의 고통이나 기쁨을 있는 그대로 온전히 느끼는 데 큰 어려움을 겪게 만듭니다. 진짜 감정을 경험하기보다는 안전하고 무균 상태인 멀찍한 거리에서 그 감정을 분석하는 것을 훨씬 선호하기 때문입니다.</span>",
+                    wellness: "You critically need to intentionally practice letting go of your strict, exhausting need for control and fully surrendering to the messy, beautifully unpredictable nature of human emotions. Consciously train yourself to offer simple, deep empathy before immediately jumping into problem-solving mode. Learn to ask your partner, 'Do you want me to help fix this, or do you just want me to listen?' Engaging in activities that connect you back to your physical body rather than your analytical mind—such as spontaneous dancing, deeply sensory cooking, or visceral physical affection—will help you unlock and express the warmer, softer, more vulnerable aspects of your soul.<br><br><span class='text-xs opacity-80'>당신은 모든 것을 통제하려는 엄격하고 피곤한 욕구를 의도적으로 내려놓고, 인간 감정의 복잡하고 아름다울 정도로 예측 불가능한 본성에 온전히 항복하는 연습을 비판적으로 수행해야 합니다. 즉각적인 문제 해결 모드로 뛰어들기 전에, 단순하고 깊은 공감을 먼저 제공하도록 의식적으로 스스로를 훈련하십시오. 파트너에게 '내가 이걸 해결해 줬으면 좋겠어, 아니면 그냥 조용히 들어줬으면 좋겠어?'라고 물어보는 법을 배우세요. 즉흥적인 춤, 감각에 깊이 집중하는 요리, 혹은 본능적이고 깊은 육체적 스킨십처럼 분석적인 머릿속에서 벗어나 물리적인 신체와 다시 연결되게 해주는 활동에 참여하는 것이, 당신 영혼의 훨씬 더 따뜻하고 부드러우며 취약한 측면을 열어주고 표현하는 데 큰 도움을 줄 것입니다.</span>",
                     match: "The Confident Bulldozer<br><span class='text-[10px] font-normal'>직진 불도저</span>" 
                 },
                 { 
                     id: "f4", 
                     title: "💐 The True Romanticist<br><span class='text-lg font-bold text-gray-500'>헌신적인 로맨티스트</span>", 
-                    overview: "Love is your top priority. You believe in fairytale romance and shower your partner with infinite affection.<br><br><span class='text-xs opacity-80'>사랑이 인생의 1순위입니다. 동화 같은 아름다운 로맨스를 굳게 믿으며, 연인에게 아낌없고 무한한 애정을 쏟아붓는 사랑꾼입니다.</span>", 
-                    strengths: "You create an incredibly warm environment that makes your partner feel like the center of the universe.<br><br><span class='text-xs opacity-80'>연인이 마치 온 우주의 중심이 된 것처럼 특별하게 느끼도록 만들어 주는, 믿을 수 없이 따뜻하고 사랑스러운 환경을 조성합니다.</span>", 
-                    weaknesses: "You risk losing your own identity in the relationship and getting easily hurt if your effort isn't matched.<br><br><span class='text-xs opacity-80'>연애에 너무 몰입한 나머지 본인만의 자아를 잃을 위험이 크며, 상대방의 노력이 내 기대에 미치지 못할 때 큰 상처를 받습니다.</span>", 
+                    overview: "You are a profoundly beautiful, classic soul who genuinely, wholeheartedly believes in epic, fairytale romance against all modern odds. For you, love is the absolute, undeniable center of the universe, the very beating heart of your entire existence. You possess an incredibly rich inner emotional world and pour an astronomical amount of energy, thought, and sheer passion into ensuring your relationships are nothing short of magical. You are naturally highly affectionate, intensely empathetic, and deeply intuitive, effortlessly turning ordinary, mundane daily moments into beautiful, cinematic memories. To you, to love and to be loved is the ultimate, highest purpose of a successful human life.<br><br><span class='text-xs opacity-80'>당신은 현대의 모든 냉소주의에 맞서 서사적이고 동화 같은 로맨스를 진심으로, 온 마음을 다해 굳게 믿는 지극히 아름답고 클래식한 영혼입니다. 당신에게 사랑이란 우주의 절대적이고 부정할 수 없는 중심이자, 당신 존재 전체를 살아 숨 쉬게 하는 심장 박동 그 자체입니다. 놀랍도록 풍부한 내면의 감정 세계를 소유하고 있으며, 당신의 관계가 마법 그 자체가 되도록 천문학적인 양의 에너지, 깊은 사유, 그리고 순수한 열정을 기꺼이 쏟아붓습니다. 타고난 다정함과 강렬한 공감 능력, 그리고 깊은 직관력을 바탕으로 평범하고 지루한 일상의 순간들을 눈부시고 영화 같은 아름다운 추억으로 아주 쉽게 탈바꿈시킵니다. 당신에게 사랑하고 사랑받는 것이야말로 성공적인 인간 삶의 궁극적이고 가장 숭고한 목적입니다.</span>",
+                    strengths: "You possess a truly extraordinary, almost magical capacity to generate immense, radiating warmth and pure unconditional love. You have an unparalleled ability to make your partner feel like they are unequivocally the most special, deeply cherished, and profoundly adored person on the entire earth. Your unwavering dedication means you never, ever take your partner for granted; you are constantly, actively seeking out new, highly creative ways to surprise them, loudly celebrate their smallest achievements, and nurture the emotional bond between you. You are the absolute ultimate cheerleader, offering an endlessly deep well of emotional support and unwavering loyalty through both life’s triumphs and devastating tragedies.<br><br><span class='text-xs opacity-80'>당신은 거대하게 뿜어져 나오는 따뜻함과 순수한 무조건적인 사랑을 생성해 내는 참으로 경이롭고 거의 마법에 가까운 능력을 소유하고 있습니다. 파트너가 온 지구상에서 의심의 여지 없이 가장 특별하고, 가장 깊이 소중히 여겨지며, 철저하게 사랑받는 존재라고 느끼게 만드는 데 타의 추종을 불허하는 재능을 가졌습니다. 흔들림 없는 헌신 덕분에 당신은 파트너의 존재를 결코 당연하게 여기지 않으며, 끊임없이 그들을 깜짝 놀라게 하고 사소한 성취를 요란하게 축하하며 둘 사이의 감정적 유대를 가꿀 새롭고 극도로 창의적인 방법을 적극적으로 모색합니다. 당신은 삶의 눈부신 승리와 파괴적인 비극 모두를 관통하며 끝없이 깊은 감정적 지지의 샘과 흔들림 없는 의리를 제공하는 절대적이고 궁극적인 최고의 치어리더입니다.</span>",
+                    relationship: "You absolutely thrive in a highly affectionate, deeply intertwined partnership where individual boundaries seamlessly, romantically blur into one shared life. You deeply adore making grand romantic gestures, meticulously planning surprise anniversary gifts, writing long heartfelt handwritten letters, and engaging in constant, comforting physical touch. You heavily prioritize deep, soulful emotional intimacy above all else, craving a partner who is completely unafraid to dive into the profound depths of vulnerability with you. You actively want to know their darkest fears, their grandest childhood dreams, and every single intricate layer of their soul, binding you together in a profound spiritual union.<br><br><span class='text-xs opacity-80'>당신은 개인의 경계선이 하나의 공유된 삶으로 매끄럽고 로맨틱하게 희미해지는, 애정 넘치고 깊이 얽힌 파트너십 속에서 완벽하게 만개합니다. 거창하고 로맨틱한 이벤트를 벌이고, 서프라이즈 기념일 선물을 치밀하게 계획하며, 진심이 꾹꾹 담긴 긴 손편지를 쓰고, 끊임없이 위안을 주는 육체적 스킨십을 나누는 것을 뼛속 깊이 사랑합니다. 당신은 그 무엇보다도 깊고 영혼이 통하는 감정적 친밀감을 가장 무겁게 우선시하며, 당신과 함께 취약성의 심연으로 두려움 없이 뛰어들 수 있는 파트너를 간절히 갈망합니다. 그들의 가장 어두운 두려움, 가장 원대한 어린 시절의 꿈, 그리고 영혼의 복잡한 모든 층위를 하나하나 낱낱이 알아내어, 심오하고 영적인 결합으로 두 사람을 단단히 묶어내기를 적극적으로 원합니다.</span>",
+                    weaknesses: "Because you invest absolutely your entire soul, energy, and core identity into your romantic relationships, you are exceptionally, dangerously vulnerable to profound psychological heartbreak if your intense efforts are not fully reciprocated. You run a very high risk of completely losing your own individual identity, often merging so deeply with your partner that you forget your own separate passions and friends. Furthermore, your highly idealized, cinematic view of romance can sometimes lead to crushing, unfair disappointment when real-life love inevitably reveals its messy, unromantic, or boringly mundane realities that fail to match your lofty fairytale expectations.<br><br><span class='text-xs opacity-80'>로맨틱한 관계에 당신의 온 영혼과 에너지, 그리고 핵심 정체성 전체를 절대적으로 쏟아붓기 때문에, 만약 당신의 그 강렬한 노력이 온전히 보답받지 못할 경우 심리적으로 파괴적인 깊은 상처에 예외적일 만큼 위험하게 노출됩니다. 파트너와 너무 깊이 융합한 나머지 당신만의 독립적인 열정과 개인적인 친구들을 잊어버리는 등, 본인 고유의 정체성을 완전히 상실할 매우 높은 위험성을 안고 있습니다. 나아가, 로맨스에 대한 고도로 이상화되고 영화 같은 당신의 관점은, 현실의 사랑이 불가피하게 당신의 숭고한 동화적 기대에 미치지 못하는 지저분하고 낭만적이지 않으며 지루할 정도로 평범한 실체를 드러낼 때, 뼈아프고 불공평한 깊은 실망감으로 이어지기도 합니다.</span>",
+                    wellness: "It is absolutely, critically crucial for your long-term survival and mental health to fiercely cultivate your own robust, independent identity entirely outside of your romantic relationships. Actively engage in passionate solo hobbies, maintain a strong, separate circle of friends, and firmly establish boundaries to protect your immense energy. Constantly remind yourself that you must aggressively pour the same overwhelming amount of fierce love and deep care into yourself as you so freely give to your partners. Practice radical self-love and recognize that your personal worth is inherent and absolute; it is never defined by your relationship status or how intensely someone else loves you.<br><br><span class='text-xs opacity-80'>당신의 장기적인 생존과 정신 건강을 위해, 연애 관계와는 완전히 분리된 당신만의 견고하고 독립적인 정체성을 치열하게 가꾸는 것은 절대적이고 결정적으로 중요합니다. 열정적인 개인 취미에 적극적으로 참여하고, 관계 밖의 탄탄한 친구 모임을 유지하며, 당신의 거대한 에너지를 보호하기 위해 단호한 경계선을 확고히 설정하십시오. 당신이 파트너에게 그토록 아낌없이 베푸는 압도적인 양의 맹렬한 사랑과 깊은 보살핌을, 당신 자신에게도 공격적으로 똑같이 쏟아부어야 한다는 사실을 끊임없이 스스로에게 상기시키십시오. 급진적인 자기애를 실천하고, 당신의 개인적인 가치는 내재적이고 절대적이며 결코 당신의 연애 상태나 다른 누군가가 당신을 얼마나 강렬하게 사랑하는지에 의해 정의되지 않는다는 것을 뼈저리게 깨달아야 합니다.</span>",
                     match: "The Cool Analyst<br><span class='text-[10px] font-normal'>이성적인 분석가</span>" 
                 }
             ]
         };
 
-        // 남성 데이터를 여성 데이터 구조와 동일하게 복사 후 타이틀 및 매치 수정
         resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
         resultsData.M[0].title = "🚜 The Direct Bulldozer<br><span class='text-lg font-bold text-gray-500'>직진 불도저</span>";
         resultsData.M[1].title = "👀 The Gentle Observer<br><span class='text-lg font-bold text-gray-500'>섬세한 관찰자</span>";
@@ -181,13 +199,45 @@
         resultsData.M[2].match = "The Direct Bulldozer<br><span class='text-[10px] font-normal'>직진 불도저</span>";
         resultsData.M[3].match = "The Logical Analyst<br><span class='text-[10px] font-normal'>이성적인 분석가</span>";
 
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('<br>')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
+
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
+
+        // 1번 파일과 완전히 동일한 안전한 화면 전환 로직 적용
         function switchScreen(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden');
-            document.getElementById(fromId).classList.remove('flex');
-            
-            const toScreen = document.getElementById(toId);
-            toScreen.classList.remove('hidden');
-            toScreen.classList.add('flex');
+            document.getElementById(toId).classList.remove('hidden');
         }
 
         function selectGender(g) {
@@ -197,16 +247,13 @@
         }
 
         function showQuestion() {
-            // 진행바 애니메이션
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
             
-            // 페이드인 애니메이션 리셋
             const qScreen = document.getElementById('question-screen');
             qScreen.classList.remove('fade-in');
             void qScreen.offsetWidth; 
             qScreen.classList.add('fade-in');
 
-            // innerHTML로 태그 렌더링 적용 (1번 파일 방식)
             document.getElementById('q-title').innerHTML = questions[currentQ].q;
             document.getElementById('btn-a').innerHTML = questions[currentQ].a;
             document.getElementById('btn-b').innerHTML = questions[currentQ].b;
@@ -221,15 +268,22 @@
             } else {
                 switchScreen('question-screen', 'loading-screen');
                 const finalIdx = score % 4; 
-                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
+                const genId = userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`;
+                setTimeout(() => showResult(genId, false), 2500);
             }
         }
 
-        function showResult(resultId) {
-            switchScreen('loading-screen', 'result-screen');
-            
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
             const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
             const result = resultsData[userGender][idx];
+            
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
             
             document.getElementById('r-title').innerHTML = result.title;
             document.getElementById('r-match').innerHTML = result.match;
@@ -238,21 +292,48 @@
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_dating_style_w.png')" : "url('k_dating_style_m.png')";
             imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            // 1번 파일과 동일한 3단 분석 UI 구성 (로즈 컬러 톤에 맞춘 배색)
             document.getElementById('r-desc').innerHTML = `
-                <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-rose-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
-                    <p class="text-sm text-rose-900 leading-relaxed font-medium">${result.overview}</p>
-                </div>
-                <div class="bg-pink-50 p-5 rounded-2xl border border-pink-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-pink-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
-                    <p class="text-sm text-pink-900 leading-relaxed font-medium">${result.strengths}</p>
-                </div>
-                <div class="bg-red-50 p-5 rounded-2xl border border-red-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-red-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
-                    <p class="text-sm text-red-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                <div class="space-y-4">
+                    <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-rose-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-rose-900 leading-relaxed font-medium">${result.overview}</p>
+                    </div>
+                    <div class="bg-pink-50 p-5 rounded-2xl border border-pink-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-pink-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-pink-900 leading-relaxed font-medium">${result.strengths}</p>
+                    </div>
+                    <div class="bg-fuchsia-50 p-5 rounded-2xl border border-fuchsia-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-fuchsia-700 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
+                        <p class="text-sm text-fuchsia-900 leading-relaxed font-medium">${result.relationship}</p>
+                    </div>
+                    <div class="bg-red-50 p-5 rounded-2xl border border-red-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-red-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-red-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-orange-700 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
+                        <p class="text-sm text-orange-900 leading-relaxed font-medium">${result.wellness}</p>
+                    </div>
                 </div>
             `;
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('결과 링크가 복사되었습니다!\\n친구들에게 공유해보세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
