@@ -10,10 +10,14 @@
         /* 부드러운 페이드인 애니메이션 */
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #4b5563; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative selection:bg-gray-200">
         
         <!-- 1. START SCREEN -->
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-gray-100 to-white fade-in">
@@ -32,9 +36,9 @@
         </div>
 
         <!-- 2. QUESTION SCREEN -->
-        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
-            <div class="w-full bg-gray-100 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-gray-800 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-white">
+            <div class="w-full bg-gray-100 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-gray-800 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center fade-in">
                 <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
@@ -48,34 +52,34 @@
         <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-gray-800 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">
+            <h2 class="text-2xl font-bold mb-2 tracking-tight">
                 Scanning ID card...<br><br>
                 <span class="text-lg opacity-70">사원증 스캔 중...</span>
             </h2>
         </div>
 
-        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI) -->
+        <!-- 4. RESULT SCREEN -->
         <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-slate-50">
             <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
                 
                 <div class="text-center mb-6">
-                    <span class="inline-block px-3 py-1 bg-gray-100 text-gray-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Analysis Complete</span>
+                    <span class="inline-block px-3 py-1.5 bg-gray-800 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md">Premium Analysis</span>
                     <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
                 </div>
 
-                <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+                <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-gray-200" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
 
                 <!-- 전문 심리 분석 리포트 섹션 -->
-                <div id="r-desc" class="space-y-4 mb-6"></div>
+                <div id="r-desc" class="space-y-4 mb-8"></div>
 
                 <!-- 찰떡 궁합 섹션 -->
-                <div class="flex items-center justify-between bg-gray-900 rounded-2xl p-4 text-white mb-8 shadow-md">
-                    <span class="text-[10px] font-bold opacity-60 uppercase tracking-widest">BEST CO-WORKER</span>
+                <div class="flex items-center justify-between bg-gray-900 rounded-2xl p-5 text-white mb-8 shadow-md">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">BEST CO-WORKER (최고의 동료)</span>
                     <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
                 </div>
 
                 <!-- 광고 영역 -->
-                <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
+                <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
                     <ins class="adsbygoogle"
                          style="display:block; width:100%;"
                          data-ad-client="ca-pub-3466039113171143"
@@ -86,7 +90,7 @@
                 </div>
 
                 <!-- 연관 테스트 추천 섹션 -->
-                <div class="border-t border-gray-100 pt-6 mb-6">
+                <div class="border-t border-gray-100 pt-6 mb-8">
                     <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center mb-4">Recommended K-Tests</p>
                     <div id="r-recommendations" class="grid grid-cols-2 gap-3">
                         <button onclick="location.href='k_aesthetic_test.html'" class="w-full text-left bg-gray-50 hover:bg-gray-100 border border-gray-200 p-3 rounded-xl shadow-sm transition-all flex flex-col items-center justify-center">
@@ -100,9 +104,18 @@
                     </div>
                 </div>
 
-                <button onclick="location.href='index.html'" class="w-full py-4 bg-gray-900 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
-                    🏠 Go to Lobby
-                </button>
+                <!-- 액션 버튼 영역 -->
+                <div class="space-y-3">
+                    <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-black text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                        </svg>
+                        결과 공유하기 (Copy Link)
+                    </button>
+                    <button onclick="goLobby()" class="w-full py-4 bg-gray-100 hover:bg-gray-200 text-gray-800 border border-gray-200 font-bold rounded-xl transition-all active:scale-95 text-sm">
+                        🏠 다른 테스트 하러 가기 (Lobby)
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -111,8 +124,8 @@
         let userGender = '';
         let currentQ = 0; 
         let score = 0;
+        let currentResultId = '';
 
-        // 질문 데이터 (Bilingual 통합 및 미적 태그 적용)
         const questions = [
             { 
                 q: "It's 5:50 PM. Your boss gives you a new task.<br><br><span class='text-sm text-gray-400 font-normal'>오후 5시 50분, 상사가 새로운 업무를 주었다.</span>", 
@@ -141,57 +154,103 @@
             }
         ];
         
-        // 결과 데이터 (전문 심리 리포트 포맷, Bilingual 통합)
+        // 데이터 확장 (5가지 분석, 오피스 생존 테마에 맞춘 심층 텍스트)
         const resultsData = {
             F: [
                 { 
                     id: "f1", 
                     title: "🏃‍♀️ The 6 PM Fairy<br><span class='text-lg font-bold text-gray-500'>칼퇴 요정</span>", 
-                    overview: "You maintain a strict psychological segregation between professional labor and personal identity. You treat work as a transaction.<br><br><span class='text-xs opacity-80'>직장 내 노동과 개인의 자아 정체성을 완벽하게 분리하는 철저한 현실주의자입니다. 업무를 명확한 계약 관계로 인지합니다.</span>", 
-                    strengths: "Hyper-efficient time management. You suffer zero boundary fatigue because you protect your restorative periods.<br><br><span class='text-xs opacity-80'>압도적인 시간 관리 능력을 갖추고 있습니다. 사적인 휴식 시간을 완벽히 보호하기 때문에 번아웃에 빠지지 않고 꾸준한 효율을 냅니다.</span>", 
-                    weaknesses: "You risk organizational alienation. By showing zero vulnerability, you miss out on informal network alliances.<br><br><span class='text-xs opacity-80'>공식적인 업무 외의 네트워킹을 차단하기 때문에, 조직 내에서 이기적이라는 평판을 받거나 중요한 승진 기회에서 소외될 수 있습니다.</span>", 
+                    overview: "You are the absolute master of modern work-life balance and psychological boundaries. You maintain a strict, unwavering segregation between your professional labor and your personal identity, treating the corporate world exactly for what it is: a business transaction. You do exactly what you are paid to do with remarkable efficiency, but the absolute second the clock strikes 6:00 PM, your corporate persona completely powers down. You fundamentally refuse to sacrifice your personal happiness, physical health, or private weekends for the vague promise of corporate glory. You are the pioneer of the 'quiet quitting' generation, performing perfectly during business hours but vigorously protecting your off-the-clock peace.<br><br><span class='text-xs opacity-80'>당신은 현대의 워라밸과 심리적 경계 설정의 절대적인 마스터입니다. 직장 내 노동과 개인의 자아 정체성을 엄격하고 흔들림 없이 철저하게 분리하며, 회사 생활을 철저한 비즈니스 계약 관계로 인식합니다. 급여를 받는 만큼의 업무를 놀라운 효율성으로 정확히 해내지만, 시계가 정확히 오후 6시를 가리키는 순간 당신의 직장인 페르소나는 완전히 전원을 종료합니다. 모호한 회사의 영광이나 막연한 승진을 위해 개인의 행복, 육체적 건강, 또는 사적인 주말을 희생하는 것을 근본적으로 전면 거부합니다. 근무 시간 중에는 완벽하게 성과를 내지만 퇴근 후의 평화는 맹렬하게 지켜내는, 진정한 의미의 현대적 직장인의 표본이자 선구자입니다.</span>", 
+                    strengths: "Your absolutely greatest strength is your hyper-efficient, razor-sharp time management. Because you intensely value your exit time, you drastically minimize useless small talk, avoid procrastinating, and accomplish eight hours of work in half the time. You suffer absolutely zero boundary fatigue and are highly immune to the chronic, soul-crushing corporate burnout that destroys your overly ambitious peers. Your clear, unwavering standards mean you are highly dependable during working hours; colleagues know exactly what to expect from you. You possess an exceptionally healthy mindset, knowing that a company is just a part of life, not the entirety of it.<br><br><span class='text-xs opacity-80'>당신의 절대적으로 가장 위대한 강점은 고도로 효율적이고 날카로운 시간 관리 능력입니다. 퇴근 시간을 그 무엇보다 강렬하게 소중히 여기기 때문에, 쓸데없는 잡담을 극적으로 최소화하고 미루는 습관을 없애며 8시간의 업무를 그 절반의 시간 만에 해치워버립니다. 당신은 경계가 무너져 생기는 피로감이 전혀 없으며, 지나치게 야심 찬 동료들을 파괴하는 만성적이고 영혼을 갉아먹는 직장 내 번아웃에 완벽한 면역력을 가지고 있습니다. 명확하고 흔들림 없는 기준 덕분에 근무 시간 내에는 고도로 신뢰할 수 있으며, 동료들은 당신에게 무엇을 기대할 수 있는지 정확히 알고 있습니다. 회사는 인생의 아주 작은 일부일 뿐 결코 전부가 아니라는, 예외적으로 건강한 사고방식을 소유하고 있습니다.</span>", 
+                    relationship: "In the office, you maintain a highly polite, entirely professional, and cleanly distant relationship with your coworkers. You actively avoid toxic workplace gossip, emotionally draining office politics, and forced after-hours socializing (Hoesik). You are friendly and collaborative during team meetings, but you firmly draw the line at becoming 'family' with your department. You prefer solitary, restorative lunch breaks to recharge your social battery. While some might mistake your strict boundaries for aloofness, you actually respect your colleagues immensely by strictly honoring their time and expecting them to respectfully honor yours in return.<br><br><span class='text-xs opacity-80'>사무실에서 당신은 동료들과 매우 예의 바르고, 전적으로 프로페셔널하며, 깔끔하게 거리를 두는 관계를 유지합니다. 유독한 직장 내 뒷담화, 감정적으로 소모적인 사내 정치, 그리고 강압적인 퇴근 후 회식을 적극적으로 회피합니다. 팀 회의 중에는 친근하고 협력적이지만, 부서 사람들과 '가족' 같은 끈끈한 관계가 되는 것에는 단호하게 선을 긋습니다. 방전된 사회적 배터리를 재충전하기 위해 혼자만의 고요하고 회복적인 점심시간을 압도적으로 선호합니다. 누군가는 당신의 엄격한 경계선을 차가움이나 무관심으로 오해할 수 있지만, 사실 당신은 동료들의 시간을 엄격하게 존중하고 그 대가로 그들 역시 당신의 시간을 예의 바르게 존중해 주기를 기대하는 가장 깔끔한 동료입니다.</span>", 
+                    weaknesses: "By aggressively enforcing absolute zero vulnerability and strictly refusing to participate in any informal network alliances, you run a massive risk of severe organizational alienation. In heavily traditional Korean corporate cultures, your complete absence from after-hours socializing can easily lead to you being entirely overlooked for critical promotions or highly lucrative project assignments. Because you view work purely as a transaction, you might actively miss out on discovering genuine, fulfilling passion in your career. Additionally, your rigid refusal to occasionally pitch in during genuine team emergencies can permanently damage your reputation, branding you as fundamentally selfish.<br><br><span class='text-xs opacity-80'>자신의 취약성을 드러내는 것을 절대적으로 차단하고 공식적인 업무 외의 네트워킹 참여를 엄격하게 거부함으로써, 당신은 심각한 조직적 소외라는 거대한 위험에 직면하게 됩니다. 몹시 보수적이고 전통적인 한국의 기업 문화에서, 퇴근 후 사교 모임에 완전히 불참하는 당신의 태도는 중요한 승진 기회나 매우 이윤이 남는 핵심 프로젝트 배정에서 당신을 완전히 배제시키는 결과를 초래할 수 있습니다. 업무를 순수한 거래로만 보기 때문에, 커리어에서 진정으로 충만하고 의미 있는 열정을 발견할 기회를 스스로 적극적으로 놓쳐버릴 수 있습니다. 또한, 팀에 닥친 진짜 위기 상황에서조차 가끔씩 손을 보태는 것을 경직되게 거부한다면 당신의 평판은 영구적으로 손상되어 근본적으로 이기적인 사람으로 낙인찍힐 수 있습니다.</span>", 
+                    wellness: "To successfully survive the corporate jungle without severely compromising your precious boundaries or completely sabotaging your career, you must strategically master the art of 'visible flexibility'. You don't have to attend every single team dinner, but purposefully attending just one major gathering a quarter will dramatically soften your image and build crucial political capital. Be explicitly vocal and highly visible about the immense efficiency you bring during your working hours; make absolutely sure your boss knows exactly how much you accomplish by 6 PM. Most importantly, use your fiercely protected free time to build a robust, fulfilling identity completely separate from your job title.<br><br><span class='text-xs opacity-80'>당신의 소중한 경계선을 심각하게 타협하거나 커리어를 완전히 망치지 않으면서 이 살벌한 직장 정글에서 성공적으로 살아남으려면, '눈에 보이는 유연성'이라는 전략적 기술을 반드시 마스터해야 합니다. 모든 회식에 참석할 필요는 전혀 없지만, 분기에 한 번 정도 열리는 가장 중요한 주요 모임에만 의도적으로 참석해도 당신의 이미지를 극적으로 부드럽게 만들고 필수적인 정치적 자본을 구축할 수 있습니다. 근무 시간 동안 당신이 발휘하는 엄청난 업무 효율성에 대해 명시적으로 목소리를 내고 가시적으로 어필하십시오. 당신이 오후 6시까지 얼마나 많은 성과를 완벽히 달성하는지 상사가 정확히 인지하도록 만들어야 합니다. 가장 중요한 것은, 맹렬하게 지켜낸 여가 시간을 활용하여 직함과는 완전히 분리된 견고하고 충만한 개인의 정체성을 구축하는 것입니다.</span>", 
                     match: "Social Butterfly<br><span class='text-[10px] font-normal'>눈치 100단 처세술</span>" 
                 },
                 { 
                     id: "f2", 
                     title: "🔥 Passionate Hustler<br><span class='text-lg font-bold text-gray-500'>열정 만수르</span>", 
-                    overview: "Driven by high instrumental motivation, you view the corporate hierarchy as a strategic arena to test your potential.<br><br><span class='text-xs opacity-80'>강한 야망과 목표 지향적 자아를 지녔습니다. 회사를 단순히 돈을 버는 곳이 아니라 자신의 능력을 증명하는 전략적 무대로 여깁니다.</span>", 
-                    strengths: "Unstoppable grit and charismatic vision. You excel under tight timelines and push lagging teams into active overdrive.<br><br><span class='text-xs opacity-80'>위기 상황에서 더욱 빛을 발하는 강력한 돌파력이 있습니다. 높은 비전으로 부하 직원들을 이끄는 탁월한 리더십을 발휘합니다.</span>", 
-                    weaknesses: "You micromanage everything. Your impatience with slower colleagues can foster toxic friction and destroy team morale.<br><br><span class='text-xs opacity-80'>통제 성향 때문에 남에게 일을 맡기지 못하고 스스로를 갈아 넣습니다. 속도가 느린 동료를 참지 못해 사내 마찰을 빚기 쉽습니다.</span>", 
+                    overview: "You are an incredibly ambitious, highly driven corporate warrior who views the organizational hierarchy not as a prison, but as a thrilling, strategic battlefield to completely dominate and test your maximum potential. Driven by intensely high instrumental motivation, you pour your absolute heart, soul, and endless overtime hours into ensuring every single project is executed with terrifying perfection. You thrive aggressively under extreme pressure, actively seeking out the most difficult, high-visibility tasks that absolutely terrify your peers. To you, a career is fundamentally tied to your core identity; success, continuous growth, and absolute recognition are your absolute lifeblood.<br><br><span class='text-xs opacity-80'>당신은 조직의 계층 구조를 감옥이 아니라 당신의 최대 잠재력을 시험하고 완벽하게 지배해야 할 짜릿하고 전략적인 전장으로 바라보는, 믿을 수 없을 만큼 야심 차고 추진력 넘치는 기업의 전사입니다. 극도로 높은 목표 지향적 동기에 의해 움직이며, 모든 단일 프로젝트가 무시무시할 정도의 완벽함으로 실행되도록 당신의 절대적인 마음과 영혼, 그리고 끝없는 야근 시간을 기꺼이 쏟아붓습니다. 극심한 압박 속에서 공격적으로 만개하며, 동료들을 완전히 겁먹게 만드는 가장 어렵고 가시성이 높은 핵심 업무를 적극적으로 찾아 나섭니다. 당신에게 커리어란 근본적으로 당신의 핵심 정체성과 깊이 결속되어 있습니다. 성공, 끊임없는 성장, 그리고 절대적인 인정이야말로 당신을 숨 쉬게 하는 생명선입니다.</span>", 
+                    strengths: "Your absolute, unstoppable grit and phenomenal, charismatic vision are your greatest weapons. You possess an extraordinary ability to perform flawlessly under the tightest, most impossible timelines, effortlessly pushing lagging, unmotivated teams into active, highly productive overdrive. You are the ultimate, highly reliable problem solver that executives desperately trust when millions of dollars are on the line. Your intense dedication naturally commands deep respect, and your proactive, fearless nature ensures that you ascend the corporate ladder at a blistering, unprecedented speed, leaving your comfortable, passive competitors entirely in the dust.<br><br><span class='text-xs opacity-80'>절대 멈출 수 없는 압도적인 투지와 경이롭고 카리스마 넘치는 비전은 당신의 가장 위대한 무기입니다. 가장 촉박하고 불가능해 보이는 마감 기한 속에서도 흠잡을 데 없이 성과를 내는 비범한 능력을 지녔으며, 뒤처지고 의욕 없는 팀들을 적극적이고 고도로 생산적인 과부하 상태로 밀어붙여 결국 성공으로 이끕니다. 당신은 수백만 달러가 걸려 있는 위기 상황에서 임원들이 필사적으로 신뢰하는 궁극적이고 고도로 신뢰할 수 있는 문제 해결사입니다. 당신의 강렬한 헌신은 자연스럽게 깊은 존경을 이끌어내며, 선제적이고 두려움 없는 본성 덕분에 안락하고 수동적인 경쟁자들을 완전히 뒤로한 채 맹렬하고 전례 없는 속도로 기업의 사다리를 오를 수 있습니다.</span>", 
+                    relationship: "In the workplace, you are a fierce, highly demanding leader and a profoundly intense collaborator. You absolutely respect colleagues who can match your blistering speed, brutal honesty, and unwavering dedication, but you have less than zero patience for chronic complainers, slackers, or those who constantly preach about 'work-life balance' while missing crucial deadlines. You view your team as a highly elite sports franchise; you demand absolute excellence and are willing to aggressively mentor those who show true promise. However, your intense, commanding presence can heavily intimidate softer colleagues, making it difficult for them to voice totally opposing, yet valuable, opinions.<br><br><span class='text-xs opacity-80'>직장에서 당신은 맹렬하고 요구 사항이 매우 많은 리더이자, 심오할 정도로 강렬한 협력자입니다. 당신의 타오르는 속도, 잔인할 정도의 솔직함, 그리고 흔들림 없는 헌신에 발맞출 수 있는 동료들을 절대적으로 존경하지만, 중요한 마감일을 놓치면서 '워라밸'만을 끊임없이 설교하거나 만성적으로 불평하는 나태한 자들에게는 단 1%의 인내심도 허락하지 않습니다. 당신은 팀을 고도로 엘리트화된 스포츠 프랜차이즈처럼 여깁니다. 절대적인 탁월함을 요구하며, 진정한 가능성을 보여주는 팀원에게는 기꺼이 공격적이고 열정적인 멘토가 되어줍니다. 하지만 당신의 강렬하고 지배적인 존재감은 부드러운 동료들을 심하게 위축시킬 수 있으며, 그들이 완전히 반대되지만 매우 가치 있는 의견을 목소리 내기 어렵게 만들 수 있습니다.</span>", 
+                    weaknesses: "Your extreme, borderline obsessive tendency to violently micromanage absolutely everything and your inability to properly delegate can effortlessly lead you straight into catastrophic, irreversible burnout. Your sheer impatience with slower, more methodical colleagues can easily foster highly toxic friction, completely destroying team morale and branding you as a brilliant but incredibly difficult tyrant. Because your self-worth is dangerously, inextricably tied to your professional output, a single failure, a missed promotion, or sudden corporate restructuring can absolutely shatter your entire psychological foundation, leaving you completely lost and profoundly depressed.<br><br><span class='text-xs opacity-80'>모든 것을 폭력적일 정도로 미시적으로 관리(Micromanage)하려는 극단적이고 거의 강박적인 성향과, 타인에게 업무를 제대로 위임하지 못하는 무능력은 당신을 돌이킬 수 없는 파멸적인 번아웃으로 아주 쉽게 끌고 갈 수 있습니다. 더 느리고 체계적인 동료들을 향한 순수한 참을성 부족은 고도로 유독한 마찰을 쉽게 조장하여 팀의 사기를 완전히 짓밟고, 당신을 '똑똑하지만 믿을 수 없을 만큼 함께 일하기 힘든 폭군'으로 낙인찍히게 만듭니다. 당신의 자존감이 당신의 직업적 성과와 위험할 정도로 떼려야 뗄 수 없이 묶여 있기 때문에, 단 한 번의 실패, 승진 누락, 또는 갑작스러운 구조조정은 당신의 전체 심리적 기반을 절대적으로 산산조각 내어 당신을 완전히 길 잃고 깊이 우울하게 만들 수 있습니다.</span>", 
+                    wellness: "To sustainably maintain your roaring success without severely destroying your physical health or completely alienating your entire team, you must proactively master the extremely difficult art of letting go. Force yourself to aggressively delegate tasks and explicitly accept that an '80% perfect' execution by a colleague is often absolutely sufficient. You must intentionally build a vibrant, exciting life entirely outside of your office walls; cultivate a completely unrelated hobby that has absolutely zero performance metrics or ROI (Return on Investment). True, long-lasting leadership requires immense emotional intelligence; practicing quiet, patient empathy will make you far more powerful than sheer force ever could.<br><br><span class='text-xs opacity-80'>당신의 육체적 건강을 심각하게 파괴하거나 전체 팀을 완전히 등지게 만들지 않으면서 당신의 포효하는 성공을 지속 가능하게 유지하려면, 모든 것을 기꺼이 내려놓는 극도로 어려운 기술을 선제적으로 마스터해야 합니다. 스스로에게 업무를 공격적으로 위임하도록 강제하고, 동료의 '80% 완벽한' 실행만으로도 종종 절대적으로 충분하다는 사실을 명시적으로 받아들이십시오. 사무실 벽 밖에서 전적으로 활기차고 흥미진진한 삶을 의도적으로 구축해야 합니다. 성과 지표나 투자 대비 수익률(ROI)이 전혀 존재하지 않는, 업무와 완전히 무관한 취미를 가꾸십시오. 진정으로 오래 지속되는 리더십은 거대한 정서 지능을 필요로 합니다. 조용하고 인내심 있는 공감을 연습하는 것이, 순수한 무력으로 밀어붙이는 것보다 당신을 훨씬 더 강력하게 만들어 줄 것입니다.</span>", 
                     match: "Hidden Master<br><span class='text-[10px] font-normal'>조용한 은둔형 고수</span>" 
                 },
                 { 
                     id: "f3", 
                     title: "💬 Social Butterfly<br><span class='text-lg font-bold text-gray-500'>눈치 100단 처세술</span>", 
-                    overview: "You possess high social adaptability. You anchor your job stability within political capital and structural consensus.<br><br><span class='text-xs opacity-80'>조직 내 역학 관계를 본능적으로 파악하는 촉을 지녔습니다. 사내 정치와 인간관계를 유연하게 활용하여 갈등을 예방하는 네트워커입니다.</span>", 
-                    strengths: "Masterful persuasion and the ability to turn cold contacts into lifelong tactical business alliances.<br><br><span class='text-xs opacity-80'>적을 만들지 않는 부드러운 친화력이 무기입니다. 부서 간 협업을 원활하게 이끌어내는 윤활유 같은 존재입니다.</span>", 
-                    weaknesses: "By constantly shifting opinions to please superiors, you compromise your professional integrity and authority.<br><br><span class='text-xs opacity-80'>모두에게 좋은 사람이 되려다 정작 중요한 순간에 자기 의견을 내지 못하는 기회주의자로 비칠 수 있으며, 거절을 못해 잡무를 떠맡습니다.</span>", 
+                    overview: "You are the absolute master of emotional intelligence, highly strategic corporate politics, and profound social adaptability. You intuitively understand that true job stability and massive corporate success are rarely built on sheer technical skill alone, but rather on immense political capital, vast structural consensus, and knowing exactly who holds the real power. You operate as the essential human lubricant of the entire organization, effortlessly diffusing highly tense conflicts, seamlessly connecting completely disparate departments, and maintaining a flawlessly pleasant, unshakeable aura. You know absolutely every piece of crucial gossip, read the unwritten rules of the room instantly, and adapt your persona flawlessly to win over anyone.<br><br><span class='text-xs opacity-80'>당신은 감성 지능, 고도로 전략적인 사내 정치, 그리고 심오한 사회적 적응력의 절대적인 마스터입니다. 진정한 직업적 안정과 거대한 기업 내 성공은 순수한 기술적 능력만으로 구축되는 것이 아니라, 엄청난 정치적 자본, 방대한 구조적 합의, 그리고 누가 진짜 권력을 쥐고 있는지 정확히 아는 것에 달려 있다는 것을 직관적으로 이해하고 있습니다. 조직 전체의 필수적인 윤활유 역할을 수행하며, 극도로 긴장된 갈등을 수월하게 진화하고, 완전히 이질적인 부서들을 매끄럽게 연결하며, 흠잡을 데 없이 유쾌하고 흔들림 없는 아우라를 유지합니다. 모든 핵심적인 뒷소문을 완벽하게 꿰뚫고 있으며, 그 공간의 암묵적인 룰을 즉각적으로 읽어내고, 누구든 내 편으로 만들기 위해 당신의 페르소나를 흠잡을 데 없이 조율합니다.</span>", 
+                    strengths: "Your truly extraordinary superpower is your masterful persuasion and your phenomenal ability to turn completely cold contacts into deeply loyal, lifelong tactical business alliances. You are heavily relied upon to navigate highly sensitive negotiations, successfully de-escalate aggressive executives, and build incredibly cohesive, highly motivated teams out of completely mismatched personalities. Your vast, incredibly dense network heavily ensures that you always have a powerful lifeline or highly exclusive inside information when completely unexpected crises hit. You are universally liked, deeply trusted to manage complex human dynamics, and fundamentally essential to the company’s daily cultural survival.<br><br><span class='text-xs opacity-80'>당신의 진정으로 경이로운 초능력은 능수능란한 설득력과, 완전히 냉담한 관계조차 깊이 충성스럽고 평생 지속되는 전술적 비즈니스 동맹으로 탈바꿈시키는 놀라운 능력입니다. 사람들은 고도로 민감한 협상을 이끌고, 공격적인 임원들을 성공적으로 진정시키며, 완전히 안 맞는 성격들로 이루어진 팀을 믿을 수 없을 만큼 응집력 있고 의욕 넘치는 팀으로 재탄생시키는 데 있어 당신에게 크게 의존합니다. 당신의 방대하고 믿을 수 없을 정도로 촘촘한 네트워크는, 전혀 예상치 못한 위기가 닥쳤을 때 언제나 강력한 구명줄이나 매우 독점적인 내부 정보를 확보할 수 있도록 든든하게 보장합니다. 당신은 보편적으로 사랑받고, 복잡한 인간의 역학을 관리하는 데 깊이 신뢰받으며, 회사의 일상적인 문화적 생존에 근본적으로 필수적인 존재입니다.</span>", 
+                    relationship: "In the corporate ecosystem, you are the ultimate, flawless diplomat. You genuinely enjoy highly informal networking, absolutely shining during after-hours team dinners (Hoesik) where you strategically build crucial bonds with higher-ups over shared drinks and laughs. You treat your colleagues highly warmly, intensely remembering small personal details that instantly make them feel deeply valued. However, beneath your constantly smiling, highly agreeable exterior, you are constantly calculating profound political risks; you carefully align yourself with the winning faction and skillfully avoid individuals whose toxic reputations might somehow unfairly drag you down.<br><br><span class='text-xs opacity-80'>기업 생태계에서 당신은 궁극적이고 흠잡을 데 없는 외교관입니다. 매우 비공식적인 네트워킹을 진심으로 즐기며, 퇴근 후 팀 회식 자리에서 가장 눈부시게 빛을 발하여 술잔과 웃음을 나누며 상사들과 중요한 유대감을 전략적으로 구축합니다. 동료들을 매우 따뜻하게 대하며, 그들이 즉각적으로 깊이 존중받는다고 느낄 만한 사소한 개인적 세부 사항들을 강렬하게 기억해 냅니다. 하지만 늘 웃고 있고 극도로 수용적인 외면 아래에서, 당신은 끊임없이 심오한 정치적 위험을 계산하고 있습니다. 승리하는 파벌과 조심스럽게 뜻을 함께하며, 유독한 평판으로 인해 당신을 부당하게 끌어내릴 수 있는 인물들을 교묘하게 피하는 데 탁월합니다.</span>", 
+                    weaknesses: "By constantly, intensely shifting your own opinions to flawlessly please your aggressive superiors and desperately maintain organizational peace, you severely compromise your own professional integrity and heavy technical authority. You run a massive, highly dangerous risk of becoming known as a superficial 'yes-man' rather than an actual visionary leader with firm, unshakeable convictions. Furthermore, your absolute, deeply ingrained inability to firmly say 'No' directly causes you to absorb an absolutely staggering amount of useless busywork, constantly covering for highly incompetent colleagues until you finally break under the crushing weight of unspoken resentment.<br><br><span class='text-xs opacity-80'>공격적인 상사들을 완벽하게 기쁘게 하고 조직의 평화를 필사적으로 유지하기 위해 자신의 의견을 끊임없이 강렬하게 바꿈으로써, 당신은 자신의 직업적 진실성과 무거운 기술적 권위를 심각하게 훼손합니다. 확고하고 흔들림 없는 신념을 가진 진정한 비전 있는 리더가 아니라, 피상적인 '예스맨'으로 알려질 거대하고 매우 위험한 리스크를 안고 있습니다. 나아가, 단호하게 '아니오'라고 말하지 못하는 당신의 절대적이고 깊이 뿌리박힌 무능력은 당신이 말도 안 되는 양의 쓸데없는 잡무를 전부 떠안게 만들며, 고도로 무능한 동료들의 실수를 끊임없이 수습하다가 결국 말하지 못한 억울함의 짓눌리는 무게 아래에서 완전히 무너져 내리게 만듭니다.</span>", 
+                    wellness: "To actively prevent completely losing your own authentic soul in the dense, highly manipulative political web of the corporate world, you must aggressively learn to draw incredibly hard, unshakeable boundaries. Practice tactfully and boldly defending your own original ideas, even if it completely completely contradicts the immediate consensus of the powerful room. Actively focus heavily on sharply upgrading your own hard, technical skills so your professional value is deeply rooted in undeniable, concrete output, not just in making people feel comfortable. Remember that temporary, healthy friction is absolutely required for true innovation; avoiding all conflict will ultimately stunt your ultimate career growth.<br><br><span class='text-xs opacity-80'>기업 세계의 촘촘하고 고도로 조작적인 정치적 거미줄 속에서 당신 본연의 진실한 영혼을 완전히 잃어버리는 것을 적극적으로 방지하려면, 믿을 수 없을 만큼 단호하고 흔들림 없는 경계선을 긋는 법을 공격적으로 배워야 합니다. 그것이 방 안에 있는 권력자들의 즉각적인 합의와 완전히 모순되더라도, 당신만의 독창적인 아이디어를 재치 있고 대담하게 방어하는 연습을 하십시오. 사람들을 편안하게 해주는 것에만 의존하지 않고, 당신의 직업적 가치가 부정할 수 없는 구체적인 성과에 깊이 뿌리내릴 수 있도록 본인만의 강력한 하드 스킬(기술적 전문성)을 날카롭게 업그레이드하는 데 적극적으로 집중하세요. 일시적이고 건강한 마찰은 진정한 혁신을 위해 절대적으로 필요하다는 것을 명심하십시오. 모든 갈등을 회피하는 것은 결국 당신의 궁극적인 커리어 성장을 심각하게 저해할 것입니다.</span>", 
                     match: "The 6 PM Fairy<br><span class='text-[10px] font-normal'>칼퇴 요정</span>" 
                 },
                 { 
                     id: "f4", 
                     title: "🥷 Hidden Master<br><span class='text-lg font-bold text-gray-500'>조용한 은둔형 고수</span>", 
-                    overview: "You find professional comfort in structural solutions and technical authority rather than team socialization.<br><br><span class='text-xs opacity-80'>드러나지 않는 기술적 전문성과 묵묵한 책임감을 중요시하는 에이스입니다. 복잡한 문제를 혼자 깊게 파고들어 해결할 때 쾌감을 느낍니다.</span>", 
-                    strengths: "Flawless analytical depth and quiet problem-solving competence. You are the structural anchor of the department.<br><br><span class='text-xs opacity-80'>위기가 터져도 조용하고 냉정하게 수습합니다. 감정 낭비가 전혀 없는 든든한 요새이자 대체 불가능한 실력자입니다.</span>", 
-                    weaknesses: "Your lack of self-promotion means your hard work becomes a free resource exploited by louder peers.<br><br><span class='text-xs opacity-80'>성과를 어필하는 능력이 심각하게 부족합니다. 얌체 같은 동료에게 공로를 뺏기거나 승진 및 연봉 협상에서 불이익을 받기 쉽습니다.</span>", 
+                    overview: "You are the absolute, undeniable backbone of the entire organization, finding your profound professional comfort in brilliant structural solutions, flawless execution, and deep technical authority rather than loud, exhausting team socialization. You operate far outside the toxic, highly visible realm of loud office politics, vastly preferring to quietly dive incredibly deep into highly complex problems that absolutely terrify your louder, superficial peers. You are an exceptionally observant, highly introverted ace who lets their absolutely impeccable, concrete results speak entirely for themselves, serving as a highly stable, heavily relied-upon fortress when the corporate world inevitably descends into absolute chaos.<br><br><span class='text-xs opacity-80'>당신은 조직 전체의 절대적이고 부정할 수 없는 중추입니다. 요란하고 소모적인 사교 활동보다는 눈부신 구조적 해결책, 흠잡을 데 없는 실행력, 그리고 깊은 기술적 권위에서 심오한 직업적 편안함을 찾습니다. 당신은 시끄럽고 유독하며 눈에 띄는 사내 정치의 영역에서 완전히 벗어나 활동하며, 요란하고 피상적인 동료들이 절대적으로 두려워하는 고도로 복잡한 문제의 심연으로 조용히 파고드는 것을 압도적으로 선호합니다. 당신은 절대적으로 흠잡을 데 없는 구체적인 결과물이 스스로를 온전히 증명하게 놔두는, 예외적으로 관찰력이 뛰어나고 고도로 내향적인 에이스입니다. 기업 세계가 필연적으로 절대적인 혼란에 빠질 때, 사람들이 가장 무겁게 의존하는 매우 안정적이고 든든한 요새의 역할을 수행합니다.</span>", 
+                    strengths: "Your absolutely flawless analytical depth and remarkably quiet, unwavering problem-solving competence are your most devastatingly powerful weapons. While aggressive others wildly panic and completely lose focus during massive corporate crises, you remain incredibly cold, highly objective, and perfectly rational, swiftly untangling the disaster with sheer brilliance. You are fundamentally the highly secure structural anchor of your department; heavily trusted executives implicitly know that if a crucial, impossible task is assigned to you, it will be executed with terrifying precision. You do not waste a single ounce of precious energy on useless posturing; you are purely, fiercely substance over style.<br><br><span class='text-xs opacity-80'>절대적으로 흠잡을 데 없는 분석적 깊이와 놀라울 정도로 조용하고 흔들림 없는 문제 해결 능력은 당신의 가장 파괴적이고 강력한 무기입니다. 거대한 기업의 위기가 닥쳤을 때 공격적인 다른 사람들이 미친 듯이 패닉에 빠지고 집중력을 완전히 잃는 동안, 당신은 믿을 수 없을 만큼 차갑고 고도로 객관적이며 완벽하게 이성적인 상태를 유지하며 순수한 광기로 재앙을 신속하게 풀어냅니다. 당신은 근본적으로 부서의 가장 안전하고 강력한 구조적 닻입니다. 당신을 무겁게 신뢰하는 임원들은, 불가능해 보이는 핵심 업무가 당신에게 배정된다면 그것이 무시무시할 정도의 정밀함으로 완벽하게 실행될 것임을 맹목적으로 알고 있습니다. 쓸데없는 허세에 단 1온스의 귀중한 에너지도 낭비하지 않으며, 오직 겉치레보다 본질(Substance over Style)을 맹렬하게 추구합니다.</span>", 
+                    relationship: "In navigating the complex corporate ecosystem, you heavily prefer intense, quiet autonomy and deeply respect colleagues who communicate with sheer, raw data and highly logical precision. You actively loathe highly unnecessary, rambling meetings, entirely superficial corporate bonding events, and managers who aggressively micromanage your perfectly functioning workflow. You are deeply fiercely loyal and heavily supportive to the very few select colleagues who have explicitly proven their absolute intellectual competence and genuine trustworthiness. While you rarely ever speak first in a crowded room, when you finally do open your mouth, your words carry absolutely immense, undeniable weight that immediately silences the entire team.<br><br><span class='text-xs opacity-80'>복잡한 기업 생태계를 항해함에 있어, 당신은 강렬하고 조용한 자율성을 무겁게 선호하며 순수한 날것의 데이터와 고도의 논리적 정밀함으로 소통하는 동료들을 깊이 존경합니다. 극도로 불필요하고 장황한 회의, 완전히 피상적인 사내 친목 행사, 그리고 당신의 완벽하게 기능하는 워크플로우를 공격적으로 미시 관리하려는 관리자들을 적극적으로 혐오합니다. 절대적인 지적 능력과 진실한 신뢰성을 명확하게 증명한 극소수의 동료들에게만 깊고 맹렬한 의리를 보이며 전폭적으로 지지합니다. 혼잡한 방에서 먼저 말을 꺼내는 법은 거의 없지만, 마침내 당신이 입을 열면 그 말은 전체 팀을 즉각적으로 침묵시킬 만큼 절대적이고 거대하며 부정할 수 없는 압도적인 무게를 지닙니다.</span>", 
+                    weaknesses: "Your extreme, deeply ingrained lack of self-promotion and vocal visibility means your truly incredible hard work and brilliant ideas frequently become a totally free resource aggressively exploited by louder, highly manipulative peers. Because you naively, stubbornly believe that 'pure results will magically speak for themselves,' you actively miss out on massive promotions and highly lucrative salary bumps. Your intensely rigid, highly silent nature can make you appear completely unapproachable, coldly aloof, or uncooperative, drastically failing to build the essential emotional alliances heavily required to securely navigate sudden, brutal corporate reorganizations or highly unfair political attacks.<br><br><span class='text-xs opacity-80'>자기 PR(자기 홍보)과 가시적인 목소리 내기에 대한 극단적이고 깊이 뿌리박힌 부족함은, 당신의 진정으로 놀라운 노고와 빛나는 아이디어들이 목소리 크고 조작에 능한 동료들에 의해 공격적으로 착취당하는 완전한 무료 자원이 되게 만듭니다. '순수한 결과가 마법처럼 스스로를 증명할 것'이라고 순진하고 고집스럽게 믿기 때문에, 당신은 거대한 승진이나 매우 매력적인 연봉 인상의 기회를 적극적으로 놓치고 맙니다. 당신의 강렬하게 경직되고 매우 과묵한 본성은 당신을 완전히 다가가기 힘들거나, 차갑고 냉담하거나, 비협조적인 사람으로 보이게 만들 수 있습니다. 이는 갑작스럽고 잔인한 조직 개편이나 매우 불공평한 정치적 공격을 안전하게 헤쳐나가기 위해 무겁게 요구되는 필수적인 감정적 동맹을 구축하는 데 철저히 실패하게 만듭니다.</span>", 
+                    wellness: "To effectively survive and properly claim the massive corporate rewards you absolutely deserve, you must proactively, fiercely step out of your completely silent shadow. Learn the heavily strategic art of aggressive, highly visible documentation; consistently and explicitly ensure your direct superiors know exactly how your brilliant technical solutions directly saved the company immense time and massive money. Practice tactfully speaking up extremely early in important meetings to solidly establish your undeniable authority before louder, less competent voices completely take over. Remember, quietly being the smartest person in the room is entirely useless if absolutely no one with real power actively realizes it.<br><br><span class='text-xs opacity-80'>이 험난한 곳에서 효과적으로 살아남고 당신이 마땅히 받아야 할 거대한 기업의 보상을 제대로 청구하기 위해서는, 당신의 그 완전히 조용한 그림자에서 선제적이고 맹렬하게 걸어 나와야 합니다. 공격적이고 매우 눈에 띄는 '가시적 문서화'라는 무거운 전략적 기술을 배우십시오. 당신의 빛나는 기술적 해결책이 어떻게 회사의 엄청난 시간과 막대한 비용을 직접적으로 절감했는지 직속 상사들이 정확히 알도록 지속적이고 명시적으로 어필해야 합니다. 목소리만 크고 무능한 자들이 대화를 완전히 장악하기 전에, 중요한 회의에서 매우 일찍 재치 있게 발언하여 당신의 부정할 수 없는 권위를 확고히 확립하는 연습을 하십시오. 명심하세요. 진정한 권력을 가진 자가 적극적으로 깨닫지 못한다면, 방 안에서 가장 똑똑한 사람으로 조용히 남아있는 것은 완전히 무용지물입니다.</span>", 
                     match: "Passionate Hustler<br><span class='text-[10px] font-normal'>열정 만수르</span>" 
                 }
             ]
         };
-        // 남성 데이터를 여성 데이터와 구조 동일하게 복제 후 타이틀 수정
+
+        // 남성 데이터는 여성 데이터 구조 복제 후 타이틀 및 매치만 수정 적용
         resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
         resultsData.M[0].title = "🏃‍♂️ The 6 PM Pro<br><span class='text-lg font-bold text-gray-500'>칼퇴 요정</span>";
         resultsData.M[1].title = "🔥 Ambitious Hustler<br><span class='text-lg font-bold text-gray-500'>열정 만수르</span>";
         resultsData.M[2].title = "🤝 Master of Networking<br><span class='text-lg font-bold text-gray-500'>눈치 100단 처세술</span>";
         resultsData.M[3].title = "🥷 Silent Ace<br><span class='text-lg font-bold text-gray-500'>조용한 은둔형 고수</span>";
+        
+        resultsData.M[0].match = "Master of Networking<br><span class='text-[10px] font-normal'>눈치 100단 처세술</span>";
+        resultsData.M[1].match = "Silent Ace<br><span class='text-[10px] font-normal'>조용한 은둔형 고수</span>";
+        resultsData.M[2].match = "The 6 PM Pro<br><span class='text-[10px] font-normal'>칼퇴 요정</span>";
+        resultsData.M[3].match = "Ambitious Hustler<br><span class='text-[10px] font-normal'>열정 만수르</span>";
 
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('<br>')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
+
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
+
+        // 안전한 화면 전환 로직 (flex 속성 충돌 방지)
         function switchScreen(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden');
-            document.getElementById(fromId).classList.remove('flex');
-            
-            const toScreen = document.getElementById(toId);
-            toScreen.classList.remove('hidden');
-            toScreen.classList.add('flex');
+            document.getElementById(toId).classList.remove('hidden');
         }
 
         function selectGender(g) {
@@ -201,13 +260,11 @@
         }
 
         function showQuestion() {
-            // 진행바 애니메이션
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
             
-            // 질문 및 답변 적용 (innerHTML 사용하여 HTML 태그 렌더링)
             const qScreen = document.getElementById('question-screen');
             qScreen.classList.remove('fade-in');
-            void qScreen.offsetWidth; // 트리거 리플로우 (애니메이션 재시작)
+            void qScreen.offsetWidth; 
             qScreen.classList.add('fade-in');
 
             document.getElementById('q-title').innerHTML = questions[currentQ].q;
@@ -223,17 +280,23 @@
                 showQuestion();
             } else {
                 switchScreen('question-screen', 'loading-screen');
-                // 기존 사용자 요청 로직: score 계산식 그대로 유지
                 const finalIdx = score % 4; 
-                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
+                const genId = userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`;
+                setTimeout(() => showResult(genId, false), 2500);
             }
         }
 
-        function showResult(resultId) {
-            switchScreen('loading-screen', 'result-screen');
-            
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
             const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
             const result = resultsData[userGender][idx];
+            
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
             
             document.getElementById('r-title').innerHTML = result.title;
             document.getElementById('r-match').innerHTML = result.match;
@@ -242,21 +305,49 @@
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_office_survival_w.png')" : "url('k_office_survival_m.png')";
             imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            // 프리미엄 리포트 UI 렌더링
+            // 5단 분석 UI 구성 (오피스 테마에 맞춘 배색)
             document.getElementById('r-desc').innerHTML = `
-                <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-indigo-600 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
-                    <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.overview}</p>
-                </div>
-                <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-emerald-600 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
-                    <p class="text-sm text-emerald-900 leading-relaxed font-medium">${result.strengths}</p>
-                </div>
-                <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
-                    <p class="text-sm text-rose-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                <div class="space-y-4">
+                    <div class="bg-gray-50 p-5 rounded-2xl border border-gray-200 shadow-sm">
+                        <h4 class="text-[10px] font-black text-gray-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-gray-800 leading-relaxed font-medium">${result.overview}</p>
+                    </div>
+                    <div class="bg-indigo-50 p-5 rounded-2xl border border-indigo-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-indigo-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-indigo-900 leading-relaxed font-medium">${result.strengths}</p>
+                    </div>
+                    <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-emerald-700 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Team Dynamic (조직 내 관계)</h4>
+                        <p class="text-sm text-emerald-900 leading-relaxed font-medium">${result.relationship}</p>
+                    </div>
+                    <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-rose-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-rose-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-amber-700 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Survival Guide (생존 가이드)</h4>
+                        <p class="text-sm text-amber-900 leading-relaxed font-medium">${result.wellness}</p>
+                    </div>
                 </div>
             `;
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('결과 링크가 복사되었습니다!\\n동료들에게 공유해보세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
