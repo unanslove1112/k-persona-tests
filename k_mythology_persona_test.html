@@ -7,13 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
     <style>
-        /* 부드러운 페이드인 애니메이션 추가 */
+        /* 부드러운 페이드인 애니메이션 */
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 스크롤바 커스텀 (다크 테마) */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #a855f7; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-gray-800 shadow-lg overflow-hidden relative border-x border-gray-700">
+    <div class="max-w-md mx-auto min-h-screen bg-gray-800 shadow-lg overflow-hidden relative border-x border-gray-700 selection:bg-purple-900 selection:text-white">
         
         <!-- 1. START SCREEN -->
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-purple-900 to-gray-900 fade-in">
@@ -33,8 +37,8 @@
 
         <!-- 2. QUESTION SCREEN -->
         <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-gray-900">
-            <div class="w-full bg-gray-700 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-purple-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+            <div class="w-full bg-gray-700 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-purple-500 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center fade-in">
                 <h2 id="q-title" class="text-xl font-bold text-white mb-8 leading-relaxed"></h2>
@@ -48,38 +52,38 @@
         <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-purple-900 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">
+            <h2 class="text-2xl font-bold mb-2 tracking-tight">
                 Consulting the spirits...<br><br>
                 <span class="text-lg opacity-80 font-normal">전설의 두루마리를 펴는 중...</span>
             </h2>
         </div>
 
-        <!-- 4. RESULT SCREEN (프리미엄 리포트 UI 적용 - 다크 테마) -->
+        <!-- 4. RESULT SCREEN -->
         <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-900">
             <div class="w-full bg-gray-800 rounded-[2rem] shadow-2xl p-6 relative overflow-hidden border border-gray-700 fade-in">
                 
                 <!-- 배경 장식 (다크 퍼플 테마) -->
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-900 rounded-full blur-3xl opacity-30"></div>
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-purple-900 rounded-full blur-3xl opacity-30 pointer-events-none"></div>
                 
                 <div class="relative z-10">
                     <div class="text-center mb-6">
-                        <span class="inline-block px-3 py-1 bg-gray-700 text-purple-300 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Mythology Scanned</span>
+                        <span class="inline-block px-3 py-1.5 bg-gray-700 text-purple-300 text-[10px] font-black uppercase tracking-widest rounded-full mb-3 border border-purple-500/30 shadow-md">Premium Analysis</span>
                         <h1 id="r-title" class="text-2xl font-extrabold text-purple-400 leading-tight"></h1>
                     </div>
 
                     <div id="r-img-div" class="w-full aspect-square bg-gray-900 bg-cover bg-no-repeat rounded-[1.5rem] shadow-[0_0_15px_rgba(168,85,247,0.3)] border border-purple-500/30 mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
 
-                    <!-- 전문 심리 분석 리포트 섹션 (JS에서 주입) -->
-                    <div id="r-desc" class="space-y-4 mb-6"></div>
+                    <!-- 전문 심리 분석 리포트 섹션 -->
+                    <div id="r-desc" class="space-y-4 mb-8"></div>
 
                     <!-- 찰떡 궁합 섹션 -->
-                    <div class="flex items-center justify-between bg-gray-900 rounded-2xl p-4 text-white mb-8 border border-gray-700 shadow-md">
-                        <span class="text-[10px] font-bold text-purple-400 opacity-80 uppercase tracking-widest">CROSSED FATES</span>
+                    <div class="flex items-center justify-between bg-gray-900 rounded-2xl p-5 text-white mb-8 border border-gray-700 shadow-md">
+                        <span class="text-[10px] font-bold text-purple-400 opacity-80 uppercase tracking-widest">CROSSED FATES (운명의 짝)</span>
                         <span id="r-match" class="font-bold text-sm tracking-tight text-right text-purple-100"></span>
                     </div>
 
                     <!-- 광고 영역 -->
-                    <div class="mb-6 text-center bg-gray-800 rounded-xl border border-dashed border-gray-600 p-2 min-h-[100px] flex items-center justify-center">
+                    <div class="mb-8 text-center bg-gray-800 rounded-xl border border-dashed border-gray-600 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
                         <ins class="adsbygoogle"
                              style="display:block; width:100%;"
                              data-ad-client="ca-pub-3466039113171143"
@@ -89,9 +93,18 @@
                         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
                     </div>
 
-                    <button onclick="location.href='index.html'" class="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
-                        🏠 Escape to Lobby
-                    </button>
+                    <!-- 액션 버튼 영역 -->
+                    <div class="space-y-3">
+                        <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            결과 공유하기 (Copy Link)
+                        </button>
+                        <button onclick="goLobby()" class="w-full py-4 bg-gray-700 hover:bg-gray-600 text-gray-200 border border-gray-600 font-bold rounded-xl transition-all active:scale-95 text-sm">
+                            🏠 다른 테스트 하러 가기 (Lobby)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,8 +114,8 @@
         let userGender = '';
         let currentQ = 0; 
         let score = 0;
+        let currentResultId = '';
 
-        // 질문 데이터 (한영 혼용 HTML 포맷 적용)
         const questions = [
             { 
                 q: "You hear a strange bell ringing in the dark forest.<br><br><span class='text-sm text-purple-300 font-normal'>어두운 숲속에서 이상한 방울 소리가 들린다.</span>", 
@@ -131,45 +144,53 @@
             }
         ];
         
-        // 결과 데이터 (전문 심리 리포트 3단 분리 포맷)
+        // 데이터 확장 (5가지 분석, 다크/신화 테마에 맞춘 심층 텍스트)
         const resultsData = {
             F: [
                 { 
                     id: "f1", 
                     title: "🦊 The Alluring Gumiho<br><span class='text-lg font-bold text-purple-300'>매혹적인 구미호</span>", 
-                    overview: "Charismatic and stunning. You naturally draw people in with your irresistible charm.<br><br><span class='text-xs opacity-80'>화려하고 치명적입니다. 가만히 있어도 사람들을 홀리는 거부할 수 없는 매력을 가졌습니다.</span>", 
-                    strengths: "High emotional intelligence, captivating presence, and adaptability. You know exactly how to navigate complex social dynamics.<br><br><span class='text-xs opacity-80'>높은 감성 지능, 시선을 사로잡는 존재감, 그리고 뛰어난 적응력. 복잡한 인간관계 속에서도 영리하게 상황을 주도합니다.</span>", 
-                    weaknesses: "You easily get bored and may struggle with deep, long-term commitments. Sometimes people question your authenticity.<br><br><span class='text-xs opacity-80'>쉽게 지루함을 느끼며 깊고 장기적인 관계를 맺는 데 어려움을 겪을 수 있습니다. 때로는 사람들이 당신의 진정성을 의심하기도 합니다.</span>", 
+                    overview: "You are the absolute embodiment of fatal charm, highly magnetic charisma, and brilliant social adaptability. Just like the legendary nine-tailed fox of Korean folklore, you possess an intensely captivating presence that effortlessly draws people toward you, often without you even trying. You are highly intelligent, incredibly quick-witted, and navigate complex social hierarchies with the grace and agility of a seasoned diplomat. Your mind is sharp, and you know exactly how to read a room, perfectly adjusting your persona to be exactly what others desperately desire. You live life vividly, always seeking the next thrilling experience and detesting anything that feels mundane, predictable, or overly restrictive.<br><br><span class='text-xs opacity-80'>당신은 치명적인 매력, 자석처럼 끌어당기는 카리스마, 그리고 눈부신 사회적 적응력의 절대적인 화신입니다. 한국 전설 속의 아홉 꼬리 여우처럼, 당신은 애쓰지 않아도 사람들을 자연스럽게 끌어당기는 강렬하고 매혹적인 아우라를 지녔습니다. 고도로 지적이고 믿을 수 없을 만큼 눈치가 빠르며, 노련한 외교관의 우아함과 민첩성으로 복잡한 사회적 계급과 인간관계를 능수능란하게 헤쳐나갑니다. 두뇌 회전이 빠르고 분위기를 읽는 데 천재적이어서, 타인이 절실히 원하는 모습으로 자신의 페르소나를 완벽하게 조율할 줄 압니다. 늘 다음의 짜릿한 경험을 갈망하며 지루하고 예측 가능하거나 지나치게 억압적인 것을 극도로 혐오하는, 생동감 넘치는 삶을 살아갑니다.</span>", 
+                    strengths: "Your greatest power lies in your phenomenal emotional intelligence and your absolute mastery of persuasion. You can charm your way out of the most impossible situations and easily win over even your harshest critics. Your highly adaptable nature means you can thrive in absolutely any environment, effortlessly mirroring the energy of those around you while secretly maintaining total control of the narrative. Furthermore, your fierce independence and incredibly high self-esteem act as a powerful shield; you rarely let others dictate your worth, and you possess a beautifully fierce confidence that intensely inspires and occasionally intimidates those lucky enough to witness it.<br><br><span class='text-xs opacity-80'>당신의 가장 위대한 힘은 경이로운 정서 지능과 완벽에 가까운 설득의 기술에 있습니다. 가장 불가능해 보이는 상황에서도 특유의 매력으로 빠져나올 수 있으며, 당신을 가장 가혹하게 비판하는 사람조차도 쉽게 내 편으로 만들어버립니다. 고도로 뛰어난 적응력 덕분에 어떤 낯선 환경에서도 만개할 수 있으며, 주변 사람들의 에너지를 수월하게 거울처럼 반사하면서도 은밀하게 상황에 대한 통제권을 완벽히 쥐고 있습니다. 나아가 당신의 맹렬한 독립심과 믿을 수 없을 만큼 높은 자존감은 강력한 방패로 작용합니다. 타인이 당신의 가치를 함부로 평가하도록 내버려 두지 않으며, 이를 목격하는 이들에게 강렬한 영감을 주고 때로는 위압감마저 느끼게 하는 맹렬하고 눈부신 자신감을 소유하고 있습니다.</span>", 
+                    relationship: "In matters of romance and friendship, you are the ultimate prize—exciting, passionate, and deeply intoxicating. You absolutely love the thrilling chase and the initial spark of a new connection. You heavily desire a partner who can constantly stimulate your sharp mind, match your fierce elegance, and keep you guessing. You detest clinginess and immediately pull away from anyone who attempts to cage your beautifully wild spirit. However, beneath your highly polished, sometimes intimidating exterior, you harbor a deep, hidden longing for a truly authentic connection. When you finally decide to drop your guard and commit, your loyalty is fiercely unwavering and deeply profound.<br><br><span class='text-xs opacity-80'>연애와 우정에 있어서 당신은 짜릿하고, 열정적이며, 상대를 깊이 취하게 만드는 궁극적인 보물과도 같습니다. 당신은 짜릿한 추격전과 새로운 인연이 시작될 때의 그 강렬한 불꽃을 절대적으로 사랑합니다. 당신의 날카로운 지성을 끊임없이 자극하고, 당신의 맹렬한 우아함에 발맞추며, 당신이 계속해서 호기심을 갖게 만드는 파트너를 강렬하게 원합니다. 집착을 극도로 혐오하며, 당신의 아름답고 야생적인 영혼을 새장에 가두려는 자에게서는 즉각적으로 멀어집니다. 하지만 고도로 다듬어지고 때로는 다가가기 힘든 외면 아래에는, 진실하고 꾸밈없는 관계에 대한 깊고 숨겨진 갈망을 품고 있습니다. 마침내 당신이 경계심을 풀고 마음을 정착하기로 결심하면, 당신의 의리는 맹렬하게 흔들림 없으며 심연처럼 깊어집니다.</span>", 
+                    weaknesses: "Your extreme fear of vulnerability and your constant need for exciting new stimulation can sometimes make you appear deeply superficial, emotionally unavailable, or notoriously unreliable to those who seek deep, stable roots. Because you are so highly skilled at wearing beautiful masks to survive and thrive, you often dangerously lose touch with your own true identity, completely forgetting who you are when no one is watching. Your tendency to abruptly vanish or emotionally detach the moment a situation becomes heavily routine or too emotionally demanding can leave a trail of deeply confused, hurt people in your magnificent wake.<br><br><span class='text-xs opacity-80'>자신의 취약성을 드러내는 것에 대한 극도의 두려움과 새롭고 짜릿한 자극에 대한 끊임없는 갈망은, 깊고 안정적인 뿌리를 찾는 사람들에게 당신이 매우 피상적이거나, 감정적 교류가 불가능하거나, 악명 높을 정도로 신뢰할 수 없는 사람처럼 보이게 만들 수 있습니다. 살아남고 번영하기 위해 아름다운 가면을 쓰는 데 너무나도 능숙하기 때문에, 당신은 종종 당신 본연의 진짜 정체성과의 연결 고리를 위험하게 잃어버리며, 아무도 보지 않을 때 자신이 진정 누구인지 완전히 잊어버리기도 합니다. 상황이 심하게 일상적으로 변하거나 감정적으로 너무 많은 것을 요구하는 순간 돌연 자취를 감추거나 감정적으로 분리되어버리는 성향은, 당신의 그 찬란한 발자취 뒤에 깊이 혼란스럽고 상처받은 사람들을 남겨둘 수 있습니다.</span>", 
+                    wellness: "To maintain your radiant energy without completely losing your soul, you must actively and intentionally practice radical authenticity. Strip away your highly curated personas and spend significant solitary time engaging in deeply grounding practices like silent meditation, raw and unedited journaling, or completely unplugged walks in dense, quiet forests. You critically need to learn that true, profound power does not exclusively come from constantly enchanting others, but from finding deep, unshakeable peace within your own unfiltered self. Challenge yourself to safely expose your flaws to one highly trusted individual; true intimacy is the ultimate magic you actually seek.<br><br><span class='text-xs opacity-80'>영혼을 잃지 않고 그 빛나는 에너지를 지속적으로 유지하려면, 급진적인 진실성을 의도적이고 적극적으로 실천해야 합니다. 정교하게 기획된 페르소나들을 모두 벗어던지고, 침묵의 명상, 날것 그대로의 꾸밈없는 일기 쓰기, 또는 조용하고 울창한 숲속에서의 완벽한 단절 등 땅에 온전히 발을 딛게 하는 활동에 깊이 몰입하는 고독한 시간을 가져야 합니다. 진정하고 심오한 힘은 타인을 끊임없이 매혹시키는 데서만 오는 것이 아니라, 필터 없는 본연의 자아 안에서 깊고 흔들림 없는 평화를 찾는 데서 온다는 것을 뼈저리게 배워야 합니다. 가장 신뢰하는 한 사람에게 안전하게 당신의 결점을 노출하는 도전을 해보세요. 당신이 진정으로 갈망하는 궁극의 마법은 완벽한 환상이 아니라 진실한 친밀감입니다.</span>", 
                     match: "The Wise Mountain Spirit<br><span class='text-[10px] font-normal'>지혜로운 산신령</span>" 
                 },
                 { 
                     id: "f2", 
                     title: "👹 The Playful Dokkaebi<br><span class='text-lg font-bold text-purple-300'>엉뚱한 도깨비</span>", 
-                    overview: "Unpredictable and fun! You love making people laugh with your playful nature.<br><br><span class='text-xs opacity-80'>장난기 많고 예측 불허! 사람들과 어울려 노는 것을 좋아하는 분위기 메이커입니다.</span>", 
-                    strengths: "Infinite energy, creative problem-solving, and deep loyalty to your true friends. You turn boring moments into magic.<br><br><span class='text-xs opacity-80'>무한한 에너지, 창의적인 문제 해결 능력, 진짜 친구를 향한 깊은 의리. 지루한 일상을 마법처럼 즐겁게 바꿉니다.</span>", 
-                    weaknesses: "Your impulsive nature can lead to reckless decisions. You hate strict rules and often clash with authority.<br><br><span class='text-xs opacity-80'>충동적인 성향 탓에 무모한 결정을 내리곤 합니다. 엄격한 규칙을 극도로 싫어하며 권위적인 상황과 자주 충돌합니다.</span>", 
+                    overview: "You are the living, breathing definition of chaotic good, possessing an absolutely boundless reservoir of vibrant energy, wild creativity, and intense playfulness. Much like the mischievous but ultimately benevolent Dokkaebi (Korean goblin), you abhor overly strict rules, stuffy traditions, and boring formalities. You operate on raw instinct and intense passion, turning the most mundane situations into incredibly magical, wildly entertaining adventures. You are fiercely protective of your true friends and possess a beautifully innocent, almost childlike wonder that makes you an incredibly refreshing, unforgettable presence in a highly cynical, serious world.<br><br><span class='text-xs opacity-80'>당신은 살아 숨 쉬는 '혼돈의 선(Chaotic Good)'의 표본으로, 활기찬 에너지, 야생적인 창의성, 그리고 강렬한 장난기의 한계 없는 거대한 저장소를 소유하고 있습니다. 장난기 많지만 궁극적으로는 선량한 도깨비처럼, 당신은 지나치게 엄격한 규칙, 답답한 전통, 그리고 지루한 격식을 극도로 혐오합니다. 다듬어지지 않은 본능과 강렬한 열정으로 움직이며, 가장 따분한 일상조차 믿을 수 없을 만큼 마법 같고 미친 듯이 즐거운 모험으로 탈바꿈시킵니다. 당신의 진짜 친구들을 맹렬하게 보호하며, 몹시 냉소적이고 진지한 현대 세상 속에서 당신을 믿을 수 없을 만큼 신선하고 절대 잊을 수 없는 존재로 만들어주는, 아름다울 정도로 순수하고 아이 같은 호기심을 간직하고 있습니다.</span>", 
+                    strengths: "Your ultimate superpower is your phenomenal ability to think completely outside the box and find highly brilliant, incredibly unconventional solutions to the most rigid problems. You possess a limitless supply of social stamina and an infectious enthusiasm that can effortlessly drag anyone out of their darkest, most depressed moods. Your loyalty is legendary; if someone treats you to a metaphorical bowl of buckwheat jelly, you will aggressively reward them with a lifetime of fierce protection and overflowing generosity. You are profoundly authentic, completely unafraid to look silly, and heavily value pure joy and deep laughter over empty prestige or social status.<br><br><span class='text-xs opacity-80'>당신의 궁극적인 초능력은 틀을 완전히 벗어나 생각하고, 가장 경직된 문제들에 대해 매우 기발하고 믿을 수 없을 만큼 독창적인 해결책을 찾아내는 경이로운 능력입니다. 무한한 사교적 체력과 전염성 강한 열정을 지니고 있어, 아무리 어둡고 우울한 기분에 빠진 사람이라도 수월하게 끌어올릴 수 있습니다. 당신의 의리는 전설적입니다. 누군가 당신에게 비유적인 '메밀묵' 한 그릇을 대접한다면, 당신은 평생 동안의 맹렬한 보호와 넘쳐흐르는 관대함으로 그들에게 맹렬하게 보답할 것입니다. 당신은 심오할 정도로 진실하며, 우스꽝스러워 보이는 것을 전혀 두려워하지 않고, 헛된 명예나 사회적 지위보다 순수한 기쁨과 깊은 웃음을 훨씬 더 무겁게 가치 있게 여깁니다.</span>", 
+                    relationship: "In relationships, you are an absolute whirlwind of fun, deeply intense affection, and highly unpredictable romantic gestures. You aggressively seek a partner who is essentially your best friend and highly enthusiastic partner-in-crime—someone who won't aggressively judge your spontaneous 3 AM ideas or try to desperately tame your wonderfully wild spirit. You completely despise passive-aggressiveness; you demand straightforward, honest communication and highly visible expressions of love. However, if a partner attempts to tie you down with suffocating rules or tries to control your massive, sprawling social life, you will vanish in a chaotic puff of smoke without a second thought.<br><br><span class='text-xs opacity-80'>관계에 있어서 당신은 극도로 즐겁고, 깊고 강렬한 애정을 쏟아부으며, 매우 예측 불가능한 로맨틱한 이벤트를 벌이는 완벽한 소용돌이와 같습니다. 본질적으로 당신의 최고의 친구이자 미친 짓을 함께할 열정적인 파트너를 공격적으로 찾습니다. 당신의 새벽 3시의 즉흥적인 아이디어를 심하게 비판하지 않으며, 당신의 경이롭고 야생적인 영혼을 필사적으로 길들이려 하지 않을 사람 말입니다. 수동 공격적인 태도를 완전히 경멸하며, 직설적이고 솔직한 소통과 눈에 확 띄는 사랑의 표현을 강력히 요구합니다. 하지만 만약 파트너가 숨 막히는 규칙으로 당신을 묶어두려 하거나 당신의 거대하고 자유로운 사교 생활을 통제하려 든다면, 당신은 단 일초의 망설임도 없이 혼란스러운 연기 속으로 영원히 사라져 버릴 것입니다.</span>", 
+                    weaknesses: "Your highly impulsive nature and extreme, borderline allergic reaction to strict authority often lead you to make highly reckless decisions without fully considering the heavy, long-term consequences. You have a massive tendency to aggressively overcommit, desperately promising the moon and the stars to everyone you love, only to utterly burn out and completely drop the ball when reality inevitably hits. Because your emotions are so incredibly massive and vibrant, your intense anger or sudden bouts of deep frustration can become highly destructive, inadvertently hurting the exact people you fiercely try to protect in your chaotic storms of passion.<br><br><span class='text-xs opacity-80'>고도로 충동적인 성향과 엄격한 권위에 대한 극단적이고 거의 알레르기에 가까운 거부 반응은, 종종 장기적이고 무거운 결과를 충분히 고려하지 않은 채 매우 무모한 결정을 내리게 만듭니다. 사랑하는 모든 사람에게 하늘의 달과 별이라도 따주겠다고 필사적으로 약속하며 극단적으로 과도한 헌신을 하다가, 필연적으로 현실의 벽에 부딪힐 때 완전히 번아웃되어 모든 것을 내려놓아 버리는 거대한 성향을 지니고 있습니다. 당신의 감정은 믿을 수 없을 만큼 거대하고 생동감 넘치기 때문에, 강렬한 분노나 갑작스럽게 밀려오는 깊은 좌절감은 매우 파괴적으로 변할 수 있습니다. 이는 혼란스러운 열정의 폭풍 속에서, 당신이 그토록 맹렬하게 보호하려 했던 바로 그 사람들에게 본의 아니게 상처를 입히는 결과를 초래하기도 합니다.</span>", 
+                    wellness: "To harness your immense, crackling magic without deeply burning yourself to the ground, you critically need to build a loose but highly necessary structural framework for your wild life. Engage heavily in intense physical activities that safely channel your explosive, chaotic energy—such as aggressive martial arts, competitive team sports, or highly vigorous dance. You absolutely must learn the immensely difficult skill of actively pausing for exactly ten seconds before responding to an intense emotional trigger or agreeing to a wild new commitment. Embrace the fact that maintaining a healthy, boring routine occasionally is what actually gives you the long-term stamina to be brilliantly magical.<br><br><span class='text-xs opacity-80'>당신 스스로를 완전히 잿더미로 만들지 않으면서 그 거대하고 톡톡 튀는 마법을 완벽하게 통제하려면, 야생적인 삶에 느슨하지만 매우 필수적인 구조적 틀을 반드시 구축해야 합니다. 공격적인 무술, 경쟁적인 팀 스포츠, 혹은 고도로 격렬한 댄스 등 폭발적이고 혼란스러운 에너지를 안전하게 분출할 수 있는 강도 높은 육체적 활동에 적극적으로 참여하세요. 강렬한 감정적 자극에 반응하거나 미친 듯이 새로운 약속에 동의하기 전에, 정확히 10초 동안 의도적으로 멈추는 엄청나게 어려운 기술을 반드시 배워야 합니다. 가끔은 건강하고 '지루한' 일상을 유지하는 것만이, 당신이 눈부시게 마법 같은 존재로 남을 수 있는 장기적인 체력을 실제로 제공한다는 사실을 기꺼이 받아들이십시오.</span>", 
                     match: "The Cold Grim Reaper<br><span class='text-[10px] font-normal'>냉철한 저승사자</span>" 
                 },
                 { 
                     id: "f3", 
                     title: "🌑 The Cold Grim Reaper<br><span class='text-lg font-bold text-purple-300'>냉철한 저승사자</span>", 
-                    overview: "Rational and strict. You stay calm and stick to your principles no matter what.<br><br><span class='text-xs opacity-80'>감정보다는 이성! 어떤 상황에서도 원칙을 지키며 냉철하게 판단하는 스타일입니다.</span>", 
-                    strengths: "Unwavering focus, incredible organizational skills, and a strong sense of justice. People trust your unbiased judgment.<br><br><span class='text-xs opacity-80'>흔들림 없는 집중력, 뛰어난 정리 능력, 강한 정의감. 사람들은 당신의 편견 없는 공정한 판단을 깊이 신뢰합니다.</span>", 
-                    weaknesses: "You can be overly blunt and perfectionistic, making it hard for you to show vulnerability or forgive mistakes.<br><br><span class='text-xs opacity-80'>지나치게 직설적이고 완벽주의적인 성향 때문에, 자신의 약점을 드러내거나 타인의 실수를 너그럽게 용서하는 데 서툽니다.</span>", 
+                    overview: "You are the absolute epitome of ultimate rationale, strict cosmic order, and uncompromising, icy precision. Like the legendary Jeoseung Saja (Korean Grim Reaper), you operate with an incredibly sharp, clinical detachment, prioritizing absolute truth, strict rules, and flawless duty over messy, unpredictable human emotions. You are fiercely intellectual, highly observant, and deeply intolerant of profound inefficiency, dramatic emotional outbursts, or chaotic disorder. To others, your highly stoic, immaculately composed exterior might seem incredibly intimidating or deeply unapproachable, but beneath the dark, icy surface lies an exceptionally dedicated, fair, and intensely honorable soul who silently maintains the essential balance of the world.<br><br><span class='text-xs opacity-80'>당신은 궁극적인 합리성, 엄격한 우주적 질서, 그리고 타협을 모르는 얼음같이 차가운 정밀함의 절대적인 표본입니다. 전설 속의 저승사자처럼, 당신은 믿을 수 없을 만큼 날카롭고 임상적인 거리감을 유지하며 행동하고, 통제 불가능하고 지저분한 인간의 감정보다 절대적인 진실, 엄격한 규칙, 그리고 흠잡을 데 없는 의무를 최우선으로 여깁니다. 맹렬할 정도로 지적이고, 고도로 관찰력이 뛰어나며, 심각한 비효율성, 극적인 감정의 폭발, 혹은 혼란스러운 무질서를 깊이 용납하지 못합니다. 타인에게 당신의 고도로 금욕적이고 티 없이 침착한 외면은 믿을 수 없을 만큼 위압적이거나 다가가기 힘든 사람으로 보일 수 있지만, 그 차갑고 어두운 표면 아래에는 세상의 필수적인 균형을 묵묵히 유지하는, 예외적으로 헌신적이고 공정하며 강렬하게 명예로운 영혼이 숨 쉬고 있습니다.</span>", 
+                    strengths: "Your most formidable asset is your unwavering, absolute mental clarity and your sheer inability to be manipulated by petty emotional games or highly chaotic external pressures. You possess a truly exceptional organizational mind, capable of elegantly bringing flawless structure to the most incredibly disastrous, chaotic environments. People instinctively rely heavily on your completely unbiased, deeply objective judgment because you are fundamentally driven by absolute fairness and truth, never by toxic personal biases. Your intense loyalty is not expressed through warm hugs, but through fiercely showing up exactly when you are supposed to and executing your commitments with absolutely terrifying, flawless perfection.<br><br><span class='text-xs opacity-80'>당신의 가장 강력한 자산은 흔들림 없는 절대적인 정신적 명료함과, 유치한 감정싸움이나 고도로 혼란스러운 외부 압력에 결코 조종당하지 않는 철저한 불능성입니다. 참으로 예외적인 조직적 두뇌를 소유하여, 가장 끔찍하게 재앙적이고 혼란스러운 환경에도 우아하게 흠잡을 데 없는 구조를 부여할 수 있습니다. 당신은 유독한 개인적 편견이 아니라 절대적인 공정함과 진실에 의해 근본적으로 움직이기 때문에, 사람들은 당신의 완벽하게 편견 없고 깊이 객관적인 판단에 본능적으로 크게 의존합니다. 당신의 강렬한 충성심은 따뜻한 포옹을 통해 표현되지 않습니다. 그것은 당신이 있어야 할 정확한 시간에 맹렬하게 등장하여, 절대적으로 무섭고 흠잡을 데 없는 완벽함으로 당신의 약속을 무자비하게 실행하는 것을 통해 증명됩니다.</span>", 
+                    relationship: "In relationships, you are an incredibly slow-burning, intensely reliable, and heavily guarded fortress. You aggressively filter out superficial, overly dramatic individuals, seeking only a profound, highly mature partnership built on absolute mutual respect, shared intellectual goals, and rigorous consistency. You strictly do not believe in messy, loud romance; you express your profound love through hyper-practical acts of undeniable service and by actively providing a fiercely secure, completely stable foundation for your partner's life. You desperately need someone who is fiercely independent and highly communicative, someone who will logically state their exact needs rather than passively hoping you magically decode their deeply hidden emotional hints.<br><br><span class='text-xs opacity-80'>관계에 있어서 당신은 믿을 수 없을 만큼 천천히 타오르고, 강렬하게 신뢰할 수 있으며, 두터운 방어벽을 두른 요새와 같습니다. 피상적이고 지나치게 극적인 인물들을 공격적으로 걸러내며, 오직 절대적인 상호 존중, 공유된 지적 목표, 그리고 엄격한 일관성을 바탕으로 구축된 심오하고 고도로 성숙한 파트너십만을 찾습니다. 지저분하고 요란한 로맨스를 절대적으로 믿지 않습니다. 당신은 부정할 수 없는 초현실적인 봉사 활동을 통해, 그리고 파트너의 삶에 맹렬히 안전하고 완벽하게 안정적인 기반을 적극적으로 제공함으로써 당신의 깊은 사랑을 표현합니다. 당신은 맹렬하게 독립적이고 소통이 명확한 사람, 즉 당신이 숨겨진 감정적 힌트를 마법처럼 해독해주기를 수동적으로 바라기보다는 논리적으로 정확한 요구 사항을 명시하는 사람을 절실히 필요로 합니다.</span>", 
+                    weaknesses: "Your extreme, almost paralyzing fear of highly unpredictable, messy emotions makes you appear deeply cold, brutally callous, or intensely robotic during highly sensitive moments when absolute emotional empathy is desperately required. You suffer from a highly severe case of extreme perfectionism, setting absolutely impossible, suffocating standards for both yourself and everyone around you, leading to intense, silent disappointment. In your desperate attempt to perfectly maintain cosmic order and absolute control, you actively isolate your soul, completely failing to deeply connect with the profound, chaotic, and beautifully vulnerable human experience that makes life truly worth living.<br><br><span class='text-xs opacity-80'>예측 불가능하고 지저분한 감정에 대한 극단적이고 거의 마비에 가까운 두려움은, 절대적인 감정적 공감이 절실히 요구되는 매우 예민한 순간에 당신을 깊이 차갑고, 잔인할 정도로 냉담하며, 강렬하게 로봇처럼 보이게 만듭니다. 극단적인 완벽주의라는 매우 심각한 증상을 앓고 있어, 당신 자신뿐만 아니라 주변의 모든 사람에게 절대적으로 불가능하고 숨 막히는 기준을 설정하며, 이는 결국 강렬하고 침묵하는 실망감으로 이어집니다. 우주적 질서와 절대적인 통제력을 완벽하게 유지하려는 절박한 시도 속에서, 당신은 적극적으로 자신의 영혼을 고립시키며, 인생을 진정으로 살 가치가 있게 만드는 심오하고 혼란스러우며 아름다울 정도로 취약한 인간의 경험과 깊이 교감하는 데 완전히 실패하고 맙니다.</span>", 
+                    wellness: "To safely thaw your beautifully icy exterior and prevent total, dark isolation, you absolutely must proactively engage in highly unstructured, purely expressive emotional outlets. Actively force yourself to aggressively consume profoundly moving art, deeply emotional music, or tragic literature to safely process messy human feelings from a comfortable, analytical distance. Consciously practice the immensely terrifying act of explicitly vocalizing one minor flaw or small fear to a highly trusted confidant. Remember that your ultimate, true strength does not exclusively lie in terrifying, flawless perfection, but in your immense, hidden capacity to protect and understand the fragile, deeply flawed human condition.<br><br><span class='text-xs opacity-80'>아름답게 얼어붙은 당신의 외면을 안전하게 녹이고 완전하고 어두운 고립을 예방하기 위해, 당신은 구조화되지 않은 순수하게 표현적인 감정의 분출구에 반드시, 선제적으로 참여해야 합니다. 편안하고 분석적인 거리에서 지저분한 인간의 감정을 안전하게 처리하기 위해, 심오하게 감동적인 예술, 깊이 감정적인 음악, 또는 비극적인 문학을 공격적으로 소비하도록 스스로를 강제하십시오. 가장 신뢰하는 측근에게 사소한 결점 하나나 작은 두려움을 명시적으로 소리 내어 말하는 엄청나게 끔찍한 행위를 의식적으로 연습하세요. 당신의 궁극적이고 진정한 힘은 무섭고 흠잡을 데 없는 완벽함에만 있는 것이 아니라, 깨지기 쉽고 깊이 결함이 있는 인간의 조건을 보호하고 이해하는 당신의 거대하고 숨겨진 능력에 있다는 것을 반드시 기억해야 합니다.</span>", 
                     match: "The Playful Dokkaebi<br><span class='text-[10px] font-normal'>엉뚱한 도깨비</span>" 
                 },
                 { 
                     id: "f4", 
                     title: "⛰️ The Wise Mountain Spirit<br><span class='text-lg font-bold text-purple-300'>지혜로운 산신령</span>", 
-                    overview: "Deep and insightful. People always come to you for comfort and good advice.<br><br><span class='text-xs opacity-80'>깊은 통찰력의 소유자. 사람들이 고민이 있을 때 가장 먼저 찾아오는 정신적 지주입니다.</span>", 
-                    strengths: "Immense patience, emotional maturity, and a calming aura. You provide a safe space for others to heal.<br><br><span class='text-xs opacity-80'>엄청난 인내심, 감정적 성숙함, 평온한 아우라. 타인이 상처를 치유할 수 있는 안전하고 따뜻한 안식처를 제공합니다.</span>", 
-                    weaknesses: "You tend to carry the weight of everyone's problems, leaving you emotionally drained and isolated.<br><br><span class='text-xs opacity-80'>모든 사람의 문제를 스스로 짊어지려는 경향이 있어, 정작 본인은 심리적으로 고갈되고 고립감을 느낄 때가 많습니다.</span>", 
+                    overview: "You are the absolute pillar of profound, unshakable wisdom, immense tranquility, and deep, grounding earthly comfort. Embodying the ancient Sanshin (Korean Mountain Spirit), your soul feels remarkably incredibly old, patient, and deeply connected to the slow, enduring rhythms of the natural world. You entirely reject the toxic, chaotic speed of modern life, deeply preferring to observe, reflect, and nurture quietly from a safe, elevated distance. People are intensely, naturally drawn to your powerfully calming aura; you are the ultimate, deeply trusted sanctuary where broken individuals run to passionately seek profound healing, unconditional acceptance, and remarkably sage advice devoid of petty judgment.<br><br><span class='text-xs opacity-80'>당신은 심오하고 흔들림 없는 지혜, 거대한 평온함, 그리고 깊고 안정적인 대지의 편안함을 상징하는 절대적인 기둥입니다. 고대의 산신령을 구현하듯, 당신의 영혼은 믿을 수 없을 만큼 몹시 오래되고 인내심이 강하며 대자연의 느리고 영속적인 리듬과 깊이 연결되어 있음을 느낍니다. 현대 생활의 유독하고 혼란스러운 속도를 전면 거부하며, 안전하고 높은 거리에서 조용히 관찰하고 반성하며 보살피는 것을 깊이 선호합니다. 사람들은 당신의 강력하게 진정되는 아우라에 강렬하고 자연스럽게 이끌립니다. 당신은 상처받은 이들이 얄팍한 판단이 배제된 심오한 치유, 무조건적인 수용, 그리고 놀라울 정도로 현명한 조언을 열정적으로 구하기 위해 달려가는 궁극적이고 깊이 신뢰받는 안식처입니다.</span>", 
+                    strengths: "Your absolutely greatest gift is your immense, almost boundless capacity for deep, active empathy and your incredibly stabilizing emotional presence. You can absorb terrifying amounts of chaotic, negative energy from others and effortlessly neutralize it with your profound, quiet patience. Your highly intuitive wisdom allows you to clearly see the massive, interconnected bigger picture, completely ignoring petty drama to focus entirely on deep, spiritual growth. You possess an incredible, steadfast loyalty; once you claim someone as your own, you will quietly, fiercely protect them and consistently provide for their deepest emotional needs without ever demanding loud recognition or reciprocal praise.<br><br><span class='text-xs opacity-80'>당신의 절대적으로 가장 위대한 재능은 깊고 적극적인 공감에 대한 거대하고 거의 한계가 없는 능력과 믿을 수 없을 만큼 안정적인 정서적 존재감입니다. 타인으로부터 뿜어져 나오는 끔찍한 양의 혼란스럽고 부정적인 에너지를 흡수하여, 당신의 심오하고 조용한 인내심으로 수월하게 무력화시킬 수 있습니다. 고도로 직관적인 지혜 덕분에 상호 연결된 거대한 큰 그림을 명확하게 볼 수 있으며, 유치한 드라마를 완전히 무시하고 오로지 깊고 영적인 성장에만 온전히 집중합니다. 당신은 믿을 수 없고 변치 않는 충성심을 지녔습니다. 일단 누군가를 당신의 사람으로 받아들이면, 요란한 인정이나 상호적인 찬양을 전혀 요구하지 않고 조용하고 맹렬하게 그들을 보호하며 가장 깊은 감정적 요구를 지속적으로 충족시켜 줄 것입니다.</span>", 
+                    relationship: "In relationships, you are an incredibly nurturing, heavily devoted, and profoundly slow-moving romantic. You absolutely require a deep, authentic, soul-level connection built on highly mature mutual respect, absolute emotional safety, and peaceful silence. You explicitly express your vast love by becoming the ultimate, unwavering emotional bedrock for your partner, ensuring they never, ever feel utterly alone in their darkest struggles. However, you desperately need a partner who explicitly understands that your immense giving nature must be carefully protected, someone who will aggressively step up to nurture you when your heavy spiritual reserves are dangerously depleted by the incredibly heavy burdens of others.<br><br><span class='text-xs opacity-80'>관계에 있어서 당신은 믿을 수 없을 만큼 헌신적으로 보살피고, 심오하게 천천히 움직이는 로맨티스트입니다. 고도로 성숙한 상호 존중, 절대적인 감정적 안전, 그리고 평화로운 침묵을 바탕으로 구축된 깊고 진실한 영혼 수준의 연결을 절대적으로 필요로 합니다. 파트너를 위한 궁극적이고 흔들림 없는 감정적 기반이 되어줌으로써, 그들이 가장 어두운 시련 속에서도 결코, 절대 혼자라고 느끼지 않게 보장하는 것으로 당신의 방대한 사랑을 명시적으로 표현합니다. 하지만, 끝없이 베푸는 당신의 본성이 조심스럽게 보호받아야 한다는 것을 명확히 이해하는 파트너, 즉 타인의 엄청나게 무거운 짐들로 인해 당신의 무거운 영적 비축량이 위험하게 고갈되었을 때, 공격적으로 나서서 당신을 돌봐줄 파트너를 절실히 필요로 합니다.</span>", 
+                    weaknesses: "Your highly dangerous tendency to act as the ultimate emotional sponge for absolutely everyone else means you frequently, severely neglect your own profoundly valid boundaries and personal needs. You run a massive risk of becoming deeply, silently resentful and entirely emotionally exhausted as people constantly take from your vast reserves without ever offering to refill them. Because you are so deeply entrenched in your quiet, elevated mountain, you can easily become far too passive, severely isolated, and heavily resistant to necessary, vibrant change, missing out on the intense, joyful chaos of actively participating in the loud, messy human world below.<br><br><span class='text-xs opacity-80'>다른 모든 사람을 위한 궁극적인 감정적 스펀지 역할을 하려는 매우 위험한 성향은, 정작 당신 자신의 심오하게 타당한 경계선과 개인적인 욕구를 빈번하고 심각하게 방치하게 만든다는 것을 의미합니다. 사람들이 당신의 방대한 에너지를 채워주려는 노력 없이 끊임없이 앗아가기만 할 때, 당신은 깊고 침묵하는 분노를 품게 되며 완전히 감정적으로 탈진해 버릴 거대한 위험을 안고 있습니다. 고요하고 높은 당신만의 산에 너무 깊이 뿌리박혀 있기 때문에, 당신은 쉽게 너무 수동적이고 심각하게 고립될 수 있으며, 필수적이고 활기찬 변화에 무겁게 저항하게 되어 아래 세상의 시끄럽고 지저분한 인간 세계에 적극적으로 참여하는 강렬하고 즐거운 혼란을 놓쳐버리게 됩니다.</span>", 
+                    wellness: "To heavily protect your deeply sacred energy and prevent total, crushing burnout, you absolutely must learn to aggressively implement the highly powerful word 'No'. You critically need to actively engage in strictly physical, deeply grounding hobbies that explicitly force you out of your heavy, empathetic head—like aggressive gardening, intense pottery making, or rigorous physical hiking. It is entirely vital that you proactively seek out and deeply connect with highly robust, fiercely independent peers who absolutely do not require constant emotional fixing. Remember that stepping down from your heavy mountain to playfully experience pure, selfish joy is not a weakness; it is an absolute necessity for your soul's survival.<br><br><span class='text-xs opacity-80'>당신의 깊고 신성한 에너지를 무겁게 보호하고 완전하고 파괴적인 번아웃을 방지하려면, 매우 강력한 단어인 '아니오'를 공격적으로 실행하는 법을 반드시 배워야 합니다. 공격적인 정원 가꾸기, 강렬한 도자기 만들기, 또는 험난한 육체적 하이킹처럼 무겁고 공감으로 가득 찬 머릿속에서 명시적으로 벗어나게 만드는, 엄격하게 육체적이고 깊이 땅에 발을 딛는 취미에 적극적으로 참여해야 합니다. 끊임없는 감정적 치유를 절대적으로 필요로 하지 않는, 매우 강건하고 맹렬하게 독립적인 동료들을 선제적으로 찾고 그들과 깊이 교류하는 것은 전적으로 중요합니다. 무거운 산에서 내려와 순수하고 이기적인 기쁨을 장난스럽게 경험하는 것은 결코 약점이 아니며, 당신 영혼의 생존을 위한 절대적인 필수 조건임을 반드시 기억하십시오.</span>", 
                     match: "The Alluring Gumiho<br><span class='text-[10px] font-normal'>매혹적인 구미호</span>" 
                 }
             ]
         };
 
-        // 남성 데이터를 여성 데이터와 동일한 구조로 설정 후 타이틀 및 매칭 수정
+        // 남성 데이터는 여성 데이터 구조 복제 후 타이틀 및 매치만 수정 적용
         resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
         resultsData.M[0].title = "🦊 The Charming Gumiho<br><span class='text-lg font-bold text-purple-300'>매혹적인 구미호</span>";
         resultsData.M[1].title = "👹 The Cheerful Dokkaebi<br><span class='text-lg font-bold text-purple-300'>유쾌한 도깨비</span>";
@@ -181,13 +202,45 @@
         resultsData.M[2].match = "The Cheerful Dokkaebi<br><span class='text-[10px] font-normal'>유쾌한 도깨비</span>";
         resultsData.M[3].match = "The Charming Gumiho<br><span class='text-[10px] font-normal'>매혹적인 구미호</span>";
 
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('<br>')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
+
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
+
+        // 안전한 화면 전환 로직 (flex 충돌 방지)
         function switchScreen(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden');
-            document.getElementById(fromId).classList.remove('flex');
-            
-            const toScreen = document.getElementById(toId);
-            toScreen.classList.remove('hidden');
-            toScreen.classList.add('flex');
+            document.getElementById(toId).classList.remove('hidden');
         }
 
         function selectGender(g) {
@@ -197,16 +250,13 @@
         }
 
         function showQuestion() {
-            // 진행바 애니메이션
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
             
-            // 페이드인 애니메이션 리셋
             const qScreen = document.getElementById('question-screen');
             qScreen.classList.remove('fade-in');
             void qScreen.offsetWidth; 
             qScreen.classList.add('fade-in');
 
-            // innerHTML 렌더링
             document.getElementById('q-title').innerHTML = questions[currentQ].q;
             document.getElementById('btn-a').innerHTML = questions[currentQ].a;
             document.getElementById('btn-b').innerHTML = questions[currentQ].b;
@@ -221,15 +271,22 @@
             } else {
                 switchScreen('question-screen', 'loading-screen');
                 const finalIdx = score % 4; 
-                setTimeout(() => showResult(userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`), 2500);
+                const genId = userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`;
+                setTimeout(() => showResult(genId, false), 2500);
             }
         }
 
-        function showResult(resultId) {
-            switchScreen('loading-screen', 'result-screen');
-            
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
             const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
             const result = resultsData[userGender][idx];
+            
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
             
             document.getElementById('r-title').innerHTML = result.title;
             document.getElementById('r-match').innerHTML = result.match;
@@ -238,21 +295,49 @@
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_mythology_persona_w.png')" : "url('k_mythology_persona_m.png')";
             imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
-            // 1번 파일과 동일한 3단 분석 UI 구성 (다크 퍼플 테마에 맞춘 배색)
+            // 5단 분석 UI 구성 (다크 퍼플 테마 배색)
             document.getElementById('r-desc').innerHTML = `
-                <div class="bg-gray-800 p-5 rounded-2xl border border-purple-500/30 shadow-sm">
-                    <h4 class="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
-                    <p class="text-sm text-gray-300 leading-relaxed font-medium">${result.overview}</p>
-                </div>
-                <div class="bg-gray-800 p-5 rounded-2xl border border-blue-500/30 shadow-sm">
-                    <h4 class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
-                    <p class="text-sm text-gray-300 leading-relaxed font-medium">${result.strengths}</p>
-                </div>
-                <div class="bg-gray-800 p-5 rounded-2xl border border-pink-500/30 shadow-sm">
-                    <h4 class="text-[10px] font-black text-pink-400 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
-                    <p class="text-sm text-gray-300 leading-relaxed font-medium">${result.weaknesses}</p>
+                <div class="space-y-4">
+                    <div class="bg-gray-800 p-5 rounded-2xl border border-purple-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-purple-400 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-gray-300 leading-relaxed font-medium">${result.overview}</p>
+                    </div>
+                    <div class="bg-gray-800 p-5 rounded-2xl border border-blue-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-gray-300 leading-relaxed font-medium">${result.strengths}</p>
+                    </div>
+                    <div class="bg-gray-800 p-5 rounded-2xl border border-indigo-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
+                        <p class="text-sm text-gray-300 leading-relaxed font-medium">${result.relationship}</p>
+                    </div>
+                    <div class="bg-gray-800 p-5 rounded-2xl border border-pink-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-pink-400 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-gray-300 leading-relaxed font-medium">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-gray-800 p-5 rounded-2xl border border-teal-500/30 shadow-sm">
+                        <h4 class="text-[10px] font-black text-teal-400 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
+                        <p class="text-sm text-gray-300 leading-relaxed font-medium">${result.wellness}</p>
+                    </div>
                 </div>
             `;
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('결과 링크가 복사되었습니다!\\n친구들에게 공유해보세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
