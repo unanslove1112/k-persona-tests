@@ -7,13 +7,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3466039113171143" crossorigin="anonymous"></script>
     <style>
+        /* 부드러운 페이드인 애니메이션 */
         .fade-in { animation: fadeIn 0.4s ease-in-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #f97316; border-radius: 10px; }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900 font-sans">
-    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative">
+    <div class="max-w-md mx-auto min-h-screen bg-white shadow-lg overflow-hidden relative selection:bg-orange-200">
         
+        <!-- 1. START SCREEN -->
         <div id="start-screen" class="px-6 py-12 text-center min-h-screen flex flex-col justify-center bg-gradient-to-b from-orange-50 to-white fade-in">
             <h1 class="text-4xl font-extrabold text-orange-600 mb-4 tracking-tight">K-Food Soul</h1>
             <p class="text-gray-600 mb-8 font-medium">
@@ -29,125 +35,309 @@
             </div>
         </div>
 
-        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col">
-            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8">
-                <div id="progress-bar" class="bg-orange-500 h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+        <!-- 2. QUESTION SCREEN -->
+        <div id="question-screen" class="hidden px-6 py-12 min-h-screen flex flex-col bg-white">
+            <div class="w-full bg-gray-200 rounded-full h-2.5 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-orange-500 h-2.5 rounded-full transition-all duration-300 ease-out" style="width: 0%"></div>
             </div>
             <div class="flex-1 flex flex-col justify-center fade-in">
                 <h2 id="q-title" class="text-xl font-bold text-gray-800 mb-8 leading-relaxed"></h2>
                 <div class="space-y-4">
-                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-orange-50 border border-gray-200 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
-                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-orange-50 border border-gray-200 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(0)" id="btn-a" class="w-full text-left bg-gray-50 hover:bg-orange-50 border border-gray-200 hover:border-orange-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
+                    <button onclick="answer(1)" id="btn-b" class="w-full text-left bg-gray-50 hover:bg-orange-50 border border-gray-200 hover:border-orange-300 p-5 rounded-xl shadow-sm leading-relaxed transition-all active:scale-95"></button>
                 </div>
             </div>
         </div>
 
+        <!-- 3. LOADING SCREEN -->
         <div id="loading-screen" class="hidden px-6 py-12 text-center min-h-screen flex flex-col justify-center items-center bg-orange-500 text-white">
             <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-white mb-6"></div>
-            <h2 class="text-2xl font-bold mb-2">
+            <h2 class="text-2xl font-bold mb-2 tracking-tight">
                 Cooking your result...<br><br>
                 <span class="text-lg opacity-80 font-normal">당신의 소울푸드 조리 중...</span>
             </h2>
         </div>
 
+        <!-- 4. RESULT SCREEN -->
         <div id="result-screen" class="hidden px-4 md:px-6 py-10 min-h-screen bg-gray-50">
             <div class="w-full bg-white rounded-[2rem] shadow-xl p-6 relative overflow-hidden ring-1 ring-gray-100 fade-in">
-                <div class="absolute -top-10 -right-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50"></div>
+                
+                <!-- 배경 장식 (오렌지 테마) -->
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-orange-100 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+                
                 <div class="relative z-10">
                     <div class="text-center mb-6">
-                        <span class="inline-block px-3 py-1 bg-orange-50 text-orange-600 text-[10px] font-black uppercase tracking-widest rounded-full mb-2">Dish Ready</span>
+                        <span class="inline-block px-3 py-1.5 bg-orange-800 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-md">Premium Analysis</span>
                         <h1 id="r-title" class="text-2xl font-extrabold text-gray-900 leading-tight"></h1>
                     </div>
-                    <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
-                    <div id="r-desc" class="space-y-4 mb-6"></div>
-                    <div class="flex items-center justify-between bg-orange-900 rounded-2xl p-4 text-white mb-8 shadow-md">
-                        <span class="text-[10px] font-bold opacity-70 uppercase tracking-widest">BEST PAIRING</span>
+
+                    <div id="r-img-div" class="w-full aspect-square bg-gray-100 bg-cover bg-no-repeat rounded-[1.5rem] shadow-inner mb-6 border border-white/50" style="background-size: 200% 200%; background-position: 0% 0%;"></div>
+
+                    <!-- 전문 심리 분석 리포트 섹션 -->
+                    <div id="r-desc" class="space-y-4 mb-8"></div>
+
+                    <!-- 찰떡 궁합 섹션 -->
+                    <div class="flex items-center justify-between bg-orange-900 rounded-2xl p-5 text-white mb-8 shadow-md">
+                        <span class="text-[10px] font-bold text-orange-300 uppercase tracking-widest">BEST PAIRING (최상의 페어링)</span>
                         <span id="r-match" class="font-bold text-sm tracking-tight text-right"></span>
                     </div>
-                    <div class="mb-6 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center">
-                        <ins class="adsbygoogle" style="display:block; width:100%;" data-ad-client="ca-pub-3466039113171143" data-ad-slot="여기에_슬롯ID_입력" data-ad-format="auto" data-full-width-responsive="true"></ins>
+
+                    <!-- 광고 영역 -->
+                    <div class="mb-8 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 p-2 min-h-[100px] flex items-center justify-center overflow-hidden">
+                        <ins class="adsbygoogle"
+                             style="display:block; width:100%;"
+                             data-ad-client="ca-pub-3466039113171143"
+                             data-ad-slot="여기에_슬롯ID_입력"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
                         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
                     </div>
-                    <button onclick="location.href='index.html'" class="w-full py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm">
-                        🏠 Go to Lobby
-                    </button>
+
+                    <!-- 액션 버튼 영역 -->
+                    <div class="space-y-3">
+                        <button onclick="shareResult()" class="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-bold rounded-xl shadow-md transition-all active:scale-95 text-sm flex justify-center items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                            </svg>
+                            결과 공유하기 (Copy Link)
+                        </button>
+                        <button onclick="goLobby()" class="w-full py-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-xl transition-all active:scale-95 text-sm">
+                            🏠 다른 테스트 하러 가기 (Lobby)
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        let userGender = ''; let currentQ = 0; let score = 0;
+        let userGender = '';
+        let currentQ = 0; 
+        let score = 0;
+        let currentResultId = '';
 
         const questions = [
-            { q: "It's Friday night! What's for dinner?<br><br><span class='text-sm text-gray-400 font-normal'>불금입니다! 오늘 저녁 메뉴는?</span>", a: "Spicy street food with loud friends.<br><br><span class='text-sm text-gray-500 font-normal'>시끌벅적한 친구들과 먹는 매운 길거리 음식.</span>", b: "A quiet, warm, and hearty soup.<br><br><span class='text-sm text-gray-500 font-normal'>조용하고 든든하게 배를 채우는 따뜻한 국밥.</span>" },
-            { q: "When cooking a new recipe...<br><br><span class='text-sm text-gray-400 font-normal'>새로운 요리를 할 때 당신은?</span>", a: "I just eyeball the ingredients. Cooking is an art!<br><br><span class='text-sm text-gray-500 font-normal'>눈대중으로 대충 감으로 넣는다. 요리는 예술이지!</span>", b: "I measure exactly according to the recipe.<br><br><span class='text-sm text-gray-500 font-normal'>레시피에 적힌 정량 그대로 정확하게 계량한다.</span>" },
-            { q: "After a heavy, satisfying meal...<br><br><span class='text-sm text-gray-400 font-normal'>배부르게 밥을 먹고 난 후에는?</span>", a: "I need a sweet and trendy dessert like Tanghulu.<br><br><span class='text-sm text-gray-500 font-normal'>탕후루나 케이크 같은 달콤하고 트렌디한 디저트 필수.</span>", b: "Just a clean Iced Americano, please.<br><br><span class='text-sm text-gray-500 font-normal'>깔끔하게 아이스 아메리카노 한 잔이면 충분하다.</span>" },
-            { q: "Your friends are arguing about what to eat.<br><br><span class='text-sm text-gray-400 font-normal'>친구들이 메뉴를 못 정하고 싸우고 있다면?</span>", a: "I take charge and pick the best restaurant.<br><br><span class='text-sm text-gray-500 font-normal'>내가 주도권을 잡고 최고의 맛집으로 이끈다.</span>", b: "I just follow whatever the majority wants.<br><br><span class='text-sm text-gray-500 font-normal'>다수결에 따르며 조용히 의견을 맞춘다.</span>" },
-            { q: "When you are extremely stressed out...<br><br><span class='text-sm text-gray-400 font-normal'>극심한 스트레스를 받았을 때 당신은?</span>", a: "Eat something so spicy I cry to release stress.<br><br><span class='text-sm text-gray-500 font-normal'>눈물 쏙 빠지게 매운 음식을 먹으며 스트레스를 푼다.</span>", b: "Eat my favorite comfort food alone in peace.<br><br><span class='text-sm text-gray-500 font-normal'>방해받지 않고 조용히 나만의 소울푸드를 음미한다.</span>" }
+            { 
+                q: "It's Friday night! What's for dinner?<br><br><span class='text-sm text-gray-400 font-normal'>불금입니다! 오늘 저녁 메뉴는?</span>", 
+                a: "Spicy street food with loud friends.<br><br><span class='text-sm text-gray-500 font-normal'>시끌벅적한 친구들과 먹는 매운 길거리 음식.</span>", 
+                b: "A quiet, warm, and hearty soup.<br><br><span class='text-sm text-gray-500 font-normal'>조용하고 든든하게 배를 채우는 따뜻한 국밥.</span>" 
+            },
+            { 
+                q: "When cooking a new recipe...<br><br><span class='text-sm text-gray-400 font-normal'>새로운 요리를 할 때 당신은?</span>", 
+                a: "I just eyeball the ingredients. Cooking is an art!<br><br><span class='text-sm text-gray-500 font-normal'>눈대중으로 대충 감으로 넣는다. 요리는 예술이지!</span>", 
+                b: "I measure exactly according to the recipe.<br><br><span class='text-sm text-gray-500 font-normal'>레시피에 적힌 정량 그대로 정확하게 계량한다.</span>" 
+            },
+            { 
+                q: "After a heavy, satisfying meal...<br><br><span class='text-sm text-gray-400 font-normal'>배부르게 밥을 먹고 난 후에는?</span>", 
+                a: "I need a sweet and trendy dessert like Tanghulu.<br><br><span class='text-sm text-gray-500 font-normal'>탕후루나 케이크 같은 달콤하고 트렌디한 디저트 필수.</span>", 
+                b: "Just a clean Iced Americano, please.<br><br><span class='text-sm text-gray-500 font-normal'>깔끔하게 아이스 아메리카노 한 잔이면 충분하다.</span>" 
+            },
+            { 
+                q: "Your friends are arguing about what to eat.<br><br><span class='text-sm text-gray-400 font-normal'>친구들이 메뉴를 못 정하고 싸우고 있다면?</span>", 
+                a: "I take charge and pick the best restaurant.<br><br><span class='text-sm text-gray-500 font-normal'>내가 주도권을 잡고 최고의 맛집으로 이끈다.</span>", 
+                b: "I just follow whatever the majority wants.<br><br><span class='text-sm text-gray-500 font-normal'>다수결에 따르며 조용히 의견을 맞춘다.</span>" 
+            },
+            { 
+                q: "When you are extremely stressed out...<br><br><span class='text-sm text-gray-400 font-normal'>극심한 스트레스를 받았을 때 당신은?</span>", 
+                a: "Eat something so spicy I cry to release stress.<br><br><span class='text-sm text-gray-500 font-normal'>눈물 쏙 빠지게 매운 음식을 먹으며 스트레스를 푼다.</span>", 
+                b: "Eat my favorite comfort food alone in peace.<br><br><span class='text-sm text-gray-500 font-normal'>방해받지 않고 조용히 나만의 소울푸드를 음미한다.</span>" 
+            }
         ];
         
+        // 데이터 확장 (5가지 분석, 각 분석마다 방대한 분량 제공)
         const resultsData = {
             F: [
-                { id: "f1", title: "🔥 Fiery Tteokbokki<br><span class='text-lg font-bold text-gray-500'>불타는 마라 떡볶이</span>", overview: "Passionate and trendy. You have a spicy personality that leaves a strong impression on everyone.<br><br><span class='text-xs opacity-80'>열정적이고 트렌디합니다. 한 번 보면 잊을 수 없는 강렬하고 매콤한 성격의 소유자입니다.</span>", strengths: "High energy, great leadership, and an incredible ability to hype people up.<br><br><span class='text-xs opacity-80'>넘치는 에너지와 리더십을 가졌으며, 주변 사람들의 텐션을 단숨에 끌어올리는 능력이 탁월합니다.</span>", weaknesses: "You can be quite hot-tempered. Your straightforwardness sometimes burns others.<br><br><span class='text-xs opacity-80'>다소 다혈질적인 면이 있습니다. 너무 솔직하고 직설적인 화법이 때로는 타인에게 상처를 주기도 합니다.</span>", match: "Warm Gukbap<br><span class='text-[10px] font-normal'>따뜻한 뚝배기 국밥</span>" },
-                { id: "f2", title: "🍚 Warm Gukbap<br><span class='text-lg font-bold text-gray-500'>따뜻한 뚝배기 국밥</span>", overview: "Reliable and comforting. You are a deep, genuine person who values long-term relationships.<br><br><span class='text-xs opacity-80'>든든하고 편안합니다. 가벼운 유행보다는 변치 않는 진정성과 깊은 관계를 중시하는 진국 같은 사람입니다.</span>", strengths: "Incredible patience, strong sense of responsibility, and a warm heart that heals others.<br><br><span class='text-xs opacity-80'>놀라운 인내심, 강한 책임감, 그리고 타인의 마음을 달래주는 따뜻한 위로 능력을 갖췄습니다.</span>", weaknesses: "You can be a bit stubborn. You hate stepping out of your comfort zone.<br><br><span class='text-xs opacity-80'>은근히 고집이 셉니다. 익숙하고 편안한 것을 지나치게 좋아해 새로운 도전을 꺼리는 경향이 있습니다.</span>", match: "Chill Naengmyeon<br><span class='text-[10px] font-normal'>쿨한 얼음 냉면</span>" },
-                { id: "f3", title: "🍖 Sizzling K-BBQ<br><span class='text-lg font-bold text-gray-500'>지글지글 K-삼겹살</span>", overview: "Social, rich, and essential. You are the center of every party and bring people together.<br><br><span class='text-xs opacity-80'>사교적이고 풍성하며 모임에 절대 빠질 수 없는 존재. 사람들을 하나로 모으는 파티의 중심입니다.</span>", strengths: "Amazing sociability, generous nature, and excellent at creating a fun atmosphere.<br><br><span class='text-xs opacity-80'>놀라운 친화력과 넉넉한 인심을 자랑하며, 어느 자리에서든 유쾌한 분위기를 만들어내는 재주꾼입니다.</span>", weaknesses: "You hate being alone so much that you sometimes overcommit your time and energy to others.<br><br><span class='text-xs opacity-80'>혼자 있는 것을 너무 싫어해 끊임없이 약속을 잡다가, 정작 본인의 체력과 에너지가 방전되곤 합니다.</span>", match: "Fiery Tteokbokki<br><span class='text-[10px] font-normal'>불타는 마라 떡볶이</span>" },
-                { id: "f4", title: "🧊 Chill Naengmyeon<br><span class='text-lg font-bold text-gray-500'>쿨한 얼음 냉면</span>", overview: "Calm, independent, and refreshing. You keep a cool head in any chaotic situation.<br><br><span class='text-xs opacity-80'>차분하고 독립적이며 깔끔합니다. 아무리 복잡한 상황에서도 얼음처럼 이성적이고 쿨한 태도를 유지합니다.</span>", strengths: "High logic, sharp problem-solving skills, and you never cross people's boundaries.<br><br><span class='text-xs opacity-80'>논리적이고 문제 해결 능력이 뛰어나며, 타인의 선을 넘거나 불필요한 참견을 절대 하지 않습니다.</span>", weaknesses: "You can appear emotionally detached or indifferent, making it hard for people to get close to you.<br><br><span class='text-xs opacity-80'>감정 표현이 적고 무관심해 보여서, 사람들이 당신에게 진정으로 다가가는 데 큰 어려움을 느낄 수 있습니다.</span>", match: "Sizzling K-BBQ<br><span class='text-[10px] font-normal'>지글지글 K-삼겹살</span>" }
+                { 
+                    id: "f1", 
+                    title: "🔥 Fiery Tteokbokki<br><span class='text-lg font-bold text-gray-500'>불타는 마라 떡볶이</span>", 
+                    overview: "You are an incredibly vibrant, unapologetically passionate individual who thrives on high energy and thrilling new experiences. Just like the intensely addictive, overwhelmingly spicy flavor of Mara Tteokbokki, your personality leaves a massive, unforgettable impact on absolutely everyone you meet. You embrace a fast-paced, highly dynamic lifestyle and naturally gravitate towards the absolute latest trends in culture, fashion, and food. You are the definitive center of attention in any room, radiating a fierce, confident aura that makes you an incredibly compelling leader and an exciting, spontaneous companion who absolutely hates boring, predictable routines.<br><br><span class='text-xs opacity-80'>당신은 믿을 수 없을 정도로 생동감 넘치고, 타인의 시선을 신경 쓰지 않는 열정적인 개인으로, 높은 에너지와 짜릿한 새로운 경험을 통해 활력을 얻습니다. 강렬하게 중독적이고 압도적으로 매콤한 마라 떡볶이의 맛처럼, 당신의 성격은 만나는 모든 사람에게 결코 잊을 수 없는 거대한 임팩트를 남깁니다. 당신은 빠르고 역동적인 라이프스타일을 기꺼이 수용하며 문화, 패션, 미식의 가장 최신 트렌드에 본능적으로 끌립니다. 어떤 공간에서든 단연 돋보이는 관심의 중심이며, 맹렬하고 자신감 넘치는 아우라를 발산하여 사람들을 매료시키는 강력한 리더이자 지루하고 예측 가능한 일상을 극도로 혐오하는 흥미롭고 즉흥적인 동반자입니다.</span>",
+                    strengths: "Your greatest strength is your absolute fearlessness and your phenomenal, magnetic charisma. You are not afraid to boldly speak your mind, fiercely defend your friends, and aggressively pursue your wildest ambitions without a single ounce of hesitation. Your ability to instantly hype up a crowd and inject pure, unfiltered fun into the most mundane situations is truly unmatched. You process stress dynamically—often converting intense negative emotions into highly productive, creative bursts of energy. People admire your brilliant transparency; with you, what they see is exactly what they get, making you an incredibly trustworthy, fiercely genuine force of nature.<br><br><span class='text-xs opacity-80'>당신의 가장 위대한 강점은 절대적인 두려움 없음과 경이롭고 자석 같은 카리스마입니다. 마음속에 있는 생각을 대담하게 말하고, 친구들을 맹렬하게 방어하며, 당신의 가장 거친 야망을 단 한 치의 망설임도 없이 공격적으로 추구하는 것을 결코 두려워하지 않습니다. 순식간에 군중을 열광시키고, 가장 따분한 상황에서도 순수하고 필터 없는 즐거움을 주입하는 능력은 참으로 타의 추종을 불허합니다. 당신은 스트레스를 매우 역동적으로 처리하며, 종종 강렬한 부정적인 감정을 고도로 생산적이고 창의적인 에너지의 폭발로 전환시킵니다. 사람들은 당신의 눈부신 투명성을 존경합니다. 당신에게는 보이는 모습이 곧 진실이며, 이는 당신을 믿을 수 없을 만큼 신뢰할 수 있고 맹렬하게 진실한 거대한 자연의 힘처럼 만듭니다.</span>",
+                    relationship: "In relationships, you burn incredibly bright and fiercely hot. You absolutely detest playing complicated mind games, sending mixed signals, or settling for a lukewarm, ambiguous romance. When you fall, you fall hard, showering your partner with immense, overwhelming affection, highly spontaneous adventures, and fierce loyalty. You constantly seek a partner who can completely match your intense energy level, challenge your sharp wit, and proudly stand right beside you in the vibrant spotlight. However, your intense passion demands total, unwavering honesty; you expect your partner to be just as direct, bold, and fiercely committed as you are.<br><br><span class='text-xs opacity-80'>관계에 있어서 당신은 믿을 수 없을 정도로 밝고 맹렬하게 뜨겁게 타오릅니다. 복잡한 심리전을 펼치거나, 엇갈린 신호를 보내거나, 미지근하고 애매모호한 로맨스에 안주하는 것을 절대적으로 혐오합니다. 누군가에게 빠지면 그야말로 깊게 빠져들며, 파트너에게 거대하고 압도적인 애정, 고도로 즉흥적인 모험, 그리고 맹렬한 의리를 아낌없이 쏟아붓습니다. 당신의 강렬한 에너지 수준을 완벽하게 맞추고, 당신의 날카로운 재치에 도전하며, 화려한 스포트라이트 속에서 당신 바로 옆에 자랑스럽게 설 수 있는 파트너를 끊임없이 원합니다. 하지만 당신의 강렬한 열정은 완전하고 흔들림 없는 정직함을 요구합니다. 파트너 역시 당신만큼 직설적이고 대담하며 맹렬하게 헌신적이기를 기대합니다.</span>",
+                    weaknesses: "Your blazing speed and brutally honest nature can sometimes severely burn or inadvertently intimidate more sensitive, quiet individuals around you. Because you operate at absolute maximum intensity, you often struggle significantly with patience and can become highly irritable, easily bored, or intensely frustrated when progress is slow or things don't go exactly your way. Your tendency to make rapid, impulsive decisions based purely on a surge of strong emotion can occasionally lead you into unnecessary, chaotic conflicts that could have easily been avoided with just a few moments of cool, silent reflection.<br><br><span class='text-xs opacity-80'>당신의 타오르는 속도와 잔인할 정도로 솔직한 본성은 때때로 당신 주변의 더 예민하고 조용한 사람들에게 심각한 화상을 입히거나 본의 아니게 위압감을 줄 수 있습니다. 절대적인 최대 강도로 행동하기 때문에, 당신은 종종 인내심을 발휘하는 데 큰 어려움을 겪으며 진행이 더디거나 상황이 당신의 뜻대로 정확히 흘러가지 않을 때 매우 짜증을 내거나, 쉽게 지루해하거나, 극심한 좌절감을 느낄 수 있습니다. 오로지 강렬한 감정의 폭발에만 의존하여 빠르고 충동적인 결정을 내리는 당신의 성향은, 차갑고 조용한 몇 분의 숙고만 있었어도 쉽게 피할 수 있었을 불필요하고 혼란스러운 갈등으로 당신을 이끌기도 합니다.</span>",
+                    wellness: "To sustainably maintain your roaring inner fire without completely burning out, you must proactively master the highly essential art of cooling down. Balance your intense, chaotic energy by deliberately incorporating deeply calming, highly sensory activities into your weekly routine—such as slow, deep-tissue stretching, mindful meditation in absolute silence, or consuming physically cooling, mild foods to calm your overactive digestive and nervous systems. Consistently learning to pause for just three deep breaths before reacting emotionally will dramatically transform your life, allowing you to channel your immense power much more effectively and constructively.<br><br><span class='text-xs opacity-80'>완전히 연소되어 재가 되지 않고 당신의 포효하는 내면의 불꽃을 지속 가능하게 유지하려면, 열을 식히는 매우 필수적인 기술을 선제적으로 마스터해야 합니다. 느리고 깊은 근육 스트레칭, 절대적인 침묵 속에서의 마음 챙김 명상, 혹은 과도하게 활성화된 소화 및 신경계를 진정시키기 위해 물리적으로 시원하고 순한 음식을 섭취하는 등 깊이 진정되고 감각적인 활동을 주간 루틴에 의도적으로 통합하여 당신의 강렬하고 혼란스러운 에너지의 균형을 맞추십시오. 감정적으로 반응하기 전에 단 세 번의 깊은 심호흡을 하며 멈추는 법을 지속적으로 배우는 것은 당신의 삶을 극적으로 변화시킬 것이며, 당신의 거대한 힘을 훨씬 더 효과적이고 건설적으로 쏟아낼 수 있게 해줄 것입니다.</span>",
+                    match: "Warm Gukbap<br><span class='text-[10px] font-normal'>따뜻한 뚝배기 국밥</span>" 
+                },
+                { 
+                    id: "f2", 
+                    title: "🍚 Warm Gukbap<br><span class='text-lg font-bold text-gray-500'>따뜻한 뚝배기 국밥</span>", 
+                    overview: "You are the absolute embodiment of deep, enduring comfort and unwavering reliability. Much like a boiling hot, incredibly hearty bowl of traditional Gukbap on a freezing winter day, your profound presence instantly warms the souls of absolutely everyone around you. You value highly authentic, timeless traditions and profoundly deep human connections far above any fleeting, superficial modern trends. You are an old soul who operates with quiet grace, immense patience, and an inherently nurturing spirit, constantly striving to create a deeply stable, exceptionally harmonious, and perfectly peaceful environment for your beloved community.<br><br><span class='text-xs opacity-80'>당신은 깊고 변치 않는 편안함과 흔들림 없는 신뢰성의 절대적인 화신입니다. 얼어붙을 듯한 한겨울에 끓어오르는, 믿을 수 없을 만큼 든든하고 전통적인 국밥 한 그릇처럼, 당신의 묵직한 존재감은 주변 모든 사람들의 영혼을 즉각적으로 따뜻하게 데워줍니다. 한순간 스쳐 지나가는 피상적이고 현대적인 유행보다, 극도로 진정성 있고 변치 않는 전통과 심연처럼 깊은 인간적 유대를 훨씬 더 가치 있게 여깁니다. 당신은 조용한 우아함, 거대한 인내심, 그리고 본질적으로 타인을 보살피는 영혼으로 살아가는 성숙한 사람이며, 사랑하는 공동체를 위해 깊이 안정적이고 예외적으로 조화로우며 완벽하게 평화로운 환경을 만들기 위해 끊임없이 노력합니다.</span>",
+                    strengths: "Your absolutely phenomenal emotional resilience and your seemingly infinite capacity for deep, non-judgmental empathy make you the ultimate, irreplaceable safe haven for your friends and family. You are a truly exceptional listener who remembers the most subtle, intricate details of people's lives, offering incredibly grounded, highly practical advice that actually heals. Your tremendous sense of responsibility ensures that you never, ever abandon a project or a person when times inevitably get tough. You provide a highly secure, unwavering anchor in a chaotic world, fiercely protecting those you love with quiet, absolute determination.<br><br><span class='text-xs opacity-80'>당신의 절대적이고 경이로운 정서적 회복 탄력성과 편견 없이 깊이 공감하는 무한한 능력은, 당신을 친구와 가족들에게 궁극적이고 대체 불가능한 안전한 피난처로 만들어 줍니다. 사람들의 삶의 가장 미묘하고 복잡한 세부 사항을 정확히 기억하는 진정으로 예외적인 경청자이며, 실제로 영혼을 치유하는 믿을 수 없을 만큼 현실적이고 탄탄한 조언을 제공합니다. 엄청난 책임감 덕분에, 필연적으로 힘든 시기가 닥쳤을 때 당신은 프로젝트나 사람을 결코, 절대 포기하지 않습니다. 혼란스러운 세상 속에서 매우 안전하고 흔들림 없는 닻을 제공하며, 조용하지만 절대적인 결단력으로 당신이 사랑하는 사람들을 맹렬하게 보호합니다.</span>",
+                    relationship: "In matters of the heart, you are a deeply devoted, incredibly slow-burning romantic who meticulously builds relationships to last an entire lifetime. You absolutely detest superficial dating and actively seek a profound, unshakeable soulmate connection based on immense mutual trust, shared core values, and quiet, daily acts of genuine service. You express your profound love not through loud, theatrical declarations, but through consistently ensuring your partner is deeply cared for—cooking them hearty, nutritious meals, silently fixing their practical problems, and offering a warm, perfectly safe embrace at the end of a highly exhausting day.<br><br><span class='text-xs opacity-80'>마음의 영역에 있어서 당신은 깊이 헌신적이고 놀라울 정도로 천천히 타오르는 로맨티스트이며, 평생 지속될 관계를 치밀하고 정성스럽게 구축합니다. 피상적인 데이트를 절대적으로 혐오하고, 거대한 상호 신뢰, 공유된 핵심 가치, 그리고 조용하고 일상적인 진실한 헌신을 바탕으로 한 심오하고 흔들림 없는 소울메이트와의 결합을 적극적으로 추구합니다. 당신은 요란하고 연극적인 고백이 아니라, 파트너가 깊이 보살핌을 받고 있다는 것을 지속적으로 확인시킴으로써 깊은 사랑을 표현합니다. 영양이 풍부하고 든든한 식사를 요리해 주고, 그들의 현실적인 문제를 묵묵히 해결해 주며, 지치고 힘든 하루의 끝에 따뜻하고 완벽하게 안전한 포옹을 제공합니다.</span>",
+                    weaknesses: "Your extreme, almost paralyzing preference for absolute stability and comfortable, deeply entrenched routines can heavily prevent you from embracing necessary growth or wildly exciting new opportunities. You are often incredibly stubborn, silently resisting change even when it is highly beneficial. Because you are deeply accustomed to silently bearing the heavy emotional weight of everyone else, you frequently suppress your own highly valid needs, completely failing to ask for help until you reach a point of severe, quiet exhaustion. You might also stay in emotionally draining, deeply unfulfilling situations far too long simply out of a misplaced sense of extreme loyalty.<br><br><span class='text-xs opacity-80'>절대적인 안정과 편안하고 깊이 뿌리박힌 일상에 대한 극단적이고 거의 마비에 가까운 선호는, 필수적인 성장이나 미친 듯이 흥미진진한 새로운 기회를 수용하는 것을 심각하게 방해할 수 있습니다. 종종 믿을 수 없을 정도로 고집이 세서, 변화가 매우 유익한 상황임에도 불구하고 조용히 완강하게 저항합니다. 다른 모든 사람들의 무거운 감정적 짐을 묵묵히 견디는 데 너무나도 깊이 익숙해져 있기 때문에, 정작 당신 자신의 매우 정당한 욕구는 빈번하게 억누르며, 심각하고 조용한 탈진 상태에 이를 때까지 타인에게 도움을 요청하는 데 완전히 실패합니다. 또한, 오직 잘못 자리 잡은 극단적인 의리라는 이유 하나만으로 감정적으로 소모적이고 깊이 불만족스러운 상황에 너무 오래 머무를 위험도 있습니다.</span>",
+                    wellness: "To preserve your beautifully warm core, you absolutely must learn the immensely difficult skill of actively establishing strict, protective emotional boundaries. It is utterly vital that you carve out completely unapologetic, solitary time strictly dedicated to explicitly nurturing yourself. Try consciously stepping slightly out of your rigid comfort zone—explore a completely foreign cuisine, travel solo to an unfamiliar destination, or try a radically different artistic hobby. Constantly remind yourself that expressing your own legitimate needs does not make you a burden; in fact, allowing others to care for you occasionally deeply strengthens the authentic human bond.<br><br><span class='text-xs opacity-80'>아름답고 따뜻한 당신의 내면을 완벽하게 보존하려면, 엄격하고 방어적인 감정적 경계선을 적극적으로 설정하는 엄청나게 어려운 기술을 반드시 배워야 합니다. 오직 당신 자신만을 명시적으로 보살피는 데 전적으로 바치는, 전혀 미안해할 필요 없는 고독한 시간을 의도적으로 확보하는 것이 절대적으로 중요합니다. 엄격한 안전지대에서 아주 조금씩 의식적으로 벗어나는 연습을 해보세요. 완전히 생소한 외국 요리를 탐험하거나, 낯선 목적지로 홀로 여행을 떠나거나, 급진적으로 다른 예술적 취미를 시도해 보세요. 당신의 정당한 요구를 표현하는 것이 결코 당신을 짐스러운 존재로 만들지 않는다는 사실을 끊임없이 스스로에게 상기시키십시오. 사실, 가끔은 타인이 당신을 돌볼 수 있도록 허락하는 것이야말로 진실한 인간적 유대를 가장 깊이 강화합니다.</span>",
+                    match: "Chill Naengmyeon<br><span class='text-[10px] font-normal'>쿨한 얼음 냉면</span>" 
+                },
+                { 
+                    id: "f3", 
+                    title: "🍖 Sizzling K-BBQ<br><span class='text-lg font-bold text-gray-500'>지글지글 K-삼겹살</span>", 
+                    overview: "You are the absolute, undeniable life of the party, possessing an incredibly rich, highly abundant, and intensely social spirit. Just like the universally beloved, sizzling, loud, and celebratory nature of a K-BBQ feast, you naturally bring people together from all walks of life, creating an atmosphere of sheer joy, loud laughter, and immense generosity. You thrive exceptionally in highly collaborative, dynamic group settings where you can openly share resources, stories, and vibrant energy. Your overarching philosophy in life is that absolutely everything is fundamentally better when experienced together, making you an incredibly essential, deeply cherished hub in your vast social network.<br><br><span class='text-xs opacity-80'>당신은 파티의 절대적이고 부정할 수 없는 주인공으로, 믿을 수 없을 만큼 풍성하고 넘칠 듯이 넉넉하며 강렬하게 사교적인 영혼을 소유하고 있습니다. 전 세계적으로 사랑받는 지글거리고 시끌벅적하며 축제 같은 K-바비큐 만찬의 본성처럼, 당신은 자연스럽게 각양각색의 사람들을 하나로 모아 순수한 기쁨, 호탕한 웃음, 그리고 거대한 관대함의 분위기를 창조해 냅니다. 당신은 자원과 이야기, 역동적인 에너지를 개방적으로 공유할 수 있는 고도로 협력적이고 활기찬 그룹 환경에서 예외적으로 큰 활력을 얻습니다. 당신의 인생을 관통하는 철학은 모든 것은 함께 경험할 때 근본적으로 훨씬 더 낫다는 것이며, 이는 당신을 방대한 소셜 네트워크에서 믿을 수 없을 만큼 필수적이고 깊이 사랑받는 중심축으로 만듭니다.</span>",
+                    strengths: "Your absolutely unmatched sociability, supreme hosting skills, and highly infectious optimism are your greatest, most powerful tools. You possess a completely extraordinary talent for making absolutely anyone—even the most rigid, socially awkward introverts—feel instantly comfortable, fiercely included, and deeply valued. Your immense generosity knows absolutely no bounds; you genuinely love treating your friends to great experiences and fiercely championing their massive successes. You are remarkably adaptable, highly persuasive, and incredibly skilled at effortlessly navigating complex social dynamics, making you an exceptionally powerful networker and an incredibly beloved community builder.<br><br><span class='text-xs opacity-80'>절대적으로 타의 추종을 불허하는 사교성, 최고의 호스팅 능력, 그리고 전염성이 매우 강한 낙관주의는 당신의 가장 위대하고 강력한 무기입니다. 당신은 심지어 가장 경직되고 사회적으로 어색한 내향적인 사람조차도 즉각적으로 편안함을 느끼고, 열렬히 소속감을 느끼며, 깊이 존중받는다고 느끼게 만드는 완전히 경이로운 재능을 소유하고 있습니다. 당신의 거대한 관대함은 절대 한계를 모릅니다. 친구들에게 훌륭한 경험을 대접하고 그들의 거대한 성공을 맹렬하게 지지하고 축하하는 것을 진심으로 사랑합니다. 당신은 놀라울 정도로 적응력이 뛰어나고 설득력이 높으며 복잡한 사회적 역학을 수월하게 탐색하는 데 믿을 수 없을 만큼 능숙하여, 예외적으로 강력한 네트워커이자 엄청나게 사랑받는 커뮤니티 빌더로 활약합니다.</span>",
+                    relationship: "In love, you are extremely expansive, highly inclusive, and remarkably giving. You don't just date a person; you seamlessly, enthusiastically integrate them into your massive, vibrant world, eagerly sharing your huge circle of friends and your dynamic, endless hobbies. You express your immense affection through incredibly grand gestures, lavish dates, and loudly, proudly showing off your partner to absolutely everyone you know. You deeply need a partner who is completely secure, highly confident, and deeply adaptable—someone who can confidently ride the massive, thrilling wave of your highly social lifestyle without feeling the slightest bit jealous or overwhelmed by your immense popularity.<br><br><span class='text-xs opacity-80'>사랑에 있어서 당신은 극도로 개방적이고 매우 포용적이며 놀라울 정도로 헌신적입니다. 단순히 한 사람과 데이트하는 것에 그치지 않고, 그들을 당신의 거대하고 활기찬 세계로 매끄럽고 열정적으로 통합시키며 방대한 친구 관계와 역동적이고 끝없는 취미를 간절히 공유합니다. 믿을 수 없을 만큼 거창한 이벤트, 화려한 데이트, 그리고 당신이 아는 모든 사람에게 파트너를 크고 자랑스럽게 과시함으로써 당신의 거대한 애정을 표현합니다. 당신은 완전히 안정적이고 매우 자신감 넘치며 적응력이 뛰어난 파트너를 깊이 필요로 합니다. 당신의 매우 사교적인 라이프스타일이 만들어내는 거대하고 짜릿한 파도를 자신감 있게 타면서도, 당신의 엄청난 인기 때문에 아주 작은 질투나 압도감을 느끼지 않을 사람이 바로 당신의 짝입니다.</span>",
+                    weaknesses: "Because you rely so heavily on constant external validation and vibrant group energy, you can suffer from paralyzing FOMO (Fear Of Missing Out) and often feel an intense, crushing emptiness when absolutely forced to be completely alone. You have a highly dangerous tendency to drastically overcommit your limited time, depleting your physical and mental resources trying to please absolutely everyone simultaneously. Additionally, in your desperate, relentless pursuit of maintaining a fun, positive, flawless atmosphere, you might actively avoid addressing necessary, deep emotional conflicts, sweeping serious issues dangerously under the rug until they inevitably explode.<br><br><span class='text-xs opacity-80'>끊임없는 외부의 인정과 활기찬 그룹의 에너지에 너무 크게 의존하기 때문에, 당신은 마비될 듯한 심각한 포모(FOMO, 소외되는 것에 대한 두려움)를 겪을 수 있으며 완벽하게 혼자 있어야만 하는 상황에 직면하면 강렬하고 파괴적인 공허함을 자주 느낍니다. 동시에 모든 사람을 만족시키려다 제한된 시간을 극단적으로 과도하게 약속해 버려 육체적, 정신적 자원을 완전히 고갈시키는 매우 위험한 성향을 가지고 있습니다. 또한, 무조건 재미있고 긍정적이며 결점 없는 분위기를 유지하려는 절박하고 끊임없는 추구 속에서, 필수적이고 깊은 감정적 갈등을 다루는 것을 적극적으로 회피하며, 심각한 문제들이 필연적으로 폭발할 때까지 위험하게 카펫 밑으로 쓸어 숨겨버릴 우려가 있습니다.</span>",
+                    wellness: "You absolutely must learn the highly crucial, life-saving art of enjoying your own solitary company. You require strict, intentional digital detoxes to disconnect from the endless, noisy demands of your vast social network. Try engaging in intensely solitary, highly focused hobbies that don't fundamentally require an audience—like deep journal writing, quiet solo hiking, or intricate model building. Practicing the simple but incredibly difficult word 'No' is absolutely essential to protect your heavily drained energy. Learning to fully process your own negative emotions silently, rather than immediately masking them with loud social interactions, will dramatically build your inner emotional strength.<br><br><span class='text-xs opacity-80'>당신은 오롯이 혼자만의 시간을 즐기는 매우 결정적이고 생명을 구하는 기술을 반드시 배워야 합니다. 방대한 소셜 네트워크의 끝없고 시끄러운 요구로부터 완벽하게 단절되기 위해 엄격하고 의도적인 디지털 디톡스가 절대적으로 필요합니다. 깊이 있는 일기 쓰기, 조용한 나홀로 등산, 혹은 복잡한 프라모델 조립처럼 근본적으로 관객을 필요로 하지 않는 강렬하게 고립되고 고도로 집중된 취미에 참여해 보세요. 심하게 고갈된 당신의 에너지를 보호하기 위해 단순하지만 믿을 수 없을 만큼 어려운 단어인 '아니오'를 연습하는 것은 절대적으로 필수입니다. 부정적인 감정을 시끄러운 사교 활동으로 즉각적으로 덮어버리는 대신, 조용히 당신 내면의 감정을 온전히 처리하는 법을 배우는 것이 내면의 정서적 힘을 극적으로 키워줄 것입니다.</span>",
+                    match: "Fiery Tteokbokki<br><span class='text-[10px] font-normal'>불타는 마라 떡볶이</span>" 
+                },
+                { 
+                    id: "f4", 
+                    title: "🧊 Chill Naengmyeon<br><span class='text-lg font-bold text-gray-500'>쿨한 얼음 냉면</span>", 
+                    overview: "You are an incredibly composed, fiercely independent, and highly analytical mind. Just like a perfectly chilled, refreshingly crisp bowl of Naengmyeon in the sweltering heat, you provide absolute clarity, sheer logic, and an immensely calming presence in the midst of extreme chaos. You highly value absolute minimalism, pristine order, and supreme efficiency in absolutely every single aspect of your life. You are not easily swayed by fleeting, messy emotional drama or the loud, irrational opinions of the masses. Instead, you operate with a razor-sharp intellect, carefully processing immense amounts of data before making incredibly precise, brilliant decisions.<br><br><span class='text-xs opacity-80'>당신은 믿을 수 없을 정도로 침착하고 맹렬하게 독립적이며 고도로 분석적인 지성을 소유하고 있습니다. 푹푹 찌는 한여름 폭염 속에 완벽하게 차갑고 상쾌할 정도로 깔끔한 냉면 한 그릇처럼, 당신은 극도의 혼란 속에서도 절대적인 명료함, 순수한 논리, 그리고 엄청나게 진정되는 아우라를 제공합니다. 당신은 삶의 모든 측면에서 절대적인 미니멀리즘, 완벽한 질서, 그리고 최고의 효율성을 가장 높게 평가합니다. 일시적이고 지저분한 감정적 드라마나 대중의 시끄럽고 비이성적인 의견에 결코 쉽게 흔들리지 않습니다. 대신, 날카로운 지성으로 움직이며, 믿을 수 없을 정도로 정밀하고 훌륭한 결정을 내리기 전에 방대한 양의 데이터를 치밀하게 처리합니다.</span>",
+                    strengths: "Your absolutely outstanding ability to remain completely emotionally detached allows you to be the ultimate, highly effective crisis manager. You can logically untangle the most incredibly complex problems, quickly identifying highly efficient, brilliant solutions that others miss due to sheer panic. You deeply respect the firm boundaries of others and fiercely protect your own, making you an incredibly low-drama, highly reliable individual. Your independence is an absolute superpower; you are highly self-sufficient, fiercely resourceful, and totally immune to the toxic, exhausting peer pressure that constantly derails others.<br><br><span class='text-xs opacity-80'>감정적으로 완전히 분리된 상태를 완벽하게 유지하는 당신의 압도적인 능력은, 당신을 궁극적이고 고도로 효과적인 위기 관리자로 만들어 줍니다. 극도의 패닉 상태에 빠진 다른 사람들이 놓치는 고도로 효율적이고 빛나는 해결책을 빠르게 식별하여, 믿을 수 없을 만큼 복잡하게 얽힌 문제들을 논리적으로 완벽하게 풀어낼 수 있습니다. 타인의 확고한 경계선을 깊이 존중하고 자신의 경계선을 맹렬하게 방어하여, 불필요한 드라마가 전혀 없는 매우 신뢰할 수 있는 사람입니다. 당신의 독립성은 절대적인 초능력과 같습니다. 스스로 자급자족하며, 놀라울 정도로 문제 해결 능력이 뛰어나고, 끊임없이 타인을 탈선시키는 유독하고 소모적인 또래 압력에 완전히 면역되어 있습니다.</span>",
+                    relationship: "In relationships, you prioritize profound intellectual compatibility, absolute mutual respect, and massive amounts of independent personal space above all else. You explicitly express love through highly practical, extremely reliable acts—solving complex logistical problems, meticulously managing finances, or simply ensuring a perfectly functioning, drama-free life together. You are entirely put off by extreme emotional clinginess, irrational jealousy, or the desperate, exhausting need for constant verbal reassurance. You seek a formidable, equally independent partner who is completely self-assured and views the relationship as an incredibly highly functioning, strategic partnership rather than a messy emotional crutch.<br><br><span class='text-xs opacity-80'>관계에서 당신은 깊은 지적 호환성, 절대적인 상호 존중, 그리고 방대한 양의 독립적인 개인 공간을 그 무엇보다 우선시합니다. 복잡한 현실적 문제를 해결하거나, 꼼꼼하게 재정을 관리하거나, 단순히 완벽하게 기능하고 드라마 없는 공동의 삶을 보장하는 등 매우 실용적이고 극도로 신뢰할 수 있는 행동을 통해 명시적으로 사랑을 표현합니다. 극단적인 감정적 집착, 비이성적인 질투, 또는 끊임없는 언어적 확신을 절박하고 피곤하게 요구하는 행위를 철저히 배격합니다. 당신은 스스로에 대한 확신이 완전하며, 관계를 지저분한 감정적 목발이 아닌 믿을 수 없을 정도로 제 기능을 다하는 전략적 파트너십으로 바라보는 강력하고 동등하게 독립적인 파트너를 찾습니다.</span>",
+                    weaknesses: "Your extreme, unyielding reliance on pure, cold logic means you can frequently appear highly intimidating, deeply indifferent, or completely unapproachable to those who desperately seek emotional warmth. You might dangerously invalidate the very real, complex emotions of others simply because they don't logically 'make sense' to your highly structured brain. In your intense pursuit of absolute independence, you severely risk total emotional isolation, completely failing to deeply connect with the highly irrational but beautifully profound aspects of the human experience. Furthermore, your incredibly high standards for perfection can easily make you overly critical and brutally dismissive.<br><br><span class='text-xs opacity-80'>순수하고 차가운 논리에 대한 극단적이고 타협 없는 의존은, 감정적인 따뜻함을 절실히 찾는 사람들에게 당신이 매우 위압적이거나 깊이 무관심하며 완전히 다가가기 힘든 사람으로 빈번하게 보이게 만듭니다. 다른 사람들의 매우 현실적이고 복잡한 감정들이 당신의 고도로 구조화된 두뇌에 논리적으로 '이치에 맞지 않는다'는 이유만으로 그 감정들을 위험하게 짓밟고 무효화할 수 있습니다. 절대적인 독립성을 향한 강렬한 추구 속에서, 인간 경험의 지극히 비이성적이지만 아름다울 정도로 심오한 측면과 깊이 교감하는 데 완전히 실패하여 완벽한 정서적 고립에 빠질 심각한 위험을 안고 있습니다. 나아가 완벽을 향한 믿을 수 없을 정도로 높은 기준은 당신을 지나치게 비판적이고 잔인할 정도로 냉정하게 만들 수 있습니다.</span>",
+                    wellness: "To heavily counteract your dangerously rigid, overly analytical nature, you must proactively engage in highly sensory, purely expressive, and deeply 'messy' physical activities. Force yourself to participate in things that absolutely have no correct answer or logical structure—like highly abstract finger painting, absolutely spontaneous, unstructured dancing, or totally unmeasured, chaotic cooking. You must consciously, deliberately practice extending explicit verbal empathy before immediately trying to fix someone's problem. Learning to comfortably sit in the highly uncomfortable, utterly illogical space of raw human emotion without trying to 'solve' it will absolutely transform your deepest relationships.<br><br><span class='text-xs opacity-80'>위험할 정도로 경직되고 지나치게 분석적인 당신의 본성을 강력하게 상쇄하기 위해, 고도로 감각적이고 순수하게 표현적이며 매우 '지저분한' 육체적 활동에 선제적으로 참여해야 합니다. 극도로 추상적인 핑거 페인팅, 절대적으로 즉흥적이고 구조가 없는 춤, 혹은 계량하지 않은 혼란스러운 요리처럼 절대적인 정답이나 논리적 구조가 아예 없는 활동에 스스로를 강제로 참여시키십시오. 누군가의 문제를 즉각적으로 해결하려 들기 전에, 명시적이고 언어적인 공감을 먼저 건네는 연습을 의식적이고 의도적으로 수행해야 합니다. 날것 그대로의 인간 감정이라는, 매우 불편하고 완전히 비논리적인 공간에서 그것을 '해결'하려 들지 않고 그저 편안하게 머무르는 법을 배우는 것은 당신의 가장 깊은 관계들을 절대적으로 변화시킬 것입니다.</span>",
+                    match: "Sizzling K-BBQ<br><span class='text-[10px] font-normal'>지글지글 K-삼겹살</span>" 
+                }
             ]
         };
-        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
 
+        // 남성 데이터는 여성 데이터 구조를 복제하여 타이틀 및 매칭만 남성 포맷에 맞게 수정 적용
+        resultsData.M = JSON.parse(JSON.stringify(resultsData.F));
+        resultsData.M[0].title = "🔥 Dynamic Tteokbokki<br><span class='text-lg font-bold text-gray-500'>다이내믹 마라 떡볶이</span>";
+        resultsData.M[1].title = "🍚 Steadfast Gukbap<br><span class='text-lg font-bold text-gray-500'>우직한 뚝배기 국밥</span>";
+        resultsData.M[2].title = "🍖 Energetic K-BBQ<br><span class='text-lg font-bold text-gray-500'>에너제틱 K-삼겹살</span>";
+        resultsData.M[3].title = "🧊 Rational Naengmyeon<br><span class='text-lg font-bold text-gray-500'>이성적인 얼음 냉면</span>";
+        
+        resultsData.M[0].match = "Steadfast Gukbap<br><span class='text-[10px] font-normal'>우직한 뚝배기 국밥</span>";
+        resultsData.M[1].match = "Rational Naengmyeon<br><span class='text-[10px] font-normal'>이성적인 얼음 냉면</span>";
+        resultsData.M[2].match = "Dynamic Tteokbokki<br><span class='text-[10px] font-normal'>다이내믹 마라 떡볶이</span>";
+        resultsData.M[3].match = "Energetic K-BBQ<br><span class='text-[10px] font-normal'>에너제틱 K-삼겹살</span>";
+
+        function generateSlug(titleHtml) {
+            const englishPart = titleHtml.split('<br>')[0];
+            return englishPart.replace(/[^a-zA-Z0-9 ]/g, '').trim().toLowerCase().replace(/\s+/g, '-');
+        }
+
+        window.onload = () => {
+            const hash = window.location.hash;
+            const match = hash.match(/#\/result\/([a-zA-Z0-9-]+)/);
+            
+            if(match) {
+                const currentSlug = match[1];
+                let foundGender = '';
+                let foundId = '';
+                
+                for(let g of ['F', 'M']) {
+                    for(let i=0; i<resultsData[g].length; i++) {
+                        if(generateSlug(resultsData[g][i].title) === currentSlug) {
+                            foundGender = g;
+                            foundId = g.toLowerCase() + (i + 1);
+                            break;
+                        }
+                    }
+                }
+                
+                if(foundId) {
+                    userGender = foundGender;
+                    document.getElementById('start-screen').classList.add('hidden');
+                    document.getElementById('question-screen').classList.add('hidden');
+                    document.getElementById('loading-screen').classList.add('hidden');
+                    document.getElementById('result-screen').classList.remove('hidden');
+                    showResult(foundId, true); 
+                }
+            }
+        };
+
+        // 안전한 화면 전환 로직 적용 (flex 속성 충돌 방지)
         function switchScreen(fromId, toId) {
             document.getElementById(fromId).classList.add('hidden');
             document.getElementById(toId).classList.remove('hidden');
-            document.getElementById(toId).classList.add('flex');
         }
+
         function selectGender(g) {
             userGender = g;
             switchScreen('start-screen', 'question-screen');
             showQuestion();
         }
+
         function showQuestion() {
             document.getElementById('progress-bar').style.width = ((currentQ + 1) / questions.length) * 100 + "%";
+            
             const qScreen = document.getElementById('question-screen');
-            qScreen.classList.remove('fade-in'); void qScreen.offsetWidth; qScreen.classList.add('fade-in');
+            qScreen.classList.remove('fade-in');
+            void qScreen.offsetWidth; 
+            qScreen.classList.add('fade-in');
+
             document.getElementById('q-title').innerHTML = questions[currentQ].q;
             document.getElementById('btn-a').innerHTML = questions[currentQ].a;
             document.getElementById('btn-b').innerHTML = questions[currentQ].b;
         }
+
         function answer(val) {
             if(val === 0) score++;
             currentQ++;
-            if(currentQ < questions.length) showQuestion();
-            else {
+            
+            if(currentQ < questions.length) {
+                showQuestion();
+            } else {
                 switchScreen('question-screen', 'loading-screen');
-                setTimeout(() => showResult(userGender === 'F' ? `f${(score % 4) + 1}` : `m${(score % 4) + 1}`), 2500);
+                const finalIdx = score % 4; 
+                const genId = userGender === 'F' ? `f${finalIdx + 1}` : `m${finalIdx + 1}`;
+                setTimeout(() => showResult(genId, false), 2500);
             }
         }
-        function showResult(resultId) {
-            switchScreen('loading-screen', 'result-screen');
+
+        function showResult(resultId, isDirectLoad = false) {
+            currentResultId = resultId;
             const idx = parseInt(resultId.replace(/[fm]/g, '')) - 1;
             const result = resultsData[userGender][idx];
+            
+            const slug = generateSlug(result.title);
+            
+            if(!isDirectLoad) {
+                switchScreen('loading-screen', 'result-screen');
+                window.location.hash = "/result/" + slug;
+            }
+            
             document.getElementById('r-title').innerHTML = result.title;
             document.getElementById('r-match').innerHTML = result.match;
+            
             const imgDiv = document.getElementById('r-img-div');
             imgDiv.style.backgroundImage = userGender === 'F' ? "url('k_food_soul_w.png')" : "url('k_food_soul_m.png')";
             imgDiv.style.backgroundPosition = ["0% 0%", "100% 0%", "0% 100%", "100% 100%"][idx];
             
+            // 5단 분석 UI 구성 (오렌지/앰버 테마)
             document.getElementById('r-desc').innerHTML = `
-                <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-orange-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview</h4>
-                    <p class="text-sm text-orange-900 leading-relaxed font-medium">${result.overview}</p>
-                </div>
-                <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-amber-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths</h4>
-                    <p class="text-sm text-amber-900 leading-relaxed font-medium">${result.strengths}</p>
-                </div>
-                <div class="bg-red-50 p-5 rounded-2xl border border-red-100 shadow-sm">
-                    <h4 class="text-[10px] font-black text-red-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check</h4>
-                    <p class="text-sm text-red-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                <div class="space-y-4">
+                    <div class="bg-orange-50 p-5 rounded-2xl border border-orange-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-orange-700 uppercase tracking-widest mb-2 flex items-center gap-1">💡 Overview (총평)</h4>
+                        <p class="text-sm text-orange-900 leading-relaxed font-medium">${result.overview}</p>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-amber-700 uppercase tracking-widest mb-2 flex items-center gap-1">✨ Strengths (핵심 강점)</h4>
+                        <p class="text-sm text-amber-900 leading-relaxed font-medium">${result.strengths}</p>
+                    </div>
+                    <div class="bg-yellow-50 p-5 rounded-2xl border border-yellow-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-yellow-700 uppercase tracking-widest mb-2 flex items-center gap-1">🤝 Relationship (관계 스타일)</h4>
+                        <p class="text-sm text-yellow-900 leading-relaxed font-medium">${result.relationship}</p>
+                    </div>
+                    <div class="bg-red-50 p-5 rounded-2xl border border-red-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-red-700 uppercase tracking-widest mb-2 flex items-center gap-1">🎯 Fact Check (주의점)</h4>
+                        <p class="text-sm text-red-900 leading-relaxed font-medium">${result.weaknesses}</p>
+                    </div>
+                    <div class="bg-rose-50 p-5 rounded-2xl border border-rose-100 shadow-sm">
+                        <h4 class="text-[10px] font-black text-rose-700 uppercase tracking-widest mb-2 flex items-center gap-1">🔋 Wellness (힐링 가이드)</h4>
+                        <p class="text-sm text-rose-900 leading-relaxed font-medium">${result.wellness}</p>
+                    </div>
                 </div>
             `;
+        }
+
+        function shareResult() {
+            const idx = parseInt(currentResultId.replace(/[fm]/g, '')) - 1;
+            const slug = generateSlug(resultsData[userGender][idx].title);
+            const shareUrl = window.location.origin + window.location.pathname + '#/result/' + slug;
+            
+            navigator.clipboard.writeText(shareUrl).then(() => {
+                alert('결과 링크가 복사되었습니다!\\n친구들에게 공유해보세요. 🚀');
+            }).catch(err => {
+                console.error('Copy failed', err);
+                alert('링크 복사에 실패했습니다. 주소창의 URL을 직접 복사해주세요.');
+            });
+        }
+
+        function goLobby() {
+            window.location.hash = ''; 
+            window.location.reload();  
         }
     </script>
 </body>
